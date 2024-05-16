@@ -1,0 +1,4 @@
+arviz==0.18.0
+pymc==5.15
+preliz==0.6.3
+bambi==0.13.0
