@@ -1,0 +1,16 @@
+name: ei2
+channels:
+  - conda-forge
+dependencies:
+  - python<3.11
+  - ipython>=8.6
+  - jupyter>=1.0.0
+  - ipympl>=0.9.2
+  - pymc==5.14.0
+  - arviz==0.18.0
+  - bambi==0.13.0
+  - pip>=22.3.1
+  - python-graphviz
+  - pip:
+    - preliz==0.6.0
+

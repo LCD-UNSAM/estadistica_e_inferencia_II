@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Estadística a Inferencia II - 3&nbsp; Modelado Jerárquico</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02_Programación_probabilística.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_Modelos_jerárquicos.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelado Jerárquico</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Estadística a Inferencia II</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="github"><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/LCD-UNSAM/estadistica_e_inferencia_II">
+            Fuente
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/LCD-UNSAM/estadistica_e_inferencia_II/issues/new">
+            Reportar errores
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Modo claro/oscuro"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Modo sin distracciones">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">‎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Inferencia_Bayesiana.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inferencia Bayesiana</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Programación_probabilística.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Programación probabilista</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_Modelos_jerárquicos.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelado Jerárquico</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#jerarquías-en-los-datos" id="toc-jerarquías-en-los-datos" class="nav-link active" data-scroll-target="#jerarquías-en-los-datos"><span class="header-section-number">3.1</span> Jerarquías en los datos</a></li>
+  <li><a href="#desplazamientos-jerárquicos" id="toc-desplazamientos-jerárquicos" class="nav-link" data-scroll-target="#desplazamientos-jerárquicos"><span class="header-section-number">3.2</span> Desplazamientos jerárquicos</a></li>
+  <li><a href="#es-deseable-tener-contracción" id="toc-es-deseable-tener-contracción" class="nav-link" data-scroll-target="#es-deseable-tener-contracción"><span class="header-section-number">3.3</span> Es deseable tener contracción?</a></li>
+  <li><a href="#intercambiabilidad" id="toc-intercambiabilidad" class="nav-link" data-scroll-target="#intercambiabilidad"><span class="header-section-number">3.4</span> Intercambiabilidad</a></li>
+  <li><a href="#teorema-de-de-finetti" id="toc-teorema-de-de-finetti" class="nav-link" data-scroll-target="#teorema-de-de-finetti"><span class="header-section-number">3.5</span> Teorema de De Finetti</a></li>
+  <li><a href="#intercambiabilidad-en-un-ejemplo" id="toc-intercambiabilidad-en-un-ejemplo" class="nav-link" data-scroll-target="#intercambiabilidad-en-un-ejemplo"><span class="header-section-number">3.6</span> Intercambiabilidad en un ejemplo</a></li>
+  <li><a href="#renacuajos-multinivel" id="toc-renacuajos-multinivel" class="nav-link" data-scroll-target="#renacuajos-multinivel"><span class="header-section-number">3.7</span> Renacuajos multinivel</a></li>
+  <li><a href="#jerarquías-futboleras" id="toc-jerarquías-futboleras" class="nav-link" data-scroll-target="#jerarquías-futboleras"><span class="header-section-number">3.8</span> Jerarquías futboleras</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">3.9</span> Resumen</a></li>
+  <li><a href="#para-seguir-leyendo" id="toc-para-seguir-leyendo" class="nav-link" data-scroll-target="#para-seguir-leyendo"><span class="header-section-number">3.10</span> Para seguir leyendo</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">3.11</span> Ejercicios</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-hierarchical-models" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelado Jerárquico</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-1" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">from</span> scipy.special <span class="im">import</span> expit <span class="im">as</span> logistic</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-2" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>az.style.use(<span class="st">'arviz-doc'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-3" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">%%</span>javascript</span>
+<span id="cb3-2"><a href="#cb3-2"></a>IPython.OutputArea.prototype._should_scroll <span class="op">=</span> function(lines) {</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="cf">return</span> false<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+IPython.OutputArea.prototype._should_scroll = function(lines) {
+    return false;
+}
+
+</script>
+</div>
+</div>
+<p>Los objetivos de este capítulo son:</p>
+<ul>
+<li>Aprender sobre modelos jerárquicos
+<ul>
+<li>agrupamiento-parcial</li>
+<li>efecto de <em>contracción</em></li>
+</ul></li>
+</ul>
+<section id="jerarquías-en-los-datos" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="jerarquías-en-los-datos"><span class="header-section-number">3.1</span> Jerarquías en los datos</h2>
+<p>Al analizar datos es común encontrarse con situaciones como las siguientes:</p>
+<ul>
+<li>Datos de desempeño deportivo. Por ejemplo datos de los mismos corredores en diferentes años.</li>
+<li>Datos de salud. Por ejemplo datos de pacientes en diferentes hospitales.</li>
+<li>Datos de rendimiento escolar. Podríamos tener información sobre el rendimiento de los estudiantes en diferentes escuelas, de diferentes ciudades y en diferentes provincias.</li>
+</ul>
+<p>En todos estos casos lo que tenemos es una agrupamiento o jerarquía “natural”. Los datos están agrupados en diferentes niveles. En el caso de los estudiantes, los datos están agrupados por escuela, ciudad y provincia. En el caso de los pacientes, los datos están agrupados por hospital. En el caso de los corredores tenemos mediciones repetidas de un mismo individuo a lo largo del tiempo, es decir los datos están agrupados por corredor.</p>
+<p>Es muy común que al analizar estos datos ignoremos la estructura jerárquica de los datos y decidamos o bien agrupar los datos (ej, todos los corredores en un mismo grupo) o bien analizarlos por separado (cada corredor, independiente del resto). Agrupar todos los datos nos permite obtener estimaciones más precisas, el costo es que perdemos los detalles de cada grupo. Al agrupar datos también corremos el riesgo de opacar diferencias o incluso obtener conclusiones diametralmente opuestas (ver <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">paradoja de Simpson</a>). Tratar a cada grupo por separado tiene la ventaja que podemos capturar las particularidades de caa grupo, pero las estimaciones de los parámetros serán menos precisas y corremos el riesgo de sobre-ajuste.</p>
+<p>¿Es posible construir un modelo que contemple que los datos están formados por grupos diferentes, pero que al mismo tiempo comparten información?</p>
+<p>Si, y ese es precisamente el tema principal de este capítulo. Este tipo de modelos se conocen como modelos jerárquicos. En la literatura es posible encontrar el mismo concepto bajo diferentes nombres; modelos multinivel, modelos de efectos mixtos, modelos de efectos aleatorios o modelos anidados. Lamentablemente algunos autores utilizan estos términos de forma intercambiable, mientras que otros los utilizan para marcar algunas diferencias. Nosotros utilizaremos el término modelo jerárquico para referirnos a cualquier modelo que contemple la estructura jerárquica de los datos.</p>
+<p>Un modelo jerárquico se construye asignado distribuciones a priori a las distribuciones a priori! Este nivel superior de distribuciones a priori se suelen denominar hiper-priors. Conceptualmente al utilizar un hiper-prior, estamos asumiendo que los priors de cada grupo no son nesariamente idénticos, pero si están vinculados al provenir de una población (o mecanismo generarador de datos) común. La siguiente figura muestra un diagrama con las diferencias entre un modelo agrupado (un solo grupo), un modelo no agrupado (todos los grupos separados) y un modelo jerárquico.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/hierarchical_model.png" class="img-fluid figure-img"></p>
+<figcaption>Diagrama que muestra las diferencias entre un modelo agrupado, un modelo no agrupado y un modelo jerárquico.</figcaption>
+</figure>
+</div>
+<p>El introducir hiper-priors induce una distribución a posteriori donde las estimaciones de cad grupo estarán parcialmente agrupadas, es decir en algún punto entre el modelo agrupado y el modelo no agrupado. Para generar intuición sobre este punto construyamos un modelo no-jerarquico y uno jerárquico y compararemos los resultados.</p>
+</section>
+<section id="desplazamientos-jerárquicos" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="desplazamientos-jerárquicos"><span class="header-section-number">3.2</span> Desplazamientos jerárquicos</h2>
+<p>Las <a href="https://www.youtube.com/watch?v=wvTv8TqWC48">proteínas</a> son moléculas formadas por 20 unidades, llamadas amino ácidos, cada amino ácido puede aparecer en una proteína 0 o más veces. Así como una melodía está definida por una sucesión de notas musicales, una proteína está definida por una sucesión de amino ácidos. Algunas variaciones de notas pueden dar como resultados pequeñas variaciones sobre la misma melodía, otras variaciones pueden resultar en melodías completamente distintas, algo similar sucede con las proteínas. Una forma de estudiar proteínas es usando resonancia magnética nuclear (la misma técnica usada para imágenes médicas). Esta técnica permite medir diversos <em>observables</em>, uno de ellos se llama <em>desplazamiento químico</em> y para simplificar diremos que podemos medir tantos desplazamientos químicos como amino ácidos tenga una proteína. Los aminoácidos son una familia de compuestos químicos por lo que tendría sentido tratarlos a todos de igual forma, pero al mismo tiempo tienen diferentes propiedades químicas, las cuales de hecho son relevantes para comprender como funcionan las proteínas! Por lo que también tiene sentido tratarlos por separado. Como ya vimos una alternativa es construir un modelo jerárquico y hacer algo a mitad de camino.</p>
+<p>El siguiente conjunto de datos contiene valores de desplazamientos químicos para un conjunto de proteínas. Si inspeccionan el DataFrame <code>cs_data</code> verán que tiene 4 columnas:</p>
+<ul>
+<li>La primera es un código que identifica a la proteína (si tienen curiosidad pueden ingresar el identificador en esta base de datos <a href="https://www.rcsb.org" class="uri">https://www.rcsb.org</a>).</li>
+<li>La segunda columna tiene el nombre del amino ácido (pueden corroborar que hay tan solo 20 nombres únicos).</li>
+<li>La tercera contiene valores teóricos de desplazamientos químicos (calculados usando métodos cuánticos).</li>
+<li>La cuarta tiene valores experimentales.</li>
+</ul>
+<p>La motivación de este ejemplo es comparar las diferencias entre valores teóricos y experimentales, entre otras razones para evaluar la capacidad de los métodos teóricos para reproducir valores experimentales.</p>
+<div id="cell-9" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>cs_data <span class="op">=</span> pd.read_csv(<span class="st">'datos/chemical_shifts_theo_exp.csv'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>diff <span class="op">=</span> cs_data.theo <span class="op">-</span> cs_data.exp</span>
+<span id="cb4-3"><a href="#cb4-3"></a>cat_encode <span class="op">=</span> pd.Categorical(cs_data[<span class="st">'aa'</span>])</span>
+<span id="cb4-4"><a href="#cb4-4"></a>idx <span class="op">=</span> cat_encode.codes</span>
+<span id="cb4-5"><a href="#cb4-5"></a>coords <span class="op">=</span> {<span class="st">"aa"</span>: cat_encode.categories}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Para resaltar la diferencia entre un modelo jerárquico y uno no-jerárquico vamos a construir ambos. Primero el no-jerárquico. Este modelo es equivalente a haber ajustado cada uno de los <code>aa</code> grupos por separado.</p>
+<div id="cell-11" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> cs_nh:         </span>
+<span id="cb5-2"><a href="#cb5-2"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">1</span>, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
+<span id="cb5-3"><a href="#cb5-3"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">2</span>, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
+<span id="cb5-4"><a href="#cb5-4"></a> </span>
+<span id="cb5-5"><a href="#cb5-5"></a>    y <span class="op">=</span> pm.Normal(<span class="st">'y'</span>, mu<span class="op">=</span>μ[idx], sigma<span class="op">=</span>σ[idx], observed<span class="op">=</span>diff) </span>
+<span id="cb5-6"><a href="#cb5-6"></a>     </span>
+<span id="cb5-7"><a href="#cb5-7"></a>    idata_cs_nh <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [μ, σ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 20 seconds.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"394fe92572244aada41887f0b62a5655","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<p>Y ahora la novedad. El modeloo jerárquico.</p>
+<p>Este modelo tiene un hiper-prior para la media de <span class="math inline">\(\mu\)</span> (<code>μ_mu</code>) y otro para la desviación estándar de <span class="math inline">\(\mu\)</span> (<code>μ_sd</code>). Para <span class="math inline">\(\sigma\)</span> no usamos un hiper-prior, asumimos un valor común del parámetro para todos los grupos. Esto es una decisión de modelado. En este caso la justificación es mantener el ejemplo simple, pero en principio no sería problemático usar un hiper-prior también para <span class="math inline">\(\sigma\)</span>.</p>
+<div id="cell-13" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> cs_h:</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="co"># hyper_priors</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    μ_mu <span class="op">=</span> pm.Normal(<span class="st">'μ_mu'</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    μ_sd <span class="op">=</span> pm.HalfNormal(<span class="st">'μ_sd'</span>, <span class="dv">2</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="co"># priors</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span>μ_mu, sigma<span class="op">=</span>μ_sd, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
+<span id="cb7-8"><a href="#cb7-8"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">2</span>, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>    y <span class="op">=</span> pm.Normal(<span class="st">'y'</span>, mu<span class="op">=</span>μ[idx], sigma<span class="op">=</span>σ[idx], observed<span class="op">=</span>diff) </span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a>    idata_cs_h <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [μ_mu, μ_sd, μ, σ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 26 seconds.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3634ee17e11a4aaf946ddaa95019e8b0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<p>Antes de observar los resultados, comparemos gráficamente ambos modelos, para estar seguros que entendemos en que difieren. La siguiente figura muestra una representación gráfica de los modelos <code>cs_nh</code> (no-jerárquico) y <code>cs_h</code> (jerárquico). Se puede ver como el modelo jerárquico tiene un nivel más.</p>
+<div>
+<p><img src="img/cs_nh_vs_h.png" width="700"></p>
+</div>
+<p>Ahora que tenemos más claras las diferencias a nivel del modelo, vamos a explorar las consecuencias de esas diferencias. Para ello vamos a comparar los resultados usando un forest plot. ArviZ nos ofrece la función <code>plot_forest</code> que permite pasar más de un modelo, esto es útil cuando queremos comparar los valores de parámetros equivalentes entre modelos como en el presente ejemplo. Por defecto, <code>plot_forest</code> grafica las cadenas de MCMC por separado, esto no es relevante en este caso por lo que vamos a combinarlas usando <code>combined=True</code>. Los invito a explorar, por su cuenta, el significado del resto de los argumentos que pasamos en la siguiente celda.</p>
+<div id="cell-16" class="cell" data-scrolled="false" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>axes <span class="op">=</span> az.plot_forest([idata_cs_nh, idata_cs_h], model_names<span class="op">=</span>[<span class="st">'no_jerárquico'</span>, <span class="st">'jerárquico'</span>],</span>
+<span id="cb9-2"><a href="#cb9-2"></a>                      var_names<span class="op">=</span><span class="st">'μ'</span>, combined<span class="op">=</span><span class="va">True</span>, r_hat<span class="op">=</span><span class="va">False</span>, ess<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>),</span>
+<span id="cb9-3"><a href="#cb9-3"></a>                      colors<span class="op">=</span><span class="st">'cycle'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>y_lims <span class="op">=</span> axes[<span class="dv">0</span>].get_ylim()</span>
+<span id="cb9-5"><a href="#cb9-5"></a>axes[<span class="dv">0</span>].vlines(idata_cs_h.posterior[<span class="st">'μ_mu'</span>].mean(), <span class="op">*</span>y_lims, color<span class="op">=</span><span class="st">"k"</span>, ls<span class="op">=</span><span class="st">":"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_Modelos_jerárquicos_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Bien, tenemos un gráfico para 38 valores medios estimados, uno por aminoácido (19 en este conjunto de datos) y esto duplicado ya que tenemos dos modelos. También tenemos los intervalos de credibilidad del 94% y el rango intercuartil (el intervalo que contiene el 50% central de la distribución). La línea vertical es la media parcialmente agrupada, es decir la media según el modelo jerárquico. El valor es cercano a cero, esto es parte de lo que esperaríamos ver si los valores teóricos son buenos reproduciendo los valores experimentales.</p>
+<p>La parte más relevante de este gráfico es que las estimaciones del modelo jerárquico son <em>atraídas</em> hacia la media parcialmente agrupada o, de forma equivalente, se <em>contraen</em> con respecto a las estimaciones no agrupadas. Este efecto es más notorio para los grupos más alejados de la media (como PRO), además la incertidumbre es igual o menor que la del modelo no jerárquico. Decimos que las estimaciones están parcialmente agrupadas porque tenemos una estimación para cada grupo, pero las estimaciones para cada grupo se informan mutuamente mediante el hiper prior. Por lo tanto, se obtiene una situación intermedia entre tener un solo grupo (la media global), todos los aminoácidos juntos, y tener 20 grupos separados, uno por aminoácido (el modelo no jerárquico).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En un modelo jerárquico, los grupos que comparten un hiperprior común comparten información a través de ese hiperprior. Esto da como resultado una contracción de las estimaciones, respecto del modelo desagrupado. Es decir, las estimaciones individuales se contraen hacia la media común. Al agrupar parcialemente las estimaciones, estamos modelando los grupos en algún punto medio entre grupos independientes unos de otros y un solo gran grupo.</p>
+</div>
+</div>
+</section>
+<section id="es-deseable-tener-contracción" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="es-deseable-tener-contracción"><span class="header-section-number">3.3</span> Es deseable tener contracción?</h2>
+<p>Un modelo jerárquico ofrece estimaciones más conservadoras y más robustas. Por ejemplo, si un grupo tiene un tamaño de muestra pequeño, la estimación de ese grupo será más incierta que la de un grupo con un tamaño de muestra grande. En un modelo jerárquico, la información de los grupos con mayor tamaño de muestra se comparte con los grupos con menor tamaño de muestra, lo que resulta en una estimación más precisa para los grupos con menor tamaño de muestra. La cantidad exacta de contracción dependerá de varios factores (ver ejercicios), pero en general, la contracción es deseable ya que reduce la varianza de las estimaciones y reduce las posibilidades de sobreajuste.</p>
+</section>
+<section id="intercambiabilidad" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="intercambiabilidad"><span class="header-section-number">3.4</span> Intercambiabilidad</h2>
+<p>Una secuencia, finita o infinita de variables aleatorias <span class="math inline">\(X_1, X_2, X_3, \dots X_j\)</span> es intercambiable si su distribución de probabilidad conjunta no se ve modificada por permutaciones de los indices <span class="math inline">\((1, \dots, J)\)</span>.</p>
+<p>Un ejemplo típico de variables intercambiables es el siguiente:</p>
+<p>Tenemos una bolsa con una bola blanca y una negra. La probabilidad de sacar cualquiera de ellas es de 0.5. Si <span class="math inline">\(Y_i = 1\)</span> indica que la iésima bola es blanca y muestreando sin reemplazo, tendremos que:</p>
+<p><span class="math display">\[P(X_1=1, X_2=0) = 0.5\]</span> <span class="math display">\[P(X_1=0, X_2=1) = 0.5\]</span></p>
+<p>Es decir la probabilidad de tomar primero la blanca y luego la negra es igual a tomar primero la blanca y luego la negra. Es decir <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> son intercambiables.</p>
+<p>Ahora bien también es cierto que:</p>
+<p><span class="math display">\[0 = P(X_2=1 \mid X_1=1) \not= P(X_2=1) = 0.5\]</span></p>
+<p>Es decir la probabilidad marginal de que la segunda bola sea blanca no es la misma que la probabilidad (condicional) de que la segunda sea blanca dado que ya obtuvimos una blanca. Es decir <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> no son independientes.</p>
+<blockquote class="blockquote">
+<p>Toda secuencia iid es también intercambiable, pero una secuencia intercambiable no es necesariamente iid. La condición de intercambialidad es más general (o menos <em>estricta</em>) que la de independencia.</p>
+</blockquote>
+<p>Este enunciado se puede demostrar de la siguiente forma:</p>
+<p>Sea <span class="math inline">\(x_i \mathop{\sim}\limits^{iid} p(x)\)</span>, tenemos que la probabilidad conjunta se calcula como el producto de las probabilidades marginales:</p>
+<p><span class="math display">\[p(x_i, \dots , x_n) = \prod_i^n p(x_i)\]</span></p>
+<p>Dado que el producto es commutativo, tenemos que el resultado es invariante a permutaciones.</p>
+<p>OK, todo muy lindo, pero y que tiene que ver esto con modelos jerárquicos? Por ahora parece que nada, pero avancemos un poco más.</p>
+</section>
+<section id="teorema-de-de-finetti" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="teorema-de-de-finetti"><span class="header-section-number">3.5</span> Teorema de De Finetti</h2>
+<p>Una secuencia de variables aleatorias es intercambiable si y solo si para todo <span class="math inline">\(n\)</span> podemos escribir:</p>
+<p><span class="math display">\[p(X_1, X_2,  \dots , X_n) = \int \prod_i^n p(X_i \mid \theta) \; p(\theta)\]</span></p>
+<p>Es decir, que conjunto de variable aleatorias puede ser descrito por:</p>
+<ul>
+<li>un parámetro <span class="math inline">\(\theta\)</span></li>
+<li>un likelihood <span class="math inline">\(p(X \mid \theta)\)</span></li>
+<li>un prior p()</li>
+</ul>
+<p>Entonces podemos ver al teorema de De Finetti como una justificación de la estadística Bayesiana y como una garantía de que si tenemos una secuencia de observaciones/variables aleatorias intercambiables entoces podremos describirlas adecuadamente usando estadística Bayesiana. La trampa, por que siempre hay una trampa, es que el teorema no nos dice nada sobre como elegir ni el parámetro, ni el likelihood ni el prior. Existen algunas justificaciones teóricas para elegir estos elementos, pero no lo discutiremos en este curso, principalmente por su limitada utilidad práctica.</p>
+<p>Supongamos ahora que <span class="math inline">\(\theta\)</span> representa un conjunto de parámetros, <span class="math inline">\(\theta (\theta_1, \theta_2,  \dots , \theta_n)\)</span> y que este conjunto de parámetros es intercambiable. Entonces podemos escribir:</p>
+<p><span class="math display">\[(\theta_1, \theta_2,  \dots , \theta_n) = \int \prod_i^n p(\theta_i \mid \psi) \; p(\psi)\]</span></p>
+<p>Obteniendo un modelo jerárquico que podríamos reescribir como:</p>
+<p><span class="math display">\[\begin{align*}
+X_{ij} &amp;\sim p(X \mid \theta_i) \\
+\theta_i &amp;\sim p(\theta \mid \psi)  \\
+\psi &amp;\sim p(\psi)
+\end{align*}\]</span></p>
+</section>
+<section id="intercambiabilidad-en-un-ejemplo" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="intercambiabilidad-en-un-ejemplo"><span class="header-section-number">3.6</span> Intercambiabilidad en un ejemplo</h2>
+<p>Yo he seleccionado 10 valores de desplazamientos químicos <span class="math inline">\(y_1, \dots, Y_{10}\)</span>. Qué me pueden decir del valor <span class="math inline">\(y_4\)</span>? Sin conocer algo de la química de aminoácidos es dificil arriesgar un rango razonable para <span class="math inline">\(y_4\)</span>, pero si asumen intercambialidad podrían decir <span class="math inline">\(y_4\)</span> debe parecerse a los demás valores, ya que no hay razón para pensar que <span class="math inline">\(y_4\)</span> sea especial, por ejemplo para decir algo como <span class="math inline">\(y_4 &gt; y_3\)</span> necesitarían información adicional o supuestos adicionales, como asumir un orden dado. Es decir intercambialidad, implica cierto grado de ignorancia.</p>
+<p>Bien, ahora supongamos que les muestro 9 valores, excepto <span class="math inline">\(y_4\)</span>, qué pueden decir de <span class="math inline">\(y_4\)</span>?</p>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(y_1\)</span></th>
+<th><span class="math inline">\(y_2\)</span></th>
+<th><span class="math inline">\(y_3\)</span></th>
+<th><span class="math inline">\(y_5\)</span></th>
+<th><span class="math inline">\(y_6\)</span></th>
+<th><span class="math inline">\(y_7\)</span></th>
+<th><span class="math inline">\(y_8\)</span></th>
+<th><span class="math inline">\(y_9\)</span></th>
+<th><span class="math inline">\(y_{10}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>58.27</td>
+<td>56.18</td>
+<td>56.84</td>
+<td>54.64</td>
+<td>54.2</td>
+<td>57.51</td>
+<td>44.45</td>
+<td>61.46</td>
+<td>54.45</td>
+</tr>
+</tbody>
+</table>
+<p>Podrían decir que es posible que <span class="math inline">\(y_4\)</span> esté comprendido en ese rango y si están dispuestos a asumir normalidad, entonces pueden decir algo más como que es probable que <span class="math inline">\(y_4\)</span> tenga una valor de 54.9 (la media de los otros valores) y sería extraño que tenga una valor inferior a <span class="math inline">\(\approx 41\)</span> y superior a <span class="math inline">\(\approx 68\)</span> (<span class="math inline">\(54.9 \pm 3 \text{desvios estándard}\)</span>). Esta estimación es válida incluso si reordenamos los valores de la tabla anterior. Estamos asumiendo que <span class="math inline">\(y_4\)</span> es intercambiable, pero no independiente, ya que de alguna forma el valor de <span class="math inline">\(y_4\)</span> está “informado” por los otros valores.</p>
+<p>Alguien podría objetar que este análisis no es válido, ya que existen distintos tipos de aminoácidos y en algunos casos los desplazamientos pueden ser muy diferentes para estos distintos tipos. En ese caso podemos responder de al menos 2 formas.</p>
+<ul>
+<li>Si solo tenemos los valores pero no los “rótulos” (es decir no sabemos a que aminoácido corresponde cada valor), entonces no tenemos otra opción que asumir intercambialidad.</li>
+<li>Si tenemos los rótulos, entonces podemos incorporar esa información y hacer un análisis jerárquico.</li>
+</ul>
+<p>Ambas opciones están justificadas teóricamente. La diferencia es la información disponible.</p>
+<p>Luego de estas discusión teórica y conceptual veamos algunos otros ejemplos prácticos de modelos jerárquicos.</p>
+</section>
+<section id="renacuajos-multinivel" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="renacuajos-multinivel"><span class="header-section-number">3.7</span> Renacuajos multinivel</h2>
+<p>Este ejemplo está tomado de <a href="https://xcelab.net/rm/statistical-rethinking/">statistical rethinking</a></p>
+<ul>
+<li><p>Tenemos 48 tanques llenos de renacuajos</p></li>
+<li><p>Queremos modelar la probabilidad de supervivencia de los renacuajos</p></li>
+<li><p>Las condiciones como la temperatura, el pH, la luz, etc. varían ligeramente entre los tanques (pero no los estamos teniendo en cuenta explícitamente)</p></li>
+<li><p>Podemos pensar en cada tanque como un grupo</p></li>
+</ul>
+<div id="cell-22" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">'datos/renacuajos.csv'</span>, sep<span class="op">=</span><span class="st">","</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>coords <span class="op">=</span> {<span class="st">"tanks"</span>: <span class="bu">list</span>(d.index)}</span>
+<span id="cb10-3"><a href="#cb10-3"></a>d.head()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">density</th>
+<th data-quarto-table-cell-role="th">pred</th>
+<th data-quarto-table-cell-role="th">size</th>
+<th data-quarto-table-cell-role="th">surv</th>
+<th data-quarto-table-cell-role="th">propsurv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10</td>
+<td>no</td>
+<td>big</td>
+<td>9</td>
+<td>0.9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>10</td>
+<td>no</td>
+<td>big</td>
+<td>10</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>no</td>
+<td>big</td>
+<td>7</td>
+<td>0.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>no</td>
+<td>big</td>
+<td>10</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>10</td>
+<td>no</td>
+<td>small</td>
+<td>9</td>
+<td>0.9</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div id="cell-23" class="cell" data-hide_input="false" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_renacuajos:</span>
+<span id="cb11-2"><a href="#cb11-2"></a>    <span class="co"># Hiperpriors</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, <span class="fl">0.</span>, <span class="fl">2.</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, <span class="fl">2.</span>)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    <span class="co"># Prior</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>    α_tanque <span class="op">=</span> pm.Normal(<span class="st">'α_tanque'</span>, μ, σ,  dims<span class="op">=</span><span class="st">"tanks"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7"></a>    p <span class="op">=</span> pm.Deterministic(<span class="st">'p'</span>, pm.math.sigmoid(α_tanque))  <span class="co"># transformación logística</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>    <span class="co">#likelihood</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>    surv <span class="op">=</span> pm.Binomial(<span class="st">'surv'</span>, n<span class="op">=</span>d.density, p<span class="op">=</span>p, observed<span class="op">=</span>d.surv)</span>
+<span id="cb11-10"><a href="#cb11-10"></a>    </span>
+<span id="cb11-11"><a href="#cb11-11"></a>    idata_renacuajos <span class="op">=</span> pm.sample(<span class="dv">2000</span>, tune<span class="op">=</span><span class="dv">2000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [μ, σ, α_tanque]
+Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws total) took 49 seconds.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1b76d4d6e64d4384ac642f3bc6fc6962","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<div id="cell-24" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>pm.model_to_graphviz(modelo_renacuajos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<figure class="figure">
+<p><img src="03_Modelos_jerárquicos_files/figure-html/cell-11-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En la siguiente figura se muestran las proporciones empíricas de sobrevivientes en cada tanque de renacuajos (puntos azules) y las proporciones estimadas por el modelo (puntos turquesa). La línea discontinua indica la proporción promedio de sobrevivientes teniendo en cuenta todos los tanques. Las lineas verticales dividen los tanques de acuerdo a las diferentes densidades iniciales de renacuajos: tanques pequeños (10), tanques medianos (25) y tanques grandes (35). En cada tanque, la media a posteriori del modelo multinivel está más cerca de la línea punteada que la proporción empírica. Esto refleja la información compartida entre tanques y el efecto de contracción.</p>
+<div id="cell-26" class="cell" data-hide_input="true" data-scrolled="false" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>post_r <span class="op">=</span> az.extract(idata_renacuajos)</span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>ax.scatter(np.arange(<span class="dv">0</span>, <span class="dv">48</span>), d.propsurv, color<span class="op">=</span><span class="st">'C0'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>ax.scatter(np.arange(<span class="dv">0</span>, <span class="dv">48</span>), post_r[<span class="st">'p'</span>].mean(<span class="st">"sample"</span>), color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb14-7"><a href="#cb14-7"></a>ax.hlines(logistic(post_r[<span class="st">'μ'</span>].median(<span class="st">"sample"</span>)), <span class="op">-</span><span class="dv">1</span>, <span class="dv">49</span>, linestyles<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a>idx <span class="op">=</span> d.density[d.density.diff() <span class="op">&gt;</span> <span class="dv">0</span>].index</span>
+<span id="cb14-10"><a href="#cb14-10"></a>ax.vlines(idx <span class="op">+</span> <span class="fl">0.5</span>, <span class="op">-</span><span class="fl">.05</span>, <span class="fl">1.05</span>, lw<span class="op">=</span><span class="fl">.5</span>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="cf">for</span> i, t <span class="kw">in</span> <span class="bu">zip</span>(np.linspace(<span class="dv">0</span>, <span class="dv">48</span>, <span class="dv">7</span>)[<span class="dv">1</span>::<span class="dv">2</span>], (<span class="st">'pequeño'</span>, <span class="st">'mediano'</span>, <span class="st">'grande'</span>)):</span>
+<span id="cb14-12"><a href="#cb14-12"></a>    ax.text(i, <span class="dv">0</span>, t, horizontalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb14-13"><a href="#cb14-13"></a>ax.set_xlabel(<span class="st">'tanques'</span>)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>ax.set_ylabel(<span class="st">'proporción de survivencia'</span>)</span>
+<span id="cb14-15"><a href="#cb14-15"></a>ax.set_xlim(<span class="op">-</span><span class="dv">1</span>, <span class="dv">48</span>)</span>
+<span id="cb14-16"><a href="#cb14-16"></a>ax.set_xticks([])</span>
+<span id="cb14-17"><a href="#cb14-17"></a>ax.set_ylim(<span class="op">-</span><span class="fl">.05</span>, <span class="fl">1.05</span>)</span>
+<span id="cb14-18"><a href="#cb14-18"></a>ax.grid(<span class="va">False</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_Modelos_jerárquicos_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="jerarquías-futboleras" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="jerarquías-futboleras"><span class="header-section-number">3.8</span> Jerarquías futboleras</h2>
+<p>Varias estructuras de datos se prestan a descripciones jerárquicas que pueden abarcar múltiples niveles. Por ejemplo, jugadores profesionales de fútbol. Como en muchos otros deportes, los jugadores tienen diferentes posiciones dentro de la cancha. Es posible que nos interese estimar algunas métricas de habilidad para cada jugador, para las posiciones y para el grupo general de jugadores de fútbol profesional. Este tipo de estructura jerárquica también se puede encontrar en muchos otros dominios, como:</p>
+<ul>
+<li><p>Investigación médica: Supongamos que estamos interesados en estimar la eficacia de diferentes fármacos para el tratamiento de una determinada enfermedad. Podemos categorizar a los pacientes según su información demográfica, la gravedad de la enfermedad y otros factores relevantes y construir un modelo jerárquico para estimar la probabilidad de curación o el éxito del tratamiento para cada subgrupo. Luego podemos usar los parámetros de la distribución de subgrupos para estimar la probabilidad general de curación o éxito del tratamiento para toda la población de pacientes.</p></li>
+<li><p>Ciencias ambientales: Supongamos que estamos interesados en estimar el impacto de un determinado contaminante en un ecosistema particular. Podemos categorizar diferentes hábitats dentro del ecosistema (p.&nbsp;ej., ríos, lagos, bosques, humedales) y construir un modelo jerárquico para estimar la distribución de los niveles de contaminantes dentro de cada hábitat. Luego podemos usar los parámetros de la distribución del hábitat para estimar la distribución general de los niveles de contaminantes dentro del ecosistema.</p></li>
+<li><p>Investigación de mercado: supongamos que estamos interesados en comprender el comportamiento de compra de los consumidores de un producto en particular en diferentes regiones. Podemos categorizar a los consumidores según su información demográfica (por ejemplo, edad, sexo, ingresos, educación) y construir un modelo jerárquico para estimar la distribución del comportamiento de compra para cada subgrupo. Luego podemos usar los parámetros de la distribución del subgrupo para estimar la distribución del comportamiento de compra para el grupo general de consumidores.</p></li>
+</ul>
+<p>Volviendo a nuestros jugadores de fútbol, hemos recopilado datos de la <em>Premier League</em>, <em>Ligue 1</em>, <em>Bundesliga</em>, <em>Serie A</em> y <em>La Liga</em>, en el transcurso de cuatro años (2017 a 2020). Supongamos que estamos interesados en la métrica de goles por tiro. Esto es lo que los estadísticos suelen llamar <em>tasa de éxito</em>, y podemos estimarlo con un modelo Binomial donde el parámetro <span class="math inline">\(n\)</span> es el número de tiros y las observaciones <span class="math inline">\(y\)</span> es el número de goles. Esto nos deja con un valor desconocido para <span class="math inline">\(p\)</span>, en ejemplos anteriores hemos estado llamando a este parámetro <span class="math inline">\(\theta\)</span> y hemos usado una distribución Beta para modelarlo. Haremos lo mismo ahora, pero jerárquicamente. <span class="math inline">\(\theta\)</span> representa la “tasa de éxito” de cada jugador y, por lo tanto, es un vector de tamaño <code>n_jugadores</code>. Usamos una distribución Beta para modelar <span class="math inline">\(\theta\)</span>. Los hiperparámetros de la distribución Beta serán los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span>, que son vectores de tamaño 4, que representan las cuatro posiciones en nuestro conjunto de datos (defensor <code>DF</code>, centrocampista <code>MF</code>, delantero <code>FW</code> y arquero <code>GK</code>). Tendremos que indexar correctamente los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span> para que coincidan con el número total de jugadores. Finalmente, tendremos dos parámetros globales, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\nu\)</span>, que representan a los futbolistas profesionales.</p>
+<p>El modelo PyMC se define en el siguiente bloque de código. El <code>pm.Beta('mu', 1.7, 5.8)</code> fue elegido con la ayuda de PreliZ como prior con el 90% de la masa entre 0 y 0.5. Este es un ejemplo de un prior poco informativo, ya que no hay duda de que una tasa de éxito de 0,5 es un valor alto. Las estadísticas deportivas están bien estudiadas y hay mucha información previa que podría usarse para definir priors más fuertes. Para este ejemplo, nos conformaremos con este prior. Una justificación similar se puede hacer para el prior <code>pm.Gamma('nu', mu=125, sigma=50)</code>, que definimos como la distribución Gamma de máxima entropía con el 90% de la masa entre 50 y 200.</p>
+<div id="cell-28" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>futbol <span class="op">=</span> pd.read_csv(<span class="st">"datos/futbol.csv"</span>, dtype<span class="op">=</span>{<span class="st">'posición'</span>:<span class="st">'category'</span>})</span>
+<span id="cb15-2"><a href="#cb15-2"></a>pos_idx <span class="op">=</span> futbol.posición.cat.codes.values</span>
+<span id="cb15-3"><a href="#cb15-3"></a>pos_codes <span class="op">=</span> futbol.posición.cat.categories</span>
+<span id="cb15-4"><a href="#cb15-4"></a>n_pos <span class="op">=</span> pos_codes.size</span>
+<span id="cb15-5"><a href="#cb15-5"></a>n_jugadores <span class="op">=</span> futbol.index.size</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-29" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>coords <span class="op">=</span> {<span class="st">"pos"</span>: pos_codes}</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_futbol:</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="co"># Hiper-parámetros</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>    μ <span class="op">=</span> pm.Beta(<span class="st">'μ'</span>, <span class="fl">1.7</span>, <span class="fl">5.8</span>) </span>
+<span id="cb16-5"><a href="#cb16-5"></a>    ν <span class="op">=</span> pm.Gamma(<span class="st">'ν'</span>, mu<span class="op">=</span><span class="dv">125</span>, sigma<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a>    </span>
+<span id="cb16-8"><a href="#cb16-8"></a>    <span class="co"># Parámetros por posición</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>    μ_p <span class="op">=</span> pm.Beta(<span class="st">'μ_p'</span>,</span>
+<span id="cb16-10"><a href="#cb16-10"></a>                       mu<span class="op">=</span>μ,</span>
+<span id="cb16-11"><a href="#cb16-11"></a>                       nu<span class="op">=</span>ν,</span>
+<span id="cb16-12"><a href="#cb16-12"></a>                       dims <span class="op">=</span> <span class="st">"pos"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13"></a>    </span>
+<span id="cb16-14"><a href="#cb16-14"></a>    ν_p <span class="op">=</span> pm.Gamma(<span class="st">'ν_p'</span>, mu<span class="op">=</span><span class="dv">125</span>, sigma<span class="op">=</span><span class="dv">50</span>, dims<span class="op">=</span><span class="st">"pos"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15"></a> </span>
+<span id="cb16-16"><a href="#cb16-16"></a>    <span class="co"># Parámetros por jugador</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a>    θ <span class="op">=</span> pm.Beta(<span class="st">'θ'</span>, </span>
+<span id="cb16-18"><a href="#cb16-18"></a>                    mu<span class="op">=</span>μ_p[pos_idx],</span>
+<span id="cb16-19"><a href="#cb16-19"></a>                    nu<span class="op">=</span>ν_p[pos_idx])</span>
+<span id="cb16-20"><a href="#cb16-20"></a>    </span>
+<span id="cb16-21"><a href="#cb16-21"></a>    _ <span class="op">=</span> pm.Binomial(<span class="st">'gs'</span>, n<span class="op">=</span>futbol.tiros.values, p<span class="op">=</span>θ, observed<span class="op">=</span>futbol.goles.values)</span>
+<span id="cb16-22"><a href="#cb16-22"></a></span>
+<span id="cb16-23"><a href="#cb16-23"></a>    idata_futbol <span class="op">=</span> pm.sample(<span class="dv">4000</span>, target_accept<span class="op">=</span><span class="fl">0.98</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [μ, ν, μ_p, ν_p, θ]
+Sampling 4 chains for 1_000 tune and 4_000 draw iterations (4_000 + 16_000 draws total) took 358 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1cc3f201b1bf4e4585dbadfa203bdea8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<div id="cell-30" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>pm.model_to_graphviz(modelo_futbol)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<figure class="figure">
+<p><img src="03_Modelos_jerárquicos_files/figure-html/cell-15-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En el panel superior de la siguiente figura tenemos la distribución a posteriori del parámetro global <span class="math inline">\(\mu\)</span>. La distribución a posteriori es cercana a 0.1. Lo que significa que, en general, para un jugador de fútbol profesional, la probabilidad de hacer un gol es en promedio del 10%. Este es un valor razonable, ya que hacer goles no es una tarea fácil y no estamos discriminando posiciones, es decir, estamos considerando jugadores cuyo papel principal no es el de hacer goles. En el panel central, tenemos el valor estimado de <span class="math inline">\(mu_p\)</span> para la posición de defensa, como es de esperar, es más alto que el parámetro global <span class="math inline">\(\mu\)</span>. En el panel inferior, tenemos el valor estimado de <span class="math inline">\(\theta\)</span> para Lionel Messi, con un valor de 0.17, que es más alto que el parámetro global <span class="math inline">\(\mu\)</span> y el valor de la posición delantera <span class="math inline">\(\mu_p\)</span>. Esto también es de esperarse, ya que Lionel Messi es el mejor jugador de fútbol del mundo, y su rol principal es hacer goles.</p>
+<div id="cell-32" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>az.plot_posterior(idata_futbol, var_names<span class="op">=</span><span class="st">'μ'</span>, ax<span class="op">=</span>ax[<span class="dv">0</span>])</span>
+<span id="cb19-3"><a href="#cb19-3"></a>ax[<span class="dv">0</span>].set_title(<span class="vs">r"Global mean"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>az.plot_posterior(idata_futbol.posterior.sel(pos<span class="op">=</span><span class="st">"FW"</span>), var_names<span class="op">=</span><span class="st">'μ_p'</span>, ax<span class="op">=</span>ax[<span class="dv">1</span>])</span>
+<span id="cb19-5"><a href="#cb19-5"></a>ax[<span class="dv">1</span>].set_title(<span class="vs">r"Forward position mean"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6"></a>az.plot_posterior(idata_futbol.posterior.sel(θ_dim_0<span class="op">=</span><span class="dv">1457</span>), var_names<span class="op">=</span><span class="st">'θ'</span>, ax<span class="op">=</span>ax[<span class="dv">2</span>])</span>
+<span id="cb19-7"><a href="#cb19-7"></a>ax[<span class="dv">2</span>].set_title(<span class="vs">r"Messi mean"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_Modelos_jerárquicos_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La siguiente figura muestra un <code>forest plot</code> para la distribución a posteriori del parámetro <span class="math inline">\(\mu_p\)</span>. La distribución a posteriori para delanteros se centra en torno a 0.13, como ya vimos, y es la más alta de las cuatro. Esto tiene sentido ya que el papel de los jugadores en una posición delantera es hacer goles y asistencias. El valor más bajo de <span class="math inline">\(\mu_p\)</span> es para la posición de arquero. Esto esperable, ya que la función principal es evitar que el equipo contrario haga goles. El aspecto interesante es que la incertidumbre es muy alta, esto se debe a que tenemos muy pocos arqueros haciendo goles en nuestro conjunto de datos, 3 para ser precisos. Las distribuciones a posteriori para las posiciones de defensa y mediocampo están en <em>el medio</em>, siendo ligeramente más altas para los mediocampistas. Podemos explicar esto porque el papel principal de un mediocampista es defender y atacar, y por lo tanto la probabilidad de marcar un gol es mayor que la de un defensor pero menor que la de un delantero.</p>
+<div id="cell-34" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>az.plot_forest(idata_futbol, var_names<span class="op">=</span>[<span class="st">'μ_p'</span>], combined<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_Modelos_jerárquicos_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="resumen" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="resumen"><span class="header-section-number">3.9</span> Resumen</h2>
+<p>En este capítulo hemos descrito uno de los conceptos más importantes de este curso: los modelos jerárquicos. Podemos construir modelos jerárquicos cada vez que podamos identificar subgrupos en nuestros datos. En tales casos, en lugar de tratar los subgrupos como entidades separadas o ignorar los subgrupos y tratarlos como un solo gran-grupo, podemos construir un modelo para agrupar-parcialmente la información entre los grupos.</p>
+<p>El principal efecto de este agrupamiento-parcial es que las estimaciones de cada subgrupo estarán sesgadas por las estimaciones del resto de los subgrupos. Este efecto se conoce como contracción y, en general, es un <em>truco</em> muy útil que ayuda a mejorar las inferencias haciéndolas más conservadoras (ya que cada subgrupo informa a los demás acercando el resto de las estimaciones hacia él) y más informativas, obtenemos estimaciones a nivel de subgrupo y el nivel del grupo.</p>
+</section>
+<section id="para-seguir-leyendo" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="para-seguir-leyendo"><span class="header-section-number">3.10</span> Para seguir leyendo</h2>
+<ul>
+<li>Capítulo 5 de Bayesian Data Analysis de Gelman et al.&nbsp;<a href="https://www.stat.columbia.edu/~gelman/book/BDA3.pdf">BDA3</a></li>
+<li>Bernardo, J. M. (1996). The concept of exchangeability and its applications. Far East J. Mathematical Sciences 4, 111-121. <a href="http://www.uv.es/~bernardo/Exchangeability.pdf">Exchangeability</a></li>
+</ul>
+</section>
+<section id="ejercicios" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">3.11</span> Ejercicios</h2>
+<ol type="1">
+<li><p>(Borrador). Escribir el teorema de bayes para un modelo jerárquico. La idea es que escriban, likelihood, prior e hyperprior.</p></li>
+<li><p>(Borrador). Escribir enunciado tuberías jerarquicas (ver ejemplo en repo privado).</p></li>
+<li><p>(Borrador, este ejericio asume que ya vimos el ejemplo de las propinas, si no es así podríamos introducir el ejemplo y pedir que ajusten el modelo jerarquico y no jerarquico). Creá una versión jerárquica para el ejemplo de las propinas agrupando parcialmente los días de la semana.</p></li>
+<li><p>(Borrador), Cuando se utilizan distribuciones a priori débilmente informativos, las predicciones medias a posteriori de un modelo normal-normal jerárquico son (aproximadamente) promedios pesado de la siguiente forma:</p></li>
+</ol>
+<p><span class="math display">\[
+\frac{\sigma^2_y}{\sigma^2_y + n_j \sigma^2_\mu} \overline{y}_{\text{global}} + \frac{n_j\sigma^2_\mu}{\sigma^2_y + n_j \sigma^2_\mu} \overline{y}_j.
+\]</span></p>
+<p>donde <span class="math inline">\(\overline{y}_{\text{global}}\)</span> es la media de todas las observaciones, <span class="math inline">\(\overline{y}_j\)</span> es la media de las observaciones en el grupo <span class="math inline">\(j\)</span>, <span class="math inline">\(n_j\)</span> es el número de observaciones en el grupo <span class="math inline">\(j\)</span>, <span class="math inline">\(\sigma^2_y\)</span> es la varianza de las observaciones y <span class="math inline">\(\sigma^2_\mu\)</span> es la varianza de las medias de los grupos. Indique en que condiciones las prediccions a nivel individual se contraeran más hacia la predicción global.</p>
+<ol type="1">
+<li>Aplicá al menos uno de los modelos visto en este capítulo a datos propios o de tu interés.</li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./02_Programación_probabilística.html" class="pagination-link" aria-label="Programación probabilista">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Programación probabilista</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png"></a><br>Este obra está bajo <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
