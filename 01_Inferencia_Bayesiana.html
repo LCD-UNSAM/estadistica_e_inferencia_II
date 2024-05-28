@@ -297,22 +297,18 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> preliz <span class="im">as</span> pz</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>/home/osvaldo/proyectos/00_BM/pymc-devs/pytensor/pytensor/tensor/sharedvar.py:14: FutureWarning: The class `ScalarSharedVariable` has been deprecated. Use `TensorSharedVariable` instead and check for `ndim==0`.
-  warnings.warn(</code></pre>
-</div>
 </div>
 <div id="cell-2" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>az.style.use(<span class="st">'arviz-doc'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>az.style.use(<span class="st">'arviz-doc'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Los objetivos de este capítulo son:</p>
 <ul>
 <li>Revisitar conceptos básicos de estadística Bayesiana
 <ul>
-<li>Que implica hacer estadística Bayesiana</li>
+<li>Qué implica hacer estadística Bayesiana</li>
 <li>Interpretación de probabilidades en estadística Bayesiana</li>
 </ul></li>
 <li>Entender las distribuciones a priori, a posteriori, a priori predictiva y a posteriori predictiva</li>
@@ -329,10 +325,10 @@ window.Quarto = {
 <section id="teorema-de-bayes" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="teorema-de-bayes"><span class="header-section-number">1.1.1</span> Teorema de Bayes</h3>
 <p>El teorema de Bayes es una consecuencia directa de la regla del producto, veamos.</p>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{align}
 p(\theta, Y) = p(\theta \mid Y)\; p(Y) \\
 p(\theta, Y) = p(Y \mid \theta)\; p(\theta)
-\]</span> Dado que los dos términos a la derecha de la igualdad son iguales entre si podemos escribir que:</p>
+\end{align}\]</span> Dado que los dos términos a la derecha de la igualdad son iguales entre si podemos escribir que:</p>
 <p><span class="math display">\[
 p(\theta \mid Y) \; p(Y) = p(Y \mid \theta)\; p(\theta)
 \]</span></p>
@@ -372,7 +368,7 @@ J = \int \varphi(\theta) \ \ p(\theta \mid Y) d\theta
 <ol type="1">
 <li><p><strong>Crear un modelo probabilístico</strong>. Los modelos probabilísticos son <em>historias</em> que dan cuenta de como se generan los datos observados (o por observar). Los modelos se expresan usando distribuciones de probabilidad.</p></li>
 <li><p><strong>Condicionar el modelo a los datos observados a fin de obtener el <em>a posteriori</em></strong>. Usando el teorema de Bayes se actualizan las probabilidades asignadas <em>a priori</em> de acuerdo a los datos observados obteniéndose las probabilidades <em>a posteriori</em>.</p></li>
-<li><p><strong>Criticar el ajuste del modelo generado a los datos y evaluar las consecuencias del modelo</strong>. Se puede demostrar que dada la información previa y los datos observados no existe otro mecanismo capaz de generar una <em>mejor</em> inferencia que la estadística Bayesiana. Esto parece maravilloso, pero hay un problema, solo es cierto si se asumen que los datos y el modelo son correctos. En la práctica, los datos pueden contener errores y los modelos son <em>a duras penas</em> aproximaciones de fenómenos <em>reales</em>. Por lo tanto es necesario realizar varias evaluaciones, incluyendo si las predicciones generadas por el modelo se ajustan a los datos observados, si las conclusiones obtenidas tienen sentido dado el marco conceptual en el que uno trabaja, la sensibilidad de los resultados a los <em>detalles</em> del modelo (sobre todo a detalles para los cuales no tenemos demasiada información), etc. Además, es posible que realizar inferencia Bayesiana sea demasiado costosa en la práctica por lo que sea conveniente realizar aproximaciones.</p></li>
+<li><p><strong>Criticar el ajuste del modelo generado a los datos y evaluar las consecuencias del modelo</strong>. Se puede demostrar que dada la información previa y los datos observados no existe otro mecanismo capaz de generar una <em>mejor</em> inferencia que la estadística Bayesiana. Esto parece maravilloso, pero hay un problema, sólo es cierto si se asumen que los datos y el modelo son correctos. En la práctica, los datos pueden contener errores y los modelos son <em>a duras penas</em> aproximaciones de fenómenos <em>reales</em>. Por lo tanto es necesario realizar varias evaluaciones, incluyendo si las predicciones generadas por el modelo se ajustan a los datos observados, si las conclusiones obtenidas tienen sentido dado el marco conceptual en el que uno trabaja, la sensibilidad de los resultados a los <em>detalles</em> del modelo (sobre todo a detalles para los cuales no tenemos demasiada información), etc. Además, es posible que realizar inferencia Bayesiana sea demasiado costosa en la práctica por lo que sea conveniente realizar aproximaciones.</p></li>
 </ol>
 </section>
 </section>
@@ -389,7 +385,7 @@ J = \int \varphi(\theta) \ \ p(\theta \mid Y) d\theta
 p(\theta \mid Y) \propto p(Y \mid  \theta) p(\theta)
 \]</span></p>
 <p>Donde, como dijimos <span class="math inline">\(\theta = 1\)</span> quiere decir 100% cara y <span class="math inline">\(\theta = 0\)</span> 100% ceca.</p>
-<p>Ahora solo restar reemplazar los dos términos a la derecha de la igualdad, el <em>a priori</em> y el <em>likelihood</em>, por distribuciones de probabilidad <em>adecuadas</em> y luego multiplicarlas para obtener el término a la izquierda, el <em>a posteriori</em>. Como es la primera vez que haremos ésto, lo haremos paso a paso y analíticamente. En el próximo capítulo veremos cómo hacerlo computacionalmente.</p>
+<p>Ahora sólo restar reemplazar los dos términos a la derecha de la igualdad, el <em>a priori</em> y el <em>likelihood</em>, por distribuciones de probabilidad <em>adecuadas</em> y luego multiplicarlas para obtener el término a la izquierda, el <em>a posteriori</em>. Como es la primera vez que haremos ésto, lo haremos paso a paso y analíticamente. En el próximo capítulo veremos cómo hacerlo computacionalmente.</p>
 </section>
 <section id="definiendo-el-a-priori" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="definiendo-el-a-priori"><span class="header-section-number">1.2.2</span> Definiendo el <em>a priori</em></h3>
@@ -409,13 +405,13 @@ p(\theta) \propto  \theta^{\alpha-1}(1-\theta)^{\beta-1}
 </ul>
 <p>Respecto al último punto, veamos un ejemplo. Supongamos que el experimento de la moneda es realizado por tres personas. Una de ellas dice no saber nada de la moneda por lo tanto <em>a priori</em> todos los valores de <span class="math inline">\(\theta\)</span> son igualmente probables. La segunda persona desconfía de la moneda, ya que sospecha que es una moneda trucada, por lo tanto considera que está sesgada, pero no sabe para cual de las dos opciones. Por último, la tercer persona asegura que lo más probable es que <span class="math inline">\(\theta\)</span> tome un valor alrededor de 0.5 ya que así lo indican experimentos previos y análisis teóricos sobre tiradas de monedas. Todas estas situaciones pueden ser modeladas por la distribución Beta, como se ve a continuación.</p>
 <div id="cell-11" class="cell" data-nbpresent="{&quot;id&quot;:&quot;0862c2ab-669f-4578-b565-33fbf856f1e5&quot;}" data-scrolled="true" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a>params <span class="op">=</span> [(<span class="dv">1</span>, <span class="dv">1</span>), (<span class="fl">0.5</span>, <span class="fl">0.5</span>), (<span class="dv">20</span>, <span class="dv">20</span>)]</span>
-<span id="cb4-4"><a href="#cb4-4"></a></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="cf">for</span> (a, b), ax  <span class="kw">in</span> <span class="bu">zip</span>(params, axes):</span>
-<span id="cb4-6"><a href="#cb4-6"></a>    ax <span class="op">=</span> pz.Beta(a, b).plot_pdf(ax<span class="op">=</span>ax, legend<span class="op">=</span><span class="st">"title"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">7</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>params <span class="op">=</span> [(<span class="dv">1</span>, <span class="dv">1</span>), (<span class="fl">0.5</span>, <span class="fl">0.5</span>), (<span class="dv">20</span>, <span class="dv">20</span>)]</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="cf">for</span> (a, b), ax  <span class="kw">in</span> <span class="bu">zip</span>(params, axes):</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    ax <span class="op">=</span> pz.Beta(a, b).plot_pdf(ax<span class="op">=</span>ax, legend<span class="op">=</span><span class="st">"title"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">7</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -425,10 +421,10 @@ p(\theta) \propto  \theta^{\alpha-1}(1-\theta)^{\beta-1}
 </div>
 </div>
 <div id="cell-12" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>pz.Beta().plot_interactive(xy_lim<span class="op">=</span>(<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="dv">10</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>pz.Beta().plot_interactive(xy_lim<span class="op">=</span>(<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="dv">10</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"dbdfe5fd062e4f00b03d8ff9528639fa","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"6602fb4681d34a60a3f8fa68de77a058","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div>
@@ -445,10 +441,10 @@ p(y \mid \theta) \propto \theta^y (1 - \theta)^{N−y}
 \]</span></p>
 <p>La elección de esta distribución para modelar nuestro problema es razonable ya que <span class="math inline">\(\theta\)</span> es la chance de obtener una cara al arrojar una moneda y ese hecho ha ocurrido <span class="math inline">\(y\)</span> veces, de la misma forma <span class="math inline">\(1-\theta\)</span> es la chance de obtener ceca lo cual ha sido observado <span class="math inline">\(N-y\)</span> veces.</p>
 <div id="cell-14" class="cell" data-nbpresent="{&quot;id&quot;:&quot;8f7f8e91-ae8d-4f01-b29b-0f7e2bb0d8b1&quot;}" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>pz.Binomial(<span class="dv">1</span>, <span class="fl">0.5</span>).plot_interactive(pointinterval<span class="op">=</span><span class="va">False</span>, xy_lim<span class="op">=</span>(<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>pz.Binomial(<span class="dv">1</span>, <span class="fl">0.5</span>).plot_interactive(pointinterval<span class="op">=</span><span class="va">False</span>, xy_lim<span class="op">=</span>(<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"6807681543f442eeb5eb64b3ac71ef8d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"f10aecab398f44799ba1c8cfad68ccc4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div>
@@ -472,7 +468,7 @@ p(\theta \mid y) \propto \underbrace{\frac{N!}{y!(N-y)!} \theta^y (1 - \theta)^{
 p(\theta \mid y) \propto \theta^{\alpha-1+y}(1-\theta)^{\beta-1+N−y}
 \]</span></p>
 <p>Podemos ver que la expresión a la derecha de la proporcionalidad tiene la misma forma funcional (sin considerar la constante de proporcionalidad) que una distribución Beta con parámetros <span class="math inline">\(\alpha_{\text{a posteriori}} = \alpha_{\text{a priori}} + y \quad \beta_{\text{a posteriori}} = \beta_{\text{a priori}} + N - y\)</span>.</p>
-<p>Cuando se cumple que para un cierto <em>likelihood</em> la forma funcional del <em>a priori</em> y la del <em>a posteriori</em> coinciden se dice que el <em>a priori</em> es conjugado con el <em>likelihood</em>. Historicamente los problemas en estadística Bayesiana estuvieron restringidos al uso de <em>a prioris</em> conjugados, ya que estos garantizan la tratabilidad matemática del problema, es decir garantizan que es posible obtener una expresión analítica para nuestro problema. En el próximo capítulo veremos técnicas computacionales modernas que permiten calcular la distribución <em>a posteriori</em> incluso cuando no se usan <em>a prioris</em> conjugados. Estas técnicas computacionales han permitido el resurgimiento de la estadística Bayesiana en las últimas décadas.</p>
+<p>Cuando se cumple que para un cierto <em>likelihood</em> la forma funcional del <em>a priori</em> y la del <em>a posteriori</em> coinciden se dice que el <em>a priori</em> es conjugado con el <em>likelihood</em>. Históricamente los problemas en estadística Bayesiana estuvieron restringidos al uso de <em>a prioris</em> conjugados, ya que estos garantizan la tratabilidad matemática del problema, es decir garantizan que es posible obtener una expresión analítica para nuestro problema. En el próximo capítulo veremos técnicas computacionales modernas que permiten calcular la distribución <em>a posteriori</em> incluso cuando no se usan <em>a prioris</em> conjugados. Estas técnicas computacionales han permitido el resurgimiento de la estadística Bayesiana en las últimas décadas.</p>
 </section>
 <section id="notación-y-visualización-de-modelos-bayesianos" class="level3" data-number="1.2.5">
 <h3 data-number="1.2.5" class="anchored" data-anchor-id="notación-y-visualización-de-modelos-bayesianos"><span class="header-section-number">1.2.5</span> Notación y visualización de modelos Bayesianos</h3>
@@ -483,7 +479,7 @@ p(\theta \mid y) \propto \theta^{\alpha-1+y}(1-\theta)^{\beta-1+N−y}
 Y \sim &amp; \operatorname{Bin}(n=1, p=\theta)
 \end{align}
 \]</span></p>
-<p>El símbolo <span class="math inline">\(\sim\)</span> indica que la variable a la izquierda se distribuye según la distribución a la derecha. Entonces podríamos decir que <span class="math inline">\(\mathbf{\theta}\)</span> es una variable aleatoria con distribución <span class="math inline">\(\operatorname{Beta}\)</span>, y que <span class="math inline">\(\operatorname{Beta}\)</span> está definida por los parámetros <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>, este es nuestro <em>a priori</em>. En la siguiente linea tenemos el <em>likelihood</em> el cual está definido por una distribución binomial con parámetros <span class="math inline">\(n=1\)</span> y <span class="math inline">\(p=\theta\)</span>.</p>
+<p>El símbolo <span class="math inline">\(\sim\)</span> indica que la variable a la izquierda se distribuye según la distribución a la derecha. Entonces podríamos decir que <span class="math inline">\(\mathbf{\theta}\)</span> es una variable aleatoria con distribución <span class="math inline">\(\operatorname{Beta}\)</span>, y que <span class="math inline">\(\operatorname{Beta}\)</span> está definida por los parámetros <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>, este es nuestro <em>a priori</em>. En la siguiente línea tenemos el <em>likelihood</em> el cual está definido por una distribución binomial con parámetros <span class="math inline">\(n=1\)</span> y <span class="math inline">\(p=\theta\)</span>.</p>
 <p>Gráficamente esto se puede representar usando los diagramas de Kruschke:</p>
 <p><img src="img/modelo_1_moneda.png" width="400"></p>
 <p>En el primer nivel (de arriba hacia abajo) se observa el <em>a priori</em>, luego el likelihood, y por último los datos. Las flechas indican la vinculación entre las partes del modelo y el signo <span class="math inline">\(\sim\)</span> la naturaleza estocástica de las variables.</p>
@@ -496,38 +492,42 @@ Y \sim &amp; \operatorname{Bin}(n=1, p=\theta)
 <h3 data-number="1.2.7" class="anchored" data-anchor-id="calculando-el-a-posteriori"><span class="header-section-number">1.2.7</span> Calculando el <em>a posteriori</em></h3>
 <p>En el próximo capítulo veremos cómo usar métodos computacionales para computar un <em>a posteriori</em> sin necesidad de derivarlo analíticamente. Esto es lo que haremos para resolver el resto de los problemas del curso. Pero dado que ya nos tomamos el trabajo de derivar analíticamente la expresión para el <em>a posteriori</em> vamos a usar esa expresión. Si miran el código de la siguiente celda verán que la mayoría de las lineas se encargan de dibujar los resultados y no de calcularlos. El cálculo del <em>a posteriori</em> ocurre en la línea 20. Cada una de estas lineas computa el <em>a posteriori</em> para cada uno de los <em>a prioris</em> que vimos antes. El cálculo es simple, tan solo se computa el valor del <em>a posteriori</em> (usando la función <em>pdf</em> de la distribución Beta provista por PreliZ) para 2000 puntos igualmente espaciados entre 0 y 1 (linea 9). El loop que empieza en la linea 11 se debe a que exploraremos cómo cambian las distribuciones <em>a posteriori</em> para distinta cantidad de datos (<em>n_intentos</em>). Con un círculo negro de contorno blanco se indica el valor real de <span class="math inline">\(\theta\)</span>, valor que por supuesto es desconocido en una situación real, pero conocido para mí, ya que los datos son sintéticos.</p>
 <div id="cell-19" class="cell" data-nbpresent="{&quot;id&quot;:&quot;bf1b519c-69dd-42d5-b637-80ef31d70d7f&quot;}" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">9</span>))</span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a>n_trials <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">50</span>, <span class="dv">150</span>]</span>
-<span id="cb7-4"><a href="#cb7-4"></a>data <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">13</span>, <span class="dv">48</span>]</span>
-<span id="cb7-5"><a href="#cb7-5"></a>theta_real <span class="op">=</span> <span class="fl">0.35</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a>beta_params <span class="op">=</span> [(<span class="dv">1</span>, <span class="dv">1</span>), (<span class="fl">0.5</span>, <span class="fl">0.5</span>), (<span class="dv">20</span>, <span class="dv">20</span>)]</span>
-<span id="cb7-8"><a href="#cb7-8"></a>dist <span class="op">=</span> pz.Beta</span>
-<span id="cb7-9"><a href="#cb7-9"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2000</span>)</span>
-<span id="cb7-10"><a href="#cb7-10"></a></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="cf">for</span> idx, N <span class="kw">in</span> <span class="bu">enumerate</span>(n_trials):</span>
-<span id="cb7-12"><a href="#cb7-12"></a>    <span class="cf">if</span> idx <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb7-13"><a href="#cb7-13"></a>        plt.subplot(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
-<span id="cb7-14"><a href="#cb7-14"></a>        plt.xlabel(<span class="st">'θ'</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-16"><a href="#cb7-16"></a>        plt.subplot(<span class="dv">4</span>, <span class="dv">3</span>, idx<span class="op">+</span><span class="dv">3</span>)</span>
-<span id="cb7-17"><a href="#cb7-17"></a>        plt.xticks([])</span>
-<span id="cb7-18"><a href="#cb7-18"></a>    y <span class="op">=</span> data[idx]</span>
-<span id="cb7-19"><a href="#cb7-19"></a>    <span class="cf">for</span> (a_prior, b_prior) <span class="kw">in</span> beta_params:</span>
-<span id="cb7-20"><a href="#cb7-20"></a>        posterior <span class="op">=</span> dist(a_prior <span class="op">+</span> y, b_prior <span class="op">+</span> N <span class="op">-</span> y).pdf(x)</span>
-<span id="cb7-21"><a href="#cb7-21"></a>        plt.fill_between(x, <span class="dv">0</span>, posterior, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb7-22"><a href="#cb7-22"></a></span>
-<span id="cb7-23"><a href="#cb7-23"></a>    plt.plot(theta_real, <span class="dv">0</span>, ms<span class="op">=</span><span class="dv">9</span>, marker<span class="op">=</span><span class="st">'o'</span>, mec<span class="op">=</span><span class="st">'w'</span>, mfc<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb7-24"><a href="#cb7-24"></a>    plt.plot(<span class="dv">0</span>, <span class="dv">0</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>N<span class="sc">:4d}</span><span class="ss"> experimentos</span><span class="ch">\n</span><span class="sc">{</span>y<span class="sc">:4d}</span><span class="ss"> caras'</span>, alpha<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-25"><a href="#cb7-25"></a>    plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb7-26"><a href="#cb7-26"></a>    plt.ylim(<span class="dv">0</span>, <span class="dv">12</span>)</span>
-<span id="cb7-27"><a href="#cb7-27"></a>    plt.legend()</span>
-<span id="cb7-28"><a href="#cb7-28"></a>    plt.yticks([])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">9</span>))</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>n_trials <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">50</span>, <span class="dv">150</span>]</span>
+<span id="cb6-4"><a href="#cb6-4"></a>data <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">13</span>, <span class="dv">48</span>]</span>
+<span id="cb6-5"><a href="#cb6-5"></a>theta_real <span class="op">=</span> <span class="fl">0.35</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>beta_params <span class="op">=</span> [(<span class="dv">1</span>, <span class="dv">1</span>), (<span class="fl">0.5</span>, <span class="fl">0.5</span>), (<span class="dv">20</span>, <span class="dv">20</span>)]</span>
+<span id="cb6-8"><a href="#cb6-8"></a>dist <span class="op">=</span> pz.Beta</span>
+<span id="cb6-9"><a href="#cb6-9"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2000</span>)</span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="cf">for</span> idx, N <span class="kw">in</span> <span class="bu">enumerate</span>(n_trials):</span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="cf">if</span> idx <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb6-13"><a href="#cb6-13"></a>        plt.subplot(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb6-14"><a href="#cb6-14"></a>        plt.xlabel(<span class="st">'θ'</span>)</span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="cf">else</span>:</span>
+<span id="cb6-16"><a href="#cb6-16"></a>        plt.subplot(<span class="dv">4</span>, <span class="dv">3</span>, idx<span class="op">+</span><span class="dv">3</span>)</span>
+<span id="cb6-17"><a href="#cb6-17"></a>        plt.xticks([])</span>
+<span id="cb6-18"><a href="#cb6-18"></a>    y <span class="op">=</span> data[idx]</span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="cf">for</span> (a_prior, b_prior) <span class="kw">in</span> beta_params:</span>
+<span id="cb6-20"><a href="#cb6-20"></a>        posterior <span class="op">=</span> dist(a_prior <span class="op">+</span> y, b_prior <span class="op">+</span> N <span class="op">-</span> y).pdf(x)</span>
+<span id="cb6-21"><a href="#cb6-21"></a>        plt.fill_between(x, <span class="dv">0</span>, posterior, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb6-22"><a href="#cb6-22"></a></span>
+<span id="cb6-23"><a href="#cb6-23"></a>    plt.plot(theta_real, <span class="dv">0</span>, ms<span class="op">=</span><span class="dv">9</span>, marker<span class="op">=</span><span class="st">'o'</span>, mec<span class="op">=</span><span class="st">'w'</span>, mfc<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb6-24"><a href="#cb6-24"></a>    plt.plot(<span class="dv">0</span>, <span class="dv">0</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>N<span class="sc">:4d}</span><span class="ss"> experimentos</span><span class="ch">\n</span><span class="sc">{</span>y<span class="sc">:4d}</span><span class="ss"> caras'</span>, alpha<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-25"><a href="#cb6-25"></a>    plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb6-26"><a href="#cb6-26"></a>    plt.ylim(<span class="dv">0</span>, <span class="dv">12</span>)</span>
+<span id="cb6-27"><a href="#cb6-27"></a>    plt.legend()</span>
+<span id="cb6-28"><a href="#cb6-28"></a>    plt.yticks([])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/tcicchini/anaconda3/envs/estadistica_e_inferencia_II/lib/python3.12/site-packages/numba/np/ufunc/dufunc.py:202: RuntimeWarning: divide by zero encountered in nb_logpdf
+  return super().__call__(*args, **kws)</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01_Inferencia_Bayesiana_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="01_Inferencia_Bayesiana_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -647,7 +647,7 @@ p(\tilde{Y}  \mid  Y)  \propto \operatorname{Beta-binomial}(n=N, \alpha_{a prior
 <h3 data-number="1.4.4" class="anchored" data-anchor-id="cuarteto-bayesiano"><span class="header-section-number">1.4.4</span> Cuarteto Bayesiano</h3>
 <p>El siguiente bloque de código computa las distribuciones <em>a priori</em>, <em>a posteriori</em>, predictiva <em>a priori</em> y predictiva <em>a posteriori</em>. En vez de usar la distribución <span class="math inline">\(\operatorname{Beta-binomial}\)</span> para las distribuciones predictivas hemos optado por usar una aproximación más computacional y muestrear primero de la distribuciones beta y luego de la binomial. Esperamos que esta decisión contribuya a comprender mejor que representan estas distribuciones.</p>
 <p>Es importante notar que mientras la distribuciones <em>a priori</em> y <em>a posteriori</em> son distribución <strong>sobre los parámetros en un modelo</strong>, la distribución predictivas <em>a priori</em> y <em>a posteriori</em> son distribuciones <strong>sobre los datos</strong> (predichos).</p>
-<div id="cell-30" class="cell" data-execution_count="14">
+<div id="cell-30" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>), sharex<span class="op">=</span><span class="st">"row"</span>, sharey<span class="op">=</span><span class="st">"row"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a>axes <span class="op">=</span> np.ravel(axes)</span>
 <span id="cb9-3"><a href="#cb9-3"></a>dist <span class="op">=</span> pz.Beta</span>
@@ -659,7 +659,7 @@ p(\tilde{Y}  \mid  Y)  \propto \operatorname{Beta-binomial}(n=N, \alpha_{a prior
 <span id="cb9-9"><a href="#cb9-9"></a></span>
 <span id="cb9-10"><a href="#cb9-10"></a></span>
 <span id="cb9-11"><a href="#cb9-11"></a>prior <span class="op">=</span> dist(a_prior, b_prior).pdf(x)</span>
-<span id="cb9-12"><a href="#cb9-12"></a>axes[<span class="dv">0</span>].fill_between(x, <span class="dv">0</span>, prior)s</span>
+<span id="cb9-12"><a href="#cb9-12"></a>axes[<span class="dv">0</span>].fill_between(x, <span class="dv">0</span>, prior)</span>
 <span id="cb9-13"><a href="#cb9-13"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Prior"</span>)</span>
 <span id="cb9-14"><a href="#cb9-14"></a>axes[<span class="dv">0</span>].set_yticks([])</span>
 <span id="cb9-15"><a href="#cb9-15"></a></span>
@@ -708,7 +708,7 @@ p(\tilde{Y}  \mid  Y)  \propto \operatorname{Beta-binomial}(n=N, \alpha_{a prior
 <li><p>PreliZ tiene una función llamada <a href="https://preliz.readthedocs.io/en/latest/api_reference.html#preliz.unidimensional.maxent">maxent</a>. Explicá que hace y generá un par de ejemplos</p></li>
 <li><p>Usá la siguiente función para explorar diversas combinaciones de <em>priors</em> y <em>likelihoods</em>. Enunciá las conclusiones que consideres más relevantes.</p></li>
 </ol>
-<div id="cell-32" class="cell" data-execution_count="3">
+<div id="cell-32" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">def</span> a_posteriori_grilla(grilla<span class="op">=</span><span class="dv">10</span>, a<span class="op">=</span><span class="dv">1</span>, b<span class="op">=</span><span class="dv">1</span>, caras<span class="op">=</span><span class="dv">6</span>, tiradas<span class="op">=</span><span class="dv">9</span>):</span>
 <span id="cb10-2"><a href="#cb10-2"></a>    grid <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, grilla)</span>
 <span id="cb10-3"><a href="#cb10-3"></a>    prior <span class="op">=</span> pz.Beta(a, b).pdf(grid)</span>
@@ -727,7 +727,7 @@ p(\tilde{Y}  \mid  Y)  \propto \operatorname{Beta-binomial}(n=N, \alpha_{a prior
 <span id="cb10-16"><a href="#cb10-16"></a>    <span class="bu">min</span><span class="op">=</span><span class="dv">1</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">7</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">1</span>), caras<span class="op">=</span>ipyw.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">20</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">6</span>), tiradas<span class="op">=</span>ipyw.IntSlider(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">20</span>, step<span class="op">=</span><span class="dv">1</span>, value<span class="op">=</span><span class="dv">9</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a016911bb75d4f249e802c4b3dada260","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"763561e136834640b8f70129cffd5215","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div>
