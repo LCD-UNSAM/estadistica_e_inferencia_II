@@ -31,6 +31,7 @@ book:
     - 01_Inferencia_Bayesiana.ipynb
     - 02_Programación_probabilística.ipynb
     - 03_Modelos_jerárquicos.ipynb
+    - 04_Flujo_de_trabajo_bayesiano.ipynb
 
   page-navigation: true
   reader-mode: true
