@@ -302,20 +302,20 @@ window.Quarto = {
 
 
 <div id="b7afa352" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> bambi <span class="im">as</span> bmb</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> kulprit <span class="im">as</span> kpt</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="im">import</span> preliz <span class="im">as</span> pz</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> PchipInterpolator</span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="im">from</span> scipy.stats <span class="im">import</span> linregress</span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> bambi <span class="im">as</span> bmb</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> kulprit <span class="im">as</span> kpt</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="im">import</span> preliz <span class="im">as</span> pz</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> PchipInterpolator</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="im">from</span> scipy.stats <span class="im">import</span> linregress</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div id="c45ed9a6-3a98-40fc-8a98-8577da4fabf8" class="cell" data-execution_count="2">
 <details class="code-fold">
@@ -352,7 +352,7 @@ Y \sim \mathcal{N}(\mu, \sigma)
 <p>La idea central de la regresión lineal es extender este modelo, agregando una variable predictora <span class="math inline">\(X\)</span> a la estimación de la media <span class="math inline">\(\mu\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mu = \alpha + \beta X  \\
+\mu &amp;= \alpha + \beta X  \\
 Y &amp;\sim \mathcal{N}(\mu, \sigma)
 \end{aligned}
 \]</span></p>
