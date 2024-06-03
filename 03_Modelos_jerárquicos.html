@@ -338,7 +338,7 @@ IPython.OutputArea.prototype._should_scroll = function(lines) {
 <figcaption>Diagrama que muestra las diferencias entre un modelo agrupado, un modelo no agrupado y un modelo jerárquico.</figcaption>
 </figure>
 </div>
-<p>El introducir hiper-priors induce una distribución a posteriori donde las estimaciones de cad grupo estarán parcialmente agrupadas, es decir en algún punto entre el modelo agrupado y el modelo no agrupado. Para generar intuición sobre este punto construyamos un modelo no-jerarquico y uno jerárquico y compararemos los resultados.</p>
+<p>El introducir hiper-priors induce una distribución a posteriori donde las estimaciones de cada grupo estarán parcialmente agrupadas, es decir en algún punto entre el modelo agrupado y el modelo no agrupado. Para generar intuición sobre este punto construyamos un modelo no-jerarquico y uno jerárquico y compararemos los resultados.</p>
 </section>
 <section id="desplazamientos-jerárquicos" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="desplazamientos-jerárquicos"><span class="header-section-number">3.2</span> Desplazamientos jerárquicos</h2>
@@ -372,11 +372,21 @@ IPython.OutputArea.prototype._should_scroll = function(lines) {
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 20 seconds.</code></pre>
+IOPub message rate exceeded.
+The Jupyter server will temporarily stop sending output
+to the client in order to avoid crashing it.
+To change this limit, set the config variable
+`--ServerApp.iopub_msg_rate_limit`.
+
+Current values:
+ServerApp.iopub_msg_rate_limit=1000.0 (msgs/sec)
+ServerApp.rate_limit_window=3.0 (secs)
+
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 24 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"394fe92572244aada41887f0b62a5655","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"54e769bcd4ec4ee0897fc8f386de116d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -386,7 +396,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
-<p>Y ahora la novedad. El modeloo jerárquico.</p>
+<p>Y ahora la novedad. El modelo jerárquico.</p>
 <p>Este modelo tiene un hiper-prior para la media de <span class="math inline">\(\mu\)</span> (<code>μ_mu</code>) y otro para la desviación estándar de <span class="math inline">\(\mu\)</span> (<code>μ_sd</code>). Para <span class="math inline">\(\sigma\)</span> no usamos un hiper-prior, asumimos un valor común del parámetro para todos los grupos. Esto es una decisión de modelado. En este caso la justificación es mantener el ejemplo simple, pero en principio no sería problemático usar un hiper-prior también para <span class="math inline">\(\sigma\)</span>.</p>
 <div id="cell-13" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> cs_h:</span>
@@ -406,21 +416,38 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [μ_mu, μ_sd, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 26 seconds.</code></pre>
+IOPub message rate exceeded.
+The Jupyter server will temporarily stop sending output
+to the client in order to avoid crashing it.
+To change this limit, set the config variable
+`--ServerApp.iopub_msg_rate_limit`.
+
+Current values:
+ServerApp.iopub_msg_rate_limit=1000.0 (msgs/sec)
+ServerApp.rate_limit_window=3.0 (secs)
+
+IOPub message rate exceeded.
+The Jupyter server will temporarily stop sending output
+to the client in order to avoid crashing it.
+To change this limit, set the config variable
+`--ServerApp.iopub_msg_rate_limit`.
+
+Current values:
+ServerApp.iopub_msg_rate_limit=1000.0 (msgs/sec)
+ServerApp.rate_limit_window=3.0 (secs)
+</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3634ee17e11a4aaf946ddaa95019e8b0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"567ec3caab0c41269f13f5e0b818eef3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Sampling 4 chains, 0 divergences <span style="color: #1764f4; text-decoration-color: #1764f4">━━━━━━━━━━━</span><span style="color: #3a3a3a; text-decoration-color: #3a3a3a">╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style="color: #800080; text-decoration-color: #800080"> 28%</span> <span style="color: #008080; text-decoration-color: #008080">0:00:19</span> / <span style="color: #808000; text-decoration-color: #808000">0:00:07</span>
+</pre>
 </div>
 </div>
-<p>Antes de observar los resultados, comparemos gráficamente ambos modelos, para estar seguros que entendemos en que difieren. La siguiente figura muestra una representación gráfica de los modelos <code>cs_nh</code> (no-jerárquico) y <code>cs_h</code> (jerárquico). Se puede ver como el modelo jerárquico tiene un nivel más.</p>
+<p>Antes de observar los resultados, comparemos gráficamente ambos modelos, para estar seguros que entendemos en qué difieren. La siguiente figura muestra una representación gráfica de los modelos <code>cs_nh</code> (no-jerárquico) y <code>cs_h</code> (jerárquico). Se puede ver como el modelo jerárquico tiene un nivel más.</p>
 <div>
 <p><img src="img/cs_nh_vs_h.png" width="700"></p>
 </div>
@@ -642,18 +669,41 @@ X_{ij} &amp;\sim p(X \mid \theta_i) \\
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [μ, σ, α_tanque]
-Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws total) took 49 seconds.</code></pre>
+IOPub message rate exceeded.
+The Jupyter server will temporarily stop sending output
+to the client in order to avoid crashing it.
+To change this limit, set the config variable
+`--ServerApp.iopub_msg_rate_limit`.
+
+Current values:
+ServerApp.iopub_msg_rate_limit=1000.0 (msgs/sec)
+ServerApp.rate_limit_window=3.0 (secs)
+
+IOPub message rate exceeded.
+The Jupyter server will temporarily stop sending output
+to the client in order to avoid crashing it.
+To change this limit, set the config variable
+`--ServerApp.iopub_msg_rate_limit`.
+
+Current values:
+ServerApp.iopub_msg_rate_limit=1000.0 (msgs/sec)
+ServerApp.rate_limit_window=3.0 (secs)
+
+IOPub message rate exceeded.
+The Jupyter server will temporarily stop sending output
+to the client in order to avoid crashing it.
+To change this limit, set the config variable
+`--ServerApp.iopub_msg_rate_limit`.
+
+Current values:
+ServerApp.iopub_msg_rate_limit=1000.0 (msgs/sec)
+ServerApp.rate_limit_window=3.0 (secs)
+</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1b76d4d6e64d4384ac642f3bc6fc6962","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"de94adcf1a154e52b82641efad4b39cf","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
 <div id="cell-24" class="cell" data-execution_count="10">
@@ -705,14 +755,14 @@ Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws 
 </ul>
 <p>Volviendo a nuestros jugadores de fútbol, hemos recopilado datos de la <em>Premier League</em>, <em>Ligue 1</em>, <em>Bundesliga</em>, <em>Serie A</em> y <em>La Liga</em>, en el transcurso de cuatro años (2017 a 2020). Supongamos que estamos interesados en la métrica de goles por tiro. Esto es lo que los estadísticos suelen llamar <em>tasa de éxito</em>, y podemos estimarlo con un modelo Binomial donde el parámetro <span class="math inline">\(n\)</span> es el número de tiros y las observaciones <span class="math inline">\(y\)</span> es el número de goles. Esto nos deja con un valor desconocido para <span class="math inline">\(p\)</span>, en ejemplos anteriores hemos estado llamando a este parámetro <span class="math inline">\(\theta\)</span> y hemos usado una distribución Beta para modelarlo. Haremos lo mismo ahora, pero jerárquicamente. <span class="math inline">\(\theta\)</span> representa la “tasa de éxito” de cada jugador y, por lo tanto, es un vector de tamaño <code>n_jugadores</code>. Usamos una distribución Beta para modelar <span class="math inline">\(\theta\)</span>. Los hiperparámetros de la distribución Beta serán los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span>, que son vectores de tamaño 4, que representan las cuatro posiciones en nuestro conjunto de datos (defensor <code>DF</code>, centrocampista <code>MF</code>, delantero <code>FW</code> y arquero <code>GK</code>). Tendremos que indexar correctamente los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span> para que coincidan con el número total de jugadores. Finalmente, tendremos dos parámetros globales, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\nu\)</span>, que representan a los futbolistas profesionales.</p>
 <p>El modelo PyMC se define en el siguiente bloque de código. El <code>pm.Beta('mu', 1.7, 5.8)</code> fue elegido con la ayuda de PreliZ como prior con el 90% de la masa entre 0 y 0.5. Este es un ejemplo de un prior poco informativo, ya que no hay duda de que una tasa de éxito de 0,5 es un valor alto. Las estadísticas deportivas están bien estudiadas y hay mucha información previa que podría usarse para definir priors más fuertes. Para este ejemplo, nos conformaremos con este prior. Una justificación similar se puede hacer para el prior <code>pm.Gamma('nu', mu=125, sigma=50)</code>, que definimos como la distribución Gamma de máxima entropía con el 90% de la masa entre 50 y 200.</p>
-<div id="cell-28" class="cell" data-execution_count="13">
+<div id="cell-28" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>futbol <span class="op">=</span> pd.read_csv(<span class="st">"datos/futbol.csv"</span>, dtype<span class="op">=</span>{<span class="st">'posición'</span>:<span class="st">'category'</span>})</span>
 <span id="cb15-2"><a href="#cb15-2"></a>pos_idx <span class="op">=</span> futbol.posición.cat.codes.values</span>
 <span id="cb15-3"><a href="#cb15-3"></a>pos_codes <span class="op">=</span> futbol.posición.cat.categories</span>
 <span id="cb15-4"><a href="#cb15-4"></a>n_pos <span class="op">=</span> pos_codes.size</span>
 <span id="cb15-5"><a href="#cb15-5"></a>n_jugadores <span class="op">=</span> futbol.index.size</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-29" class="cell" data-execution_count="14">
+<div id="cell-29" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>coords <span class="op">=</span> {<span class="st">"pos"</span>: pos_codes}</span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_futbol:</span>
 <span id="cb16-3"><a href="#cb16-3"></a>    <span class="co"># Hiper-parámetros</span></span>
@@ -741,13 +791,13 @@ Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws 
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [μ, ν, μ_p, ν_p, θ]
-Sampling 4 chains for 1_000 tune and 4_000 draw iterations (4_000 + 16_000 draws total) took 358 seconds.
+Sampling 4 chains for 1_000 tune and 4_000 draw iterations (4_000 + 16_000 draws total) took 465 seconds.
 The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
 The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1cc3f201b1bf4e4585dbadfa203bdea8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"204c2464b39a4d0c9db64bb8370d746c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -757,9 +807,9 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
-<div id="cell-30" class="cell" data-execution_count="15">
+<div id="cell-30" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>pm.model_to_graphviz(modelo_futbol)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <figure class="figure">
 <p><img src="03_Modelos_jerárquicos_files/figure-html/cell-15-output-1.svg" class="img-fluid figure-img"></p>
@@ -768,7 +818,7 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 </div>
 <p>En el panel superior de la siguiente figura tenemos la distribución a posteriori del parámetro global <span class="math inline">\(\mu\)</span>. La distribución a posteriori es cercana a 0.1. Lo que significa que, en general, para un jugador de fútbol profesional, la probabilidad de hacer un gol es en promedio del 10%. Este es un valor razonable, ya que hacer goles no es una tarea fácil y no estamos discriminando posiciones, es decir, estamos considerando jugadores cuyo papel principal no es el de hacer goles. En el panel central, tenemos el valor estimado de <span class="math inline">\(mu_p\)</span> para la posición de defensa, como es de esperar, es más alto que el parámetro global <span class="math inline">\(\mu\)</span>. En el panel inferior, tenemos el valor estimado de <span class="math inline">\(\theta\)</span> para Lionel Messi, con un valor de 0.17, que es más alto que el parámetro global <span class="math inline">\(\mu\)</span> y el valor de la posición delantera <span class="math inline">\(\mu_p\)</span>. Esto también es de esperarse, ya que Lionel Messi es el mejor jugador de fútbol del mundo, y su rol principal es hacer goles.</p>
-<div id="cell-32" class="cell" data-execution_count="16">
+<div id="cell-32" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb19-2"><a href="#cb19-2"></a>az.plot_posterior(idata_futbol, var_names<span class="op">=</span><span class="st">'μ'</span>, ax<span class="op">=</span>ax[<span class="dv">0</span>])</span>
 <span id="cb19-3"><a href="#cb19-3"></a>ax[<span class="dv">0</span>].set_title(<span class="vs">r"Global mean"</span>)</span>
@@ -785,7 +835,7 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 </div>
 <p>La siguiente figura muestra un <code>forest plot</code> para la distribución a posteriori del parámetro <span class="math inline">\(\mu_p\)</span>. La distribución a posteriori para delanteros se centra en torno a 0.13, como ya vimos, y es la más alta de las cuatro. Esto tiene sentido ya que el papel de los jugadores en una posición delantera es hacer goles y asistencias. El valor más bajo de <span class="math inline">\(\mu_p\)</span> es para la posición de arquero. Esto esperable, ya que la función principal es evitar que el equipo contrario haga goles. El aspecto interesante es que la incertidumbre es muy alta, esto se debe a que tenemos muy pocos arqueros haciendo goles en nuestro conjunto de datos, 3 para ser precisos. Las distribuciones a posteriori para las posiciones de defensa y mediocampo están en <em>el medio</em>, siendo ligeramente más altas para los mediocampistas. Podemos explicar esto porque el papel principal de un mediocampista es defender y atacar, y por lo tanto la probabilidad de marcar un gol es mayor que la de un defensor pero menor que la de un delantero.</p>
-<div id="cell-34" class="cell" data-execution_count="17">
+<div id="cell-34" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>az.plot_forest(idata_futbol, var_names<span class="op">=</span>[<span class="st">'μ_p'</span>], combined<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
