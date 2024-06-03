@@ -32,6 +32,7 @@ book:
     - 02_Programación_probabilística.ipynb
     - 03_Modelos_jerárquicos.ipynb
     - 04_Flujo_de_trabajo_bayesiano.ipynb
+    - 05_GLMS.ipynb
 
   page-navigation: true
   reader-mode: true
