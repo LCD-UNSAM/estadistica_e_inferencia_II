@@ -6,9 +6,9 @@ Existen dos grandes conjuntos de herramientas para analizar datos:
 
 **Análisis Exploratorio de Datos (EDA)**: Consiste en resúmenes numéricos como la media, moda, desviación estándar, rangos intercuartiles, etc (esto se conoce también como estadística descriptiva). Además hace énfasis en el uso de métodos visuales para inspeccionar los datos, como por ejemplo histogramas y gráficos de dispersión.
 
-**Estadística Inferencial**: Consiste en usar datos para generar enunciados que exceden los propios datos. A veces esto implica realizar predicciones, a veces entender los detalles de algún fenómeno en particular o elegir entre varias explicaciones plausibles.
+**Estadística Inferencial**: Consiste en usar datos para generar enunciados que exceden los propios datos. A veces esto implica realizar predicciones, describir factores latentes, generar explicaciones plausibles sobre algún fenómeno en particular o elegir entre explicaciones alternativas.
 
-> Este curso es sobre inferencia Bayesiana, pero como verán hacemos uso de métodos parcialmente inspirados en el análisis exploratorio de datos para resumir, interpretar, evaluar y comunicar los resultados de tales inferencias.
+> Este curso es sobre inferencia Bayesiana, pero como verán hacemos uso de métodos inspirados en el análisis exploratorio de datos para resumir, interpretar, evaluar y comunicar los resultados de tales inferencias. Además este curso adopta una perspectiva computacional, puntualmente utilizando programación probabilística para definir y resolver modelos estadísticos. Es decir definimos modelos de forma explícita y luego usamos métodos genéricos para resolverlos. Esta aproximación permite una separación clara entre el modelo y el método de resolución.
 
 Muchos de los cursos y libros sobre estadística, principalmente aquellos dirigidos a no-estadísticos, enseñan una serie de recetas que más o menos tienen la siguiente forma. 
 
@@ -26,33 +26,26 @@ Este enfoque es posible por dos razones:
 * Una es ontológica: La estadística es una forma de modelado unificada bajo el marco de la teoría de probabilidad.
 * La otra es técnica: Software moderno permite a los practicantes definir, resolver y analizar modelos de forma cada vez más sencilla.
 
-## A quienes está dirigido?
-
-Este es un curso introductorio para personas sin conocimiento previo de estadística o ciencia de datos. Se asume familiaridad con Python y librerías de Python usadas en análisis de datos como Numpy, matplotlib, Pandas, etc.
-
-Quienes no sepan Python, pero tengan familiaridad con otros lenguajes de programación también podrán aprovechar el curso, aunque puede que experimente un poco más de fricción.
-
-Por último quienes no tengan interés en aprender a usar código para análisis de datos pueden aún aprovechar parte del material para obtener una visión a vuelo de pájaro de los métodos Bayesianos.
 
 ## Cómo usar este material
 
 * Versión estática: Al hacer click en los archivos que se muestran arriba (los que terminan en ipynb) podrás leer una versión estática del material. Es decir podrás ver el texto y las figuras pero no podrás modificarlos, ni interactuar con el material.
 
-* Versión interactiva online [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Grupo-de-modelado-probabilista/Modelado_Bayesiano/main).
+* Versión interactiva online [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LCD-UNSAM/estadistica_e_inferencia_II/main).
 
-* Versión interactiva local. También es posible descargar el material y ejecutarlo en tu propia computadora. Para ello hacé click [acá](https://github.com/Grupo-de-modelado-probabilista/Modelado_Bayesiano/archive/main.zip) y sigue las instrucciones de la próxima sección (Instalación).
+* Versión interactiva local. También es posible descargar el material y ejecutarlo en tu propia computadora. Para ello hacé click [acá](https://github.com/LCD-UNSAM/estadistica_e_inferencia_II/archive/refs/heads/main.zip) y sigue las instrucciones de la próxima sección (Instalación).
 
 
 ## Instalación
 Para usar este material es necesario tener instalado Python. Se recomienda la versión 3.9 o superior. Además es necesario instalar los siguientes paquetes:
 
-* PyMC 5.8.2
-* ArviZ 0.16.1
-* Preliz 0.3.3
+* PyMC 5.15.1
+* ArviZ 0.18.0
+* Preliz 0.7.0
 
-Se recomienda instalar primero [Anaconda](https://www.continuum.io/downloads). Luego instalar el resto de los paquetes con los comandos:
+Se recomienda instalar primero [Anaconda](https://www.anaconda.com/download). Luego instalar el resto de los paquetes con los comandos:
 
-* `conda install -c conda-forge pymc arviz`
+* `conda install -c conda-forge pymc arviz preliz`
 
 ## Contribuciones
 Todo el contenido de este repositorio es abierto, esto quiere decir que cualquier persona interesada puede contribuir al mismo. Todas las contribuciones serán bien recibidas incluyendo:
