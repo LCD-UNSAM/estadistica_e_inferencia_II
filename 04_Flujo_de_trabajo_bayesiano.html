@@ -337,7 +337,7 @@ window.Quarto = {
 <h2 data-number="4.1" class="anchored" data-anchor-id="de-datos-y-suposiciones-a-insights"><span class="header-section-number">4.1</span> De datos y suposiciones a insights</h2>
 <p>Usamos datos para comprender el mundo que nos rodea, lo que podría consistir en revelar el origen del universo, predecir cuándo debemos plantar y cuándo cosechar, o cómo hacer sugerencias de productos útiles para mantener a los clientes interesados y comprando nuestros productos. Sin embargo, el mundo suele ser un lugar complejo y, por lo tanto, los datos deben procesarse e interpretarse para que sean útiles. Una forma de interpretar los datos es construir modelos. Los modelos son útiles porque nos permiten incorporar suposiciones y evaluarlas.</p>
 <p>Los modelos funcionan como ficciones científicas; mapas que nos ayudan a navegar relaciones complejas. Por lo general (aunque no siempre), los modelos no son el objeto de interés principal, sino que son andamios que proporcionan un marco estructurado para comprender e interpretar datos.</p>
-<p>Al discutir estadística Bayesiana se suele hacer en torno a modelos de probabilidad. Tomamos algunos priors, algunos likelihoods, que luego mezclamos con datos siguiendo como receta el Teorema de Bayes, y Voila!, somos bayesianos!</p>
+<p>Al discutir estadística Bayesiana se suele hacer en torno a modelos de probabilidad. Tomamos algunos priors, algunos likelihoods, que luego mezclamos con datos siguiendo como receta el Teorema de Bayes, y Voila!, somos Bayesianos!</p>
 <p>Esta descripción no es incorrecta, simplemente no refleja muchos de los aspectos prácticos de la estadística Bayesiano (o del modelado en general). Lo que sucede es que muchos de esos aspectos prácticos no han sido completamente formalizados (como sí lo ha sido el proceso de inferencia). Incluso para varios de esos aspectos, no tenemos aún buenas herramientas o incluso no tenemos aún buenos marcos conceptuales.</p>
 </section>
 <section id="el-flujo-de-trabajo-bayesiano" class="level2" data-number="4.2">
@@ -2148,7 +2148,7 @@ Sampling: [acc]</code></pre>
 <p><span class="math display">\[
 \text{valor-p Bayesiano} \triangleq p(T_{\text{sim}} \le T_{\text{obs}} \mid \tilde y)
 \]</span></p>
-<p>Donde <span class="math inline">\(T\)</span> es un estadístico sumário como la media, mediana, desviación estándar o lo que se desee comparar, que se calcula para los datos observados <span class="math inline">\(T_{\text{obs}}\)</span> y para los datos simulados <span class="math inline">\(T_{\text{sim}}\)</span>.</p>
+<p>Donde <span class="math inline">\(T\)</span> es un estadístico sumario como la media, mediana, desviación estándar o lo que se desee comparar, que se calcula para los datos observados <span class="math inline">\(T_{\text{obs}}\)</span> y para los datos simulados <span class="math inline">\(T_{\text{sim}}\)</span>.</p>
 <p>Si los valores observados coinciden con los predichos, el valor esperado será 0,5. Es decir, la mitad de las predicciones estarán por debajo de las observaciones y la otra mitad por encima.</p>
 <blockquote class="blockquote">
 <p>Para aquellos que están familiarizados con los valores p y su uso en estadística frecuentista, hay un par de aclaraciones. Lo que hay de Bayesiano en estos valores p es que NO estamos utilizando una distribución muestral sino la distribución predictiva posterior. Además, no estamos haciendo una prueba de hipótesis nula ni tratando de declarar que una diferencia es “significativa”.</p>
@@ -2204,7 +2204,7 @@ p(\tilde y_i \le y_i \mid y)
 </div>
 </div>
 </div>
-<p>Por qué esperamos una distribución uniforme? Debido a una propiedada llamada transformada integral de probabilidad (PIT por su sigla en inglés). También llamada a veces universalidad de la uniforme.</p>
+<p>Por qué esperamos una distribución uniforme? Debido a una propiedad llamada transformada integral de probabilidad (PIT por su sigla en inglés). También llamada a veces universalidad de la uniforme.</p>
 <p>Dada una variable aleatoria continua <span class="math inline">\(X\)</span> y CDF <span class="math inline">\(F_X\)</span> podemos computar una variable aleatoria <span class="math inline">\(Y\)</span> con distribución uniforme estándar haciendo.</p>
 <p><span class="math display">\[
 Y = F_X (X)
@@ -2365,17 +2365,25 @@ Y = F_X (X)
 <h3 data-number="4.6.6" class="anchored" data-anchor-id="criterios-de-información"><span class="header-section-number">4.6.6</span> Criterios de información</h3>
 <p>Los criterios de información son una colección de herramientas estrechamente relacionadas que se utilizan para comparar modelos en términos de la bondad del ajuste y de la complejidad del modelo. En otras palabras, los criterios de información formalizan la intuición que desarrollamos al comienzo del capítulo. La forma exacta en que se derivan estas cantidades tiene que ver con un campo conocido como <a href="http://www.inference.org.uk/mackay/itila/book.html">Teoría de la Información</a>.</p>
 <p>Una forma intuitiva de medir qué tan bien un modelo se ajusta a los datos es calcular el error cuadrático medio entre los datos y las predicciones realizadas por el modelo:</p>
-<p><span class="math display">\[\frac{1}{n} \sum_{i=1}^{n}  (y_i - \operatorname{E} (y_i \mid \theta))^2\]</span></p>
+<p><span class="math display">\[
+\frac{1}{N} \sum_i^N  (y_i - \operatorname{E} (y_i \mid \theta))^2
+\]</span></p>
 <p><span class="math inline">\(\operatorname{E} (y_i \mid \theta)\)</span> es el valor predicho dados los parámetros estimados. Es importante notar que esto es esencialmente el promedio de la diferencia entre los datos observados y los predichos. Tomar el cuadrado de los errores asegura que las diferencias no se cancelen y enfatiza grandes errores comparado con otros alternativas como por ejemplo calcular el valor absoluto.</p>
 <p>El error cuadrático medio, puede resultarnos familiar ya que es muy popular. Pero si nos detenemos a reflexionar sobre esta cantidad veremos que en principio no tiene nada de especial y bien podríamos idear otras expresiones similares. Cuando adoptamos una aproximación probabilista vemos que una expresión más general (y <em>natural</em>) es la siguiente:</p>
-<p><span class="math display">\[ \sum_{i=1}^{n} \log p(y_i \mid \theta)\]</span></p>
+<p><span class="math display">\[
+\sum_i^N \log p(y_i \mid \theta)
+\]</span></p>
 <p>Esto es, la suma (sobre <span class="math inline">\(n\)</span> datos) de los <em>likelihoods</em> (en escala logarítmica). Esto es <em>natural</em> por que al elegir un likelihood en un modelo estamos eligiendo implícitamente una métrica para evaluar el ajuste del modelo. Cuando <span class="math inline">\(p(y_i \mid \theta)\)</span> es una gaussiana entonces la suma de log-likelihood será proporcional al error cuadrático medio.</p>
 <section id="criterio-de-información-de-akaike" class="level4" data-number="4.6.6.1">
 <h4 data-number="4.6.6.1" class="anchored" data-anchor-id="criterio-de-información-de-akaike"><span class="header-section-number">4.6.6.1</span> Criterio de información de Akaike</h4>
 <p>Este es un criterio de información muy conocido y ampliamente utilizado fuera del universo Bayesiano y se define como:</p>
-<p><span class="math display">\[AIC = -2 \sum_{i=1}^{n} \log p(y_i \mid \hat{\theta}_{mle}) + 2 k \]</span></p>
+<p><span class="math display">\[
+AIC = -2 \sum_i^N \log p(y_i \mid \hat{\theta}_{mle}) + 2 k
+\]</span></p>
 <p>Donde, k es el número de parámetros del modelo y <span class="math inline">\(\hat{\theta}_{mle}\)</span> es la estimación por máxima verosimilitud para <span class="math inline">\(\theta\)</span>. Para el resto de nuestra discusión vamos a omitir la constante -2 y escribir</p>
-<p><span class="math display">\[AIC = \sum_{i=1}^{n} \log p(y_i \mid \hat{\theta}_{mle}) - k \]</span></p>
+<p><span class="math display">\[
+AIC = \sum_i^N \log p(y_i \mid \hat{\theta}_{mle}) - k
+\]</span></p>
 <p>De esta forma es más fácil ver que el criterio de Akaike es una maxima-verosimilitud penalizada (se hace más chica, se minimiza) mientras más parámetros tenga un modelo.Además, esta versión sin el -2 tiene una correspondencia más clara con otras expresiones que veremos a continuación.</p>
 <p>Qué el número de parámetros sea un criterio válido de penalización es intuitivo, ya que como vimos en el ejemplo anterior con los polinomios, un modelo con mayor número de parámetros es, en general, más flexible. Pero es importante destacar que el criterio de Akaike tiene una justificación teórica, no es que Akaike simplemente pensó que usar <span class="math inline">\(k\)</span> era buena idea.</p>
 <p>El criterio de AIC es muy útil, pero presenta problemas para modelos Bayesianos. Una de las razones es que no utiliza la distribución a posteriori de <span class="math inline">\(\theta\)</span> y, por lo tanto, descarta información. Además AIC, desde una perspectiva Bayesiana, asume que los priors son <em>planos</em> y, por lo tanto, AIC es incompatible con priors informativos y/o ligeramente informativos. Además, la cantidad de parámetros de un modelo no es una buena medida de la complejidad del mismo cuando se usan priors informativos o estructuras como la jerárquica. Agregar información a un modelo en su estructura, equivale a reducir la <em>cantidad efectiva de parámetros</em>, algo también conocido como <em>regularización</em>.</p>
@@ -2384,22 +2392,24 @@ Y = F_X (X)
 </section>
 <section id="waic" class="level3" data-number="4.6.7">
 <h3 data-number="4.6.7" class="anchored" data-anchor-id="waic"><span class="header-section-number">4.6.7</span> WAIC</h3>
-<p>Como ya vimos en el criterio de Akaike, la bondad del ajuste viene dado por:</p>
+<p>Como ya vimos en el criterio de Akaike, la bondad del ajuste viene dada por:</p>
 <p><span class="math display">\[
-\sum_{i=1}^{n} \log p(y_i \mid \hat{\theta}_{mle})
+\sum_i^N \log p(y_i \mid \hat{\theta}_{mle})
 \]</span></p>
 <p>Pero en estadística Bayesiana, NO tenemos una estimación puntual de <span class="math inline">\(\theta\)</span>. Tenemos una distribución, por lo que deberíamos hacer:</p>
 <p><span class="math display">\[
-\sum_{i=1}^{n} \log
+\sum_i^N \log
     \int \ p(y_i \mid \theta) \; p(\theta \mid y) d\theta
 \]</span></p>
 <p>Como en general no tenemos una expresión analítica para el posterior, <span class="math inline">\(p(\theta \mid y)\)</span>, pero tenemos unas serie de muestras (como las obtenidas por MCMC), entonces podemos aproximar la integral por:</p>
 <p><span class="math display">\[
-\sum_i^n \log \left(\frac{1}{S} \sum_{s=1}^S p(y_i \mid \theta^s) \right)
+\sum_i^N \log \left(\frac{1}{S} \sum_{j}^S p(y_i \mid \theta^j) \right)
 \]</span></p>
 <p>LLamaremos a esta cantidad ELPD, que es la sigla en inglés para valor esperado de la densidad log-predictiva.</p>
 <p>OK, ya tenemos como medir la bondad de ajuste. Ahora necesitamos un término que penalice la complejidad del modelo. Encontrar la expresión correcta para esto, requiere de trabajo, asi que la vamos a presentar sin justificar. Este nuevo criterio (la versión Bayesiana de Akaike) se llama Widely applicable information criterion:</p>
-<p><span class="math display">\[WAIC = \sum_i^n \log \left(\frac{1}{S} \sum_{s=1}^S p(y_i \mid \theta^s) \right) - \sum_i^n  \left( V_{s=1}^S \log p(y_i \mid \theta^s) \right)\]</span></p>
+<p><span class="math display">\[
+WAIC = \sum_i^N \log \left(\frac{1}{S} \sum_{j}^S p(y_i \mid \theta^j) \right) - \sum_i^N  \left( V_{j}^S \log p(y_i \mid \theta^j) \right)
+\]</span></p>
 <p>Donde el término de penalización viene dado por la varianza de los log-likelihoods sobre las <span class="math inline">\(S\)</span> muestras del posterior. Intuitivamente el término penaliza modelos que tengan mucha variabilidad en sus predicciones. Veamos como ejemplo un modelo lineal:</p>
 <p><span class="math display">\[
 Y = \alpha + \beta X
@@ -2410,12 +2420,12 @@ Y = \alpha + \beta X
 <h3 data-number="4.6.8" class="anchored" data-anchor-id="loo-y-la-validación-cruzada-aproximada"><span class="header-section-number">4.6.8</span> LOO y la validación cruzada (aproximada)</h3>
 <p>Existe otra alternativa para penalizar el término</p>
 <p><span class="math display">\[
-\sum_i^n \log \left(\frac{1}{S} \sum_{s=1}^S p(y_i \mid \theta^s) \right)
+\sum_i^N \log \left(\frac{1}{S} \sum_{s=1}^S p(y_i \mid \theta^s) \right)
 \]</span></p>
 <p>Y es calcular</p>
 <p><span class="math display">\[
-\sum_{i}^{n} \log
-    \left( \frac{1}{s}\sum_j^s \mathbin{\color{#E9692C}{p(y_i \mid \theta_{-i}^j)}} \right)
+\sum_i^N \log
+    \left( \frac{1}{S}\sum_j^S \mathbin{\color{#E9692C}{p(y_i \mid \theta_{-i}^j)}} \right)
 \]</span></p>
 <p>donde <span class="math inline">\(_{-i}\)</span> quiere decir que dejamos la observación <span class="math inline">\(i\)</span> afuera. Una implementación Naive de esta estimación requiere que estimemos tantas distribuciones a posteriori como datos tengamos, ya que para cada una de ellas eliminaremos una observación. Sin embargo, esto no es necesario ya que es posible estiamar <span class="math inline">\(\color{#E9692C}{p(y_i \mid \theta_{-i}^j})\)</span> usando <strong>Muestreo de Importancia</strong> (importance sampling).</p>
 <p>Antes de seguir con nuestra agenda, necesitamos hacer un pequeño detour.</p>
@@ -2442,7 +2452,7 @@ Y = \alpha + \beta X
 <span id="cb23-4"><a href="#cb23-4"></a></span>
 <span id="cb23-5"><a href="#cb23-5"></a>w <span class="op">=</span> f.pdf(samples) <span class="op">/</span> g.pdf(samples)</span>
 <span id="cb23-6"><a href="#cb23-6"></a></span>
-<span id="cb23-7"><a href="#cb23-7"></a>plt.hist(samples, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>, weights<span class="op">=</span>w, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'g'</span>, label<span class="op">=</span><span class="st">'Weighted samples'</span>)</span>
+<span id="cb23-7"><a href="#cb23-7"></a>plt.hist(samples, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>, weights<span class="op">=</span>w, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'C1'</span>, label<span class="op">=</span><span class="st">'Weighted samples'</span>)</span>
 <span id="cb23-8"><a href="#cb23-8"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">15</span>)</span>
 <span id="cb23-9"><a href="#cb23-9"></a></span>
 <span id="cb23-10"><a href="#cb23-10"></a></span>
@@ -2461,9 +2471,9 @@ Y = \alpha + \beta X
 <section id="retomando" class="level3" data-number="4.6.9">
 <h3 data-number="4.6.9" class="anchored" data-anchor-id="retomando"><span class="header-section-number">4.6.9</span> Retomando</h3>
 <p>Ahora que tenemos una mejor idea de muestreo por importancia veamos como podemos usarlo. La distribución que conocemos es la distribución a posteriori, y la que queremos aproximar por muestreo de importancia es la distribución a posteriori dejando uno afuera <span class="math inline">\(p(y_i \mid \theta_{-i}^j)\)</span>. Por lo que los pesos de importancia que nos interesa calcular son:</p>
-<p><span class="math display">\[\begin{equation}
-    w_i^j = \frac{p(\theta^j \mid y_{-i} )}{p(\theta^j \mid y)} \propto \frac{p(\theta) \prod_{i\not=-i}^n p(y_i \mid \theta)}{p(\theta) \prod_i^n p(y_i \mid \theta)} \propto \frac{1}{p(y_i \mid \theta^j)}
-\end{equation}\]</span></p>
+<p><span class="math display">\[
+w_i^j = \frac{p(\theta^j \mid y_{-i} )}{p(\theta^j \mid y)} \propto \frac{p(\theta) \prod_{i\not=-i}^n p(y_i \mid \theta)}{p(\theta) \prod_i^n p(y_i \mid \theta)} \propto \frac{1}{p(y_i \mid \theta^j)}
+\]</span></p>
 <p>Es decir los términos comunes (y que por lo tanto se cancelan) entre numerador y denominador son todos menos el likelihood para la observación que queremos remover. Nótese que los pesos son proporcionales y no están normalizados, pero esto no es un problema ya que se pueden normalizar simplemente dividiendo cada peso por la suma total de los pesos.</p>
 <p>Este resultado es una gran noticia, porque nos dice que es posible calcular el ELPD por validación cruzada dejando uno afuera, a partir de un solo ajuste de los datos! y que solo necesitamos los valores de los log-likelihoods, cuyo costo computacional es, en general, muy bajo.</p>
 <p>La trampa, por que siempre hay una trampa, es que es esperable que <span class="math inline">\(p(\theta^j \mid y_{-i} )\)</span> sea más “ancha” que <span class="math inline">\(p(\theta^j \mid y)\)</span>, ya que es una distribución a posteriori estimada con una observación menos. Esto es lo contrario al caso ideal en muestreo por importancia. Para muchos casos puede que la diferencia no sea relevante, ya que eliminar una observación puede conducir a una distribución a posteriori prácticamente equivalente. Pero en algunos casos la diferencia puede ser relativamente grande. Cuándo? Pues, mientras más “influyente” sea la observación. En términos de importance sampling esto se traduce en pesos con mayor importancia relativa y que por lo tanto tienen a dominar la estimación.</p>
