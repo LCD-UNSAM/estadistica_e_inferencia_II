@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Estadística a Inferencia II - 6&nbsp; Árboles de decisión</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05_GLMS.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08_BART.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Árboles de decisión</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Estadística a Inferencia II</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="github"><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/LCD-UNSAM/estadistica_e_inferencia_II">
+            Fuente
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/LCD-UNSAM/estadistica_e_inferencia_II/issues/new">
+            Reportar errores
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Modo claro/oscuro"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Modo sin distracciones">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">‎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Inferencia_Bayesiana.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inferencia Bayesiana</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Programación_probabilística.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Programación probabilista</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_Modelos_jerárquicos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelado Jerárquico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_Flujo_de_trabajo_bayesiano.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Flujo de trabajo Bayesiano</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_GLMS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos lineales y generalizaciones</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_BART.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Árboles de decisión</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#árboles-de-regresión" id="toc-árboles-de-regresión" class="nav-link active" data-scroll-target="#árboles-de-regresión"><span class="header-section-number">6.1</span> Árboles de regresión</a></li>
+  <li><a href="#interpretabilidad-y-flexibilidad" id="toc-interpretabilidad-y-flexibilidad" class="nav-link" data-scroll-target="#interpretabilidad-y-flexibilidad"><span class="header-section-number">6.2</span> Interpretabilidad y flexibilidad</a></li>
+  <li><a href="#conjuntos-de-árboles" id="toc-conjuntos-de-árboles" class="nav-link" data-scroll-target="#conjuntos-de-árboles"><span class="header-section-number">6.3</span> Conjuntos de árboles</a></li>
+  <li><a href="#bart" id="toc-bart" class="nav-link" data-scroll-target="#bart"><span class="header-section-number">6.4</span> BART</a></li>
+  <li><a href="#priors-para-bart" id="toc-priors-para-bart" class="nav-link" data-scroll-target="#priors-para-bart"><span class="header-section-number">6.5</span> Priors para BART</a>
+  <ul class="collapse">
+  <li><a href="#priors-independientes" id="toc-priors-independientes" class="nav-link" data-scroll-target="#priors-independientes"><span class="header-section-number">6.5.1</span> Priors independientes</a></li>
+  </ul></li>
+  <li><a href="#inferencia-sobre-árboles-de-regresión-aditiva-bayesiana" id="toc-inferencia-sobre-árboles-de-regresión-aditiva-bayesiana" class="nav-link" data-scroll-target="#inferencia-sobre-árboles-de-regresión-aditiva-bayesiana"><span class="header-section-number">6.6</span> Inferencia sobre árboles de regresión aditiva bayesiana</a></li>
+  <li><a href="#minería-de-carbón-con-bart" id="toc-minería-de-carbón-con-bart" class="nav-link" data-scroll-target="#minería-de-carbón-con-bart"><span class="header-section-number">6.7</span> Minería de carbón con BART</a></li>
+  <li><a href="#bicicleteando-con-bart" id="toc-bicicleteando-con-bart" class="nav-link" data-scroll-target="#bicicleteando-con-bart"><span class="header-section-number">6.8</span> Bicicleteando con BART</a>
+  <ul class="collapse">
+  <li><a href="#diagnóstico-de-convergencia" id="toc-diagnóstico-de-convergencia" class="nav-link" data-scroll-target="#diagnóstico-de-convergencia"><span class="header-section-number">6.8.1</span> Diagnóstico de convergencia</a></li>
+  </ul></li>
+  <li><a href="#partial-dependence-plots" id="toc-partial-dependence-plots" class="nav-link" data-scroll-target="#partial-dependence-plots"><span class="header-section-number">6.9</span> Partial dependence plots</a>
+  <ul class="collapse">
+  <li><a href="#selección-de-variables" id="toc-selección-de-variables" class="nav-link" data-scroll-target="#selección-de-variables"><span class="header-section-number">6.9.1</span> Selección de variables</a></li>
+  </ul></li>
+  <li><a href="#modelos-distribucionales-con-bart" id="toc-modelos-distribucionales-con-bart" class="nav-link" data-scroll-target="#modelos-distribucionales-con-bart"><span class="header-section-number">6.10</span> Modelos distribucionales con BART</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">6.11</span> Ejercicios</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Árboles de decisión</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-0" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> pymc_bart <span class="im">as</span> pmb</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-2" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>plt.style.use(<span class="st">'arviz-doc'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>RANDOM_SEED <span class="op">=</span> <span class="dv">5781</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Anteriormente analizamos los Procesos Gaussianos (GPs), particularmente en el contexto de regresión. En este capítulo, aprenderemos sobre otro modelo no paramétrico de regresión conocido como árboles de regresión aditiva Bayesiana o BART, para los amigos.</p>
+<p>BART es parte de una gran familia de métodos que podríamos describir como “métodos de ensamble”. Estos métodos funcionan combinando varios modelos simples como por ej constantes, pero restringiendo la aplicación de esos modelos simples a regiones particulares del espacio. Esta descripción es similar por ej a lo que vimos con splines. Un subgrupo de métodos de esta gran familia utiliza árboles para asignar esos modelos simples a distintas regiones. En este subgrupo entran métodos como CART, random forest, Gradient boosting, etc.</p>
+<p>La esencia es BART es usar una suma de árboles regularizada por un prior. Prácticamente en la totalidad de la literatura, BART se discute como un modelo independiente y el software que lo implementa generalmente se limita a uno o unos pocos modelos predeterminados. Nosotros vamos a discutirlo en el mismo contexto en el que hemos discutido el resto de los tópicos de este curso, en el contexto de la programación probabilista. En este contexto BART es una variable aleatoria, o escríctamente un proceso estocástico similar a GPs.</p>
+<p>En este capítulo, cubriremos los siguientes temas:</p>
+<ul>
+<li>Árboles de decisión</li>
+<li>Modelos BART</li>
+<li>Regresión flexible con BART</li>
+<li>Gráficos de dependencia parcial</li>
+<li>Gráficos de expectativas condicionales individuales</li>
+<li>Selección de variables</li>
+</ul>
+<p>Supongamos que tenemos dos variables <span class="math inline">\(X_1\)</span> y <span class="math inline">\(X_2\)</span> y queremos usar esas variables para clasificar objetos en dos clases: ⬤ o ▲. Para lograr este objetivo podemos utilizar una estructura de árbol como se muestra en el panel izquierdo de la siguiente figura.</p>
+<p><img src="img/decision_tree.png" class="img-fluid"></p>
+<p>Un árbol es un grafo en el que cualquier par de vértices (o nodos) están conectados por exactamente un camino (o lado). El árbol de la figura anterior es un árbol binario porque cada nodo puede tener como máximo dos nodos hijos. Los nodos sin hijos se conocen como nodos hoja o nodos terminales. En este ejemplo tenemos dos nodos internos o interiores (representados como rectángulos) y 3 nodos terminales (representados como rectángulos redondeados). Cada nodo interno tiene una regla de decisión asociada. Si seguimos esas reglas de decisión, eventualmente llegaremos a un nodo hoja que nos proporcionará la respuesta a nuestro problema de decisión. Por ejemplo, si una instancia de la variable <span class="math inline">\(X_1\)</span> es mayor que <span class="math inline">\(c_1\)</span> el árbol de decisión nos dice que le asignemos a esa instancia la clase ⬤. Si en cambio observamos un valor de <span class="math inline">\(x_{1i}\)</span> menor que <span class="math inline">\(c_1\)</span> y el valor de <span class="math inline">\(x_{2i}\)</span> menor que <span class="math inline">\(c_2\)</span> entonces debemos asignar la clase ▲.</p>
+<p>Algorítmicamente podemos conceptualizar un árbol como un conjunto de declaraciones <em>if-else</em> que seguimos para realizar una determinada tarea, como una clasificación. Otra perspectiva útil es la geométrica. Podemos entender un árbol binario como una forma de dividir el espacio muestral en bloques, como se muestra en el panel derecho de la figura anterior. Cada bloque está definido por líneas de división (asociadas a las reglas de clasificación de los nodos internos). Cada división del espacio muestral se alineará con uno de los ejes de las covariables. En la figura anterior usamos dos variables por que es más sencillo visualmente, pero la misma idea se puede extender fácilmente a mayores dimensiones.</p>
+<p>Para facilitar la discusión de BART resulta conveniente definir un árbol <span class="math inline">\(g\)</span> como una 2-tupla con elementos:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{T}\)</span> el conjunto de lados y nodos (los cuadrados, los cuadrados redondeados y las líneas que los unen en la figura anterior) junto con las reglas de decisión asociadas con los nodos internos.</li>
+<li><span class="math inline">\(\mathcal{M} = \{\mu_1, \mu_2, \dots, \mu_b\}\)</span> denota un conjunto de valores de parámetros asociados con cada uno de los nodos terminales de <span class="math inline">\(\mathcal{T}\)</span>.</li>
+</ul>
+<p>Entonces <span class="math inline">\(G(X; \mathcal{T}, \mathcal{M})\)</span> es la función que asigna <span class="math inline">\(\mu_i \in M\)</span> a <span class="math inline">\(X\)</span>. Por ejemplo, en la figura anterior los valores de <span class="math inline">\(\mu_{i}\)</span> son (⬤, ⬤ y ▲). Y la función <span class="math inline">\(G\)</span> asigna ⬤, a casos con <span class="math inline">\(X_1\)</span> mayor que <span class="math inline">\(c_1\)</span>, ⬤, a <span class="math inline">\(X_1\)</span> menor que <span class="math inline">\(c_1\)</span> y <span class="math inline">\(X_2\)</span> mayor que <span class="math inline">\(c_2\)</span> y ▲, a <span class="math inline">\(X_1\)</span> menor que <span class="math inline">\(c_1\)</span> y <span class="math inline">\(X_2\)</span> menor que <span class="math inline">\(c_2\)</span>.</p>
+<section id="árboles-de-regresión" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="árboles-de-regresión"><span class="header-section-number">6.1</span> Árboles de regresión</h2>
+<p>En un árbol de decisión, $ contiene clases o etiquetas. Pero en principio podemos asociar otros elementos, típicamente números reales.</p>
+<p>En la siguiente figura se muestra un caso de regresión con una sola covariable. A la izquierda vemos un árbol binario similar al de la figura anterior, con la principal diferencia de que en lugar de devolver un valor de clase en cada nodo hoja, el árbol devuelve un número.</p>
+<p><img src="img/decision_tree_reg.png" class="img-fluid"></p>
+<p>En este caso hemos aproximado una serie de puntos, que parecen seguir una curva sinusoidal, con tres valores constantes, que geométricamente podemos interpretar como tres segmentos no-continuos, o de forma más general como una función definida por partes. En ese caso el valor de cada nodo hoja se corresponde con la media de los puntos correspondientes a su partición. La elección de la media es arbitraria, y se relaciona principalmente con su simpleza y facilidad de cálculo. Algunas alternativas serían la mediana, lo que podría ofrecer robustez a valores extremos. O incluso funciones más complejas como una regresión lineal, un spline, un proceso Gaussiano o una red neuronal. Sin embargo, la media es probablemente la opción más común para los árboles de regresión.</p>
+</section>
+<section id="interpretabilidad-y-flexibilidad" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="interpretabilidad-y-flexibilidad"><span class="header-section-number">6.2</span> Interpretabilidad y flexibilidad</h2>
+<p>Es importante señalar que, en general, un árbol de regresión no es una aproximación “suave” o “continua” sino una función escalonada por partes, aunque existen excepciones en la literatura. Esto no significa que los árboles de regresión sean necesariamente una mala elección para ajustar funciones continuas. En principio podemos aproximar cualquier función continua con una función escalonada y en la práctica esta aproximación podría ser bastante buena.</p>
+<p>Una característica atractiva de los árboles de decisión/regresión es su interpretabilidad: literalmente se puede leer el árbol y seguir los pasos necesarios para resolver un determinado problema. Y, por lo tanto, se puede comprender de forma transparente qué está haciendo el método, porque funciona y porque algunas clases pueden no estar clasificadas adecuadamente o porque algunos datos no están bien aproximados. Además, también es fácil explicar el resultado a una audiencia no técnica con términos simples.</p>
+<p>Además los árboles ofrecen un método muy flexible, ya que siempre se puede encontrar un árbol lo suficientemente complejo como para que cada nodo hoja tenga asociado una observación. La contracara de esta flexibilidad es el sobreajuste. La siguiente figura muestra un ejemplo de un árbol que ha sobreajustado los datos.</p>
+<p><img src="img/decision_tree_overfitting.png" class="img-fluid"></p>
+<p>Otro punto a notar es que es posible encontrar más de un árbol que ajuste igualmente bien un conjunto de datos. Esto quiere decir que áun cuando interpretables, podríamos encontrar interpretaciones alternativas. Un caso sencillo se da en la primer figura, el punto <span class="math inline">\(C_1\)</span> no es único, hay una cantidad infinita de puntos a su alrededor que darían árboles que proveen exactamente el mismo ajuste y por lo tanto indistinguibles (al menos in-sample).</p>
+<p>Una propiedad interesante de los árboles surge cuando pensamos en ellos en términos de efectos e interacciones principales como lo hicimos con los modelos lineales. Observe que el término <span class="math inline">\(\mathbb{E}(Y \mid \boldsymbol{X})\)</span> es igual a la suma de todos los parámetros del nodo hoja <span class="math inline">\(\mu_{ij}\)</span>, por lo tanto:</p>
+<ul>
+<li>Cuando un árbol depende de una sola variable cada uno de esos <span class="math inline">\(\mu_{ij}\)</span> representa un efecto principal</li>
+<li>Cuando un árbol depende de más de una variable, cada <span class="math inline">\(\mu_{ij}\)</span> representa un efecto de interacción.</li>
+</ul>
+<p>Por ejemplo en la primer figura del árbol de decisión, obtener un triángulo requiere la interacción de <span class="math inline">\(X_1\)</span> y <span class="math inline">\(X_2\)</span> ya que la condición del nodo secundario (<span class="math inline">\(X_2 &gt; c_2\)</span>) depende de la condición del nodo principal (<span class="math inline">\(X_1 &gt; c_1\)</span>).</p>
+<p>Como en principio el tamaño de los árboles es variable, podemos utilizar árboles para modelar de forma automática interacciones de distintos órdenes. Es decir, a medida que un árbol se vuelve más profundo, aumenta la posibilidad de utilizar más variables y por lo tanto de representar interacciones de orden superior. Sin embargo no todo lo que brilla es oro, la capacidad teórica de un método de representar interacciones de orden arbitrario no implica que en la práctica seamos capaces de detectar o aprender esas interacciones con cierto grado de certeza. En general, y no solo para árboles, estimar una interacción requiere de más datos que estimar una efecto principal y estimar una interacción de bajo orden requiere menos datos que una de mayor orden.</p>
+</section>
+<section id="conjuntos-de-árboles" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="conjuntos-de-árboles"><span class="header-section-number">6.3</span> Conjuntos de árboles</h2>
+<p>Teniendo en cuenta que los árboles demasiado complejos probablemente no serán muy buenos para predecir datos nuevos, es común introducir dispositivos para regularizar la complejidad de los árboles y disminuir el riesgo de sobreajuste. Varias de las soluciones encontradas a lo largo de los años consisten en utilizar no un solo árbol, si no un conjunto de árboles donde la capacidad de aprendizaje/ajuste de cada árbol se limita. Es importante notar que una suma de árboles es otro árbol. Por lo que en principio será posible trabajar con un solo árbol y encontrar una solución que no sobreajuste. Pero en la práctica se ha observado repetidas veces, que es mejor usar un conjunto. Esto es válido tanto para métodos no-bayesianos como random forest o bayesianos como BART.</p>
+<p>Una desventaja de utilizar conjuntos de árboles es que perdemos la interpretabilidad de un único árbol. Para obtener una respuesta no podemos seguir un solo árbol, debemos considerar a todos, lo que generalmente dificulta cualquier interpretación directa. Hemos cambiado la interpretabilidad por la flexibilidad y la generalización.</p>
+</section>
+<section id="bart" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="bart"><span class="header-section-number">6.4</span> BART</h2>
+<p>De forma general podemos escribir un modelo BART como:</p>
+<p><span class="math display">\[
+Y = \phi \left(\sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_i, \mathcal{M}_i), \theta \right)
+\]</span></p>
+<p>Donde <span class="math inline">\(G\)</span> representa una función árbol parametrizada por <span class="math inline">\(\mathcal{T}_i\)</span> y <span class="math inline">\(\mathcal{M}_i\)</span>, que como ya vimos<span class="math inline">\(\mathcal{T}_i\)</span> representa la estructura de un árbol binario, es decir, el conjunto de nodos internos y sus reglas de decisión asociadas y un conjunto de nodos terminales. Mientras que <span class="math inline">\(\mathcal{M}_i\)</span> representa los valores en los nodos terminales. <span class="math inline">\(\phi\)</span> representa una distribución de probabilidad arbitraria que se usará como likelihood en nuestro modelo y <span class="math inline">\(\theta\)</span> otros parámetros de <span class="math inline">\(\phi\)</span> no modelados como una suma de árboles.</p>
+<p>Por ejemplo si <span class="math inline">\(\phi\)</span> es una distribución Normal, podríamos usar la suma de árboles para representar la media <span class="math inline">\(\mu\)</span> y tendríamos a <span class="math inline">\(\sigma\)</span> como variable auxiliar.</p>
+<p><span class="math display">\[
+Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathcal{M}_j), \sigma^2  \right)
+\]</span></p>
+<p>Como es habitual, para especificar completamente un modelo BART, debemos elegir los priors sobre <span class="math inline">\(\mathcal{T}\)</span> y <span class="math inline">\(\mathcal{M}\)</span>.</p>
+</section>
+<section id="priors-para-bart" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="priors-para-bart"><span class="header-section-number">6.5</span> Priors para BART</h2>
+<p>En el <a href="https://arxiv.org/abs/0806.3286">artículo original</a> de BART y en la mayoría de las modificaciones e implementaciones posteriores, los priors para BART son conjugados. La implementación de BART en PyMC-BART no utiliza priors conjugados y también se desvía de otras maneras de gran parte del resto de la literatura. En lugar de discutir las diferencias nos centraremos en la implementación de PyMC-BART, que es la que vamos a utilizar para los ejemplos.</p>
+<section id="priors-independientes" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="priors-independientes"><span class="header-section-number">6.5.1</span> Priors independientes</h3>
+<p>Para simplificar la especificación de los priors asumimos que la estructura del árbol <span class="math inline">\(\mathcal{T}\)</span> y los valores de las hojas <span class="math inline">\(\mathcal{M}\)</span> son independientes. Además estos priors son independientes de los priors para <span class="math inline">\(\theta\)</span>.</p>
+<p>El prior para la estructura de árbol <span class="math inline">\(\mathcal{T}\)</span> se especifica mediante tres aspectos:</p>
+<ul>
+<li><p>La probabilidad de que un nodo de profundidad <span class="math inline">\(d=(0, 1, 2, \dots)\)</span> sea no terminal está dado por <span class="math inline">\(\alpha(1 + d)^{-\beta}\)</span> con <span class="math inline">\(\alpha \in (0, 1)\)</span> y <span class="math inline">\(\beta \in [0, \infty)\)</span>.</p></li>
+<li><p>La distribución sobre la variable de partición. Lo más habitual es que sea Uniforme entre las covariables disponibles. Es posible utilizar otras distribuciones. PyMC-BART permite pasar un vector <code>split_prior</code> que tiene la misma interpretación que el parámetro de concentración <span class="math inline">\(\alpha\)</span> en una distribución de Dirichlet.</p></li>
+<li><p>La distribución sobre los valores de partición. Es decir, una vez que elegimos una variable de partición, qué valor usamos para tomar una decisión. Es uniforme sobre los valores disponibles.</p></li>
+</ul>
+<p>El prior para los valores de las hojas $_{ij}</p>
+<p>Usamos <span class="math inline">\(\mathcal{N}(\mu_\text{pred}, {\varepsilon^2})\)</span>, donde <span class="math inline">\(\mu_\text{pred}\)</span> se calcula como la media de la suma actual de árboles dividida por número de árboles . <span class="math inline">\(\varepsilon\)</span> se calcula inicialmente a partir de <span class="math inline">\(Y\)</span>, siendo <span class="math inline">\(\varepsilon = \frac{3}{\sqrt{m}}\)</span> para datos binomiales y <span class="math inline">\(\varepsilon = \frac{Y_\text{std}}{\sqrt{m}}\)</span> para datos distintos del binomial.</p>
+<p>El número de árboles <span class="math inline">\(m\)</span> debe ser especificado por el usuario, valores comunmente usados suelen ser 50, 100 o 200. En general mientras más árboles se utilicen mejor serán los resultados. Cuando se evalúa usando LOO, en general lo que se observa al aumentar <span class="math inline">\(m\)</span> es una saturación sin llegar a sobrejustar. Es decir LOO aumenta a medida que <span class="math inline">\(m\)</span> aumenta, pero el incremento va disminuyendo. Esto se puede explicar, al menos en parte, por el hecho que el aumento de <span class="math inline">\(m\)</span> implica un valor cada vez más pequeño de <span class="math inline">\(\mu\)</span>.</p>
+<p>La especificación de los priors para BART, se desvía un poco de la especificación típica de priors en modelos Bayesianos, y la razón es que están diseñados para ser automáticos, algo similar a lo que hace Bambi. Por ejemplo usamos <span class="math inline">\(Y\)</span> para especificar <span class="math inline">\(\mu\)</span>, además este valor de <span class="math inline">\(\mu\)</span> es solo utilizado inicialmente. Durante la fase de ajuste el valor de <span class="math inline">\(\mu\)</span> es actualizado utilizando la varianza de las predicciones de cada árbol ajustado. Algo similar sucede con las variables de partición, por defecto todas tienen la misma probabilidad, pero durante la fase de ajuste se va actualizando esta probabiliad de acuerdo a la frecuencia con la que las variables entran en los árboles. Esto disminuye la probabilidad de que variables espurias participen de la suma de árboles, mejorado el uso de los recursos computacionales y mejorando la estimación de la importancia de las variables. Es claro que estos “trucos” hacen que el método no sea 100% bayesiano, si no una aproximación.</p>
+</section>
+</section>
+<section id="inferencia-sobre-árboles-de-regresión-aditiva-bayesiana" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="inferencia-sobre-árboles-de-regresión-aditiva-bayesiana"><span class="header-section-number">6.6</span> Inferencia sobre árboles de regresión aditiva bayesiana</h2>
+<p>Hasta ahora hemos discutido ideas generales sobre los árboles y algo sobre como especificar distribuciones a priori para árboles, pero no hemos discutido detalles de calcular una distribución a posteriori de árboles. Hay muchas estrategias para hacer esto y los detalles son demasiado específicos para este curso. Por ese motivo vamos a describir sólo los elementos principales. Para más detalles pueden leer este <a href="https://arxiv.org/abs/2206.03619">artículo</a>.</p>
+<p>Para ajustar los modelos BART no podemos usar métodos basados en gradientes como el Monte Carlo Hamiltoniano porque el espacio de los árboles es discreto, y por lo tanto no hay forma directa de obtener gradientes. Por esa razón, se han desarrollado métodos de muestreo específicos para árboles, muchos de ellos son variantes de MCMC.</p>
+<p>A grandes rasgos, cada paso del método implementado en PyMC-BART consiste en elegir uno de los <span class="math inline">\(m_i\)</span> árboles disponibles y proponer un nuevo árbol que lo reemplace. Para ello se procede de la siguiente forma</p>
+<ol type="1">
+<li>Se hacen crecer <span class="math inline">\(N\)</span> árboles, comenzando desde la raíz y siguiendo los priors.</li>
+<li>Se calcula un peso para cada uno de los <span class="math inline">\(N\)</span> árboles y para el árbol <span class="math inline">\(m_i\)</span></li>
+<li>Se reemplaza el árbol <span class="math inline">\(m_i\)</span> por un árbol muestreado de forma proporcional a los pesos del punto anterior</li>
+</ol>
+<p>En este algoritmo los priors son utilizado como distribución de propuesta, esto no es lo más común. En métodos como MH, HMC, NUTS, etc la distribución de propuesta y los priors son objetos completamente distintos. El peso calculado en el punto 2 es el log-likelihood, teniendo en cuenta la suma del árbol de propuesta y todos los demás árboles <span class="math inline">\(m_{-i}\)</span>. La razón de incluir a <span class="math inline">\(m_i\)</span>, es garantizar que la probabilidad de no-innovar sea no nula. Además, como sucede con métodos MCMC, la probabilidad de elegir un árbol que “empeore” el ajuste es no nula.</p>
+<p>Este procedimiento se repite hasta ajustar los <span class="math inline">\(m\)</span> árboles. Es importante notar que la suma de los <span class="math inline">\(m\)</span> árboles representa un punto en el espacio de la distribución a posteriori. Es decir, para obtener 1000 muestras de la distribución a posteriori necesitamos calcular <span class="math inline">\(1000 \times m\)</span> árboles. En la práctica PyMC-BART solo ajusta un subconjunto de los <span class="math inline">\(m\)</span> árboles por iteración, lo que permite reducir el costo computacional.</p>
+<p>Los parámetros <span class="math inline">\(\theta\)</span>, es decir los parámetros que no están vinculados a la suma de árboles, se calculan con los métodos estándar de PyMC. Es decir que la distribución a posteriori se consigue con una combinación de métodos de muestreo.</p>
+</section>
+<section id="minería-de-carbón-con-bart" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="minería-de-carbón-con-bart"><span class="header-section-number">6.7</span> Minería de carbón con BART</h2>
+<p>Para comprender mejor BART en la práctica, utilizaremos dataset de la minería del carbón que ya usamos en dos ejemplos anteriores. En lugar de pensar este problema como un modelo de punto de cambio con dos distribuciones de Poisson, como en el ejemplo original de PyMC. Vamos a pensar en este problema como una regresión no paramétrica con una respuesta de Poisson, esto generalmente se discute en términos de <a href="https://en.wikipedia.org/wiki/Poisson_point_process">procesos de Poisson</a> o <a href="https://en.wikipedia.org/wiki/Cox_process">procesos de Cox</a>.</p>
+<p>Debido a que nuestros datos son solo una columna con fechas, necesitamos realizar un procesamiento previo. Vamos a discretizar los datos, como si estuviéramos construyendo un histograma. Vamos a utilizar los centros de los <em>bins</em> como la variable <span class="math inline">\(X\)</span> y la frecuencia por <em>bin</em> como la variable <span class="math inline">\(Y\)</span>.</p>
+<div id="cell-13" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>coal <span class="op">=</span> np.loadtxt(<span class="st">"datos/coal.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-14" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># discretize data</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>years <span class="op">=</span> <span class="bu">int</span>(coal.<span class="bu">max</span>() <span class="op">-</span> coal.<span class="bu">min</span>())</span>
+<span id="cb4-3"><a href="#cb4-3"></a>bins <span class="op">=</span> years <span class="op">//</span> <span class="dv">4</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>hist, x_edges <span class="op">=</span> np.histogram(coal, bins<span class="op">=</span>bins)</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># compute the location of the centers of the discretized data</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>x_centers <span class="op">=</span> x_edges[:<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> (x_edges[<span class="dv">1</span>] <span class="op">-</span> x_edges[<span class="dv">0</span>]) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># xdata needs to be 2D for BART</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>x_data <span class="op">=</span> x_centers[:, <span class="va">None</span>]</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># express data as the rate number of disaster per year</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>y_data <span class="op">=</span> hist</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Una variable BART se puede definir de manera muy similar a otras variables aleatorias. Una diferencia importante es que tenemos que pasar los valores de X e Y a la variable BART, esta información se usa al muestrear árboles.</p>
+<p>Aquí también dejamos explícito que vamos a utilizar una suma de 20 árboles (<code>m=20</code>). Un número bajo de árboles como 20 podría ser suficiente para modelos simples como este y también podría funcionar muy bien como una aproximación rápida para modelos más complejos, en particular durante la etapa inicial del modelado, cuando es posible que queramos probar algunas cosas tan rápido como sea posible.</p>
+<div id="cell-16" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_coal:</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    μ_ <span class="op">=</span> pmb.BART(<span class="st">"μ_"</span>, X<span class="op">=</span>x_data, Y<span class="op">=</span>np.log(y_data), m<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    μ <span class="op">=</span> pm.Deterministic(<span class="st">"μ"</span>, pm.math.exp(μ_))</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    y_pred <span class="op">=</span> pm.Poisson(<span class="st">"y_pred"</span>, mu<span class="op">=</span>μ, observed<span class="op">=</span>y_data)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    idata_coal <span class="op">=</span> pm.sample(random_seed<span class="op">=</span>RANDOM_SEED)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Multiprocess sampling (4 chains in 4 jobs)
+PGBART: [μ_]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 12 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"5d5ad25fec1840e4a6bf642e024fbee4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<p>Antes de comprobar el resultado, necesitamos discutir un detalle más, la variable BART siempre devuelve muestras en los reales, lo que significa que en principio podemos obtener valores que van desde <span class="math inline">\(-\infty\)</span> hasta <span class="math inline">\(\infty\)</span>. Por lo tanto, es posible que necesitemos transformar estos valores como lo haríamos para modelos lineales generalizados, por ejemplo en <code>modelo_coal</code> calculamos <code>pm.math.exp(μ_)</code> porque la distribución de Poisson espera valores que van de 0 a <span class="math inline">\(\infty\)</span>. Hasta acá no hay demasiada novedad. Lo nuevo es que es posible que necesitemos aplicar la transformación inversa a los valores de <span class="math inline">\(Y\)</span>, como hicimos en el modelo anterior donde tomamos <span class="math inline">\(\log(Y)\)</span>. Como ya mencionamos los valores del argumento <code>Y</code> se utilizan para obtener un valor inicial razonable. Por tanto, aplicar la transformación inversa es una forma sencilla de mejorar la eficiencia y precisión del resultado. ¿Deberíamos hacer esto siempre? Bueno no. Si usamos BART para el parámetro <span class="math inline">\(\mu\)</span> de distribuciones como Normal, T de Student o LaplaceAsimétrica, no necesitamos hacer nada ya que el soporte de estos parámetros son los reales. Ahora, una excepción no trivial es cuando usemos como likelihood Bernoulli (o Binomial con n=1), en ese caso, necesitamos aplicar la función logística a la variable BART, pero no es necesario aplicar su inversa para transformar <code>Y</code>, PyMC-BART es capaz de lidiar con este caso particular internamente.</p>
+<p>Bien, ahora veamos el resultado de <code>modelo_coal</code>.</p>
+<div id="cell-18" class="cell" data-hide_input="false" data-execution_count="6">
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>rates <span class="op">=</span> idata_coal.posterior[<span class="st">"μ"</span>] <span class="op">/</span> <span class="dv">4</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>rate_mean <span class="op">=</span> rates.mean(dim<span class="op">=</span>[<span class="st">"draw"</span>, <span class="st">"chain"</span>])</span>
+<span id="cb7-5"><a href="#cb7-5"></a>ax.plot(x_centers, rate_mean, <span class="st">"w"</span>, lw<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>ax.plot(x_centers, y_data <span class="op">/</span> <span class="dv">4</span>, <span class="st">"k."</span>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a>az.plot_hdi(x_centers, rates, smooth<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>az.plot_hdi(x_centers, rates, hdi_prob<span class="op">=</span><span class="fl">0.5</span>, smooth<span class="op">=</span><span class="va">False</span>, plot_kwargs<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="dv">0</span>})</span>
+<span id="cb7-9"><a href="#cb7-9"></a>ax.plot(coal, np.zeros_like(coal) <span class="op">-</span> <span class="fl">0.5</span>, <span class="st">"k|"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>ax.set_xlabel(<span class="st">"years"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>ax.set_ylabel(<span class="st">"rate"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_BART_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La línea blanca en el gráfico anterior muestra la tasa media de accidentes. La franja cyan más oscura representa el HDI 50% y la más clara el HDI 94%. Podemos ver una rápida disminución en los accidentes relacionados con el carbón entre 1880 y 1900.</p>
+<p>En el gráfico anterior, la línea blanca es la media de 4000 muestras de la distribución a posteriori, y cada uno de esos muestras es una suma de 20 árboles.</p>
+</section>
+<section id="bicicleteando-con-bart" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="bicicleteando-con-bart"><span class="header-section-number">6.8</span> Bicicleteando con BART</h2>
+<p>Veamos otro ejemplo, esta vez usando el dataset de bikes.</p>
+<div id="cell-21" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>bikes <span class="op">=</span> pd.read_csv(<span class="st">"datos/bikes.csv"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>features <span class="op">=</span> [<span class="st">"hour"</span>, <span class="st">"temperature"</span>, <span class="st">"humidity"</span>, <span class="st">"weekday"</span>]</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>X <span class="op">=</span> bikes[features]</span>
+<span id="cb8-6"><a href="#cb8-6"></a>Y <span class="op">=</span> bikes[<span class="st">"rented"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_bikes:</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    α <span class="op">=</span> pm.Exponential(<span class="st">"α"</span>, <span class="dv">1</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    μ <span class="op">=</span> pmb.BART(<span class="st">"μ"</span>, X, np.log(Y), m<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    y <span class="op">=</span> pm.NegativeBinomial(<span class="st">"y"</span>, mu<span class="op">=</span>pm.math.exp(μ), alpha<span class="op">=</span>α, observed<span class="op">=</span>Y)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>    idata_bikes <span class="op">=</span> pm.sample(compute_convergence_checks<span class="op">=</span><span class="va">False</span>, random_seed<span class="op">=</span>RANDOM_SEED)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Multiprocess sampling (4 chains in 4 jobs)
+CompoundStep
+&gt;NUTS: [α]
+&gt;PGBART: [μ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 108 seconds.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b08d75e4e5114c6880ae41b686645cbd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<section id="diagnóstico-de-convergencia" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="diagnóstico-de-convergencia"><span class="header-section-number">6.8.1</span> Diagnóstico de convergencia</h3>
+<p>Para verificar la convergencia de muestreo de los modelos BART, recomendamos un enfoque de 2 pasos.</p>
+<ul>
+<li>Para las variables que no son BART (como <span class="math inline">\(\alpha\)</span> en <code>model_bikes</code>) seguimos las recomendaciones estándar, como verificar los diagnósticos numéricos R-hat (&lt;= 1.01) y ESS (&lt; 100x número de cadenas), así como usar trazar gráficos o incluso mejores gráficos de clasificación</li>
+<li>Para las variables BART recomendamos utilizar la función <code>pmb.plot_convergence</code>.</li>
+</ul>
+<div id="cell-24" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>az.plot_trace(idata_bikes, var_names<span class="op">=</span>[<span class="st">"α"</span>], kind<span class="op">=</span><span class="st">"rank_bars"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_BART_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>pmb.plot_convergence(idata_bikes, var_name<span class="op">=</span><span class="st">"μ"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_BART_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En la literatura de BART, el diagnóstico de las variables de BART a veces se considera menos importante que el diagnóstico de las variables que no son de BART; el argumento principal es que las estimaciones individuales de las variables latentes no tienen ningún interés directo y, en cambio, solo deberíamos preocuparnos. sobre qué tan bien estamos estimando toda la función/regresión.</p>
+<p>En cambio, consideramos que verificar la convergencia de las variables BART es una parte importante del flujo de trabajo Bayesiano. La razón principal para usar <code>pmb.plot_convergence</code> es que normalmente la variable BART será un vector grande (estimamos una distribución por observación) y, por lo tanto, necesitaremos verificar una gran cantidad de diagnósticos. Además, el umbral de R-hat de 1,01 no es un umbral estricto; este valor se eligió suponiendo que se examinan uno o varios R-hat (y que las cadenas son lo suficientemente largas para estimar con precisión su autocorrelación), y si observamos una gran cantidad de R-que se espera que algunos de ellos sean mayores que el umbral de 1,01 (o cualquier umbral que elijamos) incluso si no hay nada malo en nuestra inferencia. Por esa razón, un análisis justo debe incluir un ajuste de comparación múltiple, y eso es lo que <code>pmb.plot_convergence</code> hace automáticamente por usted. Entonces, ¿cómo leer su salida? Tenemos dos paneles uno para ESS y otro para R-hat. La línea azul es la distribución acumulativa empírica de esos valores, para ESS queremos que toda la curva esté por encima de la línea discontinua y para R-hat queremos que la curva esté completamente por debajo de la línea discontinua. En la figura anterior, podemos ver que apenas lo logramos para ESS y para R-hat tenemos muy pocos valores por encima del umbral. ¿Son nuestros resultados inútiles? Probablemente no. Pero, sin duda, es posible que queramos realizar algunos sorteos más.</p>
+</section>
+</section>
+<section id="partial-dependence-plots" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="partial-dependence-plots"><span class="header-section-number">6.9</span> Partial dependence plots</h2>
+<p>Para ayudarnos a interpretar los resultados de nuestro modelo, utilizaremos gráficos de dependencia parcial. Este es un tipo de gráfico que muestra el efecto marginal que tiene una covariable sobre la variable predicha. Es decir, ¿cuál es el efecto que tiene una covariable <span class="math inline">\(X_i\)</span> sobre <span class="math inline">\(Y\)</span> mientras promediamos todas las demás covariables (<span class="math inline">\(X_j, \forall j \not = i\)</span>). Esta herramienta no es exclusiva de BART. Pero se utilizan a menudo en la literatura de BART.</p>
+<div id="cell-28" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>pmb.plot_pdp(μ, X<span class="op">=</span>X, Y<span class="op">=</span>Y, grid<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), func<span class="op">=</span>np.exp, var_discrete<span class="op">=</span>[<span class="dv">3</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_BART_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En este gráfico, podemos ver el efecto principal de cada covariable sobre el valor predicho. Esto es muy útil ya que podemos recuperar relaciones complejas más allá de efectos monótonos crecientes o decrecientes. Por ejemplo para la covariable “hora” podemos ver dos picos alrededor de las 8 y 17 hs y un mínimo a medianoche.</p>
+<p>Al interpretar gráficos de dependencia parcial debemos tener cuidado con los supuestos de este gráfico. Primero, asumimos que las variables son independientes. Por ejemplo, al calcular el efecto de la “hora” tenemos que marginar el efecto de la “temperatura” y esto significa que para calcular el valor de dependencia parcial en “hora=0” estamos incluyendo todos los valores de temperatura observados, y esto puede incluir temperaturas. que no se observan a medianoche, dado que es más probable que haya temperaturas más bajas que más altas. Solo estamos viendo promedios, por lo que si para una covariable la mitad de los valores están asociados positivamente con la variable predicha y la otra mitad está asociada negativamente. La gráfica de dependencia parcial será plana ya que sus contribuciones se cancelarán entre sí. Este es un problema que se puede resolver utilizando gráficos de expectativas condicionales individuales <code>pmb.plot_ice(...)</code>. Observe que todos estos supuestos son supuestos del gráfico de dependencia parcial, ¡no de nuestro modelo! De hecho, BART puede acomodar fácilmente interacciones de variables de orden arbitrario, las interacciones de alto orden están regularizadas.</p>
+<p>Finalmente, al igual que con otros métodos de regresión, debemos tener cuidado de que los efectos que observamos en las variables individuales estén condicionados a la inclusión de otras variables. Así, por ejemplo, aunque la “humedad” parece ser mayoritariamente plana, lo que significa que esta covariable tiene un pequeño efecto en el número de bicicletas usadas. Este podría ser el caso porque la “humedad” y la “temperatura” están correlacionadas hasta cierto punto y una vez que incluimos la “temperatura” en nuestro modelo, la “humedad” no proporciona demasiada información adicional. Intente, por ejemplo, ajustar el modelo nuevamente, pero esta vez con “humedad” como covariable única y luego ajustar el modelo nuevamente con “hora” como covariable única. Debería ver que el resultado de este modelo de variable única será muy similar a la figura anterior para la covariable “hora”, pero menos similar para la covariable “humedad”.</p>
+<section id="selección-de-variables" class="level3" data-number="6.9.1">
+<h3 data-number="6.9.1" class="anchored" data-anchor-id="selección-de-variables"><span class="header-section-number">6.9.1</span> Selección de variables</h3>
+<p>Como vimos en la sección anterior, un gráfico de dependencia parcial nos permite interpretar el efecto (marginal) de cada covariable sobre la respuesta. Además nos da una idea de cuánto contribuye cada covariable a la variable predicha. Pero hay una forma más directa de hacer esto. Veamos primero un gráfico y luego como interpretarlo y calcularlo.</p>
+<div id="cell-31" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_BART_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En el eje x tenemos los nombres de las covariables y en el eje y el R² (el cuadrado del coeficiente de correlación de Pearson) entre las predicciones realizadas para el modelo completo (todas las variables incluidas) y los submodelos, aquellos con sólo un subconjunto de las variables.</p>
+<p>En este ejemplo, la variable más importante es “hora”, luego “temperatura”, “humedad” y finalmente “día de la semana”. Observe que el primer valor de R² es el valor de un modelo que solo incluye la variable “hora”, el segundo R² es para un modelo con dos variables, “hora” y “temperatura”, y así sucesivamente. Podemos ver como un modelo con las variables “hora” y “temperatura”, es capaz de hacer predicciones equivalentes a un modelo con todas las variables. Las barras de error representan el 94% HDI de la distribución predictiva a posteriori.</p>
+<p><code>plot_variable_importance</code> es rápido porque hace dos suposiciones:</p>
+<ul>
+<li><p>El ordenamiento de las variables se calcula con una heurística simple. Contamos cuántas veces se incluye una variable en todos los árboles de regresión. La intuición es que si una variable es importante debería aparecer con más frecuencia en los árboles ajustados que las variables menos importantes.</p></li>
+<li><p>Las predicciones utilizadas para el cálculo de R² provienen de los árboles ya ajustados. Por ejemplo, para estimar el efecto de un modelo BART con la variable <code>hora</code> <em>podamos</em> la rama que no incluye esta variable. Esto hace que los cálculos sean mucho más rápidos, ya que no necesitamos encontrar un nuevo conjunto de árboles. Esto es similar a lo que hacemos al calcular un PDP.</p></li>
+</ul>
+<p>En lugar de utilizar la “heurística de conteo”. También puede realizar una búsqueda hacia atrás, <code>pmb.plot_variable_importance(..., method="backward")</code>. Internamente, esto calculará el R² para el modelo completo, luego para todos los modelos con una variable menos que el modelo completo, y luego para todos los modelos con menos de dos, y así sucesivamente. En cada etapa, descartamos la variable que da el R² más bajo. El método inverso será más lento, ya que necesitamos calcular predicciones para más modelos.</p>
+<div id="cell-33" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X, method<span class="op">=</span><span class="st">"backward"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_BART_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="modelos-distribucionales-con-bart" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="modelos-distribucionales-con-bart"><span class="header-section-number">6.10</span> Modelos distribucionales con BART</h2>
+<p>Como ya vimos para modelos lineales generalizados, no estamos restringidos a crear modelos lineales para la media o el parámetro de ubicación; También podemos modelar otros parámetros, como el parámetro de dispersión. Lo mismo se aplica a los modelos BART.</p>
+<p>Para ejemplificar esto probemos extender el modelo anterior, esta vez usando la suma de árboles tanto para modelar <span class="math inline">\(\mu\)</span> como <span class="math inline">\(\alpha\)</span>.</p>
+<div id="cell-35" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_bb:</span>
+<span id="cb16-2"><a href="#cb16-2"></a>    μ <span class="op">=</span> pmb.BART(<span class="st">"μ"</span>, X, np.log(Y), shape<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">348</span>), separate_trees<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    pm.NegativeBinomial(<span class="st">'yl'</span>, mu<span class="op">=</span>np.exp(μ[<span class="dv">0</span>]), alpha<span class="op">=</span>np.exp(μ[<span class="dv">1</span>]), observed<span class="op">=</span>Y)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>    idata_bb <span class="op">=</span> pm.sample(compute_convergence_checks<span class="op">=</span><span class="va">False</span>, random_seed<span class="op">=</span>RANDOM_SEED)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Multiprocess sampling (4 chains in 4 jobs)
+PGBART: [μ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 222 seconds.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"26e6fe302e8e4e33ba54a9d7ed63da4b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<p>Tomémonos un momento para asegurarnos de que entendemos este modelo.</p>
+<p>Primero, observe que pasamos un argumento <code>shape</code> a <code>pmb.BART()</code>. Esto nos permitirá definir una sola variable BART, pero usarla para modelar dos parámetros de forma independiente. Al usar <code>separate_trees = True</code> le indicamos a PyMC-BART que ajuste dos conjuntos independiente de árboles, si en cambio fuera <code>False</code>, tendríamos el mismo conjunto de árboles, pero cada nodo hoja devolvería dos valores muestreados independientemente.</p>
+<p>Luego necesitamos indexar <code>μ</code> para usar la primera dimensión para el parámetro <span class="math inline">\(\mu\)</span> y la segunda para el parámetro <span class="math inline">\(\alpha\)</span>.</p>
+<p>Otro aspecto importante del <code>modelo_bb</code> es que tomamos la función exponencial de <code>μ</code>. Hacemos esto para garantizar que la distribución binomial negativa obtenga solo valores positivos, tanto para <span class="math inline">\(\mu\)</span> como para <span class="math inline">\(\alpha\)</span>. Este es el mismo tipo de transformación que discutimos en el contexto de los modelos lineales generalizados.</p>
+<p>La siguiente figura muestra un partial dependence plots con dos columnas una por cada parámetro de la distribución NegativaBinomial</p>
+<div id="cell-37" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>pmb.plot_pdp(μ, X, Y, </span>
+<span id="cb18-2"><a href="#cb18-2"></a>             xs_interval<span class="op">=</span><span class="st">"insample"</span>, func<span class="op">=</span>np.exp , var_discrete<span class="op">=</span>[<span class="dv">3</span>],</span>
+<span id="cb18-3"><a href="#cb18-3"></a>             grid<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_BART_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicios" class="level2" data-number="6.11">
+<h2 data-number="6.11" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">6.11</span> Ejercicios</h2>
+<ul>
+<li><p>Podriamos tener un ejercicio donde ajustamos un dataset muy simple con una sola covariable y hacemos predicciones fuera del rango de los datos y pedimos a los estudiantes que expliquen por que see observa lo que se observa y luego repetir pero cambiando la respuesta lineal.</p></li>
+<li><p>Esto podría ser otro mostrando que las predicciones insample son similares pero los PDPs no https://www.pymc.io/projects/bart/en/latest/examples/bart_categorical_hawks.html</p></li>
+<li><p>generamos este dataset</p></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>X <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, (<span class="dv">250</span>, <span class="dv">3</span>))</span>
+<span id="cb19-2"><a href="#cb19-2"></a>lala <span class="op">=</span> np.where(X[:,<span class="dv">2</span>] <span class="op">&gt;=</span> <span class="dv">0</span>,  np.zeros_like(X[:,<span class="dv">2</span>]), np.ones_like(X[:,<span class="dv">2</span>]))</span>
+<span id="cb19-3"><a href="#cb19-3"></a>e <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">250</span>)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>Y <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span>X[:,<span class="dv">0</span>] <span class="op">-</span> <span class="dv">5</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">+</span> <span class="dv">10</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">*</span> lala<span class="op">+</span> e</span>
+<span id="cb19-5"><a href="#cb19-5"></a></span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a>plt.plot(X[:,<span class="dv">1</span>], Y, <span class="st">'.'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>usan BART y calculan un PDP y un ICE, expliquen diferencia</p>
+<ul>
+<li>Space influenza con distintos valores de m [5, 20, 50, 100] tienen que usar LOO y un gráfico para comparar los resultados y explicar las diferencias.</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>space_in <span class="op">=</span> pd.read_csv(<span class="st">"datos/space_influenza.csv"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>X <span class="op">=</span> np.atleast_2d(space_in[<span class="st">"age"</span>]).T</span>
+<span id="cb20-3"><a href="#cb20-3"></a>Y <span class="op">=</span> space_in[<span class="st">"sick"</span>]</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a>Y_jittered <span class="op">=</span> np.random.normal(Y, <span class="fl">0.02</span>)</span>
+<span id="cb20-7"><a href="#cb20-7"></a>plt.plot(X[:,<span class="dv">0</span>], Y_jittered, <span class="st">"."</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05_GLMS.html" class="pagination-link" aria-label="Modelos lineales y generalizaciones">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Modelos lineales y generalizaciones</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png"></a><br>Este obra está bajo <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
