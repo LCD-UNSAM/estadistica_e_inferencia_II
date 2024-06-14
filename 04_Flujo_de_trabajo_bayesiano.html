@@ -266,37 +266,44 @@ window.Quarto = {
   <li><a href="#loo-y-waic" id="toc-loo-y-waic" class="nav-link" data-scroll-target="#loo-y-waic"><span class="header-section-number">4.6.10</span> LOO y WAIC</a></li>
   <li><a href="#calculando-loo" id="toc-calculando-loo" class="nav-link" data-scroll-target="#calculando-loo"><span class="header-section-number">4.6.11</span> Calculando LOO</a></li>
   </ul></li>
-  <li><a href="#diagnosticos-del-muestreo-por-mcmc" id="toc-diagnosticos-del-muestreo-por-mcmc" class="nav-link" data-scroll-target="#diagnosticos-del-muestreo-por-mcmc"><span class="header-section-number">4.7</span> Diagnosticos del muestreo por MCMC</a>
+  <li><a href="#métodos-numéricos-de-inferencia-bayesiana" id="toc-métodos-numéricos-de-inferencia-bayesiana" class="nav-link" data-scroll-target="#métodos-numéricos-de-inferencia-bayesiana"><span class="header-section-number">4.7</span> Métodos numéricos de Inferencia Bayesiana</a></li>
+  <li><a href="#calculando-la-distribución-a-posteriori" id="toc-calculando-la-distribución-a-posteriori" class="nav-link" data-scroll-target="#calculando-la-distribución-a-posteriori"><span class="header-section-number">4.8</span> Calculando la distribución a posteriori</a>
   <ul class="collapse">
-  <li><a href="#trace-plots" id="toc-trace-plots" class="nav-link" data-scroll-target="#trace-plots"><span class="header-section-number">4.7.1</span> Trace plots</a></li>
-  <li><a href="#rank-plots" id="toc-rank-plots" class="nav-link" data-scroll-target="#rank-plots"><span class="header-section-number">4.7.2</span> Rank plots</a></li>
-  <li><a href="#hat-r-r-sombrero" id="toc-hat-r-r-sombrero" class="nav-link" data-scroll-target="#hat-r-r-sombrero"><span class="header-section-number">4.7.3</span> <span class="math inline">\(\hat R\)</span> (R sombrero)</a></li>
-  <li><a href="#gráfico-de-autocorrelación" id="toc-gráfico-de-autocorrelación" class="nav-link" data-scroll-target="#gráfico-de-autocorrelación"><span class="header-section-number">4.7.4</span> Gráfico de autocorrelación</a></li>
-  <li><a href="#tamaño-de-muestra-efectivo-ess" id="toc-tamaño-de-muestra-efectivo-ess" class="nav-link" data-scroll-target="#tamaño-de-muestra-efectivo-ess"><span class="header-section-number">4.7.5</span> Tamaño de muestra efectivo (ESS)</a></li>
-  <li><a href="#error-estándar-del-monte-carlo-mcse" id="toc-error-estándar-del-monte-carlo-mcse" class="nav-link" data-scroll-target="#error-estándar-del-monte-carlo-mcse"><span class="header-section-number">4.7.6</span> Error estándar del Monte Carlo (MCSE)</a></li>
+  <li><a href="#markov-chain-monte-carlo-mcmc" id="toc-markov-chain-monte-carlo-mcmc" class="nav-link" data-scroll-target="#markov-chain-monte-carlo-mcmc"><span class="header-section-number">4.8.1</span> Markov Chain Monte Carlo (MCMC)</a></li>
+  <li><a href="#metropolis-hastings" id="toc-metropolis-hastings" class="nav-link" data-scroll-target="#metropolis-hastings"><span class="header-section-number">4.8.2</span> Metropolis-Hastings</a></li>
+  <li><a href="#mh-adaptativo" id="toc-mh-adaptativo" class="nav-link" data-scroll-target="#mh-adaptativo"><span class="header-section-number">4.8.3</span> MH adaptativo</a></li>
   </ul></li>
-  <li><a href="#diagnóstico-de-algoritmos-basados-en-gradiente" id="toc-diagnóstico-de-algoritmos-basados-en-gradiente" class="nav-link" data-scroll-target="#diagnóstico-de-algoritmos-basados-en-gradiente"><span class="header-section-number">4.8</span> Diagnóstico de algoritmos basados en gradiente</a>
+  <li><a href="#diagnóstico-del-muestreo" id="toc-diagnóstico-del-muestreo" class="nav-link" data-scroll-target="#diagnóstico-del-muestreo"><span class="header-section-number">4.9</span> Diagnóstico del muestreo</a>
   <ul class="collapse">
-  <li><a href="#energía-de-transición-vs-energía-marginal" id="toc-energía-de-transición-vs-energía-marginal" class="nav-link" data-scroll-target="#energía-de-transición-vs-energía-marginal"><span class="header-section-number">4.8.1</span> Energía de transición vs energía marginal</a></li>
-  <li><a href="#divergencias" id="toc-divergencias" class="nav-link" data-scroll-target="#divergencias"><span class="header-section-number">4.8.2</span> Divergencias</a></li>
+  <li><a href="#trace-plots" id="toc-trace-plots" class="nav-link" data-scroll-target="#trace-plots"><span class="header-section-number">4.9.1</span> Trace plots</a></li>
+  <li><a href="#rank-plots" id="toc-rank-plots" class="nav-link" data-scroll-target="#rank-plots"><span class="header-section-number">4.9.2</span> Rank plots</a></li>
+  <li><a href="#hat-r-r-sombrero" id="toc-hat-r-r-sombrero" class="nav-link" data-scroll-target="#hat-r-r-sombrero"><span class="header-section-number">4.9.3</span> <span class="math inline">\(\hat R\)</span> (R sombrero)</a></li>
+  <li><a href="#gráfico-de-autocorrelación" id="toc-gráfico-de-autocorrelación" class="nav-link" data-scroll-target="#gráfico-de-autocorrelación"><span class="header-section-number">4.9.4</span> Gráfico de autocorrelación</a></li>
+  <li><a href="#tamaño-de-muestra-efectivo-ess" id="toc-tamaño-de-muestra-efectivo-ess" class="nav-link" data-scroll-target="#tamaño-de-muestra-efectivo-ess"><span class="header-section-number">4.9.5</span> Tamaño de muestra efectivo (ESS)</a></li>
+  <li><a href="#error-estándar-del-monte-carlo-mcse" id="toc-error-estándar-del-monte-carlo-mcse" class="nav-link" data-scroll-target="#error-estándar-del-monte-carlo-mcse"><span class="header-section-number">4.9.6</span> Error estándar del Monte Carlo (MCSE)</a></li>
+  <li><a href="#montecarlo-hamiltoniano-hmc" id="toc-montecarlo-hamiltoniano-hmc" class="nav-link" data-scroll-target="#montecarlo-hamiltoniano-hmc"><span class="header-section-number">4.9.7</span> Montecarlo Hamiltoniano (HMC)</a></li>
+  <li><a href="#propuestas-aleatorias-vs-hamiltonianos" id="toc-propuestas-aleatorias-vs-hamiltonianos" class="nav-link" data-scroll-target="#propuestas-aleatorias-vs-hamiltonianos"><span class="header-section-number">4.9.8</span> Propuestas aleatorias vs hamiltonianos</a></li>
+  <li><a href="#hmc-dinámico-y-adaptativo" id="toc-hmc-dinámico-y-adaptativo" class="nav-link" data-scroll-target="#hmc-dinámico-y-adaptativo"><span class="header-section-number">4.9.9</span> HMC dinámico y adaptativo</a></li>
+  <li><a href="#diagnóstico-de-algoritmos-basados-en-gradiente" id="toc-diagnóstico-de-algoritmos-basados-en-gradiente" class="nav-link" data-scroll-target="#diagnóstico-de-algoritmos-basados-en-gradiente"><span class="header-section-number">4.9.10</span> Diagnóstico de algoritmos basados en gradiente</a></li>
+  <li><a href="#divergencias" id="toc-divergencias" class="nav-link" data-scroll-target="#divergencias"><span class="header-section-number">4.9.11</span> Divergencias</a></li>
   </ul></li>
-  <li><a href="#qué-hacer-cuando-los-diagnósticos-no-dan-bien" id="toc-qué-hacer-cuando-los-diagnósticos-no-dan-bien" class="nav-link" data-scroll-target="#qué-hacer-cuando-los-diagnósticos-no-dan-bien"><span class="header-section-number">4.9</span> Qué hacer cuando los diagnósticos no dan bien?</a></li>
-  <li><a href="#una-hoja-de-ruta-para-el-bayesian-workflow" id="toc-una-hoja-de-ruta-para-el-bayesian-workflow" class="nav-link" data-scroll-target="#una-hoja-de-ruta-para-el-bayesian-workflow"><span class="header-section-number">4.10</span> Una hoja de ruta para el Bayesian workflow</a>
+  <li><a href="#qué-hacer-cuando-los-diagnósticos-no-dan-bien" id="toc-qué-hacer-cuando-los-diagnósticos-no-dan-bien" class="nav-link" data-scroll-target="#qué-hacer-cuando-los-diagnósticos-no-dan-bien"><span class="header-section-number">4.10</span> Qué hacer cuando los diagnósticos no dan bien?</a></li>
+  <li><a href="#una-hoja-de-ruta-para-el-bayesian-workflow" id="toc-una-hoja-de-ruta-para-el-bayesian-workflow" class="nav-link" data-scroll-target="#una-hoja-de-ruta-para-el-bayesian-workflow"><span class="header-section-number">4.11</span> Una hoja de ruta para el Bayesian workflow</a>
   <ul class="collapse">
-  <li><a href="#resume-el-problema" id="toc-resume-el-problema" class="nav-link" data-scroll-target="#resume-el-problema"><span class="header-section-number">4.10.1</span> Resume el problema</a></li>
-  <li><a href="#familiarízate-con-los-datos" id="toc-familiarízate-con-los-datos" class="nav-link" data-scroll-target="#familiarízate-con-los-datos"><span class="header-section-number">4.10.2</span> Familiarízate con los datos</a></li>
-  <li><a href="#cuente-una-historia-para-los-datos" id="toc-cuente-una-historia-para-los-datos" class="nav-link" data-scroll-target="#cuente-una-historia-para-los-datos"><span class="header-section-number">4.10.3</span> Cuente una historia para los datos</a></li>
-  <li><a href="#escribe-un-modelo" id="toc-escribe-un-modelo" class="nav-link" data-scroll-target="#escribe-un-modelo"><span class="header-section-number">4.10.4</span> Escribe un modelo</a></li>
-  <li><a href="#implementar-el-modelo" id="toc-implementar-el-modelo" class="nav-link" data-scroll-target="#implementar-el-modelo"><span class="header-section-number">4.10.5</span> Implementar el modelo</a></li>
-  <li><a href="#evaluar-la-distribución-predictiva-a-priori" id="toc-evaluar-la-distribución-predictiva-a-priori" class="nav-link" data-scroll-target="#evaluar-la-distribución-predictiva-a-priori"><span class="header-section-number">4.10.6</span> Evaluar la distribución predictiva a priori</a></li>
-  <li><a href="#calcular-la-distribución-a-posteriori" id="toc-calcular-la-distribución-a-posteriori" class="nav-link" data-scroll-target="#calcular-la-distribución-a-posteriori"><span class="header-section-number">4.10.7</span> Calcular la distribución a posteriori</a></li>
-  <li><a href="#evaluar-muestras" id="toc-evaluar-muestras" class="nav-link" data-scroll-target="#evaluar-muestras"><span class="header-section-number">4.10.8</span> Evaluar muestras</a></li>
-  <li><a href="#validar-el-modelo" id="toc-validar-el-modelo" class="nav-link" data-scroll-target="#validar-el-modelo"><span class="header-section-number">4.10.9</span> Validar el modelo</a></li>
-  <li><a href="#comparar-modelos" id="toc-comparar-modelos" class="nav-link" data-scroll-target="#comparar-modelos"><span class="header-section-number">4.10.10</span> Comparar modelos</a></li>
-  <li><a href="#resumir-resultados" id="toc-resumir-resultados" class="nav-link" data-scroll-target="#resumir-resultados"><span class="header-section-number">4.10.11</span> Resumir resultados</a></li>
+  <li><a href="#resume-el-problema" id="toc-resume-el-problema" class="nav-link" data-scroll-target="#resume-el-problema"><span class="header-section-number">4.11.1</span> Resume el problema</a></li>
+  <li><a href="#familiarízate-con-los-datos" id="toc-familiarízate-con-los-datos" class="nav-link" data-scroll-target="#familiarízate-con-los-datos"><span class="header-section-number">4.11.2</span> Familiarízate con los datos</a></li>
+  <li><a href="#cuente-una-historia-para-los-datos" id="toc-cuente-una-historia-para-los-datos" class="nav-link" data-scroll-target="#cuente-una-historia-para-los-datos"><span class="header-section-number">4.11.3</span> Cuente una historia para los datos</a></li>
+  <li><a href="#escribe-un-modelo" id="toc-escribe-un-modelo" class="nav-link" data-scroll-target="#escribe-un-modelo"><span class="header-section-number">4.11.4</span> Escribe un modelo</a></li>
+  <li><a href="#implementar-el-modelo" id="toc-implementar-el-modelo" class="nav-link" data-scroll-target="#implementar-el-modelo"><span class="header-section-number">4.11.5</span> Implementar el modelo</a></li>
+  <li><a href="#evaluar-la-distribución-predictiva-a-priori" id="toc-evaluar-la-distribución-predictiva-a-priori" class="nav-link" data-scroll-target="#evaluar-la-distribución-predictiva-a-priori"><span class="header-section-number">4.11.6</span> Evaluar la distribución predictiva a priori</a></li>
+  <li><a href="#calcular-la-distribución-a-posteriori" id="toc-calcular-la-distribución-a-posteriori" class="nav-link" data-scroll-target="#calcular-la-distribución-a-posteriori"><span class="header-section-number">4.11.7</span> Calcular la distribución a posteriori</a></li>
+  <li><a href="#evaluar-muestras" id="toc-evaluar-muestras" class="nav-link" data-scroll-target="#evaluar-muestras"><span class="header-section-number">4.11.8</span> Evaluar muestras</a></li>
+  <li><a href="#validar-el-modelo" id="toc-validar-el-modelo" class="nav-link" data-scroll-target="#validar-el-modelo"><span class="header-section-number">4.11.9</span> Validar el modelo</a></li>
+  <li><a href="#comparar-modelos" id="toc-comparar-modelos" class="nav-link" data-scroll-target="#comparar-modelos"><span class="header-section-number">4.11.10</span> Comparar modelos</a></li>
+  <li><a href="#resumir-resultados" id="toc-resumir-resultados" class="nav-link" data-scroll-target="#resumir-resultados"><span class="header-section-number">4.11.11</span> Resumir resultados</a></li>
   </ul></li>
-  <li><a href="#comentarios-finales" id="toc-comentarios-finales" class="nav-link" data-scroll-target="#comentarios-finales"><span class="header-section-number">4.11</span> Comentarios finales</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">4.12</span> Ejercicios</a></li>
+  <li><a href="#comentarios-finales" id="toc-comentarios-finales" class="nav-link" data-scroll-target="#comentarios-finales"><span class="header-section-number">4.12</span> Comentarios finales</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">4.13</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -2678,10 +2685,152 @@ NUTS: [μ, σ]</code></pre>
 </section>
 </section>
 </section>
-<section id="diagnosticos-del-muestreo-por-mcmc" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="diagnosticos-del-muestreo-por-mcmc"><span class="header-section-number">4.7</span> Diagnosticos del muestreo por MCMC</h2>
-<section id="trace-plots" class="level3" data-number="4.7.1">
-<h3 data-number="4.7.1" class="anchored" data-anchor-id="trace-plots"><span class="header-section-number">4.7.1</span> Trace plots</h3>
+<section id="métodos-numéricos-de-inferencia-bayesiana" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="métodos-numéricos-de-inferencia-bayesiana"><span class="header-section-number">4.7</span> Métodos numéricos de Inferencia Bayesiana</h2>
+<p>La estadística Bayesiana es una técnica flexible y poderosa que ofrece un marco conceptual unificado para el análisis de datos. Lamentablemente esta formulación conduce a expresiones que no siempre tienen solución analítica por lo que se requiere de métodos numéricos de inferencia. Los lenguajes de programación probabilista (lpp) han sido propuestos como una forma de superar estas limitaciones técnicas y facilitar la creación de modelos probabilistas. El objetivo de los lpp es unificar los lenguajes de programación general con el modelado probabilista, permitiendo que estudiantes, investigadores y practicantes se focalicen en crear e interpretar modelos en vez de tener que lidiar con <em>detalles</em> computacionales y/o matemáticos. La posibilidad de aplicar métodos Bayesianos a una amplia variedad de problemas sin requerir, por parte del analista, de avanzados conocimientos matemáticos y computacionales es relativamente reciente. Este hito descansa, principalmente, en el aumento de poder de cálculo y en el desarrollo de métodos de inferencia automática. Para entender donde radica la dificultad de la inferencia Bayesiana podemos revisitar el teorema de Bayes.</p>
+<p><span class="math display">\[
+\underbrace{p(\boldsymbol{\theta} \mid \boldsymbol{Y})}_{\text{posterior}} = \frac{\overbrace{p(\boldsymbol{Y} \mid \boldsymbol{\theta})}^{\text{likelihood}}\; \overbrace{p(\boldsymbol{\theta})}^{\text{prior}}}{\underbrace{{p(\boldsymbol{Y})}}_{\text{marginal likelihood}}}
+\]</span></p>
+<p>El teorema de Bayes, tiene una formulación que a primera vista parece muy inocente. Pero el diablo está en los detalles. El likelihood marginal toma la forma de una integral.</p>
+<p><span class="math display">\[
+{p(\boldsymbol{Y}) = \int_{\boldsymbol{\Theta}} p(\boldsymbol{Y} \mid \boldsymbol{\theta})p(\boldsymbol{\theta}) d\boldsymbol{\theta}}
+\]</span></p>
+<p>Esta integral suele ser difícil de resolver. Veamos, esta expresión nos dice que debemos evaluar el likelihood para cada uno de los posibles valores del prior <span class="math inline">\(\theta\)</span>. En la práctica esa tarea no siempre es sencilla o barata de realizar. Si <span class="math inline">\(\theta\)</span> representa un solo parámetro desconocido (como en el modelo beta-binomial) entonces solo hay que resolver una integral 1D, pero si <span class="math inline">\(\theta\)</span> representa dos parámetros (como en el modelo Gaussiano) entonces la integral será doble. En definitiva la integral tendrá tantas dimensiones como parámetros el modelo. En general las integrales en grandes dimensiones no son simples de resolver.</p>
+<p>Para obtener una buena aproximación de la distribución a posteriori podemos concentrarnos en las regiones donde tanto la contribución del prior como del likelihood son <em>relativamente grandes</em> (área gris en la siguiente figura), en general esto es lo que hacen métodos numéricos como MCMC, encontrar de forma automática la regiones de mayor densidad de probabilidad. Esa misma aproximación puede conducir a errores gruesos en el cálculo del likelihood marginal</p>
+<center>
+<img src="img/grid.png" width="800">
+</center>
+<p>Para algunos problemas es posible calcular la distribución a posteriori de forma analítica. Esto ya lo vimos para el modelo beta-binomial donde la distribución a posteriori es:</p>
+<p><span class="math display">\[
+p(\theta \mid y) \propto \operatorname{Beta}(\alpha_{a priori} + y, \beta_{a priori} + N - y)
+\]</span></p>
+<p>Para esos casos suele ser posible también calcular el marginal likelihood de forma analítica.</p>
+<p>Pero en general no tenemos expresiones analíticas y entonces debemos confiar en métodos numéricos.</p>
+</section>
+<section id="calculando-la-distribución-a-posteriori" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="calculando-la-distribución-a-posteriori"><span class="header-section-number">4.8</span> Calculando la distribución a posteriori</h2>
+<p>Hay muchas formas de calcular la distribución a posteriori</p>
+<ul>
+<li><font color="gray"> Conjugación </font></li>
+<li><font color="gray"> Método de Laplace </font></li>
+<li><font color="gray"> Aproximación de Laplace Anidada Integrada (INLA) </font></li>
+<li><font color="gray"> Inferencia Variacional (VI) </font></li>
+<li>Markov Chain Monte Carlo (MCMC)</li>
+<li><font color="gray"> Sequential Monte Carlo </font></li>
+<li>…</li>
+</ul>
+<p>Por ahora solo hablaremos de los métodos MCMC ya que, por el momento, son los métodos más generales. Pero para entender de forma más simple que es lo que hacen estos métodos conviene empezar desde otro método, conocido como método de la grilla.</p>
+<section id="markov-chain-monte-carlo-mcmc" class="level3" data-number="4.8.1">
+<h3 data-number="4.8.1" class="anchored" data-anchor-id="markov-chain-monte-carlo-mcmc"><span class="header-section-number">4.8.1</span> Markov Chain Monte Carlo (MCMC)</h3>
+<p>Esta es una familia muy extensa de métodos utilizados para resolver muchos problemas, entre los que se encuentra el cálculo de la distribución a posteriori. Conceptualmente se puede pensar a estos métodos como generalizaciones del método de la grilla, ya que también se basan en la posibilidad de realizar evaluaciones punto a punto del prior y likelihood. La diferencia crucial es que en vez de utilizar una grilla predefinida el método realiza evaluaciones que progresivamente se concentran en regiones de alta probabilidad. No solo eso si no que eventualmente el método devolverá muestras de forma proporcional a la probabilidad a posteriori. Es decir si una región es 3 veces más probable que otra obtendremos 3 veces más muestras de esa región que de la otra.</p>
+<p>A muy grandes rasgos, y dado un punto inicial arbitrario, los métodos MCMC, constan de dos pasos.</p>
+<ol type="1">
+<li>Generar un nuevo punto a partir de perturbar uno preexistente.</li>
+<li>Aceptar o rechazar ese nuevo punto de forma probabilista y comparando la probabilidad del punto preexistente y del nuevo punto.</li>
+</ol>
+<p>Esta es esencialmente la receta, la forma exacta en que hacemos cada uno de estos pasos define los distintos métodos dentro de la familia MCMC. Veamos uno de los más sencillos de entender y de implementar.</p>
+</section>
+<section id="metropolis-hastings" class="level3" data-number="4.8.2">
+<h3 data-number="4.8.2" class="anchored" data-anchor-id="metropolis-hastings"><span class="header-section-number">4.8.2</span> Metropolis-Hastings</h3>
+<p>Metropolis-Hastings no es un algoritmo muy moderno o particularmente eficiente, pero Metropolis-Hastings es simple de entender y también proporciona una base para comprender métodos más sofisticados y poderosos.</p>
+<p>El algoritmo Metropolis-Hasting se define de la siguiente manera:</p>
+<ol type="1">
+<li>Inicialice el valor del parámetro <span class="math inline">\(\boldsymbol{X}\)</span> en <span class="math inline">\(x_i\)</span></li>
+<li>Utilice una distribución de propuesta <span class="math inline">\(q(x_{i + 1} \mid x_i)\)</span> para generar un nuevo valor <span class="math inline">\(x_{i + 1}\)</span></li>
+<li>Calcule la probabilidad de aceptar el nuevo valor como:</li>
+</ol>
+<p><span class="math display">\[
+p_a (x_{i + 1} \mid x_i) = \min \left(1, \frac{p(x_{i + 1}) \; q(x_i \mid x_{i + 1})} {p(x_i) \; q (x_{i + 1} \mid x_i)} \right)
+\]</span></p>
+<ol start="4" type="1">
+<li>Si <span class="math inline">\(p_a &gt; R\)</span> donde <span class="math inline">\(R \sim \mathcal{U}(0, 1)\)</span>, guarde el nuevo valor; de lo contrario, guarde el anterior.</li>
+<li>Iterar de 2 a 4 hasta que se haya generado una muestra <em>suficientemente grande</em></li>
+</ol>
+<p>El algoritmo Metropolis es muy general y se puede usar en aplicaciones no Bayesianas, pero para la presente discusión, <span class="math inline">\(p(x_i)\)</span> es la densidad del posterior evaluada en el valor del parámetro <span class="math inline">\(x_i\)</span>. Una forma de simplificar un poco el método es notar que si <span class="math inline">\(q\)</span> es una distribución simétrica, los términos <span class="math inline">\(q(x_i \mid x_{i + 1})\)</span> y <span class="math inline">\(q(x_{i + 1} \mid x_i)\)</span> se cancelarán (conceptualmente significa que es igualmente probable que vayamos de <span class="math inline">\(x_{i+1}\)</span> a <span class="math inline">\(x_i\)</span> o de <span class="math inline">\(x_{i}\)</span> a <span class="math inline">\(x_{i+1}\)</span>), dejando solo un cociente entre el posterior evaluado en dos puntos. Este algoritmo siempre aceptará moverse de una región de baja probabilidad a una más alta y aceptará probabilísticamente moverse de una región de alta a una baja probabilidad.</p>
+<p>¡Otra observación importante es que el algoritmo Metropolis-Hastings no es un método de optimización! No nos importa encontrar el valor del parámetro con la máxima probabilidad, queremos <em>explorar</em> la distribución <span class="math inline">\(p\)</span>. Intuitivamente esto es posible ya que en general el sistema puede moverse de una región de alta probabilidad a una región de menor probabiliad. Estrictamente MH cumple con la condición de balance detallado, que se describe como:</p>
+<p><span class="math display">\[
+p_i t_{ij} = p_j t_{ji}
+\]</span></p>
+<p>En palabras, la probabilidad de estar en un estado <span class="math inline">\(i\)</span> por la probabilidad de moverse del estado <span class="math inline">\(i\)</span> al <span class="math inline">\(j\)</span> es igual que la probabilidad de estar en el estado <span class="math inline">\(j\)</span> y moverse del <span class="math inline">\(j\)</span> al <span class="math inline">\(i\)</span>.</p>
+<p>La condición de balance detallado es suficiente para garantizar que un algoritmo de MCMC es capaz de muestrear de forma correcta de una distribución arbitraria dada una cantidad infinita de pasos. Entonces una forma de probar que un algortimo de muestre es teóricamente válido es demostrar que cumple con el balance detallado.</p>
+<p>Para hacer las cosas más concretas, intentemos resolver el modelo Beta-Binomial.</p>
+<span class="math display">\[\begin{aligned}
+    \theta \sim &amp;\; \text{Beta}(\alpha, \beta) \\
+    Y \sim &amp;\; \text{Bin}(n=1, p=\theta)
+\end{aligned}\]</span>
+<p>Este modelo tiene solución analítica. Pero supongamos que no sabemos cómo calcularla, y por lo tanto, implementaremos el algoritmo Metropolis-Hastings usando Python.</p>
+<div id="2be96e1a" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">def</span> post(θ, Y, α<span class="op">=</span><span class="dv">1</span>, β<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb35-2"><a href="#cb35-2"></a>    <span class="cf">if</span> <span class="dv">0</span> <span class="op">&lt;=</span> θ <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb35-3"><a href="#cb35-3"></a>        prior <span class="op">=</span> pz.Beta(α, β).pdf(θ)</span>
+<span id="cb35-4"><a href="#cb35-4"></a>        like  <span class="op">=</span> pz.Bernoulli(θ).pdf(Y).prod()</span>
+<span id="cb35-5"><a href="#cb35-5"></a>        prob <span class="op">=</span> like <span class="op">*</span> prior</span>
+<span id="cb35-6"><a href="#cb35-6"></a>    <span class="cf">else</span>:</span>
+<span id="cb35-7"><a href="#cb35-7"></a>        prob <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb35-8"><a href="#cb35-8"></a>    <span class="cf">return</span> prob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>También necesitamos datos, por lo que generaremos algunos datos falsos aleatorios para este propósito.</p>
+<div id="d04bff59" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>Y <span class="op">=</span> pz.Bernoulli(<span class="fl">0.7</span>).rvs(<span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Y finalmente ejecutamos nuestra implementación del algoritmo Metropolis-Hastings:</p>
+<div id="6a69434c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>n_iters <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>can_sd <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>α <span class="op">=</span> β <span class="op">=</span>  <span class="dv">1</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>θ <span class="op">=</span> <span class="fl">0.5</span> </span>
+<span id="cb37-5"><a href="#cb37-5"></a>trace <span class="op">=</span> {<span class="st">"θ"</span>:np.zeros(n_iters)}</span>
+<span id="cb37-6"><a href="#cb37-6"></a>p2 <span class="op">=</span> post(θ, Y, α, β)</span>
+<span id="cb37-7"><a href="#cb37-7"></a></span>
+<span id="cb37-8"><a href="#cb37-8"></a><span class="cf">for</span> <span class="bu">iter</span> <span class="kw">in</span> <span class="bu">range</span>(n_iters):</span>
+<span id="cb37-9"><a href="#cb37-9"></a>    θ_can <span class="op">=</span> stats.norm(θ, can_sd).rvs(<span class="dv">1</span>)</span>
+<span id="cb37-10"><a href="#cb37-10"></a>    p1 <span class="op">=</span> post(θ_can, Y, α, β)  </span>
+<span id="cb37-11"><a href="#cb37-11"></a>    pa <span class="op">=</span> p1 <span class="op">/</span> p2</span>
+<span id="cb37-12"><a href="#cb37-12"></a></span>
+<span id="cb37-13"><a href="#cb37-13"></a>    <span class="cf">if</span> pa <span class="op">&gt;</span> stats.uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(<span class="dv">1</span>):</span>
+<span id="cb37-14"><a href="#cb37-14"></a>        θ <span class="op">=</span> θ_can</span>
+<span id="cb37-15"><a href="#cb37-15"></a>        p2 <span class="op">=</span> p1</span>
+<span id="cb37-16"><a href="#cb37-16"></a></span>
+<span id="cb37-17"><a href="#cb37-17"></a>    trace[<span class="st">"θ"</span>][<span class="bu">iter</span>] <span class="op">=</span> θ</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_17064/2595604670.py:17: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  trace["θ"][iter] = θ</code></pre>
+</div>
+</div>
+<p>En la línea 9 del bloque de código anterior generamos una propuesta muestreando una distribución Normal con desviación estándar <code>can_sd</code>. En la línea 10 evaluamos el posterior en el nuevo valor generado <code>θ_can</code> y en la línea 11 calculamos la probabilidad de aceptación. En la línea 17 guardamos un valor de <code>θ</code> en el array <code>trace</code>. Dependiendo del resultado de la comparación en la línea 13, el valor guardado será nuevo o repetiremos el anterior.</p>
+<p>El primer panel de la siguiente figura muestra cada valor muestreado en cada paso, y el panel de la derecha el histograma de esos valores. El resultado parece razonable. Nada mal para unas pocas lineas de código!</p>
+<div id="325fb0e9" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb39-2"><a href="#cb39-2"></a>axes[<span class="dv">0</span>].plot(trace[<span class="st">'θ'</span>])</span>
+<span id="cb39-3"><a href="#cb39-3"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'θ'</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb39-4"><a href="#cb39-4"></a>axes[<span class="dv">1</span>].hist(trace[<span class="st">'θ'</span>], orientation<span class="op">=</span><span class="st">"horizontal"</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb39-5"><a href="#cb39-5"></a>axes[<span class="dv">1</span>].set_xticks([])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&amp;target=banana">Acá</a> pueden ver una versión interactiva de un Metropolis-Hastings</p>
+</section>
+<section id="mh-adaptativo" class="level3" data-number="4.8.3">
+<h3 data-number="4.8.3" class="anchored" data-anchor-id="mh-adaptativo"><span class="header-section-number">4.8.3</span> MH adaptativo</h3>
+<p>Las garantías teóricas de MH y otros MCMC son válidas cuando la cantidad de pasos tiende a infinito. Si tomáramos infinitas muestras, cualquier distribución de propuesta nos conduciría al mismo resultado. Tampoco importaría el punto inicial.</p>
+<p>Sin embargo, no podemos tomar infinitas muestras y por lo tanto la eficiencia puede cambiar drásticamente de acuerdo a la distribución de propuesta que utilicemos y en menor medida al punto inicial. Además, la eficiencia de una distribución de propuesta dada dependerá de la geometría de la distribución a posteriori. Por ejemplo, si la distribución a posteriori es muy alargada en una dirección y muy angosta en otra, una distribución de propuesta que isotrópica será ineficiente. Es decir no existe una única distribución de propuesta que sea eficiente para todos los problemas.</p>
+<p>Varios estudios teóricos muestran que bajos ciertas condiciones la tasa de aceptación óptima para MH es de 0.4 para distribuciones a posterirori unidimensionales y <span class="math inline">\(\approx 0.234\)</span> en el límite de dimensión infinita. En la práctica “infinito suele ser <span class="math inline">\(\lessapprox 10\)</span>”. Estos resultados teóricos proporcionan una guía para diseñar métodos adatativos. Es decir podemos agregar al algortimo una primer fase the ajuste (tuning) donde se modifica algún aspecto de la distribución de propuesta de forma tal de lograr tasas de aceptación entre 0.23 y 0.4.</p>
+<p>Existen muchos esquemas de ajuste uno común es usar como distribución de propuesta una gaussiana multivariada y ajustar la varianza de forma adaptativa. Muchas veces la matriz de covarianza usada es diagonal y se ajusta por separado cada componente. Estos esquemas adaptativos permiten que MH sea aplicado a una gran cantidad de problemas sin necesidad de realizar modificaciones al método.</p>
+<p>Al usar métodos adaptativos hay que tomar alguno recaudos. Principalmente es importante destacar que las muestras generadas durante el ajuste no son muestras válidas. Esencialmente al cambiar lo hiper-parámetros del método, perdemos las garantías teóricas que aseguran que un MCMC sea valido. Es por ello que en la práctica se suele descartar las muestras generadas durante el ajuste. Vale aclarar que es posible diseñar esquemas de ajuste que no requieran descartar muestras, pero estos son más complejos y no son tan comunes.</p>
+<p>Es posible tener que un algoritmo MCMC sea eficiente sin fase de ajuste, pero oso implica mucha suerte o que alguien se tomó el trabajo de ajusar el algoritmo a un caso particular.</p>
+<p>En resumen, la fase de ajuste permite que el método MCMC se adapte a la geometría de la distribución a posteriori y por lo tanto permite generalizar estar métodos a una amplia variedad de problemas. Es por ello que los métodos MCMC a veces reciben el nombre de “motores de inferencia universal”. El nombre es bastante rimbomante pero refleja el hecho, de que al menos en teoría, es posible escribir un modelo Bayesiano arbitrario y resolverlo. Esta separación entre modelo e inferencia es un aspecto central de la programación probabilista, ya que saca el foco del proceso de inferencia en si y pone todo el peso en el modelado. En la realidad esto es una verdad a medias, o si se quiere una promesa. En la práctica los métodos de MCMC son muy útiles hasta que dejan de serlo. Por ello es que necesitamos de métodos de diagnóstico del muestreo.</p>
+</section>
+</section>
+<section id="diagnóstico-del-muestreo" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="diagnóstico-del-muestreo"><span class="header-section-number">4.9</span> Diagnóstico del muestreo</h2>
+<p>Un método de diagnóstico, evalua alguna propiedad esperada de una muestra y nos indica sobre posibles desviaciones entre lo observado y lo predicho por la teoría. Si el diagnóstico encuentra un problema, en general es que hay un problema. Pero si el diagnóstico no encuentra un problema, no quiere decir, estrictamente, que este no exista. Además, como veremos no existe un criterio claro de demarcación. Es el problema del pelado. Se estima que un humano tienen alrededor de 150000 cabellos en su cabeza. Alguien con 0 pelos es claramente un pelado. Pero es dificil establecer un número único y no arbitrario que divida pelados de no pelados.</p>
+<section id="trace-plots" class="level3" data-number="4.9.1">
+<h3 data-number="4.9.1" class="anchored" data-anchor-id="trace-plots"><span class="header-section-number">4.9.1</span> Trace plots</h3>
 <p>Este es un gráfico muy común. Para cada parámetro graficamos su valor (eje-y) en cada iteración (eje-x). Lo esperable es no ver ningún patrón, solo ruido como en primer panel de la siguiente figura (marco turquesa).</p>
 <center>
 <img src="diapo/img/trace_single_good_bad.png" width="800">
@@ -2692,7 +2841,7 @@ NUTS: [μ, σ]</code></pre>
 <li><p>El tercer panel muestra una cadena menos “pegajosa”, pero también daría la impresión que aún no ha terminado de estabilizarse</p></li>
 <li><p>El último panel, en cambio, muestra que hay una región donde el sampler se mueve bien, pero cada tanto “salta” a estados donde se queda atascado. Quizá esto se deba a una distribución a posteriori multimodal o dificultades en el sampler para explorar regiones con distinta curvatura.</p></li>
 </ul>
-<p>Como ya vimos por defecto PyMC corre más de una cadena, por lo que un traceplot ideal debería verse como esto:</p>
+<p>En general combine correr más de una cadena de MCMC empezando de puntos distintos. Lo esperable es que no podamos distinguir diferencias entre cadenas. Un traceplot con 4 cadenas superpuestas se ve así lo cual es un poco dificil de interpretar.</p>
 <center>
 <img src="diapo/img/trace_multiple_good.png" width="800/">
 </center>
@@ -2700,9 +2849,10 @@ NUTS: [μ, σ]</code></pre>
 <center>
 <img src="diapo/img/trace_multiple_good_arviz.png" width="900">
 </center>
+<p>El KDE o histograma, también nos puedo ayudar a interpretar si hay problemas. Ya que esperamos que las distribuciones sean similares, más allá de un poco de ruido producto del número finito de muestras.</p>
 </section>
-<section id="rank-plots" class="level3" data-number="4.7.2">
-<h3 data-number="4.7.2" class="anchored" data-anchor-id="rank-plots"><span class="header-section-number">4.7.2</span> Rank plots</h3>
+<section id="rank-plots" class="level3" data-number="4.9.2">
+<h3 data-number="4.9.2" class="anchored" data-anchor-id="rank-plots"><span class="header-section-number">4.9.2</span> Rank plots</h3>
 <p>Los trace plots son muy comunes, pero existe una alternativa más moderna llamada rank plots. La idea básica es la siguiente. Para un parámetro tomamos todas las cadenas y ordenamos los valores de menor a mayor y les asignamos un rango es decir al valor más bajo le ponemos 0, al que sigue 1 y así hasta llegar a un número que será igual a la cantidad de muestras totales (cantidad de cadenas multiplicado por la cantidad de muestras por cadena). Luego reagrupamos los rankings según las cadenas que les dieron origen y para cada cadena hacemos un histograma. Si las cadenas fuesen indistinguibles esperaríamos que los histogramas sean uniformes. Ya que no hay razón para que una cadena tenga más rankings bajos (o medios o altos) que el resto.</p>
 <p>La siguiente figura muestra 4 ejemplos, donde solo uno (marco cyan) no muestra problemas</p>
 <center>
@@ -2710,107 +2860,30 @@ NUTS: [μ, σ]</code></pre>
 </center>
 <p>En ArviZ los rank plots se pueden obtener con la función <code>az.plot_rank</code> o pasando un argumento a plot_trace <code>az.plot_trace(⋅, kind="rank_bars")</code></p>
 </section>
-<section id="hat-r-r-sombrero" class="level3" data-number="4.7.3">
-<h3 data-number="4.7.3" class="anchored" data-anchor-id="hat-r-r-sombrero"><span class="header-section-number">4.7.3</span> <span class="math inline">\(\hat R\)</span> (R sombrero)</h3>
-<p>Los gráficos suelen ser útiles para descubrir patrones, pero a veces queremos números, por ejemplo al evaluar rápidamente muchos parámetros. <span class="math inline">\(\hat R\)</span> es la respuesta a la pregunta. Lograron las cadenas mezclarse adecuadamente? Pero también me gusta pensarlo como el jurado en un concurso de trace (o rank) plots. La versión implementada en ArviZ hace varias cosas debajo del capó, pero la idea central es que compara la varianza <em>entre</em> cadenas con la varianza <em>dentro</em> de cada cadena.</p>
+<section id="hat-r-r-sombrero" class="level3" data-number="4.9.3">
+<h3 data-number="4.9.3" class="anchored" data-anchor-id="hat-r-r-sombrero"><span class="header-section-number">4.9.3</span> <span class="math inline">\(\hat R\)</span> (R sombrero)</h3>
+<p>Los gráficos suelen ser útiles para descubrir patrones, pero a veces queremos números, por ejemplo al evaluar rápidamente una lista de cientos, o miles, de parámetros. <span class="math inline">\(\hat R\)</span> es la respuesta a la pregunta ¿Lograron las cadenas <em>mezclarse</em> adecuadamente?</p>
+<p>En la literatura podrán encontrar que hay varias versiones de este diagnóstico, en texto viejos puede aparecer como Gelman-Rubin, por los nombres de los autores de la primer versión de este diagnóstico. Pero hoy en día contamos con versiones más modernas y más robustas y generales de las versiones anteriores. La versión implementada en ArviZ es la última versión de este diagnóstico y su cálculo tiene varios pasos. Pero la idea central es que compara la varianza <em>entre</em> cadenas con la varianza <em>dentro</em> de cada cadena. Si las cadenas provienen de la misma distribución entonces <span class="math inline">\(\hat R = 1\)</span>. En la práctica se suele considerar que <span class="math inline">\(\hat R \lessapprox 1.01\)</span> son seguros. Pero acá retomamos el problema del pelado. El valor de corte es arbitrario, tiene cierto sustento empírico pero es arbitrario. Por ejemplo en la primer fase de modelado valores más altos como <span class="math inline">\(\hat R \approx 1.1\)</span> pueden estár bien. Además el valor de <span class="math inline">\(\hat R \lessapprox 1.01\)</span> es razonable cuando tenemos unos pocos parámetros pero es esperable que si tenemos muchos paramétros varios de ellos tengan valores de <span class="math inline">\(\hat R\)</span> mayores a 1.01. Un caso particular que veremos más adelante es el de BART, un método no paramétrico de regresión. Es conocido que BART suele generar valores de <span class="math inline">\(\hat R\)</span> relativamente alto y aún ser útil.</p>
+<p>La siguiente animación muestra, en el panel superior, 4 cadenas que progresivamente se van haciendo más similares. En el panel inferior tenemos 2 Gaussianas centradas en 0, una de ellas con las varianza intra cadena o y la otra entre cadenas.</p>
 <center>
 <img src="diapo/img/r_hat.gif" width="900">
 </center>
-<p>Idealmente <span class="math inline">\(\hat R = 1\)</span>, en la práctica <span class="math inline">\(\hat R \lessapprox 1.01\)</span> son considerados seguros y en la primer fase de modelado valores más altos como <span class="math inline">\(\hat R \approx 1.1\)</span> pueden estár bien.</p>
 <p>Usando ArviZ podemos obtener <span class="math inline">\(\hat R\)</span> usando <code>az.rhat(⋅)</code>, <code>az.summary(⋅)</code> y <code>az.plot_forest(⋅, r_hat=True)</code></p>
 </section>
-<section id="gráfico-de-autocorrelación" class="level3" data-number="4.7.4">
-<h3 data-number="4.7.4" class="anchored" data-anchor-id="gráfico-de-autocorrelación"><span class="header-section-number">4.7.4</span> Gráfico de autocorrelación</h3>
-<p>Idealmente, una muestra debe ser independiente e idénticamente distribuida (iid). Por definición, las muestras MCMC están correlacionadas. En la práctica, queremos muestras con baja autocorrelación. En ArviZ obtenemos este gráfico con la función <code>az.plot_autocorr()</code></p>
-<div id="73bdb4a8" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>cadenas_defectuosas <span class="op">=</span> {<span class="st">"cadenas_defectuosas"</span>: np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>).reshape(<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>)}</span>
-<span id="cb35-2"><a href="#cb35-2"></a>az.plot_autocorr(cadenas_defectuosas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
+<section id="gráfico-de-autocorrelación" class="level3" data-number="4.9.4">
+<h3 data-number="4.9.4" class="anchored" data-anchor-id="gráfico-de-autocorrelación"><span class="header-section-number">4.9.4</span> Gráfico de autocorrelación</h3>
+<p>Idealmente, nos gustaría poder trabajar con muestras independientes e idénticamente distribuidas (iid). Por construcción, las muestras MCMC están correlacionadas, ya que la probabilidad de aceptar el paso <span class="math inline">\(i\)</span> depende del paso <span class="math inline">\(i-1\)</span>. En la práctica, queremos muestras con baja autocorrelación.</p>
+<p>En ArviZ obtenemos este gráfico con la función <code>az.plot_autocorr()</code></p>
+<div id="73bdb4a8" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>cadenas_defectuosas <span class="op">=</span> {<span class="st">"cadenas_defectuosas"</span>: np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>).reshape(<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>)}</span>
+<span id="cb40-2"><a href="#cb40-2"></a>az.plot_autocorr(cadenas_defectuosas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'np' is not defined</code></pre>
 </div>
 </div>
 <div id="dbffd34e" class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>cadenas_adecuadas <span class="op">=</span> {<span class="st">"cadena_adecuadas"</span>: pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">500</span>))}</span>
-<span id="cb36-2"><a href="#cb36-2"></a>az.plot_autocorr(cadenas_adecuadas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="tamaño-de-muestra-efectivo-ess" class="level3" data-number="4.7.5">
-<h3 data-number="4.7.5" class="anchored" data-anchor-id="tamaño-de-muestra-efectivo-ess"><span class="header-section-number">4.7.5</span> Tamaño de muestra efectivo (ESS)</h3>
-<p>Como las muestras de un MCMC están correlacionadas la cantidad de información “útil” es menor que una muestra del mismo tamaño pero iid.</p>
-<br> <br>
-<center>
-<img src="diapo/img/ess.gif" width="600">
-</center>
-<p>Podemos estimar el <strong>tamaño de muestra efectivo</strong> (ESS), es decir, el tamaño de una muestra con la cantidad equivalente de información pero sin autocorrelación. Esto es útil para determinar si la muestra que tenemos es lo suficientemente grande. Se recomienda que el ESS sea superior a 100 por cadena. Es decir para para 4 cadenas queremos un mínimo de 400.</p>
-<p>Con ArviZ podemos obtenerlo <code>az.ess(⋅)</code>, <code>az.summary(⋅)</code> y <code>az.plot_forest(⋅, ess=True)</code></p>
-<p>pd.concat((az.ess(cadenas_defectuosas).to_pandas(), az.ess(cadenas_adecuadas).to_pandas()))</p>
-<p>Vemos que <code>az.summary(⋅)</code> devuelve dos valores de ESS, <code>ess_bulk</code> y <code>ess_tail</code>. Esto se debe a que, distintas regiones del espacio de los parámetros pueden tener distinto valor de ESS, ya que no todas las regiones son muestreadas con la misma eficiencia. Intuitivamente uno puede pensar que al muestrear una distribución como una Gaussiana es más fácil obtener mejor calidad de muestra alrededor de la media que de las colas, simplemente por que tenemos más muestras de esa región.</p>
-<p>pd.concat([az.summary(cadenas_adecuadas, kind=“diagnostics”), az.summary(cadenas_defectuosas, kind=“diagnostics”)])</p>
-<p>Si las muestras de MCMC las vamos a usar para calcular valores centrales como medias o medianas entonces tenemos que asegurarnos que el <code>ess_bulk</code> sea lo suficientemente algo, en cambio, si queremos calcular intervalos como un HDI 95% hay que asegurarse que <code>ess_tail</code> sea adecuado.</p>
-<p>ArviZ ofrece varias funciones vinculadas al ESS. Por ejemplo si queremos evaluar el desempeño del sampler para varias regiones al mismo tiempo podemos usar <code>az.plot_ess</code>.</p>
-<div id="99f14b7b" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb37-2"><a href="#cb37-2"></a>az.plot_ess(cadenas_adecuadas, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb37-3"><a href="#cb37-3"></a>az.plot_ess(cadenas_defectuosas, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-31-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Una forma simple de aumentar el ESS es aumentar la cantidad de muestras, pero podría darse el caso que el ESS crezca muy lento con el número de muestras, por lo que aún si aumentáramos 10 veces la cantidad de muestras estaríamos por debajo de lo requerido. Una forma de estimar “cuanto nos falta” es usar <code>az.plot_ess(⋅, kind="evolution")</code>. Este gráfico nos muestra como fue cambiando el ESS con cada muestra, lo que nos permite hacer proyecciones. En el siguiente ejemplo vemos que para <code>cadenas_adecuadas</code> el ESS crece linealmente con el número de muestras mientras que para <code>cadenas_defectuosas</code> no crece para nada. Este último caso no hay esperanzas de mejorar el ESS simplemente aumentando la cantidad de muestras.</p>
-<div id="e9d08319" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb38-2"><a href="#cb38-2"></a>az.plot_ess(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb38-3"><a href="#cb38-3"></a>az.plot_ess(cadenas_defectuosas,  kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="error-estándar-del-monte-carlo-mcse" class="level3" data-number="4.7.6">
-<h3 data-number="4.7.6" class="anchored" data-anchor-id="error-estándar-del-monte-carlo-mcse"><span class="header-section-number">4.7.6</span> Error estándar del Monte Carlo (MCSE)</h3>
-<p>Una ventaja del ESS es que no tiene escala, da igual si un parámetro varía entre 0.1 y 0.2 y otro entre -2000 y 5000, un ESS de 400 tiene el mismo significado en ambos casos. En modelos con muchos parámetros rápidamente podemos indentificar cuales parámetros son más problemáticos. Sin embargo, a la hora de reportar resultados no es muy informativo saber si el ESS fue de 1372 o 1501. En cambio nos gustaría saber el orden del error que estamos cometiendo al aproximar la distribución a posteriori. Esa información la da el <strong>error estándar del Monte Carlo</strong> (MCSE). Al igual que el ESS, el MCSE tiene en cuenta la autocorrelación de las muestras. Este error debe estar por debajo de la precisión deseada en nuestros resultados. Es decir si para un parámetro el MCSE es 0.1, no tiene sentido reportar que la media de ese parámetro es 3.15. Ya que tranquilamente el valor correcto podría estar entre 3.4 y 2.8.</p>
-<p>Una de las cantidades devueltas por <code>az.summary(⋅)</code> es mc_error.</p>
-</section>
-</section>
-<section id="diagnóstico-de-algoritmos-basados-en-gradiente" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="diagnóstico-de-algoritmos-basados-en-gradiente"><span class="header-section-number">4.8</span> Diagnóstico de algoritmos basados en gradiente</h2>
-<p>Debido a su funcionamiento interno, algoritmos como NUTS ofrecen algunas pruebas específicas que no están disponibles para otros métodos. Generalmente estas pruebas son muy sensibles</p>
-<p>Para ejemplificar esto vamos a cargar dos InferenceData de modelos pre-calculados. Los detalles de como se generaron estos idatas no son relevantes por el momento. Solo diremos que son dos modelos que son matemáticamente equivalente pero parametrizados de formas distintas. En este caso la parametrización afecta la eficiencia del sampler. El modelo <code>centrado</code> es muestreado de forma más eficiente que el modelo <code>no centrado</code>.</p>
-<div id="87a258ff" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>idata_cm <span class="op">=</span> az.load_arviz_data(<span class="st">"centered_eight"</span>)</span>
-<span id="cb39-2"><a href="#cb39-2"></a>idata_ncm <span class="op">=</span> az.load_arviz_data(<span class="st">"non_centered_eight"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="energía-de-transición-vs-energía-marginal" class="level3" data-number="4.8.1">
-<h3 data-number="4.8.1" class="anchored" data-anchor-id="energía-de-transición-vs-energía-marginal"><span class="header-section-number">4.8.1</span> Energía de transición vs energía marginal</h3>
-<p>Podemos pensar en un Monte Carlo Hamiltoniano como un proceso de dos pasos<br>
-* Un muestreo determinista (siguiendo el Hamiltoniano)<br>
-* Una caminata aleatorio en el espacio del momentum</p>
-<p>Si la distribución de la energía de transición es similar a la distribución de la energía marginal, entonces NUTS es capaz de generar muestras de la distribución marginal de la energía que sean <em>casi</em> independientes entre transiciones. Esto lo podemos evaluar visualmente o numéricamente, calculando el Bayesian Fraction of Missing Information (BFMI), como se muestra en la siguiente figura.</p>
-<div id="9cd52aac" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb40-2"><a href="#cb40-2"></a></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="cf">for</span> ax, idata, nombre <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), (idata_cm, idata_ncm), (<span class="st">"centrado"</span>, <span class="st">"no centrado"</span>)):</span>
-<span id="cb40-4"><a href="#cb40-4"></a>    az.plot_energy(idata, ax<span class="op">=</span>ax)</span>
-<span id="cb40-5"><a href="#cb40-5"></a>    ax.set_title(nombre)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a>cadenas_adecuadas <span class="op">=</span> {<span class="st">"cadena_adecuadas"</span>: pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">500</span>))}</span>
+<span id="cb42-2"><a href="#cb42-2"></a>az.plot_autocorr(cadenas_adecuadas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2820,41 +2893,155 @@ NUTS: [μ, σ]</code></pre>
 </div>
 </div>
 </section>
-<section id="divergencias" class="level3" data-number="4.8.2">
-<h3 data-number="4.8.2" class="anchored" data-anchor-id="divergencias"><span class="header-section-number">4.8.2</span> Divergencias</h3>
-<p>Una ventaja de NUTS es que <em>falla con el estilo</em>. Esto sucede por ejemplo al intentar pasar de regiones de baja curvatura a regiones de alta curvatura. En estos casos las trayectorias numéricas pueden divergir. En esencia esto sucede porque en esos casos no existe un único conjunto de hiper-parámetros que permita el muestreo eficiente de ambas regiones. Por lo que una de la regiones es muestreada adecuandamente y cuando el sampler se mueve hacia la otra región falla. Las trayectorias numéricas divergentes son identificadores extremadamente sensibles de <em>vecindarios patológicos</em>.</p>
-<p>El siguiente ejemplo muestra dos cosas el modelo <code>no centrado</code> muestra varias divergencias (círculos turquesas) agrupados en una región. En el modelo <code>centrado</code>, que no tiene divergencias, se puede ver que alrededor de esa misma región hay muestras para valores más pequeños de <code>tau</code>. Es decir el modelo <code>no centrado</code> falla en muestrear una región, pero al menos avisa que está teniendo problemas en muestrear esa región!</p>
-<div id="95ba3d06" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb41-2"><a href="#cb41-2"></a></span>
-<span id="cb41-3"><a href="#cb41-3"></a></span>
-<span id="cb41-4"><a href="#cb41-4"></a><span class="cf">for</span> ax, idata, nombre <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), (idata_cm, idata_ncm), (<span class="st">"centrado"</span>, <span class="st">"no_centrado"</span>)):</span>
-<span id="cb41-5"><a href="#cb41-5"></a>    az.plot_pair(idata, var_names<span class="op">=</span>[<span class="st">'theta'</span>, <span class="st">'tau'</span>], coords<span class="op">=</span>{<span class="st">'school'</span>:<span class="st">"Choate"</span>}, kind<span class="op">=</span><span class="st">'scatter'</span>,</span>
-<span id="cb41-6"><a href="#cb41-6"></a>                 divergences<span class="op">=</span><span class="va">True</span>, divergences_kwargs<span class="op">=</span>{<span class="st">'color'</span>:<span class="st">'C1'</span>},</span>
-<span id="cb41-7"><a href="#cb41-7"></a>                 ax<span class="op">=</span>ax)</span>
-<span id="cb41-8"><a href="#cb41-8"></a>    ax.set_title(nombre)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tamaño-de-muestra-efectivo-ess" class="level3" data-number="4.9.5">
+<h3 data-number="4.9.5" class="anchored" data-anchor-id="tamaño-de-muestra-efectivo-ess"><span class="header-section-number">4.9.5</span> Tamaño de muestra efectivo (ESS)</h3>
+<p>Como las muestras de un MCMC están correlacionadas la cantidad de información “útil” es menor que una muestra del mismo tamaño pero iid.</p>
+<p>La siguiente figura muestra la distribución correcta como una linea punteada y un histograma de muestras que sucesivamente van aumento. Podemos ver que en el panel de arriba, donde la muestra no están correlacionadas, obtenemos una mejor representación de la distribución real con un menor número de muestras que en el panel inferior donde las muestras si lo están.</p>
+<br> <br>
+<center>
+<img src="diapo/img/ess.gif" width="600">
+</center>
+<p>Podemos estimar el <strong>tamaño de muestra efectivo</strong> (ESS), es decir, el tamaño de una muestra con la cantidad equivalente de información pero sin autocorrelación. Esto es útil para determinar si el tamaño de muestra que tenemos es lo suficientemente grande. Se recomienda que el ESS sea superior a 100 por cadena. Es decir para para 4 cadenas queremos un mínimo de 400.</p>
+<p>Con ArviZ podemos obtenerlo <code>az.ess(⋅)</code>, <code>az.summary(⋅)</code> y <code>az.plot_forest(⋅, ess=True)</code></p>
+<div id="8d6896b9" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>pd.concat((az.ess(cadenas_defectuosas).to_pandas(),</span>
+<span id="cb43-2"><a href="#cb43-2"></a>           az.ess(cadenas_adecuadas).to_pandas()))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'pd' is not defined</code></pre>
+</div>
+</div>
+<p>Vemos que <code>az.summary(⋅)</code> devuelve dos valores de ESS, <code>ess_bulk</code> y <code>ess_tail</code>. Esto se debe a que, distintas regiones del espacio de los parámetros pueden tener distinto valor de ESS, ya que no todas las regiones son muestreadas con la misma eficiencia. Intuitivamente uno puede pensar que al muestrear una distribución como una Gaussiana es más fácil obtener mejor calidad de muestra alrededor de la media que de las colas, simplemente por que tenemos más muestras de esa región.</p>
+<div id="b86b18da" class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1"></a>pd.concat([az.summary(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"diagnostics"</span>),</span>
+<span id="cb45-2"><a href="#cb45-2"></a>           az.summary(cadenas_defectuosas, kind<span class="op">=</span><span class="st">"diagnostics"</span>)])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Si las muestras de MCMC las vamos a usar para calcular valores centrales como medias o medianas entonces tenemos que asegurarnos que el <code>ess_bulk</code> sea lo suficientemente algo, en cambio, si queremos calcular intervalos como un HDI 95% hay que asegurarse que <code>ess_tail</code> sea adecuado.</p>
+<p>ArviZ ofrece varias funciones vinculadas al ESS. Por ejemplo si queremos evaluar el desempeño del sampler para varias regiones al mismo tiempo podemos usar <code>az.plot_ess</code>.</p>
+<div id="99f14b7b" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb46-2"><a href="#cb46-2"></a>az.plot_ess(cadenas_adecuadas, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb46-3"><a href="#cb46-3"></a>az.plot_ess(cadenas_defectuosas, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-37-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Una forma simple de aumentar el ESS es aumentar la cantidad de muestras, pero podría darse el caso que el ESS crezca muy lento con el número de muestras, por lo que aún si aumentáramos 10 veces la cantidad de muestras estaríamos por debajo de lo requerido. Una forma de estimar “cuanto nos falta” es usar <code>az.plot_ess(⋅, kind="evolution")</code>. Este gráfico nos muestra como fue cambiando el ESS con cada muestra, lo que nos permite hacer proyecciones. En el siguiente ejemplo vemos que para <code>cadenas_adecuadas</code> el ESS crece linealmente con el número de muestras mientras que para <code>cadenas_defectuosas</code> no crece para nada. Este último caso no hay esperanzas de mejorar el ESS simplemente aumentando la cantidad de muestras.</p>
+<div id="e9d08319" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb47-2"><a href="#cb47-2"></a>az.plot_ess(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb47-3"><a href="#cb47-3"></a>az.plot_ess(cadenas_defectuosas,  kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-38-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="error-estándar-del-monte-carlo-mcse" class="level3" data-number="4.9.6">
+<h3 data-number="4.9.6" class="anchored" data-anchor-id="error-estándar-del-monte-carlo-mcse"><span class="header-section-number">4.9.6</span> Error estándar del Monte Carlo (MCSE)</h3>
+<p>Una ventaja del ESS es que no tiene escala, da igual si un parámetro varía entre 0.1 y 0.2 y otro entre -2000 y 5000, un ESS de 400 tiene el mismo significado en ambos casos. En modelos con muchos parámetros rápidamente podemos indentificar cuales parámetros son más problemáticos. Sin embargo, a la hora de reportar resultados no es muy informativo saber si el ESS fue de 1372 o 1501. En cambio nos gustaría saber el orden del error que estamos cometiendo al aproximar la distribución a posteriori. Esa información la da el <strong>error estándar del Monte Carlo</strong> (MCSE). Al igual que el ESS, el MCSE tiene en cuenta la autocorrelación de las muestras. Este error debe estar por debajo de la precisión deseada en nuestros resultados. Es decir si para un parámetro el MCSE es 0.1, no tiene sentido reportar que la media de ese parámetro es 3.15. Ya que tranquilamente el valor correcto podría estar entre 3.4 y 2.8.</p>
+<p>Una de las cantidades devueltas por <code>az.summary(⋅)</code> es mc_error.</p>
+</section>
+<section id="montecarlo-hamiltoniano-hmc" class="level3" data-number="4.9.7">
+<h3 data-number="4.9.7" class="anchored" data-anchor-id="montecarlo-hamiltoniano-hmc"><span class="header-section-number">4.9.7</span> Montecarlo Hamiltoniano (HMC)</h3>
+<p>Supongamos que queremos simular el movimiento de una partícula sobre una superficie. Si queremos que nuestra simulación sea fidedigna necesitamos describirla usando las leyes de la física. Una forma de describir el movimiento de la partícula es utilizando lo que se conoce como mecánica Hamiltoniana. Sin entrar en detalles diremos que un Hamiltonianio es una descripción de la energía total de un sistema físico. Si asumimos que no hay fricción ni ninguna otra forma de “disipar” energía podemos describir el compartamiento de partícula sobre una superficie con solo 2 componentes. La energía cinética y la potencial.</p>
+<p>La energía cinética es la energía asociada al movimiento de la partícula y la potencial es la energía asociada a la posición de la partícula. Supongamos que nuestra superficie tiene una forma de U. Y nuestra partícula está en la parte más baja. Esa partícula tendrá energía potencial 0 y si está quieta energía cinética 0. Nuestra simulación será terriblemente aburrida, ya que la partícula permanecerá en esa posición para siempre. Para ponerle algo de diversión podemos empujar la partícula, es decir le impartimos momentum, la partícula se moverá hacia arriba perdiendo cada vez más energía cinética (cada vez se moverá más lento) y ganando potencial, hasta que llegue a un punto en que se detenga, en ese punto toda la energía cinética se habrá convertido en potencial y la partícula comenzara a caer y la energía potencial se convertirá en cinética. Como no hay fricción la energía total del sistema se mantiene constante. Y todo los cambios en la energía cinética son compensados por cambios en la energía potencial.</p>
+<p>Para un sistema como el que acabamos de describir la energía total será:</p>
+<p><span class="math display">\[
+\underbrace{H(\overbrace{\mathbf{q}}^{\text{posición}}, \overbrace{\mathbf{p}}^{\text{momemtum}})}_{\text{Hamiltoniano}}  = \underbrace{K(\mathbf{p}, \mathbf{q})}_{\text{Energía cinética}} + \underbrace{V(\mathbf{q})}_{\text{Energía potencial}}
+\]</span></p>
+<p>Desde un punto de vista matemático da igual si la superficie es una U, una montaña rusa, un satélite en órbita o incluso una distribución a posteriori. En todos estos casos podemos describir el movimiento de la partícula usando un Hamiltoniano.</p>
+<p>La siguiente figura muestra un ejemplo de un distribución a posteriori 2D y multiples trayectorias de una partícula. En la figura se puede ver que iniciamos una simulación, la detenemos, marcamos un punto y empezamos desde ese punto empujando de vuelta la particula con una fuerza y direcciones arbitrarias.</p>
+<center>
+<img src="diapo/img/Hamiltonian_Monte_Carlo.gif" width="400">
+</center>
+<p>En el caso de la distribución a posteriori la posición de la particula son los valores de los parámetros. La energía potencial vendrá dada por la densidad de probabilidad a posteriori, estrictamente por el menos logaritmo de esa densidad. Y el momentum es una variable auxiliar. Es decir una variable completamente inventada, pero útil por que nos permite calcular el hamiltoniano.</p>
+<p><span class="math display">\[
+H(\mathbf{q}, \mathbf{p}) = \overbrace{-\log p(\mathbf{p} \mid \mathbf{q})}^{K(\mathbf{p}, \mathbf{q})} \overbrace{- \log p(\mathbf{q})}^{ + V(\mathbf{q})}
+\]</span></p>
+<p>Fijensé que en este punto no estamos haciendo ninguna analogía, estrictamente un Hamiltonian MonteCarlo es un método que simula el movimiento de una partícula en un espacio de parámetros.</p>
+<p>A grandes rasgos un HMC tiene dos pasos que se repiten hasta obtener la cantidad de muestras necesarias:</p>
+<ol type="1">
+<li>Generar un nuevo punto a partir del hamiltoniano</li>
+<li>Aceptar o rechazar ese nuevo punto según el criterio de metropolis.</li>
+</ol>
+<p>Para generar mejor intuición recomiendo jugar con ese <a href="https://chi-feng.github.io/mcmc-demo/app.html?algorithm=NaiveNUTS&amp;target=banana">demo</a></p>
+</section>
+<section id="propuestas-aleatorias-vs-hamiltonianos" class="level3" data-number="4.9.8">
+<h3 data-number="4.9.8" class="anchored" data-anchor-id="propuestas-aleatorias-vs-hamiltonianos"><span class="header-section-number">4.9.8</span> Propuestas aleatorias vs hamiltonianos</h3>
+<p>Por qué es buena idea usar el Hamiltoniano? Porque estamos explorando la distribución a posteriori siguiendo una representación fidedigna de la misma. OK, esto es cierto pero no genera demasiada intuición. Veamos un par de enfoques alternativos.</p>
+<p>En un MH la propuesta es aleatoria, es como querer encontrar algo en una habitación desconocida a oscuras, hay que ir a tientas. Si la habitación es pequeña y simple (cuadrada, con pocos muebles, escaleras etc) hacerlo a ciegas no será tarea demasiado compleja. Sin embargo con el Hamiltoniano es como tener una linterna, ahora podemos ver, al menos localmente, que hay en la habitación, por lo que recorrerla será más eficiente.</p>
+<p>Vamos con otra explicación, para resolver un hamiltoniano necesitamos calcular derivadas, las derivadas nos dan información sobre la curvatura de una función, por ejemplo el cálculo de la primer derivada en un punto nos dice hacia donde (de)crece una función. Si siguiéramos la derivada hacia donde crece la función, eventualmente llegaríamos a un máximo (asumiendo que este existe). Esto se llama maximizar una función y de hecho muchos métodos de minimización de funciones como los encontrados en <a href="https://docs.scipy.org/doc/scipy/reference/optimize.html">SciPy.optimize</a> utilizan derivadas. Al agregar el <em>momemtum</em> podemos hacer algo más interesante, no solo podemos encontrar máximos, también podemos escapar de ellos. Esto nos permite obtener puntos de toda la distribución a posteriori de forma eficiente. Esto es importante en estadística Bayesiana, ya que no solo queremos el máximo, si no una descripción de toda la distribución a posteriori.</p>
+<center>
+<img src="diapo/img/hmc_landscape.gif" width="700">
+</center>
+</section>
+<section id="hmc-dinámico-y-adaptativo" class="level3" data-number="4.9.9">
+<h3 data-number="4.9.9" class="anchored" data-anchor-id="hmc-dinámico-y-adaptativo"><span class="header-section-number">4.9.9</span> HMC dinámico y adaptativo</h3>
+<p>Un HMC tiene varios hipeparámetros, por ejemplo para simular una trayectoria tenemos que hacerlo de a pasos discretos, mientras más pequeños los pasos más fidedigna la simulación, pero también más costosa. Otro hiperparámetro es la longitud de cada simulación si esta es muy corta demoraremos mucho tiempo en explorar la distribución a posteriori, pero si está es muy larga corremos el riesgo de retornar al punto de partida, o sus inmediaciones, es decir habremos gastado un montón de recursos para terminar en el mismo lugar.</p>
+<p>En la siguiente figura se muestran tres ejemplos. A la izquierda el paso es muy corto, por lo que la exploración no es eficiente, en el centro tenemos un mejor paso pero simulamos durante tanto tiempo que terminamos regresando al punto de partida. Finalmente y a la derecha tanto el paso como el tiempo de simulación son adecuados. Decimos que es adecuado, ya que logramos genear un nuevo punto que simultaneamente está alejado en el espacio de los parámetros, pero con alta probabilidad de aceptación. De hecho en este ejemplo la probabilidad de aceptación es 1, ya que el valor de la pdf es el mismo para el punto de partida y para el punto final.</p>
+<center>
+<img src="img/hmc_1D.gif" width="900">
+</center>
+<p>Este es otro ejemplo, en cada caso se muestra una densidad de probabilidad que va de más probable (amarillo) a menos probable (violeta), las flechas naranjas indican la trayectoria calculada de a pasos. En en el primer caso vemos una trayectoria elíptica tan larga que vuelve al punto de partida. En el segundo ejemplo vemos que el paso no es adecuado, esto produce una simulación inestable que se manifiesta en <strong>divergencias</strong> de la trayectoria correcta. En este último caso, y como en el ejemplo anterior, vemos que tanto el paso como el tiempo de simulación son adecuamos y la propuesta genera un punto alejado en el espacio de los parámetros, pero con alta probabilidad de aceptación (1 en este caso).</p>
+<center>
+<img src="diapo/img/HMC_trayectoria.png" width="900">
+</center>
+<p>Las divergencias ocurren cuando hay cambios de “curvatura” demasiado bruscos. Es decir cuando la partícula pasa de zonas de baja densidad de probabilidad a zonas de alta densidad o viceversa. En estos casos el método de integración numérica que se utiliza para resolver el hamiltoniano no es suficientemente preciso. PyMC registra cuando las divergencias ocurren y como veremos más adelante, es posible utilizar las divergencias para diagnosticar problemas con el método de muestreo.</p>
+<p>Al igual que en un MH adaptativo, en un HMC también necesitamos ajustar la matriz de covarianza, usualmente llamada Matriz de Masa (mass matrix). En HMC esta matriz es la que determina el momemtum.</p>
+<p>Cuando los hiper-parámetros de un HMC son adecuados, el muestreo es muy eficiente. De hecho es mucho más eficiente que un MH. Los valores de los hiper-parámetros dependen esencialmente de la geometría de la distribución a posteriori, por lo que no existe un solo conjunto de hiper-parámetros mejor que los demás. Es por ello que en la práctica estos se calculan de forma adaptativa corriendo una cantidad de pasos de HMC los cuales se utilizan para ajustar eso hiper-parámetros automáticamente y luego se descartan.</p>
+<p>NUTS (No U-Turn sampler), el sampler por defecto en PyMC es un HMC dinámico y adaptativo. El nombre proviene de una rutina del método que evita que las trayectorias den vueltas en U. Este método detecta en cada paso de si estamos retornando el punto de partida, de ser así detiene el paso, evalúa si aceptar o no y comienza un nuevo paso. Al evitar trayectoria que vuelven al punto de partida, NUTS es capaz de explorar la distribución a posteriori de forma más eficiente.</p>
+</section>
+<section id="diagnóstico-de-algoritmos-basados-en-gradiente" class="level3" data-number="4.9.10">
+<h3 data-number="4.9.10" class="anchored" data-anchor-id="diagnóstico-de-algoritmos-basados-en-gradiente"><span class="header-section-number">4.9.10</span> Diagnóstico de algoritmos basados en gradiente</h3>
+<p>Debido a su funcionamiento interno, algoritmos como NUTS ofrecen algunas pruebas específicas que no están disponibles para otros métodos. Generalmente estas pruebas son muy sensibles</p>
+<p>Para ejemplificar esto vamos a cargar dos InferenceData de modelos pre-calculados. Los detalles de como se generaron estos idatas no son relevantes por el momento. Solo diremos que son dos modelos que son matemáticamente equivalente pero parametrizados de formas distintas. En este caso la parametrización afecta la eficiencia del sampler. El modelo <code>centrado</code> es muestreado de forma más eficiente que el modelo <code>no centrado</code>.</p>
+<div id="87a258ff" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1"></a>idata_cm <span class="op">=</span> az.load_arviz_data(<span class="st">"centered_eight"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2"></a>idata_ncm <span class="op">=</span> az.load_arviz_data(<span class="st">"non_centered_eight"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="divergencias" class="level3" data-number="4.9.11">
+<h3 data-number="4.9.11" class="anchored" data-anchor-id="divergencias"><span class="header-section-number">4.9.11</span> Divergencias</h3>
+<p>Una ventaja de NUTS es que <em>falla con el estilo</em>. Esto sucede por ejemplo al intentar pasar de regiones de baja curvatura a regiones de alta curvatura. En estos casos las trayectorias numéricas pueden divergir. En esencia esto sucede porque en esos casos no existe un único conjunto de hiper-parámetros que permita el muestreo eficiente de ambas regiones. Por lo que una de la regiones es muestreada adecuandamente y cuando el sampler se mueve hacia la otra región falla. Las trayectorias numéricas divergentes son identificadores extremadamente sensibles de <em>vecindarios patológicos</em>.</p>
+<p>El siguiente ejemplo muestra dos cosas el modelo <code>no centrado</code> muestra varias divergencias (círculos turquesas) agrupados en una región. En el modelo <code>centrado</code>, que no tiene divergencias, se puede ver que alrededor de esa misma región hay muestras para valores más pequeños de <code>tau</code>. Es decir el modelo <code>no centrado</code> falla en muestrear una región, pero al menos avisa que está teniendo problemas en muestrear esa región!</p>
+<div id="95ba3d06" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb49-2"><a href="#cb49-2"></a></span>
+<span id="cb49-3"><a href="#cb49-3"></a></span>
+<span id="cb49-4"><a href="#cb49-4"></a><span class="cf">for</span> ax, idata, nombre <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), (idata_cm, idata_ncm), (<span class="st">"centrado"</span>, <span class="st">"no_centrado"</span>)):</span>
+<span id="cb49-5"><a href="#cb49-5"></a>    az.plot_pair(idata, var_names<span class="op">=</span>[<span class="st">'theta'</span>, <span class="st">'tau'</span>], coords<span class="op">=</span>{<span class="st">'school'</span>:<span class="st">"Choate"</span>}, kind<span class="op">=</span><span class="st">'scatter'</span>,</span>
+<span id="cb49-6"><a href="#cb49-6"></a>                 divergences<span class="op">=</span><span class="va">True</span>, divergences_kwargs<span class="op">=</span>{<span class="st">'color'</span>:<span class="st">'C1'</span>},</span>
+<span id="cb49-7"><a href="#cb49-7"></a>                 ax<span class="op">=</span>ax)</span>
+<span id="cb49-8"><a href="#cb49-8"></a>    ax.set_title(nombre)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <div id="784c2014" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a>az.plot_parallel(idata_cm, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1"></a>az.plot_parallel(idata_cm, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-36-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-41-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="qué-hacer-cuando-los-diagnósticos-no-dan-bien" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="qué-hacer-cuando-los-diagnósticos-no-dan-bien"><span class="header-section-number">4.9</span> Qué hacer cuando los diagnósticos no dan bien?</h2>
+<section id="qué-hacer-cuando-los-diagnósticos-no-dan-bien" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="qué-hacer-cuando-los-diagnósticos-no-dan-bien"><span class="header-section-number">4.10</span> Qué hacer cuando los diagnósticos no dan bien?</h2>
 <p><br></p>
 <ul>
 <li><p><font color="gray"> Más muestras o más pasos de tuning. Esto solo suele ser útil cuando los problemas son menores</font></p></li>
@@ -2870,76 +3057,76 @@ NUTS: [μ, σ]</code></pre>
 <li><p>Leer los mensajes de advertencia y sugerencias de PyMC! ;-)</p></li>
 </ul>
 </section>
-<section id="una-hoja-de-ruta-para-el-bayesian-workflow" class="level2" data-number="4.10">
-<h2 data-number="4.10" class="anchored" data-anchor-id="una-hoja-de-ruta-para-el-bayesian-workflow"><span class="header-section-number">4.10</span> Una hoja de ruta para el Bayesian workflow</h2>
+<section id="una-hoja-de-ruta-para-el-bayesian-workflow" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="una-hoja-de-ruta-para-el-bayesian-workflow"><span class="header-section-number">4.11</span> Una hoja de ruta para el Bayesian workflow</h2>
 <p>A continuación se describen una serie de consejos y recomendaciones a modo de referencia rápida, sobre como encarar un análisis de datos y modelado. Las recomendaciones están orientadas a estadística Bayesiana en particular, pero pueden ser útiles al utilizar otro tipo de herramientas y modelos.</p>
 <p>Las recomendaciones están escritas de forma lineal, pero en la práctica, es posible que debas retroceder uno o más pasos y, a veces, omitir pasos. Piensa en estas notas, no como una partitura de una pieza clásica que un violinista tiene que seguir exactamente, sino como la partitura que sigue un bajista de Jazz, eres libre de improvisar, reorganizar algunas partes y omitir otras, e incluso puedes agregar tus propias notas!</p>
-<section id="resume-el-problema" class="level3" data-number="4.10.1">
-<h3 data-number="4.10.1" class="anchored" data-anchor-id="resume-el-problema"><span class="header-section-number">4.10.1</span> Resume el problema</h3>
+<section id="resume-el-problema" class="level3" data-number="4.11.1">
+<h3 data-number="4.11.1" class="anchored" data-anchor-id="resume-el-problema"><span class="header-section-number">4.11.1</span> Resume el problema</h3>
 <p>Resuma los puntos clave de su problema y lo que le gustaría aprender de los datos. Piensa también en los demás, en lo que a tu jefe, cliente o colega le gustaría saber o aprender. No es necesario que esto sea muy completo; puedes revisar los objetivos más adelante, pero pueden ayudarte a organizar tus esfuerzos de modelado y evitar desviaciones excesivas.</p>
 <p>Comuníquese con las partes interesadas cuando surjan dudas. Una respuesta de la persona adecuada, puede ahorrarnos horas de trabajo.</p>
 <p>A veces no tendrás una idea clara de como enfocar un análisis; tu única expectativa podría ser obtener “algo útil” de un conjunto de datos, y eso está bien. Pero otras veces puede que incluso sepas qué tipo de modelo quieres, tal vez tu jefe te pidió explícitamente que ejecutaras tal o cual análisis. Si ya sabe qué tipo de modelo o herramienta es necesaria, pero no está muy familiarizado con el enfoque, busque qué métodos, métricas o visualizaciones son comunes para ese problema/datos y pida consejo a otros. Esto es más importante cuanto menos familiarizado esté con ese tipo de problema/datos. Si está familiarizado, es posible que ya sepa qué métodos, visualizaciones y resúmenes desea utilizar u obtener.</p>
 <p>Escriba todos estos elementos preliminares como una lista de puntos a tener en cuenta o una hoja de ruta a seguir, en problemas complejos es fácil perder el foco. Esta lista puede ser revisada y actualizada de ser necesario, pero es importante establecer expectativas preliminares de lo que es deseable e ir actualizándolas según lo que sea posible. Quizá los datos no sirvan para contestar lo que nos interesa, o quizá necesitamos información extra o incluso puede que hayamos encontrado algo aún mas importante que lo que queríamos originalmente.</p>
 </section>
-<section id="familiarízate-con-los-datos" class="level3" data-number="4.10.2">
-<h3 data-number="4.10.2" class="anchored" data-anchor-id="familiarízate-con-los-datos"><span class="header-section-number">4.10.2</span> Familiarízate con los datos</h3>
+<section id="familiarízate-con-los-datos" class="level3" data-number="4.11.2">
+<h3 data-number="4.11.2" class="anchored" data-anchor-id="familiarízate-con-los-datos"><span class="header-section-number">4.11.2</span> Familiarízate con los datos</h3>
 <p>Siempre es una buena idea realizar un análisis exploratorio de los datos. Modelar ciegamente tus datos te lleva a todo tipo de problemas. Tomarse el tiempo de mirar los datos es rara vez una pérdida de tiempo y al contrario suele ahorrarnos tiempo y proporcionar ideas útiles. A veces un buen resumen de los datos puede ser suficiente para nuestro propósito y hacer innecesarias otras aproximaciones más complejas como modelos estadísticos o de otros tipos.</p>
 <p>La exploración de los datos debe conducir al entendimiento de los mismos. La forma exacta de lograr esto puede variar mucho de un conjunto de datos a otro y de un análisis a otro. Pero hay comprobaciones que suelen ser útiles, como comprobar si hay valores faltantes o errores en los datos. Es importantes considerar el contexto. Una valor de 200 es razonable si se refiere al peso en gramo de frutas, pero <em>problemático</em> si se refiere a registros de clima en el planeta Tierra. ¿Son correctos los tipos de datos? ¿Todos los valores que deberían ser números, son realmente números (generalmente enteros o flotantes) o son cadenas? ¿Qué variables son categóricas? ¿Cuáles son continuos? En esta etapa, es posible que deba realizar una limpieza de sus datos. Esto le ahorrará tiempo en el futuro. Y es posible que sea necesario comunicarse con quien generó o proveyó los datos, para asegurarse que estamos interpretando de forma correcta los datos y que cualquier procesamiento de los mismos es correcto.</p>
 <p>Por lo general, también nos gustaría hacer algunos gráficos, histogramas, diagramas de caja, diagramas de dispersión, matrices de correlaciones, etc. Además de los gráficos, también calcule resúmenes numéricos, medias y medianas, para todos los datos, o agrupando los datos, etc.</p>
 <p>Acá es importante llevar registro de lo que se va observando. Cualquier cosa que resulte llamativa, inesperada o que consideremos relevante para análisis posteriores. En esta etapa los gráficos y análisis no tienen que ser extremadamente prolijos. Después de todo es un análisis preliminar, pero mantener cierto orden es de utilidad. Un análisis más o menos ordenado puede ser suficiente para compartir en una discusión técnica con colegas o clientes. Incluso puede ser muy útil para nuestros yo futuro, nada tan frustrante como retomar un análisis luego de un par de meses y no entender que fue lo que nosotros mismos hicimos!</p>
 </section>
-<section id="cuente-una-historia-para-los-datos" class="level3" data-number="4.10.3">
-<h3 data-number="4.10.3" class="anchored" data-anchor-id="cuente-una-historia-para-los-datos"><span class="header-section-number">4.10.3</span> Cuente una historia para los datos</h3>
+<section id="cuente-una-historia-para-los-datos" class="level3" data-number="4.11.3">
+<h3 data-number="4.11.3" class="anchored" data-anchor-id="cuente-una-historia-para-los-datos"><span class="header-section-number">4.11.3</span> Cuente una historia para los datos</h3>
 <p>A menudo resulta útil pensar en cómo se podrían haber generado los datos. Esto suele denominarse <strong>proceso generador de datos</strong> o mecanismo de generación de datos. No necesitamos descubrir el mecanismo verdadero, muchas veces sólo necesitamos pensar en mecanismos plausibles.</p>
 <p>Haz dibujos y trata de ser muy esquemático, garabatos y figuras geométricas deberían ser suficientes a menos que seas un buen dibujante. Este paso puede ser complicado, así que usemos un ejemplo. Digamos que estás estudiando los niveles de agua de un lago, piensa en qué hace que el agua aumente; lluvia, ríos, etc, y lo que la hace disminuir; evaporación, animales bebiendo agua, producción de energía, etc. Intenta pensar cuáles de estos elementos pueden ser relevantes y cuáles podrían ser insignificantes. Utilice todo el contexto que tenga para su problema.</p>
 <p>Intente mantenerlo simple pero no más simple. Por ejemplo, un mecanismo podría ser “El peso de los cerdos aumenta cuando se les dá mayor cantidad de maíz”, ese es un buen mecanismo si todo lo que necesita predecir son sus ganancias por la venta de cerdos. Pero será un mecanismo demasiado simplista si se estudia la absorción intestinal a nivel celular.</p>
 <p>Si se te ocurren historias alternativas y no sabes decidir cuál es mejor. ¡No te preocupes, enuméralas todos! ¡Quizás podamos usar los datos para decidir!</p>
 </section>
-<section id="escribe-un-modelo" class="level3" data-number="4.10.4">
-<h3 data-number="4.10.4" class="anchored" data-anchor-id="escribe-un-modelo"><span class="header-section-number">4.10.4</span> Escribe un modelo</h3>
+<section id="escribe-un-modelo" class="level3" data-number="4.11.4">
+<h3 data-number="4.11.4" class="anchored" data-anchor-id="escribe-un-modelo"><span class="header-section-number">4.11.4</span> Escribe un modelo</h3>
 <p>Intente traducir el proceso generador de datos a un modelo. Si te sientes cómodo con las matemáticas, úsalas. Si prefiere una representación visual como un modelo gráfico, úsela. Si te gusta el código, hazlo. Los modelos incompletos están bien como primer paso. Por ejemplo, si usa código, siéntase libre de usar pseudocódigo o agregar comentarios para señalar los elementos que faltan mientras piensa en el modelo. Puedes refinarlo más tarde.</p>
 <p>Intente comenzar de manera simple, no use jerarquías, preferible empezar con priors unidimensionales e independientes, omita interacciones para modelos lineales, etc. Si por alguna razón el punto de partida es un modelo complejo, está bien, puede pensar en formas de simplificarlo.</p>
 <p>A veces, es posible que puedas utilizar un modelo de libro de texto estándar o algo que hayas visto en una publicación de blog o en una charla. Es común que para ciertos problemas la gente tienda a utilizar ciertos modelos “predeterminados”. Puede que sea un buen comienzo, o quizá todo lo que necesite. Mantenga las cosas simples, a menos que necesite algo más.</p>
 <p>Este es un buen paso para pensar en tus antecedentes, no solo qué familia vas a utilizar, sino qué parámetros específicos. Si no tienes ni idea, utiliza un previo vago. Pero si tienes alguna información úsala. Intente codificar información muy general, como que este parámetro no puede ser negativo, o es probable que este parámetro sea más pequeño que esto o esté dentro de este rango. Busque la fruta madura, normalmente eso será suficiente. La excepción será cuando tengas suficiente información de buena calidad para definir un previo muy preciso, pero incluso entonces, eso es algo que puedes agregar más adelante.</p>
 </section>
-<section id="implementar-el-modelo" class="level3" data-number="4.10.5">
-<h3 data-number="4.10.5" class="anchored" data-anchor-id="implementar-el-modelo"><span class="header-section-number">4.10.5</span> Implementar el modelo</h3>
+<section id="implementar-el-modelo" class="level3" data-number="4.11.5">
+<h3 data-number="4.11.5" class="anchored" data-anchor-id="implementar-el-modelo"><span class="header-section-number">4.11.5</span> Implementar el modelo</h3>
 <p>Escriba el modelo en un lenguaje de programación probabilístico. Si usó código en el ejemplo anterior, la línea entre este paso y el anterior puede ser difusa, está bien. Intente mantener el modelo simple al principio; agregaremos más capas más adelante a medida que sigamos iterando el flujo de trabajo. Empezar de forma sencilla normalmente le ahorra tiempo a largo plazo. Los modelos simples son más fáciles de depurar y depurar un problema a la vez es generalmente menos frustrante que tener que solucionar varios problemas antes de que nuestro modelo se ejecute.</p>
 <p>Una vez que tenga un modelo, verifique que el modelo se compile y/o ejecute sin errores. Al depurar un modelo, especialmente en una etapa inicial del análisis, es posible que desee trabajar con un conjunto de datos reducido, por ej un 50% o 10% si el conjunto de datos es demasiado grande, o tal vez comenzar con solo unas pocas covariables, y luego agrega el resto. Esto puede ayudar a acelerar el modelo, para que pueda cambiarlo e iterar más rápido. Esto tiene la desventaja de que es posible que se pierdan los datos necesarios para descubrir algún patrón relevante, pero podría estar bien al principio, cuando suele ser el momento en el que cometerá la mayoría de los errores o tendrá mayores dudas sobre lo que está haciendo. En las primeras etapas, también puede reducir la cantidad de pasos de ajuste y muestreo.</p>
 </section>
-<section id="evaluar-la-distribución-predictiva-a-priori" class="level3" data-number="4.10.6">
-<h3 data-number="4.10.6" class="anchored" data-anchor-id="evaluar-la-distribución-predictiva-a-priori"><span class="header-section-number">4.10.6</span> Evaluar la distribución predictiva a priori</h3>
+<section id="evaluar-la-distribución-predictiva-a-priori" class="level3" data-number="4.11.6">
+<h3 data-number="4.11.6" class="anchored" data-anchor-id="evaluar-la-distribución-predictiva-a-priori"><span class="header-section-number">4.11.6</span> Evaluar la distribución predictiva a priori</h3>
 <p>Generalmente es una buena idea generar datos a partir de la distribución predictiva a priori y compararlos con su conocimiento previo. ¿Está la mayor parte de la distribución simulada dentro de un rango razonable? ¿Existen valores extremos? Utilice valores de referencia como guía. Los valores de referencia son datos empíricos u observaciones históricas, normalmente serán valores mínimos, máximos o esperados. Evite comparar con los datos observados, ya que eso puede generar problemas si no es lo suficientemente cuidadoso.</p>
 </section>
-<section id="calcular-la-distribución-a-posteriori" class="level3" data-number="4.10.7">
-<h3 data-number="4.10.7" class="anchored" data-anchor-id="calcular-la-distribución-a-posteriori"><span class="header-section-number">4.10.7</span> Calcular la distribución a posteriori</h3>
+<section id="calcular-la-distribución-a-posteriori" class="level3" data-number="4.11.7">
+<h3 data-number="4.11.7" class="anchored" data-anchor-id="calcular-la-distribución-a-posteriori"><span class="header-section-number">4.11.7</span> Calcular la distribución a posteriori</h3>
 <p>Hay muchas formas de calcular el a posteriori; en esta serie de recomendaciones asumimos el uso de métodos MCMC, ya que son los métodos más generales y más usados.</p>
 </section>
-<section id="evaluar-muestras" class="level3" data-number="4.10.8">
-<h3 data-number="4.10.8" class="anchored" data-anchor-id="evaluar-muestras"><span class="header-section-number">4.10.8</span> Evaluar muestras</h3>
+<section id="evaluar-muestras" class="level3" data-number="4.11.8">
+<h3 data-number="4.11.8" class="anchored" data-anchor-id="evaluar-muestras"><span class="header-section-number">4.11.8</span> Evaluar muestras</h3>
 <p>Cuando utilizamos métodos MCMC, debemos comprobar que las muestras sean lo suficientemente buenas. Para ello, necesitamos calcular diagnósticos como <span class="math inline">\(\hat R\)</span> (r-hat) y el tamaño de muestra efectivo (ESS). Y evalúe gráficos como traceplot y rank-plots. No es necesario que los diagnósticos sean tan buenos en las primeras etapas del flujo de trabajo. Al mismo tiempo, un diagnóstico muy malo podría ser una señal de un problema con nuestro(s) modelo(s).</p>
 </section>
-<section id="validar-el-modelo" class="level3" data-number="4.10.9">
-<h3 data-number="4.10.9" class="anchored" data-anchor-id="validar-el-modelo"><span class="header-section-number">4.10.9</span> Validar el modelo</h3>
+<section id="validar-el-modelo" class="level3" data-number="4.11.9">
+<h3 data-number="4.11.9" class="anchored" data-anchor-id="validar-el-modelo"><span class="header-section-number">4.11.9</span> Validar el modelo</h3>
 <p>Hay muchas formas de validar su modelo, como una prueba predictiva a posteriori, valores p Bayesianos, análisis de residuos, recuperación de parámetros a partir de datos sintéticos. O una combinación de todo esto. A veces es posible que puedas utilizar un conjunto de extra de datos para evaluar el rendimiento predictivo de tu modelo. El objetivo principal aquí es encontrar si el modelo es lo suficientemente bueno para su propósito y qué limitaciones puede tener. Todos los modelos tendrán limitaciones, pero algunas limitaciones pueden ser irrelevantes en el contexto de su análisis, algunas pueden valer la pena eliminarlas mejorando los modelos y otras simplemente vale la pena saber que existen.</p>
 </section>
-<section id="comparar-modelos" class="level3" data-number="4.10.10">
-<h3 data-number="4.10.10" class="anchored" data-anchor-id="comparar-modelos"><span class="header-section-number">4.10.10</span> Comparar modelos</h3>
+<section id="comparar-modelos" class="level3" data-number="4.11.10">
+<h3 data-number="4.11.10" class="anchored" data-anchor-id="comparar-modelos"><span class="header-section-number">4.11.10</span> Comparar modelos</h3>
 <p>Si logras conseguir más de un modelo (normalmente es una buena idea), es posible que tengas que definir cuál te gustaría conservar (suponiendo que sólo necesitas uno). Para comparar modelos se pueden utilizar validación cruzada (incluido LOO) y/o criterios de información. Pero también puedes utilizar los resultados del paso anterior (validación del modelo). A veces comparamos modelos para mantener un solo modelo, la comparación de modelos también puede ayudarnos a comprender mejor un modelo, sus fortalezas y limitaciones, y también puede ser una motivación para mejorar un modelo o probar uno nuevo. El promediado de modelos, es decir, la combinación de varios modelos en uno solo, suele ser una estrategia sencilla y eficaz para mejorar el rendimiento predictivo.</p>
 </section>
-<section id="resumir-resultados" class="level3" data-number="4.10.11">
-<h3 data-number="4.10.11" class="anchored" data-anchor-id="resumir-resultados"><span class="header-section-number">4.10.11</span> Resumir resultados</h3>
+<section id="resumir-resultados" class="level3" data-number="4.11.11">
+<h3 data-number="4.11.11" class="anchored" data-anchor-id="resumir-resultados"><span class="header-section-number">4.11.11</span> Resumir resultados</h3>
 <p>Resuma los resultados de una manera que le ayude a alcanzar sus objetivos. ¿Logró responder las preguntas clave? ¿Es esto algo que convencerá a tu jefe o al departamento de marketing? Piense en formas efectivas de mostrar los resultados. Si su audiencia es muy técnica, haga un resumen técnico, pero si su audiencia solo se preocupa por maximizar ganancias, concéntrese en eso. Intenta utilizar resúmenes que sean fáciles de entender sin ocultar detalles valiosos, no querrás engañar a tu audiencia.</p>
 </section>
 </section>
-<section id="comentarios-finales" class="level2" data-number="4.11">
-<h2 data-number="4.11" class="anchored" data-anchor-id="comentarios-finales"><span class="header-section-number">4.11</span> Comentarios finales</h2>
+<section id="comentarios-finales" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="comentarios-finales"><span class="header-section-number">4.12</span> Comentarios finales</h2>
 <p>En conclusión, el flujo de trabajo Bayesiano no es un conjunto rígido de instrucciones sino un enfoque de modelado dinámico y en evolución. Piense en ello como un marco conceptual que guía sus pensamientos y acciones en la búsqueda de mejores modelos y análisis.</p>
 <p>Los métodos, herramientas y prácticas para el análisis Bayesiano mejorarán con el tiempo. A medida que avance la tecnología, es esperable una mayor automatización y mejorar en las herramientas de software y esta guía evolucionará en consecuencia.</p>
 <p>Además, el flujo de trabajo Bayesiano subraya la importancia de valorar tanto el viaje como el destino. Fomenta una comprensión más profunda del problema y mejora las habilidades aplicables en diversos dominios. En última instancia, el flujo de trabajo Bayesiano representa un compromiso con el aprendizaje y el refinamiento continuos en el modelado y el análisis.</p>
 </section>
-<section id="ejercicios" class="level2" data-number="4.12">
-<h2 data-number="4.12" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">4.12</span> Ejercicios</h2>
+<section id="ejercicios" class="level2" data-number="4.13">
+<h2 data-number="4.13" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">4.13</span> Ejercicios</h2>
 <ol type="1">
 <li><p>(Borrador, Está bien esto como ejercicio o lo demostramos en el texto?) Demuestre que la transformada integral de probabilidad es cierta.</p></li>
 <li><p>(Borrador) Usando la transformada integral de probabilidad describa una método general para generar muestreas aleatorias de cualquier distribución a partir de una distribución uniforme.</p></li>
