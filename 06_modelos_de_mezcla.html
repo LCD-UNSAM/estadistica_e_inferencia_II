@@ -261,6 +261,11 @@ window.Quarto = {
   <li><a href="#no-identificabilidad" id="toc-no-identificabilidad" class="nav-link" data-scroll-target="#no-identificabilidad"><span class="header-section-number">6.3</span> No-identificabilidad</a></li>
   <li><a href="#como-elegir-k" id="toc-como-elegir-k" class="nav-link" data-scroll-target="#como-elegir-k"><span class="header-section-number">6.4</span> Como elegir K</a></li>
   <li><a href="#modelos-zero-inflados-y-modelos-hurdle" id="toc-modelos-zero-inflados-y-modelos-hurdle" class="nav-link" data-scroll-target="#modelos-zero-inflados-y-modelos-hurdle"><span class="header-section-number">6.5</span> Modelos zero-inflados y modelos hurdle</a></li>
+  <li><a href="#regresión-de-poisson-inflada-en-cero" id="toc-regresión-de-poisson-inflada-en-cero" class="nav-link" data-scroll-target="#regresión-de-poisson-inflada-en-cero"><span class="header-section-number">6.6</span> Regresión de Poisson inflada en cero</a>
+  <ul class="collapse">
+  <li><a href="#modelos-hurdle" id="toc-modelos-hurdle" class="nav-link" data-scroll-target="#modelos-hurdle"><span class="header-section-number">6.6.1</span> Modelos hurdle</a></li>
+  </ul></li>
+  <li><a href="#modelos-mixtos-no-finitos" id="toc-modelos-mixtos-no-finitos" class="nav-link" data-scroll-target="#modelos-mixtos-no-finitos"><span class="header-section-number">6.7</span> Modelos mixtos no-finitos</a></li>
   </ul>
 </nav>
     </div>
@@ -286,18 +291,20 @@ window.Quarto = {
 </header>
 
 
-<div id="91a876cd" class="cell" data-execution_count="1">
+<div id="91a876cd" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> preliz <span class="im">as</span> pz</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> bambi <span class="im">as</span> bmb</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="im">import</span> preliz <span class="im">as</span> pz</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="b90ee1f5" class="cell" data-execution_count="17">
+<div id="b90ee1f5" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>az.style.use(<span class="st">'arviz-doc'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -785,6 +792,374 @@ Sampling: [x]</code></pre>
 </section>
 <section id="modelos-zero-inflados-y-modelos-hurdle" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="modelos-zero-inflados-y-modelos-hurdle"><span class="header-section-number">6.5</span> Modelos zero-inflados y modelos hurdle</h2>
+<p>Al contar cosas, como autos en una ruta, estrellas en el cielo, lunares en la piel o prácticamente cualquier otra cosa, una posiblidad es no contar nada, es decir, obtener cero. Podemos obtener cero por muchas razones; si estamos en una esquina contando autos rojos por hora podemos contar 0 autos rojos, por que ninguno pasó o por que pasó uno detras de un camión y no lo pudimos ver. Si utilizamos una distribución Poisson o NegativaBinomial para modelar dichos datos, es posible que notemos que el modelo genera menos ceros en comparación con los datos.</p>
+<p>¿Cómo arreglamos eso? Una posible solución es suponer que nuestras observaciones siguen un proceso que es en realidad una mezcla de dos procesos:</p>
+<ul>
+<li>Uno modelado por una distribución discreta con probabilidad <span class="math inline">\(\psi\)</span></li>
+<li>Uno dando ceros adicionales con probabilidad <span class="math inline">\(1 - \psi\)</span></li>
+</ul>
+<p>Un detalle, simple, pero que nos puede generar sorpresas si no prestamos atención es que en algunos textos (y software) el significado de <span class="math inline">\(\psi\)</span> está invertido, representando la probabilidad de ceros adiciones.</p>
+<p>La familia de distribuciones que permiten ceros “adicionales” se conoce como distribución inflada en cero. Los miembros más comunes de esa familia son:</p>
+<ul>
+<li>Poisson inflada en cero</li>
+<li>NegativaBinomial inflada en cero</li>
+<li>Binomial inflada en cero</li>
+</ul>
+<p>Dada una distribución base con función de masa de probabilidad (PMF). Podemos describir una distribución Hurdle como:</p>
+<span class="math display">\[\begin{split}
+f(x \mid \psi, n, p) = \left\{ \begin{array}{l}
+    (1-\psi) + \psi \; \text{PMF}(0), \text{si } x = 0 \\
+    \psi \; \text{PMF}(x), \text{si } x=1,2,3,\ldots,n
+    \end{array} \right.
+\end{split}\]</span>
+<p>En la siguiente sección, usaremos Poisson inflado de ceros para resolver un problema de regresión.</p>
+</section>
+<section id="regresión-de-poisson-inflada-en-cero" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="regresión-de-poisson-inflada-en-cero"><span class="header-section-number">6.6</span> Regresión de Poisson inflada en cero</h2>
+<p>Para ejemplificar un modelo de regresión de Poisson inflado en cero, vamos a trabajar con un conjunto de datos tomado del <a href="http://www.ats.ucla.edu/stat/data">Instituto de Investigación y Educación Digital</a>. Tenemos 250 grupos de visitantes a un parque, para cada grupo tenemos el registro de la cantidad de peces que capturaron <code>count</code>, cuántos niños había en el grupo <code>child</code> y si trajeron una casa-rodante/caravana al parque <code>camper</code>. Usando estos datos, vamos a construir un modelo de la cantidad de peces capturados en función de las variables del niño y del campista.</p>
+<div id="68517516" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>pesca <span class="op">=</span> pd.read_csv(<span class="st">'datos/pesca.csv'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Usando PyMC podemos escribir un modelo para estos datos como:</p>
+<div id="27b32c9c" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> ZIP_reg:</span>
+<span id="cb18-2"><a href="#cb18-2"></a>    ψ <span class="op">=</span> pm.Beta(<span class="st">'ψ'</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>    α <span class="op">=</span> pm.Normal(<span class="st">'α'</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb18-4"><a href="#cb18-4"></a>    β <span class="op">=</span> pm.Normal(<span class="st">'β'</span>, <span class="dv">0</span>, <span class="dv">1</span>, shape<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb18-5"><a href="#cb18-5"></a>    θ <span class="op">=</span> pm.math.exp(α <span class="op">+</span> β[<span class="dv">0</span>] <span class="op">*</span> pesca[<span class="st">'child'</span>] <span class="op">+</span> β[<span class="dv">1</span>] <span class="op">*</span> pesca[<span class="st">'camper'</span>])</span>
+<span id="cb18-6"><a href="#cb18-6"></a>    yl <span class="op">=</span> pm.ZeroInflatedPoisson(<span class="st">'yl'</span>, ψ, θ, observed<span class="op">=</span>pesca[<span class="st">'count'</span>])</span>
+<span id="cb18-7"><a href="#cb18-7"></a>    idata_ZIP_reg <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [ψ, α, β]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"22d179ad122241c7899c24447dfcda68","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<p><code>camper</code> es una variable binaria con 0 si el grupo no entró al parque en casa-rodante y 1 si lo hizo. A una variable que indica la ausencia/presencia de un atributo se le suele llamar variable binaria, dicotómica, “dummy” o variable indicadora. Es importante notar que cuando <code>camper</code> toma el valor de 0, el término que involucra a <span class="math inline">\(\beta_1\)</span> también será 0 y el modelo se reduce a una regresión con una sola variable independiente. Ya discutimos esto cuando discutimos el uso de covariables categóricas.</p>
+<p>Los resultados se muestran en la siguiente figura. Podemos ver que cuanto mayor es el número de niños, menor es el número de peces capturados. Además, las personas que viajan con una casa-rodante generalmente pescan más. Si revisamos los coeficientes asociados a <code>child</code> y <code>camper</code>, veremos que podemos decir:</p>
+<ul>
+<li>Por cada niño adicional, el recuento esperado de peces capturados disminuye en <span class="math inline">\(\approx 0,4\)</span></li>
+<li>Acampar con una casa-rodante aumenta la cantidad esperada de peces capturados en <span class="math inline">\(\approx 2\)</span></li>
+</ul>
+<p>Los modelos inflados en cero están estrechamente asociados con los modelos hurdle (obstáculos) y puede ser fácil confundirlos. Por lo que es buena idea discutir ambos modelos en simultaneo.</p>
+<div id="74a42275" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>children <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</span>
+<span id="cb20-2"><a href="#cb20-2"></a>fish_count_pred_0 <span class="op">=</span> []</span>
+<span id="cb20-3"><a href="#cb20-3"></a>fish_count_pred_1 <span class="op">=</span> []</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a>posterior <span class="op">=</span> az.extract(idata_ZIP_reg)</span>
+<span id="cb20-6"><a href="#cb20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7"></a>without_camper <span class="op">=</span> posterior[<span class="st">'α'</span>] <span class="op">+</span> posterior[<span class="st">'β'</span>][<span class="dv">0</span>] <span class="op">*</span> xr.DataArray(children)</span>
+<span id="cb20-8"><a href="#cb20-8"></a>with_camper <span class="op">=</span> without_camper <span class="op">+</span> posterior[<span class="st">'β'</span>][<span class="dv">1</span>]</span>
+<span id="cb20-9"><a href="#cb20-9"></a>fish_count_pred_0 <span class="op">=</span> np.exp(without_camper)</span>
+<span id="cb20-10"><a href="#cb20-10"></a>fish_count_pred_1 <span class="op">=</span> np.exp(with_camper)</span>
+<span id="cb20-11"><a href="#cb20-11"></a></span>
+<span id="cb20-12"><a href="#cb20-12"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb20-13"><a href="#cb20-13"></a>ax.plot(children, fish_count_pred_0.T, <span class="st">'C0.'</span>, alpha<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb20-14"><a href="#cb20-14"></a>ax.plot(children, fish_count_pred_1.T, <span class="st">'C1.'</span>, alpha<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb20-15"><a href="#cb20-15"></a>ax.plot(children, fish_count_pred_0.mean(<span class="st">"sample"</span>), <span class="st">'C0'</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb20-16"><a href="#cb20-16"></a>ax.plot(children, fish_count_pred_1.mean(<span class="st">"sample"</span>), <span class="st">'C1'</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb20-17"><a href="#cb20-17"></a>ax.set_xticks(children)</span>
+<span id="cb20-18"><a href="#cb20-18"></a>ax.set_xlabel(<span class="st">'Número de niños'</span>)</span>
+<span id="cb20-19"><a href="#cb20-19"></a>ax.set_ylabel(<span class="st">'Peces'</span>)</span>
+<span id="cb20-20"><a href="#cb20-20"></a>ax.plot([], <span class="st">'C0o'</span>, label<span class="op">=</span><span class="st">'sin casa-rodante'</span>)</span>
+<span id="cb20-21"><a href="#cb20-21"></a>ax.plot([], <span class="st">'C1o'</span>, label<span class="op">=</span><span class="st">'con casa-rodante'</span>)</span>
+<span id="cb20-22"><a href="#cb20-22"></a>plt.legend()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="modelos-hurdle" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="modelos-hurdle"><span class="header-section-number">6.6.1</span> Modelos hurdle</h3>
+<p>Los modelos de hurdle (obstáculo), también se describien como una mezcla de dos procesos de forma similar a los modelos inflados en cero. La diferencia es que en los modelos hurdles los ceros vienen dados <strong>exclusivamente</strong> con probabilidad <span class="math inline">\(1 - \psi\)</span> y los valores positivos vienen dados por una distribución base truncada en cero. Como consecuencia, un modelo inflado en cero solo puede aumentar la probabilidad de <span class="math inline">\(P(x= 0)\)</span>, pero para los modelos hurdle, la probabilidad puede ser mayor o menor que en la distribución base. La razón del nombre hurdle (obstáculo) es que podemos pensar a estas distribuciones como que estamos modelado la presencia de un obstáculo, que hae que nuestra respuesta sea cero, una vez superado el obstáculo la respuesta puede ser distinta de cero.</p>
+<p>Algunas “distribuciones hurdle” comunente usadas son:</p>
+<ul>
+<li>Poisson Hurdle</li>
+<li>NegativaBinomial Hurdle</li>
+<li>Gamma Hurdle</li>
+<li>Normal Hurdle</li>
+</ul>
+<p>Fijensé que contrario a los modelos inflados en cero, cuya distribución base son discretas acá tenemos un par de casos de distribuciones continuas y por lo tanto obtenemos distribuciones que no son continuas ni discretas, si no una mezcla.</p>
+<p>Dada una distribución base con función de distribución acumulada (CDF) y función de masa/densidad de probabilidad (PDF). Podemos describir una distribución Hurdle como:</p>
+<span class="math display">\[\begin{split}f(x \mid \psi, \mu) =
+    \left\{
+        \begin{array}{l}
+        (1 - \psi)  \ \text{si } x = 0 \\
+        \psi
+        \frac{\text{PDF}(x \mid \mu))}
+        {1 - \text{CDF}(0 \mid \mu)} \ \text{si } x \not= 0\ldots
+        \end{array}
+    \right.
+\end{split}\]</span>
+<p>Para ilustrar los modelos hurdle, vamos a utilizar el conjunto de datos del cangrejo herradura <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1439-0310.1996.tb01099.x">Brockmann_1996</a>.</p>
+<p>Los cangrejos herradura llegan a la playa en parejas para su ritual de desove. Los machos solitarios se agrupan alrededor de las parejas que anidan y compiten por la oportunidad de fertilizar los huevos. Estos individuos, conocidos como machos satélites, a menudo se congregan cerca de ciertas parejas, e ignoran a otras. Queremos modelar el número de <code>satelites</code>. Sospechamos que este número está relacionado con las propiedades de las hembras de cangrejo. Como predictores vamos a utilizar propiedades del caparazón <code>width</code> y <code>color</code>. El color se codifica utilizando los números enteros del 1 al 4, desde tonos más claros a más oscuros.</p>
+<p>Usaremos Bambi para escribir y ajustar cuatro modelos. La principal diferencia entre los cuatro modelos es que vamos a utilizar cuatro likelihoods diferentes, a saber, Poisson, Hurdle Poisson, NegativeBinomial y Hurdle NegativeBinomial.</p>
+<div id="cdbb780e" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>crab <span class="op">=</span> pd.read_csv(<span class="st">"datos/horseshoe_crab.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="326d3d73" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>familias <span class="op">=</span> [<span class="st">"poisson"</span>, <span class="st">"hurdle_poisson"</span>, <span class="st">"negativebinomial"</span>, <span class="st">"hurdle_negativebinomial"</span>]</span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a>modelos <span class="op">=</span> []</span>
+<span id="cb22-4"><a href="#cb22-4"></a>idatas <span class="op">=</span> []</span>
+<span id="cb22-5"><a href="#cb22-5"></a></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="cf">for</span> familia <span class="kw">in</span> familias:</span>
+<span id="cb22-7"><a href="#cb22-7"></a>    modelo <span class="op">=</span> bmb.Model(<span class="st">"satellite ~ width + C(color)"</span>, family<span class="op">=</span>familia, data<span class="op">=</span>crab)</span>
+<span id="cb22-8"><a href="#cb22-8"></a>    idata <span class="op">=</span> modelo.fit(idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>}, random_seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb22-9"><a href="#cb22-9"></a>    modelo.predict(idata, kind<span class="op">=</span><span class="st">"pps"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10"></a>    idatas.append(idata)</span>
+<span id="cb22-11"><a href="#cb22-11"></a>    modelos.append(modelo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [Intercept, width, C(color)]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 8 seconds.
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [satellite_psi, Intercept, width, C(color)]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [satellite_alpha, Intercept, width, C(color)]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 11 seconds.
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [satellite_alpha, satellite_psi, Intercept, width, C(color)]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 26 seconds.
+/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+  warn(</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"f16abe5f945346c18627085330fd90f6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"360c7089ff5c4c5f9b810f6fdcfb8912","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ee5e0323f6cd4b4f9973698376ccd8df","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3cb4a47df584455d8ce77cc6083c872f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+</div>
+<p>Primero hagamos una comparación en términos del ELPD</p>
+<div id="c8cfe160" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="bu">cmp</span> <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>(familias, idatas)))</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="bu">cmp</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">rank</th>
+<th data-quarto-table-cell-role="th">elpd_loo</th>
+<th data-quarto-table-cell-role="th">p_loo</th>
+<th data-quarto-table-cell-role="th">elpd_diff</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">se</th>
+<th data-quarto-table-cell-role="th">dse</th>
+<th data-quarto-table-cell-role="th">warning</th>
+<th data-quarto-table-cell-role="th">scale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">hurdle_negativebinomial</td>
+<td>0</td>
+<td>-372.700542</td>
+<td>6.195750</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>13.657861</td>
+<td>0.000000</td>
+<td>False</td>
+<td>log</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">negativebinomial</td>
+<td>1</td>
+<td>-380.321518</td>
+<td>5.606572</td>
+<td>7.620976</td>
+<td>0.416289</td>
+<td>14.105379</td>
+<td>5.659943</td>
+<td>False</td>
+<td>log</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">hurdle_poisson</td>
+<td>2</td>
+<td>-382.422101</td>
+<td>8.682035</td>
+<td>9.721559</td>
+<td>0.583711</td>
+<td>17.724196</td>
+<td>6.643121</td>
+<td>False</td>
+<td>log</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">poisson</td>
+<td>3</td>
+<td>-468.759790</td>
+<td>16.664588</td>
+<td>96.059248</td>
+<td>0.000000</td>
+<td>24.851782</td>
+<td>19.492402</td>
+<td>False</td>
+<td>log</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="160811f2" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>az.plot_compare(<span class="bu">cmp</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">2.5</span>), plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Una forma útil de evaluar visualmente el ajuste en modelos de conteo son los “<a href="https://arxiv.org/abs/1605.01311">hanging rootograms</a>” (raizogramas colgantes), como se ve en la siguiente figura.</p>
+<p>En los raizogramas colgantes, dibujamos las raíces cuadradas de los valores observados y predichos. Esta es una forma rápida de ajustar aproximadamente las diferencias de escala facilitando la comparación de frecuencias observadas y esperadas incluso para frecuencias bajas. En segundo lugar, las barras representando los datos observados <em>cuelgan</em> de los valores esperados, en lugar de <em>crecer</em> desde el cero. Debido a que las barras están valor, y si la barra cae por debajo de cero, entonces el modelo está subestimando ese valor.</p>
+<div id="e939d53c" class="cell" data-execution_count="46">
+<details class="code-fold">
+<summary>Mostrar Código</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">def</span> rotogram(idata, ax):</span>
+<span id="cb26-2"><a href="#cb26-2"></a>    max_ <span class="op">=</span> <span class="dv">17</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>    bins <span class="op">=</span> np.array(<span class="bu">range</span>(<span class="dv">0</span>, max_))</span>
+<span id="cb26-4"><a href="#cb26-4"></a>    dims <span class="op">=</span> idata.posterior_predictive.dims</span>
+<span id="cb26-5"><a href="#cb26-5"></a>    n_samples <span class="op">=</span> dims[<span class="st">"chain"</span>] <span class="op">*</span> dims[<span class="st">"draw"</span>]</span>
+<span id="cb26-6"><a href="#cb26-6"></a>    pred <span class="op">=</span>  (np.histogram(idata.posterior_predictive[<span class="st">"satellite"</span>].values.ravel(),  bins<span class="op">=</span>bins)[<span class="dv">0</span>] <span class="op">/</span> n_samples)<span class="op">**</span><span class="fl">0.5</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>    observed <span class="op">=</span> np.histogram(crab[<span class="st">"satellite"</span>].values, bins<span class="op">=</span>bins)[<span class="dv">0</span>]<span class="op">**</span><span class="fl">0.5</span></span>
+<span id="cb26-8"><a href="#cb26-8"></a></span>
+<span id="cb26-9"><a href="#cb26-9"></a>    ax.bar(bins[:<span class="op">-</span><span class="dv">1</span>], observed, <span class="fl">0.5</span>, bottom<span class="op">=</span>pred<span class="op">-</span>observed, color<span class="op">=</span><span class="st">"C0"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10"></a>    ax.plot(bins[:<span class="op">-</span><span class="dv">1</span>], pred,  <span class="st">"k.--"</span>)</span>
+<span id="cb26-11"><a href="#cb26-11"></a>    ax.hlines(<span class="dv">0</span>, <span class="op">-</span><span class="fl">0.5</span>, max_<span class="op">-</span><span class="fl">1.5</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"0.5"</span>)</span>
+<span id="cb26-12"><a href="#cb26-12"></a></span>
+<span id="cb26-13"><a href="#cb26-13"></a></span>
+<span id="cb26-14"><a href="#cb26-14"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb26-15"><a href="#cb26-15"></a><span class="cf">for</span> ax, idata, model <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), idatas, modelos):</span>
+<span id="cb26-16"><a href="#cb26-16"></a>    rotogram(idata, ax)</span>
+<span id="cb26-17"><a href="#cb26-17"></a>    ax.set_title(model.family.name)</span>
+<span id="cb26-18"><a href="#cb26-18"></a></span>
+<span id="cb26-19"><a href="#cb26-19"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Satellites"</span>)</span>
+<span id="cb26-20"><a href="#cb26-20"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Satellites"</span>)</span>
+<span id="cb26-21"><a href="#cb26-21"></a>fig.text(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">0.5</span>, <span class="st">"$\sqrt</span><span class="sc">{frecuencia}</span><span class="st">$"</span>, va<span class="op">=</span><span class="st">"center"</span>, rotation<span class="op">=</span><span class="st">"vertical"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Resumamos cada uno de los 4 paneles en la figura anterior</p>
+<ul>
+<li>Poisson: Los ceros están subestimados y los conteos del 1 al 4 están sobreestimados. La mayoría de los valores a partir de 6 también están subestimados. Este patrón indica sobredispersión en los datos, y la enorme diferencia para 0 indica un exceso de ceros.</li>
+<li>NegativoBinomial: Vemos que la sobredispersión se maneja mucho mejor en comparación con el modelo de Poisson. Todavía vemos que los ceros están subestimados y los valores 1 y 2 están sobreestimados, lo que probablemente indica un exceso de ceros.</li>
+<li>Hurdle Poisson: Como se esperaba de un modelo hurdle, obtenemos un ajuste perfecto para los ceros. Para los valores positivos todavía tenemos algunas desviaciones.</li>
+<li>Hurdle NegativoBinomial: Vemos que el modelo puede ajustarse muy bien a los datos, siendo las desviaciones muy pequeñas.</li>
+</ul>
+</section>
+</section>
+<section id="modelos-mixtos-no-finitos" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="modelos-mixtos-no-finitos"><span class="header-section-number">6.7</span> Modelos mixtos no-finitos</h2>
 
 
 </section>
