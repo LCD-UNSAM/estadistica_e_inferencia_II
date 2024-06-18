@@ -272,11 +272,12 @@ window.Quarto = {
   <li><a href="#medidas-de-exactitud-predictiva" id="toc-medidas-de-exactitud-predictiva" class="nav-link" data-scroll-target="#medidas-de-exactitud-predictiva"><span class="header-section-number">4.6.4</span> Medidas de exactitud predictiva</a></li>
   <li><a href="#validación-cruzada" id="toc-validación-cruzada" class="nav-link" data-scroll-target="#validación-cruzada"><span class="header-section-number">4.6.5</span> Validación cruzada</a></li>
   <li><a href="#criterios-de-información" id="toc-criterios-de-información" class="nav-link" data-scroll-target="#criterios-de-información"><span class="header-section-number">4.6.6</span> Criterios de información</a></li>
-  <li><a href="#waic" id="toc-waic" class="nav-link" data-scroll-target="#waic"><span class="header-section-number">4.6.7</span> WAIC</a></li>
-  <li><a href="#loo-y-la-validación-cruzada-aproximada" id="toc-loo-y-la-validación-cruzada-aproximada" class="nav-link" data-scroll-target="#loo-y-la-validación-cruzada-aproximada"><span class="header-section-number">4.6.8</span> LOO y la validación cruzada (aproximada)</a></li>
-  <li><a href="#retomando" id="toc-retomando" class="nav-link" data-scroll-target="#retomando"><span class="header-section-number">4.6.9</span> Retomando</a></li>
-  <li><a href="#loo-y-waic" id="toc-loo-y-waic" class="nav-link" data-scroll-target="#loo-y-waic"><span class="header-section-number">4.6.10</span> LOO y WAIC</a></li>
-  <li><a href="#calculando-loo" id="toc-calculando-loo" class="nav-link" data-scroll-target="#calculando-loo"><span class="header-section-number">4.6.11</span> Calculando LOO</a></li>
+  <li><a href="#entropia" id="toc-entropia" class="nav-link" data-scroll-target="#entropia"><span class="header-section-number">4.6.7</span> Entropia</a></li>
+  <li><a href="#waic" id="toc-waic" class="nav-link" data-scroll-target="#waic"><span class="header-section-number">4.6.8</span> WAIC</a></li>
+  <li><a href="#loo-y-la-validación-cruzada-aproximada" id="toc-loo-y-la-validación-cruzada-aproximada" class="nav-link" data-scroll-target="#loo-y-la-validación-cruzada-aproximada"><span class="header-section-number">4.6.9</span> LOO y la validación cruzada (aproximada)</a></li>
+  <li><a href="#retomando" id="toc-retomando" class="nav-link" data-scroll-target="#retomando"><span class="header-section-number">4.6.10</span> Retomando</a></li>
+  <li><a href="#loo-y-waic" id="toc-loo-y-waic" class="nav-link" data-scroll-target="#loo-y-waic"><span class="header-section-number">4.6.11</span> LOO y WAIC</a></li>
+  <li><a href="#calculando-loo" id="toc-calculando-loo" class="nav-link" data-scroll-target="#calculando-loo"><span class="header-section-number">4.6.12</span> Calculando LOO</a></li>
   </ul></li>
   <li><a href="#métodos-numéricos-de-inferencia-bayesiana" id="toc-métodos-numéricos-de-inferencia-bayesiana" class="nav-link" data-scroll-target="#métodos-numéricos-de-inferencia-bayesiana"><span class="header-section-number">4.7</span> Métodos numéricos de Inferencia Bayesiana</a></li>
   <li><a href="#calculando-la-distribución-a-posteriori" id="toc-calculando-la-distribución-a-posteriori" class="nav-link" data-scroll-target="#calculando-la-distribución-a-posteriori"><span class="header-section-number">4.8</span> Calculando la distribución a posteriori</a>
@@ -2388,18 +2389,59 @@ Y = F_X (X)
 \frac{1}{N} \sum_i^N  (y_i - \operatorname{E} (y_i \mid \theta))^2
 \]</span></p>
 <p><span class="math inline">\(\operatorname{E} (y_i \mid \theta)\)</span> es el valor predicho dados los parámetros estimados. Es importante notar que esto es esencialmente el promedio de la diferencia entre los datos observados y los predichos. Tomar el cuadrado de los errores asegura que las diferencias no se cancelen y enfatiza grandes errores comparado con otros alternativas como por ejemplo calcular el valor absoluto.</p>
-<p>El error cuadrático medio, puede resultarnos familiar ya que es muy popular. Pero si nos detenemos a reflexionar sobre esta cantidad veremos que en principio no tiene nada de especial y bien podríamos idear otras expresiones similares. Cuando adoptamos una aproximación probabilista vemos que una expresión más general (y <em>natural</em>) es la siguiente:</p>
+<p>El error cuadrático medio, puede resultarnos familiar ya que es muy popular. Pero si nos detenemos a reflexionar sobre esta cantidad veremos que en principio no tiene nada de especial y bien podríamos idear otras expresiones similares. Intentemos encontrar una métrica más general y compatible con la aproximación probabilista de este curso.</p>
+</section>
+<section id="entropia" class="level3" data-number="4.6.7">
+<h3 data-number="4.6.7" class="anchored" data-anchor-id="entropia"><span class="header-section-number">4.6.7</span> Entropia</h3>
+<p>For a probability distribution with <span class="math inline">\(N\)</span> possible different events which each possible event having probability <span class="math inline">\(p_i\)</span>, the entropy is defined as:</p>
 <p><span class="math display">\[
-\sum_i^N \log p(y_i \mid \theta)
+H(p) = - \mathbb{E}[\log{p}] = -\sum_i^N p_i \log{p_i}
 \]</span></p>
-<p>Esto es, la suma (sobre <span class="math inline">\(n\)</span> datos) de los <em>likelihoods</em> (en escala logarítmica). Esto es <em>natural</em> por que al elegir un likelihood en un modelo estamos eligiendo implícitamente una métrica para evaluar el ajuste del modelo. Cuando <span class="math inline">\(p(y_i \mid \theta)\)</span> es una gaussiana entonces la suma de log-likelihood será proporcional al error cuadrático medio.</p>
-<section id="criterio-de-información-de-akaike" class="level4" data-number="4.6.6.1">
-<h4 data-number="4.6.6.1" class="anchored" data-anchor-id="criterio-de-información-de-akaike"><span class="header-section-number">4.6.6.1</span> Criterio de información de Akaike</h4>
+<p>La entropía es una medida de la incertidumbre de una distribución. En este sentido podemos decir que la incertidumbre contenida en una distribución es el logaritmo de la probabilidad promedio de un evento. Si solo un evento es posible la entropía será 0, si todos los eventos tienen la misma probabilidad la entropía será máxima. El concepto de entropía se puede extender a distribuciones continuas, pero no vamos a entrar en esos detalles.</p>
+<div id="a37eff52" class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="cf">for</span> p, ax <span class="kw">in</span> <span class="bu">zip</span>([<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.9</span>, <span class="fl">0.0001</span>], axes.ravel()):</span>
+<span id="cb23-4"><a href="#cb23-4"></a>    dist <span class="op">=</span> pz.Bernoulli(p<span class="op">=</span>p)</span>
+<span id="cb23-5"><a href="#cb23-5"></a>    dist.plot_pdf(ax<span class="op">=</span>ax, legend<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb23-6"><a href="#cb23-6"></a>    ax.set_title(<span class="ss">f"Entropy=</span><span class="sc">{</span>dist<span class="sc">.</span>entropy()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7"></a>    ax.set_ylim(<span class="op">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>El concepto de entropía aparece muchas veces en estadística. Puede ser útil, por ejemplo al definir priors. En general queremos utilizar un prior que sea de máxima entropía dado nuestro conocimiento (ver por ej funcion <code>maxent</code> de PreliZ). Y también a la hora de comparar modelos. Veamos.</p>
+<p>Supongamos que tenemos una distribución objetivo <span class="math inline">\(p\)</span>, con la cual no podemos trabajar de forma directa y solo tenemos acceso a <span class="math inline">\(q\)</span>. Queremos evaluar que tan bien <span class="math inline">\(q\)</span> approxima a <span class="math inline">\(p\)</span>, o si <span class="math inline">\(q\)</span> es una familia paramétrica encontrar que parámetros hacen que <span class="math inline">\(q\)</span> sea lo más cercana a <span class="math inline">\(p\)</span> que sea posible. Una forma de hacer esto es medir la divergencia de Kulback-Leibler:</p>
+<p><span class="math display">\[
+\mathbb{KL}(p \parallel q) =  \overbrace{-\sum_i^N p_i \log{q_i}}^{H(p, q)} -  \overbrace{\left(-\sum_{i}^n p_i \log{p_i}\right)}^{H(p)}
+\]</span></p>
+<p>Fijense que tiene dos componentes la entropia de <span class="math inline">\(p\)</span>, <span class="math inline">\(H(p)\)</span> y la entropía cruzada <span class="math inline">\(H(p, q)\)</span>, es decir la entropía de <span class="math inline">\(q\)</span> pero evaluada según <span class="math inline">\(p\)</span>. Esto puede parecer algo abstracto, pero si pensamos que tenemos <span class="math inline">\(N\)</span> muestras que asumimos provienen de una distribución <span class="math inline">\(p\)</span> desconocida y tenemos un modelo descripto por <span class="math inline">\(q(y \mid \theta)\)</span>, entonces veremos que estamos describiendo una situación típica en análisis de datos.</p>
+<p>Según esta expresión la divergencia de KL representa la entropía “extra” que introducimos al aproximar <span class="math inline">\(p\)</span> por <span class="math inline">\(q\)</span>. Es común encontrarla escrita de otras formas, como:</p>
+<p><span class="math display">\[
+\mathbb{KL}(p \parallel q) \quad=\quad- \sum_i^N p_i (\log{q_i} - \log{p_i}) \quad=\quad \mathbb{E}_p[\log{p}] - \mathbb{E}_p[\log{q}] \quad=\quad \sum_i^N p_i \log{\frac{p_i}{q_i}}
+\]</span></p>
+<p>Todas formas equivalentes y útiles depediendo en contexto. Algo común en todas estas expresiones es que no podemos aplicar de forma directa si <span class="math inline">\(p\)</span> es desconocida. Por ejemplo si <span class="math inline">\(p\)</span> representa el <strong>proceso generador de datos</strong> o la <strong>población</strong> o la distribución <strong>verdadera</strong>, estamos perdidos… Pero, si lo que nos interesa es comparar modelos veremos que NO es necesario el cálculo directo, la razón es que aún cuando desconozcamos <span class="math inline">\(p\)</span> su entropía es un término constante.</p>
+<p><span class="math display">\[
+\begin{split}
+        \mathbb{KL}(p \parallel q_0) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(y \mid \theta_0)}] \\
+        \mathbb{KL}(p \parallel q_1) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(y \mid \theta_1)}] \\
+        &amp;\cdots \\
+        \mathbb{KL}(p \parallel q_2) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(y \mid \theta_2)}]
+\end{split}
+\]</span></p>
+<p>Si comparamos modelos entonces el mejor modelo, dado el conjunto de modelos comparados, será aquel que tenga un valor más grande de verosimilitud. En otras palabras mimimizar la divergencia de KL es proporcional a maximizar la verosimilitud (likelihood).</p>
+<p>En la práctica tampoco tenemos acceso a <span class="math inline">\(\mathbb{E}[\log{q}]\)</span>, lo que podemos hacer es estimar esta cantidad a partir de una muestra, pero como ya sabemos usar una muestra para estimar los parámetros de un modelo y usar la misma muestra para evaluarlo introduce un sesgo, que de alguna manera debemos corregir. Una forma de corregir este sesgo viene dada por los criterior de información.</p>
+<section id="criterio-de-información-de-akaike" class="level4" data-number="4.6.7.1">
+<h4 data-number="4.6.7.1" class="anchored" data-anchor-id="criterio-de-información-de-akaike"><span class="header-section-number">4.6.7.1</span> Criterio de información de Akaike</h4>
 <p>Este es un criterio de información muy conocido y ampliamente utilizado fuera del universo Bayesiano y se define como:</p>
 <p><span class="math display">\[
 AIC = -2 \sum_i^N \log p(y_i \mid \hat{\theta}_{mle}) + 2 k
 \]</span></p>
-<p>Donde, k es el número de parámetros del modelo y <span class="math inline">\(\hat{\theta}_{mle}\)</span> es la estimación por máxima verosimilitud para <span class="math inline">\(\theta\)</span>. Para el resto de nuestra discusión vamos a omitir la constante -2 y escribir</p>
+<p>Donde, <span class="math inline">\(k\)</span> es el número de parámetros del modelo y <span class="math inline">\(\hat{\theta}_{mle}\)</span> es la estimación por máxima verosimilitud para <span class="math inline">\(\theta\)</span>. Para el resto de nuestra discusión vamos a omitir la constante -2 y escribir</p>
 <p><span class="math display">\[
 AIC = \sum_i^N \log p(y_i \mid \hat{\theta}_{mle}) - k
 \]</span></p>
@@ -2409,8 +2451,8 @@ AIC = \sum_i^N \log p(y_i \mid \hat{\theta}_{mle}) - k
 <p>Podemos encontrar una expresión equivalente, pero mejor ajustada a modelos Bayesianos?</p>
 </section>
 </section>
-<section id="waic" class="level3" data-number="4.6.7">
-<h3 data-number="4.6.7" class="anchored" data-anchor-id="waic"><span class="header-section-number">4.6.7</span> WAIC</h3>
+<section id="waic" class="level3" data-number="4.6.8">
+<h3 data-number="4.6.8" class="anchored" data-anchor-id="waic"><span class="header-section-number">4.6.8</span> WAIC</h3>
 <p>Como ya vimos en el criterio de Akaike, la bondad del ajuste viene dada por:</p>
 <p><span class="math display">\[
 \sum_i^N \log p(y_i \mid \hat{\theta}_{mle})
@@ -2435,8 +2477,8 @@ Y = \alpha + \beta X
 \]</span></p>
 <p>Un modelo donde <span class="math inline">\(\beta=0\)</span> será menos flexible, ya que equivale a un modelo que solo tiene un parámetro, <span class="math inline">\(\alpha\)</span>. De forma un poco más sutil un modelo donde <span class="math inline">\(\beta\)</span> varía en un rango estrecho será menos flexible (más regularizado), que un modelo donde <span class="math inline">\(\beta\)</span> puede tomar cualquier valor.</p>
 </section>
-<section id="loo-y-la-validación-cruzada-aproximada" class="level3" data-number="4.6.8">
-<h3 data-number="4.6.8" class="anchored" data-anchor-id="loo-y-la-validación-cruzada-aproximada"><span class="header-section-number">4.6.8</span> LOO y la validación cruzada (aproximada)</h3>
+<section id="loo-y-la-validación-cruzada-aproximada" class="level3" data-number="4.6.9">
+<h3 data-number="4.6.9" class="anchored" data-anchor-id="loo-y-la-validación-cruzada-aproximada"><span class="header-section-number">4.6.9</span> LOO y la validación cruzada (aproximada)</h3>
 <p>Existe otra alternativa para penalizar el término</p>
 <p><span class="math display">\[
 \sum_i^N \log \left(\frac{1}{S} \sum_{s=1}^S p(y_i \mid \theta^s) \right)
@@ -2448,8 +2490,8 @@ Y = \alpha + \beta X
 \]</span></p>
 <p>donde <span class="math inline">\(_{-i}\)</span> quiere decir que dejamos la observación <span class="math inline">\(i\)</span> afuera. Una implementación Naive de esta estimación requiere que estimemos tantas distribuciones a posteriori como datos tengamos, ya que para cada una de ellas eliminaremos una observación. Sin embargo, esto no es necesario ya que es posible estiamar <span class="math inline">\(\color{#E9692C}{p(y_i \mid \theta_{-i}^j})\)</span> usando <strong>Muestreo de Importancia</strong> (importance sampling).</p>
 <p>Antes de seguir con nuestra agenda, necesitamos hacer un pequeño detour.</p>
-<section id="muestreo-de-importancia" class="level4" data-number="4.6.8.1">
-<h4 data-number="4.6.8.1" class="anchored" data-anchor-id="muestreo-de-importancia"><span class="header-section-number">4.6.8.1</span> Muestreo de importancia</h4>
+<section id="muestreo-de-importancia" class="level4" data-number="4.6.9.1">
+<h4 data-number="4.6.9.1" class="anchored" data-anchor-id="muestreo-de-importancia"><span class="header-section-number">4.6.9.1</span> Muestreo de importancia</h4>
 <p>Esta es una técnica para estimar propiedades de una distribución de interés <span class="math inline">\(f\)</span>, dado que solo tenemos muestras de una distribución <span class="math inline">\(g\)</span>. Usar el muestreo de importancia tiene sentido, por ejemplo, cuando es más simple muestrear <span class="math inline">\(g\)</span> y no <span class="math inline">\(f\)</span>.</p>
 <p>Si tenemos un conjunto de muestras de la variable aleatoria <span class="math inline">\(X\)</span> y podemos evaluar <span class="math inline">\(g\)</span> y <span class="math inline">\(f\)</span> puntualmente, podemos calcular los pesos de importancia como:</p>
 <p><span class="math display">\[\begin{equation}
@@ -2465,21 +2507,21 @@ Y = \alpha + \beta X
 <p>Una vez obtenidos los pesos <span class="math inline">\(w_i\)</span>, podemos usarlos para estimar propiedades de <span class="math inline">\(f\)</span>, su densidad, momentos, cuantiles, etc.</p>
 <p>A continuación se muestre un bloque de código donde <span class="math inline">\(g\)</span> es una Normal y <span class="math inline">\(f\)</span> una Gamma y usamos muestreo de importancia para estimar la PDF de <span class="math inline">\(f\)</span>. Este es solo un ejemplo didáctico, ya que en realidad sabemos como calcular la PDF de una Gamma. Pero en la práctica <span class="math inline">\(f\)</span> puede ser un objeto mucho más complejo.</p>
 <div id="fa98a363" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>g <span class="op">=</span> pz.Normal(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb23-2"><a href="#cb23-2"></a>samples <span class="op">=</span> g.rvs(<span class="dv">1000</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a>f <span class="op">=</span> pz.Gamma(mu<span class="op">=</span><span class="dv">4</span>, sigma<span class="op">=</span><span class="fl">1.5</span>)</span>
-<span id="cb23-4"><a href="#cb23-4"></a></span>
-<span id="cb23-5"><a href="#cb23-5"></a>w <span class="op">=</span> f.pdf(samples) <span class="op">/</span> g.pdf(samples)</span>
-<span id="cb23-6"><a href="#cb23-6"></a></span>
-<span id="cb23-7"><a href="#cb23-7"></a>plt.hist(samples, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>, weights<span class="op">=</span>w, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'C1'</span>, label<span class="op">=</span><span class="st">'Weighted samples'</span>)</span>
-<span id="cb23-8"><a href="#cb23-8"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">15</span>)</span>
-<span id="cb23-9"><a href="#cb23-9"></a></span>
-<span id="cb23-10"><a href="#cb23-10"></a></span>
-<span id="cb23-11"><a href="#cb23-11"></a>f.plot_pdf()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>g <span class="op">=</span> pz.Normal(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>samples <span class="op">=</span> g.rvs(<span class="dv">1000</span>)</span>
+<span id="cb24-3"><a href="#cb24-3"></a>f <span class="op">=</span> pz.Gamma(mu<span class="op">=</span><span class="dv">4</span>, sigma<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb24-4"><a href="#cb24-4"></a></span>
+<span id="cb24-5"><a href="#cb24-5"></a>w <span class="op">=</span> f.pdf(samples) <span class="op">/</span> g.pdf(samples)</span>
+<span id="cb24-6"><a href="#cb24-6"></a></span>
+<span id="cb24-7"><a href="#cb24-7"></a>plt.hist(samples, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>, weights<span class="op">=</span>w, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'C1'</span>, label<span class="op">=</span><span class="st">'Weighted samples'</span>)</span>
+<span id="cb24-8"><a href="#cb24-8"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">15</span>)</span>
+<span id="cb24-9"><a href="#cb24-9"></a></span>
+<span id="cb24-10"><a href="#cb24-10"></a></span>
+<span id="cb24-11"><a href="#cb24-11"></a>f.plot_pdf()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2487,8 +2529,8 @@ Y = \alpha + \beta X
 <p>Al hacer muestreo de importancia mientras más similares sean <span class="math inline">\(g\)</span> y <span class="math inline">\(f\)</span> mejor serán los resultados. En la práctica las inferencias son más confiables cuando <span class="math inline">\(g\)</span> tiene un soporte mayor que <span class="math inline">\(f\)</span>, es decir cuando es más “ancha”, intuitivamente necesitamos que las muestras de <span class="math inline">\(g\)</span> cubran todo el soporte de <span class="math inline">\(f\)</span> (o al menos las regiones de densidad alta).</p>
 </section>
 </section>
-<section id="retomando" class="level3" data-number="4.6.9">
-<h3 data-number="4.6.9" class="anchored" data-anchor-id="retomando"><span class="header-section-number">4.6.9</span> Retomando</h3>
+<section id="retomando" class="level3" data-number="4.6.10">
+<h3 data-number="4.6.10" class="anchored" data-anchor-id="retomando"><span class="header-section-number">4.6.10</span> Retomando</h3>
 <p>Ahora que tenemos una mejor idea de muestreo por importancia veamos como podemos usarlo. La distribución que conocemos es la distribución a posteriori, y la que queremos aproximar por muestreo de importancia es la distribución a posteriori dejando uno afuera <span class="math inline">\(p(y_i \mid \theta_{-i}^j)\)</span>. Por lo que los pesos de importancia que nos interesa calcular son:</p>
 <p><span class="math display">\[
 w_i^j = \frac{p(\theta^j \mid y_{-i} )}{p(\theta^j \mid y)} \propto \frac{p(\theta) \prod_{i\not=-i}^n p(y_i \mid \theta)}{p(\theta) \prod_i^n p(y_i \mid \theta)} \propto \frac{1}{p(y_i \mid \theta^j)}
@@ -2499,26 +2541,26 @@ w_i^j = \frac{p(\theta^j \mid y_{-i} )}{p(\theta^j \mid y)} \propto \frac{p(\the
 <p>Una forma de corregir esto problema es simplemente truncando los pesos “demasiado altos”, pero esto trae otros problemas que no vamos a discutir. Otra forma consiste en respaldarse en la teoría. La teoría indica que bajo ciertas condiciones los pesos altos se distribuyen según una Pareto. Por lo que en vez de truncarlos podemos ajustarlos a una distribución de Pareto y luego remplazarlos por valores obtenidos de esa distribución. Esto es una forma de suavizado que, dentro de cierto rango, permite estabilizar la estimación por muestreo de importancia, ya que hará que alguno valores “muy grandes” no lo sean tanto.</p>
 <p>Cuando combinamos todas estas ideas obtenemos un método llamado Pareto-Smooth Importance Sampling Leave-One-Out Cross Validation, que se abrevia como PSIS-LOO-CV. Dado que el nombre y la sigla son horriblemente largo y difíciles de pronunciar nosotros lo llamaremos LOO (pronunciado como “lu”).</p>
 </section>
-<section id="loo-y-waic" class="level3" data-number="4.6.10">
-<h3 data-number="4.6.10" class="anchored" data-anchor-id="loo-y-waic"><span class="header-section-number">4.6.10</span> LOO y WAIC</h3>
+<section id="loo-y-waic" class="level3" data-number="4.6.11">
+<h3 data-number="4.6.11" class="anchored" data-anchor-id="loo-y-waic"><span class="header-section-number">4.6.11</span> LOO y WAIC</h3>
 <p>Asintóticamente LOO y WAIC convergen, y además funcionan bajo el mismo conjunto de supuestos. Por lo que teóricamente son equivalentes. Sin embargo en la práctica LOO es más robusto, y además nos ofrece un diagnóstico que indica cuándo podría estar fallando (esto gracias al ajuste de Pareto). Por lo que en la práctica preferimos LOO.</p>
 </section>
-<section id="calculando-loo" class="level3" data-number="4.6.11">
-<h3 data-number="4.6.11" class="anchored" data-anchor-id="calculando-loo"><span class="header-section-number">4.6.11</span> Calculando LOO</h3>
+<section id="calculando-loo" class="level3" data-number="4.6.12">
+<h3 data-number="4.6.12" class="anchored" data-anchor-id="calculando-loo"><span class="header-section-number">4.6.12</span> Calculando LOO</h3>
 <p>Luego de toda esta introducción calcular LOO, puede parecer algo decepcionante. Solo tenemos que llamar a la función <code>loo</code> de ArviZ y pasarle un objeto InfereceData que contenga el grupo log-likelihood. Por defecto PyMC NO agrega este grupo al llamar a <code>pm.sample</code>. Podemos calcularlo junto con el posterior si hacemos <code>pm.sample(., )</code></p>
 <div id="b5f8dc11" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="cf">with</span> modelo_cat:</span>
-<span id="cb24-2"><a href="#cb24-2"></a>    pm.compute_log_likelihood(idata_cat,</span>
-<span id="cb24-3"><a href="#cb24-3"></a>                              extend_inferencedata<span class="op">=</span><span class="va">True</span>,  <span class="co"># actualizamos "in-place"</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>                              progressbar<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb24-5"><a href="#cb24-5"></a>                             )  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a><span class="cf">with</span> modelo_cat:</span>
+<span id="cb25-2"><a href="#cb25-2"></a>    pm.compute_log_likelihood(idata_cat,</span>
+<span id="cb25-3"><a href="#cb25-3"></a>                              extend_inferencedata<span class="op">=</span><span class="va">True</span>,  <span class="co"># actualizamos "in-place"</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>                              progressbar<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>                             )  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
 <div id="a6d92db9" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>loo_p <span class="op">=</span> az.loo(idata_cat)</span>
-<span id="cb25-2"><a href="#cb25-2"></a>loo_p</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>loo_p <span class="op">=</span> az.loo(idata_cat)</span>
+<span id="cb26-2"><a href="#cb26-2"></a>loo_p</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/home/osvaldo/proyectos/00_BM/arviz-devs/arviz/arviz/stats/stats.py:792: UserWarning: Estimated shape parameter of Pareto distribution is greater than 0.7 for one or more samples. You should consider using a more robust model, this is because importance sampling is less likely to work well if the marginal posterior and LOO posterior are very different. This is more likely to happen with a non-robust model and highly influential observations.
   warnings.warn(</code></pre>
@@ -2545,11 +2587,11 @@ Pareto k diagnostic values:
 <p>Como regla general si k es menor a 0.7 no hay problemas, si estamos entre 0.7 y 1 es muy probable que estemos en problemas y si el mayor a 1, estamos perdidos. El valor corte 0.7 no es fijo, estrictamente puede ser menor y depende del número total de muestras de la distribución a posteriori, 4000, en este ejemplo. Pero cuando el número es un poco mayor a 2000 ya estamos casi en 0.7. En la práctica es común usar valores de muestras de 2000 o mayores. Incrementar el número de muestras (<code>draws</code> en la función <code>pm.sample</code>) puede reducir el valor de k y por lo podríamos remover algunas de estas advertencias, pero en general el número necesario podría ser demasiado grande como para que tenga sentido práctico.</p>
 <p>Es posible visualizar los valores de k, usando <code>plot_khat</code></p>
 <div id="dc71aeb6" class="cell" data-scrolled="true" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>az.plot_khat(loo_p, threshold<span class="op">=</span><span class="fl">0.7</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>az.plot_khat(loo_p, threshold<span class="op">=</span><span class="fl">0.7</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2567,35 +2609,35 @@ p(\tilde y_i \le y_i \mid y_{-i})
 \]</span></p>
 <p>Es decir estamos evaluando, de forma aproximada, la capacidad del modelo de predecir una observación cuando removemos esa observación de los datos observados.</p>
 <div id="03e25d35" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>az.plot_loo_pit(idata_cat, y<span class="op">=</span><span class="st">"acc"</span>, use_hdi<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>az.plot_loo_pit(idata_cat, y<span class="op">=</span><span class="st">"acc"</span>, use_hdi<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<section id="otros-criterios-de-información" class="level4" data-number="4.6.11.1">
-<h4 data-number="4.6.11.1" class="anchored" data-anchor-id="otros-criterios-de-información"><span class="header-section-number">4.6.11.1</span> Otros criterios de información</h4>
+<section id="otros-criterios-de-información" class="level4" data-number="4.6.12.1">
+<h4 data-number="4.6.12.1" class="anchored" data-anchor-id="otros-criterios-de-información"><span class="header-section-number">4.6.12.1</span> Otros criterios de información</h4>
 <p>Otro criterio de información muy usado es DIC, si usamos el <em>bayesómetro™</em>, DIC es más bayesiano que AIC pero menos que WAIC. Aunque aún es popular, WAIC y principalmentete LOO han demostrado ser más útiles tanto teóricamente como empíricamente que DIC. Por lo cual NO recomendamos su uso.</p>
 <p>Otro criterio muy usado es BIC (del inglés Bayesian Information Criteria), al igual que la regresión logística y la <em>sopa seca</em> de mi madre, este nombre puede ser engañoso. BIC se propuso como una forma de corregir algunos de los problemas con AIC y el autor propuso una justificación Bayesiana para ello. Pero BIC no es realmente Bayesiano en el sentido que al igual que AIC asume priors <em>planos</em> y utiliza una estimación por máxima verosimilitud.</p>
 <p>Pero lo que es más importante, es que BIC difiere de AIC y WAIC en su objetivo. AIC y WAIC intentan reflejar cuál modelo generaliza mejor a otros datos (exactitud predictiva) mientras que BIC intenta identificar cuál es el modelo <em>correcto</em> y por lo tanto está más relacionado a los factores de Bayes que con WAIC. Más adelante discutiremos Factores de Bayes y veremos cómo se diferencia de criterios como WAIC y LOO.</p>
 <div id="af6aa2fa" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>target <span class="op">=</span> pz.StudentT(nu<span class="op">=</span><span class="dv">4</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">1</span>).rvs(<span class="dv">200</span>)</span>
-<span id="cb30-2"><a href="#cb30-2"></a></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_n:</span>
-<span id="cb30-4"><a href="#cb30-4"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">"μ"</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb30-5"><a href="#cb30-5"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">"σ"</span>, <span class="dv">1</span>)</span>
-<span id="cb30-6"><a href="#cb30-6"></a>    pm.Normal(<span class="st">"y"</span>, μ, σ, observed<span class="op">=</span>target)</span>
-<span id="cb30-7"><a href="#cb30-7"></a>    idata_n <span class="op">=</span> pm.sample(idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>})</span>
-<span id="cb30-8"><a href="#cb30-8"></a>    </span>
-<span id="cb30-9"><a href="#cb30-9"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_t:</span>
-<span id="cb30-10"><a href="#cb30-10"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">"μ"</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb30-11"><a href="#cb30-11"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">"σ"</span>, <span class="dv">1</span>)</span>
-<span id="cb30-12"><a href="#cb30-12"></a>    ν <span class="op">=</span> pm.Exponential(<span class="st">"ν"</span>, scale<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb30-13"><a href="#cb30-13"></a>    pm.StudentT(<span class="st">"y"</span>, nu<span class="op">=</span>ν, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>target)</span>
-<span id="cb30-14"><a href="#cb30-14"></a>    idata_t <span class="op">=</span> pm.sample(idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>})</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>target <span class="op">=</span> pz.StudentT(nu<span class="op">=</span><span class="dv">4</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">1</span>).rvs(<span class="dv">200</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_n:</span>
+<span id="cb31-4"><a href="#cb31-4"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">"μ"</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb31-5"><a href="#cb31-5"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">"σ"</span>, <span class="dv">1</span>)</span>
+<span id="cb31-6"><a href="#cb31-6"></a>    pm.Normal(<span class="st">"y"</span>, μ, σ, observed<span class="op">=</span>target)</span>
+<span id="cb31-7"><a href="#cb31-7"></a>    idata_n <span class="op">=</span> pm.sample(idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>})</span>
+<span id="cb31-8"><a href="#cb31-8"></a>    </span>
+<span id="cb31-9"><a href="#cb31-9"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_t:</span>
+<span id="cb31-10"><a href="#cb31-10"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">"μ"</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb31-11"><a href="#cb31-11"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">"σ"</span>, <span class="dv">1</span>)</span>
+<span id="cb31-12"><a href="#cb31-12"></a>    ν <span class="op">=</span> pm.Exponential(<span class="st">"ν"</span>, scale<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb31-13"><a href="#cb31-13"></a>    pm.StudentT(<span class="st">"y"</span>, nu<span class="op">=</span>ν, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>target)</span>
+<span id="cb31-14"><a href="#cb31-14"></a>    idata_t <span class="op">=</span> pm.sample(idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>})</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -2609,8 +2651,8 @@ NUTS: [μ, σ]</code></pre>
 </div>
 </div>
 <div id="df8ce9c2" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>cmp_df <span class="op">=</span> az.compare({<span class="st">'modelo_n'</span>:idata_n, <span class="st">'modelo_t'</span>:idata_t})</span>
-<span id="cb32-2"><a href="#cb32-2"></a>cmp_df</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a>cmp_df <span class="op">=</span> az.compare({<span class="st">'modelo_n'</span>:idata_n, <span class="st">'modelo_t'</span>:idata_t})</span>
+<span id="cb33-2"><a href="#cb33-2"></a>cmp_df</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/home/osvaldo/proyectos/00_BM/arviz-devs/arviz/arviz/stats/stats.py:792: UserWarning: Estimated shape parameter of Pareto distribution is greater than 0.7 for one or more samples. You should consider using a more robust model, this is because importance sampling is less likely to work well if the marginal posterior and LOO posterior are very different. This is more likely to happen with a non-robust model and highly influential observations.
   warnings.warn(</code></pre>
@@ -2679,11 +2721,11 @@ NUTS: [μ, σ]</code></pre>
 </ul>
 <p>También podemos obtener más o menos la misma información de forma gráfica usando la función `az.compareplot</p>
 <div id="645e4af8" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>az.plot_compare(cmp_df, plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>az.plot_compare(cmp_df, plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-28-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2772,38 +2814,38 @@ p_i t_{ij} = p_j t_{ji}
 \end{aligned}\]</span>
 <p>Este modelo tiene solución analítica. Pero supongamos que no sabemos cómo calcularla, y por lo tanto, implementaremos el algoritmo Metropolis-Hastings usando Python.</p>
 <div id="2be96e1a" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">def</span> post(θ, Y, α<span class="op">=</span><span class="dv">1</span>, β<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb35-2"><a href="#cb35-2"></a>    <span class="cf">if</span> <span class="dv">0</span> <span class="op">&lt;=</span> θ <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
-<span id="cb35-3"><a href="#cb35-3"></a>        prior <span class="op">=</span> pz.Beta(α, β).pdf(θ)</span>
-<span id="cb35-4"><a href="#cb35-4"></a>        like  <span class="op">=</span> pz.Bernoulli(θ).pdf(Y).prod()</span>
-<span id="cb35-5"><a href="#cb35-5"></a>        prob <span class="op">=</span> like <span class="op">*</span> prior</span>
-<span id="cb35-6"><a href="#cb35-6"></a>    <span class="cf">else</span>:</span>
-<span id="cb35-7"><a href="#cb35-7"></a>        prob <span class="op">=</span> <span class="op">-</span>np.inf</span>
-<span id="cb35-8"><a href="#cb35-8"></a>    <span class="cf">return</span> prob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">def</span> post(θ, Y, α<span class="op">=</span><span class="dv">1</span>, β<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb36-2"><a href="#cb36-2"></a>    <span class="cf">if</span> <span class="dv">0</span> <span class="op">&lt;=</span> θ <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb36-3"><a href="#cb36-3"></a>        prior <span class="op">=</span> pz.Beta(α, β).pdf(θ)</span>
+<span id="cb36-4"><a href="#cb36-4"></a>        like  <span class="op">=</span> pz.Bernoulli(θ).pdf(Y).prod()</span>
+<span id="cb36-5"><a href="#cb36-5"></a>        prob <span class="op">=</span> like <span class="op">*</span> prior</span>
+<span id="cb36-6"><a href="#cb36-6"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-7"><a href="#cb36-7"></a>        prob <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb36-8"><a href="#cb36-8"></a>    <span class="cf">return</span> prob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>También necesitamos datos, por lo que generaremos algunos datos falsos aleatorios para este propósito.</p>
 <div id="d04bff59" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>Y <span class="op">=</span> pz.Bernoulli(<span class="fl">0.7</span>).rvs(<span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>Y <span class="op">=</span> pz.Bernoulli(<span class="fl">0.7</span>).rvs(<span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Y finalmente ejecutamos nuestra implementación del algoritmo Metropolis-Hastings:</p>
 <div id="6a69434c" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>n_iters <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>can_sd <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a>α <span class="op">=</span> β <span class="op">=</span>  <span class="dv">1</span></span>
-<span id="cb37-4"><a href="#cb37-4"></a>θ <span class="op">=</span> <span class="fl">0.5</span> </span>
-<span id="cb37-5"><a href="#cb37-5"></a>trace <span class="op">=</span> {<span class="st">"θ"</span>:np.zeros(n_iters)}</span>
-<span id="cb37-6"><a href="#cb37-6"></a>p2 <span class="op">=</span> post(θ, Y, α, β)</span>
-<span id="cb37-7"><a href="#cb37-7"></a></span>
-<span id="cb37-8"><a href="#cb37-8"></a><span class="cf">for</span> <span class="bu">iter</span> <span class="kw">in</span> <span class="bu">range</span>(n_iters):</span>
-<span id="cb37-9"><a href="#cb37-9"></a>    θ_can <span class="op">=</span> stats.norm(θ, can_sd).rvs(<span class="dv">1</span>)</span>
-<span id="cb37-10"><a href="#cb37-10"></a>    p1 <span class="op">=</span> post(θ_can, Y, α, β)  </span>
-<span id="cb37-11"><a href="#cb37-11"></a>    pa <span class="op">=</span> p1 <span class="op">/</span> p2</span>
-<span id="cb37-12"><a href="#cb37-12"></a></span>
-<span id="cb37-13"><a href="#cb37-13"></a>    <span class="cf">if</span> pa <span class="op">&gt;</span> stats.uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(<span class="dv">1</span>):</span>
-<span id="cb37-14"><a href="#cb37-14"></a>        θ <span class="op">=</span> θ_can</span>
-<span id="cb37-15"><a href="#cb37-15"></a>        p2 <span class="op">=</span> p1</span>
-<span id="cb37-16"><a href="#cb37-16"></a></span>
-<span id="cb37-17"><a href="#cb37-17"></a>    trace[<span class="st">"θ"</span>][<span class="bu">iter</span>] <span class="op">=</span> θ</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>n_iters <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>can_sd <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>α <span class="op">=</span> β <span class="op">=</span>  <span class="dv">1</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>θ <span class="op">=</span> <span class="fl">0.5</span> </span>
+<span id="cb38-5"><a href="#cb38-5"></a>trace <span class="op">=</span> {<span class="st">"θ"</span>:np.zeros(n_iters)}</span>
+<span id="cb38-6"><a href="#cb38-6"></a>p2 <span class="op">=</span> post(θ, Y, α, β)</span>
+<span id="cb38-7"><a href="#cb38-7"></a></span>
+<span id="cb38-8"><a href="#cb38-8"></a><span class="cf">for</span> <span class="bu">iter</span> <span class="kw">in</span> <span class="bu">range</span>(n_iters):</span>
+<span id="cb38-9"><a href="#cb38-9"></a>    θ_can <span class="op">=</span> stats.norm(θ, can_sd).rvs(<span class="dv">1</span>)</span>
+<span id="cb38-10"><a href="#cb38-10"></a>    p1 <span class="op">=</span> post(θ_can, Y, α, β)  </span>
+<span id="cb38-11"><a href="#cb38-11"></a>    pa <span class="op">=</span> p1 <span class="op">/</span> p2</span>
+<span id="cb38-12"><a href="#cb38-12"></a></span>
+<span id="cb38-13"><a href="#cb38-13"></a>    <span class="cf">if</span> pa <span class="op">&gt;</span> stats.uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(<span class="dv">1</span>):</span>
+<span id="cb38-14"><a href="#cb38-14"></a>        θ <span class="op">=</span> θ_can</span>
+<span id="cb38-15"><a href="#cb38-15"></a>        p2 <span class="op">=</span> p1</span>
+<span id="cb38-16"><a href="#cb38-16"></a></span>
+<span id="cb38-17"><a href="#cb38-17"></a>    trace[<span class="st">"θ"</span>][<span class="bu">iter</span>] <span class="op">=</span> θ</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/tmp/ipykernel_17064/2595604670.py:17: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
   trace["θ"][iter] = θ</code></pre>
@@ -2812,15 +2854,15 @@ p_i t_{ij} = p_j t_{ji}
 <p>En la línea 9 del bloque de código anterior generamos una propuesta muestreando una distribución Normal con desviación estándar <code>can_sd</code>. En la línea 10 evaluamos el posterior en el nuevo valor generado <code>θ_can</code> y en la línea 11 calculamos la probabilidad de aceptación. En la línea 17 guardamos un valor de <code>θ</code> en el array <code>trace</code>. Dependiendo del resultado de la comparación en la línea 13, el valor guardado será nuevo o repetiremos el anterior.</p>
 <p>El primer panel de la siguiente figura muestra cada valor muestreado en cada paso, y el panel de la derecha el histograma de esos valores. El resultado parece razonable. Nada mal para unas pocas lineas de código!</p>
 <div id="325fb0e9" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb39-2"><a href="#cb39-2"></a>axes[<span class="dv">0</span>].plot(trace[<span class="st">'θ'</span>])</span>
-<span id="cb39-3"><a href="#cb39-3"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'θ'</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb39-4"><a href="#cb39-4"></a>axes[<span class="dv">1</span>].hist(trace[<span class="st">'θ'</span>], orientation<span class="op">=</span><span class="st">"horizontal"</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb39-5"><a href="#cb39-5"></a>axes[<span class="dv">1</span>].set_xticks([])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb40-2"><a href="#cb40-2"></a>axes[<span class="dv">0</span>].plot(trace[<span class="st">'θ'</span>])</span>
+<span id="cb40-3"><a href="#cb40-3"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'θ'</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb40-4"><a href="#cb40-4"></a>axes[<span class="dv">1</span>].hist(trace[<span class="st">'θ'</span>], orientation<span class="op">=</span><span class="st">"horizontal"</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb40-5"><a href="#cb40-5"></a>axes[<span class="dv">1</span>].set_xticks([])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-33-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2887,19 +2929,19 @@ p_i t_{ij} = p_j t_{ji}
 <p>Idealmente, nos gustaría poder trabajar con muestras independientes e idénticamente distribuidas (iid). Por construcción, las muestras MCMC están correlacionadas, ya que la probabilidad de aceptar el paso <span class="math inline">\(i\)</span> depende del paso <span class="math inline">\(i-1\)</span>. En la práctica, queremos muestras con baja autocorrelación.</p>
 <p>En ArviZ obtenemos este gráfico con la función <code>az.plot_autocorr()</code></p>
 <div id="73bdb4a8" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>cadenas_defectuosas <span class="op">=</span> {<span class="st">"cadenas_defectuosas"</span>: np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>).reshape(<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>)}</span>
-<span id="cb40-2"><a href="#cb40-2"></a>az.plot_autocorr(cadenas_defectuosas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a>cadenas_defectuosas <span class="op">=</span> {<span class="st">"cadenas_defectuosas"</span>: np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>).reshape(<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>)}</span>
+<span id="cb41-2"><a href="#cb41-2"></a>az.plot_autocorr(cadenas_defectuosas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>NameError: name 'np' is not defined</code></pre>
 </div>
 </div>
 <div id="dbffd34e" class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a>cadenas_adecuadas <span class="op">=</span> {<span class="st">"cadena_adecuadas"</span>: pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">500</span>))}</span>
-<span id="cb42-2"><a href="#cb42-2"></a>az.plot_autocorr(cadenas_adecuadas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>cadenas_adecuadas <span class="op">=</span> {<span class="st">"cadena_adecuadas"</span>: pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">500</span>))}</span>
+<span id="cb43-2"><a href="#cb43-2"></a>az.plot_autocorr(cadenas_adecuadas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-34-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2916,40 +2958,40 @@ p_i t_{ij} = p_j t_{ji}
 <p>Podemos estimar el <strong>tamaño de muestra efectivo</strong> (ESS), es decir, el tamaño de una muestra con la cantidad equivalente de información pero sin autocorrelación. Esto es útil para determinar si el tamaño de muestra que tenemos es lo suficientemente grande. Se recomienda que el ESS sea superior a 100 por cadena. Es decir para para 4 cadenas queremos un mínimo de 400.</p>
 <p>Con ArviZ podemos obtenerlo <code>az.ess(⋅)</code>, <code>az.summary(⋅)</code> y <code>az.plot_forest(⋅, ess=True)</code></p>
 <div id="8d6896b9" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>pd.concat((az.ess(cadenas_defectuosas).to_pandas(),</span>
-<span id="cb43-2"><a href="#cb43-2"></a>           az.ess(cadenas_adecuadas).to_pandas()))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1"></a>pd.concat((az.ess(cadenas_defectuosas).to_pandas(),</span>
+<span id="cb44-2"><a href="#cb44-2"></a>           az.ess(cadenas_adecuadas).to_pandas()))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>NameError: name 'pd' is not defined</code></pre>
 </div>
 </div>
 <p>Vemos que <code>az.summary(⋅)</code> devuelve dos valores de ESS, <code>ess_bulk</code> y <code>ess_tail</code>. Esto se debe a que, distintas regiones del espacio de los parámetros pueden tener distinto valor de ESS, ya que no todas las regiones son muestreadas con la misma eficiencia. Intuitivamente uno puede pensar que al muestrear una distribución como una Gaussiana es más fácil obtener mejor calidad de muestra alrededor de la media que de las colas, simplemente por que tenemos más muestras de esa región.</p>
 <div id="b86b18da" class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1"></a>pd.concat([az.summary(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"diagnostics"</span>),</span>
-<span id="cb45-2"><a href="#cb45-2"></a>           az.summary(cadenas_defectuosas, kind<span class="op">=</span><span class="st">"diagnostics"</span>)])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1"></a>pd.concat([az.summary(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"diagnostics"</span>),</span>
+<span id="cb46-2"><a href="#cb46-2"></a>           az.summary(cadenas_defectuosas, kind<span class="op">=</span><span class="st">"diagnostics"</span>)])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Si las muestras de MCMC las vamos a usar para calcular valores centrales como medias o medianas entonces tenemos que asegurarnos que el <code>ess_bulk</code> sea lo suficientemente algo, en cambio, si queremos calcular intervalos como un HDI 95% hay que asegurarse que <code>ess_tail</code> sea adecuado.</p>
 <p>ArviZ ofrece varias funciones vinculadas al ESS. Por ejemplo si queremos evaluar el desempeño del sampler para varias regiones al mismo tiempo podemos usar <code>az.plot_ess</code>.</p>
 <div id="99f14b7b" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a>az.plot_ess(cadenas_adecuadas, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb46-3"><a href="#cb46-3"></a>az.plot_ess(cadenas_defectuosas, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb47-2"><a href="#cb47-2"></a>az.plot_ess(cadenas_adecuadas, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb47-3"><a href="#cb47-3"></a>az.plot_ess(cadenas_defectuosas, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-37-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-38-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Una forma simple de aumentar el ESS es aumentar la cantidad de muestras, pero podría darse el caso que el ESS crezca muy lento con el número de muestras, por lo que aún si aumentáramos 10 veces la cantidad de muestras estaríamos por debajo de lo requerido. Una forma de estimar “cuanto nos falta” es usar <code>az.plot_ess(⋅, kind="evolution")</code>. Este gráfico nos muestra como fue cambiando el ESS con cada muestra, lo que nos permite hacer proyecciones. En el siguiente ejemplo vemos que para <code>cadenas_adecuadas</code> el ESS crece linealmente con el número de muestras mientras que para <code>cadenas_defectuosas</code> no crece para nada. Este último caso no hay esperanzas de mejorar el ESS simplemente aumentando la cantidad de muestras.</p>
 <div id="e9d08319" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb47-2"><a href="#cb47-2"></a>az.plot_ess(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb47-3"><a href="#cb47-3"></a>az.plot_ess(cadenas_defectuosas,  kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb48-2"><a href="#cb48-2"></a>az.plot_ess(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb48-3"><a href="#cb48-3"></a>az.plot_ess(cadenas_defectuosas,  kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-38-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-39-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -3015,8 +3057,8 @@ H(\mathbf{q}, \mathbf{p}) = \overbrace{-\log p(\mathbf{p} \mid \mathbf{q})}^{K(\
 <p>Debido a su funcionamiento interno, algoritmos como NUTS ofrecen algunas pruebas específicas que no están disponibles para otros métodos. Generalmente estas pruebas son muy sensibles</p>
 <p>Para ejemplificar esto vamos a cargar dos InferenceData de modelos pre-calculados. Los detalles de como se generaron estos idatas no son relevantes por el momento. Solo diremos que son dos modelos que son matemáticamente equivalente pero parametrizados de formas distintas. En este caso la parametrización afecta la eficiencia del sampler. El modelo <code>centrado</code> es muestreado de forma más eficiente que el modelo <code>no centrado</code>.</p>
 <div id="87a258ff" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1"></a>idata_cm <span class="op">=</span> az.load_arviz_data(<span class="st">"centered_eight"</span>)</span>
-<span id="cb48-2"><a href="#cb48-2"></a>idata_ncm <span class="op">=</span> az.load_arviz_data(<span class="st">"non_centered_eight"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1"></a>idata_cm <span class="op">=</span> az.load_arviz_data(<span class="st">"centered_eight"</span>)</span>
+<span id="cb49-2"><a href="#cb49-2"></a>idata_ncm <span class="op">=</span> az.load_arviz_data(<span class="st">"non_centered_eight"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="divergencias" class="level3" data-number="4.9.11">
@@ -3024,28 +3066,28 @@ H(\mathbf{q}, \mathbf{p}) = \overbrace{-\log p(\mathbf{p} \mid \mathbf{q})}^{K(\
 <p>Una ventaja de NUTS es que <em>falla con el estilo</em>. Esto sucede por ejemplo al intentar pasar de regiones de baja curvatura a regiones de alta curvatura. En estos casos las trayectorias numéricas pueden divergir. En esencia esto sucede porque en esos casos no existe un único conjunto de hiper-parámetros que permita el muestreo eficiente de ambas regiones. Por lo que una de la regiones es muestreada adecuandamente y cuando el sampler se mueve hacia la otra región falla. Las trayectorias numéricas divergentes son identificadores extremadamente sensibles de <em>vecindarios patológicos</em>.</p>
 <p>El siguiente ejemplo muestra dos cosas el modelo <code>no centrado</code> muestra varias divergencias (círculos turquesas) agrupados en una región. En el modelo <code>centrado</code>, que no tiene divergencias, se puede ver que alrededor de esa misma región hay muestras para valores más pequeños de <code>tau</code>. Es decir el modelo <code>no centrado</code> falla en muestrear una región, pero al menos avisa que está teniendo problemas en muestrear esa región!</p>
 <div id="95ba3d06" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb49-2"><a href="#cb49-2"></a></span>
-<span id="cb49-3"><a href="#cb49-3"></a></span>
-<span id="cb49-4"><a href="#cb49-4"></a><span class="cf">for</span> ax, idata, nombre <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), (idata_cm, idata_ncm), (<span class="st">"centrado"</span>, <span class="st">"no_centrado"</span>)):</span>
-<span id="cb49-5"><a href="#cb49-5"></a>    az.plot_pair(idata, var_names<span class="op">=</span>[<span class="st">'theta'</span>, <span class="st">'tau'</span>], coords<span class="op">=</span>{<span class="st">'school'</span>:<span class="st">"Choate"</span>}, kind<span class="op">=</span><span class="st">'scatter'</span>,</span>
-<span id="cb49-6"><a href="#cb49-6"></a>                 divergences<span class="op">=</span><span class="va">True</span>, divergences_kwargs<span class="op">=</span>{<span class="st">'color'</span>:<span class="st">'C1'</span>},</span>
-<span id="cb49-7"><a href="#cb49-7"></a>                 ax<span class="op">=</span>ax)</span>
-<span id="cb49-8"><a href="#cb49-8"></a>    ax.set_title(nombre)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb50-2"><a href="#cb50-2"></a></span>
+<span id="cb50-3"><a href="#cb50-3"></a></span>
+<span id="cb50-4"><a href="#cb50-4"></a><span class="cf">for</span> ax, idata, nombre <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), (idata_cm, idata_ncm), (<span class="st">"centrado"</span>, <span class="st">"no_centrado"</span>)):</span>
+<span id="cb50-5"><a href="#cb50-5"></a>    az.plot_pair(idata, var_names<span class="op">=</span>[<span class="st">'theta'</span>, <span class="st">'tau'</span>], coords<span class="op">=</span>{<span class="st">'school'</span>:<span class="st">"Choate"</span>}, kind<span class="op">=</span><span class="st">'scatter'</span>,</span>
+<span id="cb50-6"><a href="#cb50-6"></a>                 divergences<span class="op">=</span><span class="va">True</span>, divergences_kwargs<span class="op">=</span>{<span class="st">'color'</span>:<span class="st">'C1'</span>},</span>
+<span id="cb50-7"><a href="#cb50-7"></a>                 ax<span class="op">=</span>ax)</span>
+<span id="cb50-8"><a href="#cb50-8"></a>    ax.set_title(nombre)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-41-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <div id="784c2014" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1"></a>az.plot_parallel(idata_cm, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1"></a>az.plot_parallel(idata_cm, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-41-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="04_Flujo_de_trabajo_bayesiano_files/figure-html/cell-42-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
