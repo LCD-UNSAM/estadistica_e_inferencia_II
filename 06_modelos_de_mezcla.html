@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.4.557">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -265,7 +265,15 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#modelos-hurdle" id="toc-modelos-hurdle" class="nav-link" data-scroll-target="#modelos-hurdle"><span class="header-section-number">6.6.1</span> Modelos hurdle</a></li>
   </ul></li>
-  <li><a href="#modelos-mixtos-no-finitos" id="toc-modelos-mixtos-no-finitos" class="nav-link" data-scroll-target="#modelos-mixtos-no-finitos"><span class="header-section-number">6.7</span> Modelos mixtos no-finitos</a></li>
+  <li><a href="#modelos-mixtos-no-finitos" id="toc-modelos-mixtos-no-finitos" class="nav-link" data-scroll-target="#modelos-mixtos-no-finitos"><span class="header-section-number">6.7</span> Modelos mixtos no-finitos</a>
+  <ul class="collapse">
+  <li><a href="#procesos-de-dirichlet" id="toc-procesos-de-dirichlet" class="nav-link" data-scroll-target="#procesos-de-dirichlet"><span class="header-section-number">6.7.1</span> Procesos de Dirichlet</a></li>
+  </ul></li>
+  <li><a href="#mezclas-continuas" id="toc-mezclas-continuas" class="nav-link" data-scroll-target="#mezclas-continuas"><span class="header-section-number">6.8</span> Mezclas continuas</a>
+  <ul class="collapse">
+  <li><a href="#algunas-distribuciones-comunes-son-mezclas" id="toc-algunas-distribuciones-comunes-son-mezclas" class="nav-link" data-scroll-target="#algunas-distribuciones-comunes-son-mezclas"><span class="header-section-number">6.8.1</span> Algunas distribuciones comunes son mezclas</a></li>
+  </ul></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">6.9</span> Resumen</a></li>
   </ul>
 </nav>
     </div>
@@ -291,7 +299,7 @@ window.Quarto = {
 </header>
 
 
-<div id="91a876cd" class="cell" data-execution_count="24">
+<div id="91a876cd" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> arviz <span class="im">as</span> az</span>
@@ -304,7 +312,7 @@ window.Quarto = {
 <span id="cb1-8"><a href="#cb1-8"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="b90ee1f5" class="cell" data-execution_count="12">
+<div id="b90ee1f5" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>az.style.use(<span class="st">'arviz-doc'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -360,7 +368,7 @@ y &amp; \sim N(\mu_z, \sigma^2)
 <figcaption>Histograma de desplazamientos químicos</figcaption>
 </figure>
 </div>
-<div id="97478f32" class="cell" data-execution_count="2">
+<div id="97478f32" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>cs_exp <span class="op">=</span> pd.read_csv(<span class="st">"datos/chemical_shifts_theo_exp.csv"</span>)[<span class="st">"exp"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -390,7 +398,7 @@ p(x)
 \end{align*}
 \end{split}\]</span>
 <p>PyMC ofrece una sintáxis más directa para escribir este tipo de mmodelos, usando la distribución <code>NormalMixture</code>:</p>
-<div id="68c65cc3" class="cell" data-execution_count="3">
+<div id="68c65cc3" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>K <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_mg:</span>
 <span id="cb5-3"><a href="#cb5-3"></a>    w <span class="op">=</span> pm.Dirichlet(<span class="st">'w'</span>, a<span class="op">=</span>np.ones(K))</span>
@@ -403,13 +411,13 @@ p(x)
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 12 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 11 seconds.
 The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
 The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"018ab570746842e288c15e2bd0d17dd4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"fdb6ff2df528402a9d4aa233b4c1e647","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -420,7 +428,7 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 </div>
 <p>OK, lo primero que notamos es que el modelo corre en un tiempo razonable. Pero tenemos reportes de <span class="math inline">\(\hat R\)</span> altos y ESS bajos! Veamos un foresplot, para lograr entender que está sucediendo</p>
-<div id="1da6a5ab" class="cell" data-execution_count="4">
+<div id="1da6a5ab" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>az.plot_forest(idata_mg, var_names<span class="op">=</span><span class="st">"μ"</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -439,7 +447,7 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 <p>Un modelo estadístico es no-identificable si uno o más de sus parámetros no pueden determinarse de forma única. Los parámetros de un modelo no se identifican si se obtiene la misma función de verosimilitud para más de un conjunto de parámetros. Esto puede suceder por que los datos no contengan suficiente información para estimar los parámetros o por que el modelo es estructuralmente no-identificable, lo que significa que los parámetros no pueden determinarse de manera única incluso si todos los datos necesarios están disponibles.</p>
 <p>Con los modelos mixtos, existen al menos dos formas de parametrizar un modelo para eliminar el problema de la no identificabilidad. Podemos forzar un orden arbitrario en los componentes; por ejemplo, establecer que el vector <span class="math inline">\(\mu\)</span> debe ser estrictamente creciente o podemos usar priors informativos. La primer estrategia suele ser más general y simple de implementar y la segunda no garantiza la eliminación de problemas.</p>
 <p>Usando PyMC, podemos implementar la primera opción con una transformación:</p>
-<div id="e66c8ad3" class="cell" data-execution_count="5">
+<div id="e66c8ad3" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_mgo:</span>
 <span id="cb8-2"><a href="#cb8-2"></a>    w <span class="op">=</span> pm.Dirichlet(<span class="st">'w'</span>, a<span class="op">=</span>np.ones(K))</span>
 <span id="cb8-3"><a href="#cb8-3"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span>cs_exp.mean(), sigma<span class="op">=</span><span class="dv">10</span>, shape<span class="op">=</span>K,</span>
@@ -456,16 +464,16 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 32 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 31 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 30 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 31 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"061f5d8c24b9457597a23e4f308e8688","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"dc07cdd38d53444a9fe26af321f8c15a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -476,7 +484,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"25534fab7ef846f2b297853e24c6d828","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"6e0e25b69e084f64ab6c133b5c8eae3f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -491,7 +499,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <h2 data-number="6.4" class="anchored" data-anchor-id="como-elegir-k"><span class="header-section-number">6.4</span> Como elegir K</h2>
 <p>Una de las principales preocupaciones con los modelos de mezclas finitas es cómo decidir el número de componentes. Una regla general es comenzar con una cantidad relativamente pequeña de componentes y luego aumentarla para el ajuste del modelo. Como ya vimos anteriormente el ajuste de un modelo se puede evaluar con una combinación de herramientas como las pruebas predictivas a posteriori, el ELPD y la experiencia de los modeladores.</p>
 <p>Comparemos el modelo para <span class="math inline">\(K = \{2, 3, 4, 5\}\)</span></p>
-<div id="dc6fefd0" class="cell" data-execution_count="8">
+<div id="dc6fefd0" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>Ks <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a>models <span class="op">=</span> []</span>
@@ -517,26 +525,26 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 29 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 36 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 33 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 36 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 66 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 68 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 65 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 72 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ded9cfa6018c4ee99fe317555a17d25e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"9366613b36b24844a9357b4b32e76901","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -547,7 +555,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a7dc94fb245645d0a5fc766cf4fe9aa6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"84d2108712a84ec0bf62c5a74ff46d9f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -558,7 +566,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9b9c066065d44a199be88bb867995832","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"4ba3b0700e9f4072807a7b3dea1b40f3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -569,7 +577,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a71584d5b70d4a349eadc97511d2df51","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"23feb0fe74ee4175aceb54fb64a5dd8b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -580,7 +588,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 <p>La siguiente figura muestra los modelos de mezcla para <span class="math inline">\(K\)</span> Gaussianas. La linea negra y solida representa la media a posteriori y las lineas turquesa muestras de la distribución a posterori. La distribución media de cada componente está representado usando lineas punteadas</p>
-<div id="35b2b1ff" class="cell" data-execution_count="23">
+<div id="35b2b1ff" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">8</span>))</span>
@@ -614,7 +622,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <p>Visualmente, parece que <span class="math inline">\(K=2\)</span> es demasiado bajo, pero ¿cómo elegimos un valor mejor?</p>
 <p>Como ya hemos discutido, podemos usar pruebas predictivas a posteriori y calcular valores p bayesianos. La siguiente figura muestra un ejemplo de dicho cálculo y visualización. <span class="math inline">\(K=5\)</span> es la mejor solución y <span class="math inline">\(K=4\)</span> se acerca.</p>
-<div id="74634413" class="cell" data-execution_count="24">
+<div id="74634413" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>ppc_mm <span class="op">=</span> [pm.sample_posterior_predictive(idatas[i],</span>
@@ -644,62 +652,18 @@ Sampling: [x]
 Sampling: [x]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9e68ce6871b94f91a7d892259c7393cd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f04dbe53910c4c16ad4242c83edd3016","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"fcfe9060bf3441648b2dd34908fd5ce0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"fc57a7b4b9364a99a8e79995a5d4060f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_modelos_de_mezcla_files/figure-html/cell-10-output-14.png" class="img-fluid figure-img"></p>
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Para complementar las estas pruebas, podemos calcular el ELPD usando LOO. Podemos ver que los resultados coinciden con las pruebas predictivas</p>
-<div id="9bacc0e5" class="cell" data-execution_count="25">
+<div id="9bacc0e5" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>comp <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>([<span class="bu">str</span>(K) <span class="cf">for</span> K <span class="kw">in</span> Ks], idatas)))</span>
 <span id="cb15-2"><a href="#cb15-2"></a>comp</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
 
@@ -773,7 +737,7 @@ Sampling: [x]</code></pre>
 </div>
 </div>
 </div>
-<div id="e58861e0" class="cell" data-execution_count="27">
+<div id="e58861e0" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>az.plot_compare(comp, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -817,11 +781,11 @@ f(x \mid \psi, n, p) = \left\{ \begin{array}{l}
 <section id="regresión-de-poisson-inflada-en-cero" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="regresión-de-poisson-inflada-en-cero"><span class="header-section-number">6.6</span> Regresión de Poisson inflada en cero</h2>
 <p>Para ejemplificar un modelo de regresión de Poisson inflado en cero, vamos a trabajar con un conjunto de datos tomado del <a href="http://www.ats.ucla.edu/stat/data">Instituto de Investigación y Educación Digital</a>. Tenemos 250 grupos de visitantes a un parque, para cada grupo tenemos el registro de la cantidad de peces que capturaron <code>count</code>, cuántos niños había en el grupo <code>child</code> y si trajeron una casa-rodante/caravana al parque <code>camper</code>. Usando estos datos, vamos a construir un modelo de la cantidad de peces capturados en función de las variables del niño y del campista.</p>
-<div id="68517516" class="cell" data-execution_count="14">
+<div id="68517516" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>pesca <span class="op">=</span> pd.read_csv(<span class="st">'datos/pesca.csv'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Usando PyMC podemos escribir un modelo para estos datos como:</p>
-<div id="27b32c9c" class="cell" data-execution_count="17">
+<div id="27b32c9c" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> ZIP_reg:</span>
 <span id="cb18-2"><a href="#cb18-2"></a>    ψ <span class="op">=</span> pm.Beta(<span class="st">'ψ'</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
 <span id="cb18-3"><a href="#cb18-3"></a>    α <span class="op">=</span> pm.Normal(<span class="st">'α'</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
@@ -834,11 +798,11 @@ f(x \mid \psi, n, p) = \left\{ \begin{array}{l}
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [ψ, α, β]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 11 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"22d179ad122241c7899c24447dfcda68","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"2fc088eedf9a4f14bcb5a342d5c7aa59","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -855,7 +819,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <li>Acampar con una casa-rodante aumenta la cantidad esperada de peces capturados en <span class="math inline">\(\approx 2\)</span></li>
 </ul>
 <p>Los modelos inflados en cero están estrechamente asociados con los modelos hurdle (obstáculos) y puede ser fácil confundirlos. Por lo que es buena idea discutir ambos modelos en simultaneo.</p>
-<div id="74a42275" class="cell" data-execution_count="20">
+<div id="74a42275" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>children <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</span>
@@ -914,10 +878,10 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Para ilustrar los modelos hurdle, vamos a utilizar el conjunto de datos del cangrejo herradura <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1439-0310.1996.tb01099.x">Brockmann_1996</a>.</p>
 <p>Los cangrejos herradura llegan a la playa en parejas para su ritual de desove. Los machos solitarios se agrupan alrededor de las parejas que anidan y compiten por la oportunidad de fertilizar los huevos. Estos individuos, conocidos como machos satélites, a menudo se congregan cerca de ciertas parejas, e ignoran a otras. Queremos modelar el número de <code>satelites</code>. Sospechamos que este número está relacionado con las propiedades de las hembras de cangrejo. Como predictores vamos a utilizar propiedades del caparazón <code>width</code> y <code>color</code>. El color se codifica utilizando los números enteros del 1 al 4, desde tonos más claros a más oscuros.</p>
 <p>Usaremos Bambi para escribir y ajustar cuatro modelos. La principal diferencia entre los cuatro modelos es que vamos a utilizar cuatro likelihoods diferentes, a saber, Poisson, Hurdle Poisson, NegativeBinomial y Hurdle NegativeBinomial.</p>
-<div id="cdbb780e" class="cell" data-execution_count="22">
+<div id="cdbb780e" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>crab <span class="op">=</span> pd.read_csv(<span class="st">"datos/horseshoe_crab.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="326d3d73" class="cell" data-execution_count="31">
+<div id="326d3d73" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>familias <span class="op">=</span> [<span class="st">"poisson"</span>, <span class="st">"hurdle_poisson"</span>, <span class="st">"negativebinomial"</span>, <span class="st">"hurdle_negativebinomial"</span>]</span>
 <span id="cb22-2"><a href="#cb22-2"></a></span>
 <span id="cb22-3"><a href="#cb22-3"></a>modelos <span class="op">=</span> []</span>
@@ -936,21 +900,21 @@ Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 8 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 6 seconds.
 /home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
   elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [satellite_psi, Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 10 seconds.
 /home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
   elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [satellite_alpha, Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 11 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 8 seconds.
 /home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
   elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
 /home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
@@ -977,13 +941,13 @@ Initializing NUTS using jitter+adapt_diag...
   warn(
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [satellite_alpha, satellite_psi, Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 26 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 20 seconds.
 /home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f16abe5f945346c18627085330fd90f6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"189db6039cdb442197b92004066faf30","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -994,7 +958,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"360c7089ff5c4c5f9b810f6fdcfb8912","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"e70a997fab234dce98cdadbd96f30d14","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -1005,7 +969,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ee5e0323f6cd4b4f9973698376ccd8df","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"af6cbae192984566a2636d8e715fd628","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -1016,7 +980,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3cb4a47df584455d8ce77cc6083c872f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"c2e4996769a74532bb048dd208577950","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -1027,10 +991,10 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 <p>Primero hagamos una comparación en términos del ELPD</p>
-<div id="c8cfe160" class="cell" data-execution_count="37">
+<div id="c8cfe160" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="bu">cmp</span> <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>(familias, idatas)))</span>
 <span id="cb24-2"><a href="#cb24-2"></a><span class="bu">cmp</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 
 
@@ -1104,7 +1068,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 </div>
-<div id="160811f2" class="cell" data-execution_count="39">
+<div id="160811f2" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>az.plot_compare(<span class="bu">cmp</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">2.5</span>), plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1116,7 +1080,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <p>Una forma útil de evaluar visualmente el ajuste en modelos de conteo son los “<a href="https://arxiv.org/abs/1605.01311">hanging rootograms</a>” (raizogramas colgantes), como se ve en la siguiente figura.</p>
 <p>En los raizogramas colgantes, dibujamos las raíces cuadradas de los valores observados y predichos. Esta es una forma rápida de ajustar aproximadamente las diferencias de escala facilitando la comparación de frecuencias observadas y esperadas incluso para frecuencias bajas. En segundo lugar, las barras representando los datos observados <em>cuelgan</em> de los valores esperados, en lugar de <em>crecer</em> desde el cero. Debido a que las barras están valor, y si la barra cae por debajo de cero, entonces el modelo está subestimando ese valor.</p>
-<div id="e939d53c" class="cell" data-execution_count="46">
+<div id="e939d53c" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">def</span> rotogram(idata, ax):</span>
@@ -1160,6 +1124,192 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </section>
 <section id="modelos-mixtos-no-finitos" class="level2" data-number="6.7">
 <h2 data-number="6.7" class="anchored" data-anchor-id="modelos-mixtos-no-finitos"><span class="header-section-number">6.7</span> Modelos mixtos no-finitos</h2>
+<p>Para algunos problemas, como intentar agrupar dígitos escritos a mano, es fácil justificar el número de grupos que esperamos encontrar en los datos. Para otros problemas, podemos tener buenas conjeturas; por ejemplo, podemos saber que nuestra muestra de flores de Iris se tomó de una región donde sólo crecen tres especies de Iris, por lo que utilizar tres componentes es un punto de partida razonable. Cuando no estamos tan seguros de la cantidad de componentes, podemos usar la selección de modelos para ayudarnos a elegir la cantidad de grupos. Sin embargo, para otros problemas, elegir a priori el número de grupos puede ser un inconveniente, o puede que nos interese estimar este número directamente a partir de los datos. Una solución Bayesiana para este tipo de problemas viene dada por el proceso de Dirichlet.</p>
+<section id="procesos-de-dirichlet" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="procesos-de-dirichlet"><span class="header-section-number">6.7.1</span> Procesos de Dirichlet</h3>
+<p>Todos los modelos que hemos visto hasta ahora han sido modelos paramétricos, es decir, modelos con un número fijo de parámetros. En estos modelos asumimos una distribución para los datos (likelihood) y luego una distribución para los parámetros desconocidos. Pero también es posible crear modelos no-paramétricos. Este tipo de modelos no es que no tenga parámetros es que el número de parámetros es variable y depende en alguna medida de lo datos. Podemos pensar en los modelos no paramétricos como modelos con un número teóricamente infinito de parámetros junto a algún mecanismo que en la práctica nos permita trabajar con objetos finitos.</p>
+<p>En este curso veremos tres ejemplos de dichos modelos: el proceso gaussiano, los árboles de regresión aditiva bayesiana y el proceso de Dirichlet.</p>
+<p>La definición formal de un Proceso de Dirichlet (PD) es algo opaca y requiere de familiaridad con procesos estocásticos y teoría de la medida. En la literatura es común encontrarla definida de forma implicita mediante varios mecanismos alternativos. Uno de ellos es el proceso de rotura de palos. Veamos.</p>
+<p>Primero generamos una serie de pesos:</p>
+<p><span class="math display">\[\begin{align}
+\beta_i &amp; \sim \text{Beta}(1, \alpha) \\
+w_i &amp; = \beta_i \prod_{j=1}^{i-1} (1 - \beta_j)
+\end{align}\]</span></p>
+<p>Este proceso es análogo a imaginar que tenemos un palo de longitud 1, lo partimos en dos partes. Guardamos una de las partes y partimos la restante nuevamente, repetimos indefinidamente. Podemos ver que <span class="math inline">\(\alpha\)</span> controla el proceso de rotura. Cuando <span class="math inline">\(\alpha\)</span> se aproxima a 0, la distribución Beta se concentra hacia el valor 1, cuando <span class="math inline">\(\alpha=1\)</span> la distribución Beta es uniforme y a medida que <span class="math inline">\(\alpha\)</span> crece la distribución Beta se concentra hacia 0. Por lo que un valor alto de <span class="math inline">\(alpha\)</span> favorece pesos pequeños.</p>
+<p>El proceso continua asignado una ubicación <span class="math inline">\(\theta_i\)</span> al peso <span class="math inline">\(w_i\)</span>:</p>
+<p><span class="math display">\[
+\theta_i \sim H
+\]</span></p>
+<p><span class="math inline">\(H\)</span> es la distribución base del PD</p>
+<p>Dados estos elementos podemos definir a un proceso de Dirichlet <span class="math inline">\(G \sim DP(\alpha, H)\)</span> como una suma pesada de masas puntuales localizadas según la distribución base.</p>
+<p><span class="math display">\[
+G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
+\]</span></p>
+<p>donde <span class="math inline">\(\delta_{\theta_i}\)</span> es la función delta de Dirac centrada en <span class="math inline">\(\theta_i\)</span></p>
+<p>La siguiente figura muestra un ejemplo de una relización (muestra) de un proceso de Dirichlet para 4 valores distintos de <span class="math inline">\(\alpha\)</span></p>
+<p>Asi como la distribución de Dirichlet es la generalización n-dimensional de la distribución Beta, el proceso de Dirichlet es la generalización de dimensión infinita de la distribución de Dirichlet.</p>
+<div id="99887649" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">def</span> stick_breaking_process(alpha, base_dist):</span>
+<span id="cb27-2"><a href="#cb27-2"></a>    <span class="co">"""</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="co">    Generate a realization from a Dirichlet Process using the stick-breaking process.</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a></span>
+<span id="cb27-5"><a href="#cb27-5"></a><span class="co">    Parameters:</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="co">    ----------</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="co">    </span></span>
+<span id="cb27-8"><a href="#cb27-8"></a><span class="co">    alpha : float</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="co">        Concentration parameter of the Dirichlet Process</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a><span class="co">    base_dist : PreliZ distribution</span></span>
+<span id="cb27-11"><a href="#cb27-11"></a><span class="co">        Base distribution</span></span>
+<span id="cb27-12"><a href="#cb27-12"></a><span class="co">    """</span></span>
+<span id="cb27-13"><a href="#cb27-13"></a>    K_max <span class="op">=</span> <span class="bu">max</span>(<span class="dv">10</span>, <span class="bu">int</span>(alpha<span class="op">/</span><span class="dv">10</span>)) </span>
+<span id="cb27-14"><a href="#cb27-14"></a>    beta <span class="op">=</span> pz.Beta(<span class="dv">1</span>, alpha).rvs(K_max)</span>
+<span id="cb27-15"><a href="#cb27-15"></a>    w <span class="op">=</span> np.empty(K_max)</span>
+<span id="cb27-16"><a href="#cb27-16"></a>    w[<span class="dv">0</span>] <span class="op">=</span> beta[<span class="dv">0</span>]</span>
+<span id="cb27-17"><a href="#cb27-17"></a>    w[<span class="dv">1</span>:] <span class="op">=</span> beta[<span class="dv">1</span>:] <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> beta[:<span class="op">-</span><span class="dv">1</span>]).cumprod()</span>
+<span id="cb27-18"><a href="#cb27-18"></a>    w <span class="op">/=</span> w.<span class="bu">sum</span>()  </span>
+<span id="cb27-19"><a href="#cb27-19"></a></span>
+<span id="cb27-20"><a href="#cb27-20"></a>    loc <span class="op">=</span> base_dist.rvs(K_max)</span>
+<span id="cb27-21"><a href="#cb27-21"></a></span>
+<span id="cb27-22"><a href="#cb27-22"></a>    samples <span class="op">=</span> np.random.choice(loc, p<span class="op">=</span>w, size<span class="op">=</span>K_max)</span>
+<span id="cb27-23"><a href="#cb27-23"></a></span>
+<span id="cb27-24"><a href="#cb27-24"></a>    <span class="cf">return</span> samples</span>
+<span id="cb27-25"><a href="#cb27-25"></a></span>
+<span id="cb27-26"><a href="#cb27-26"></a>N <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb27-27"><a href="#cb27-27"></a>base_distribution <span class="op">=</span> pz.Normal(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb27-28"><a href="#cb27-28"></a></span>
+<span id="cb27-29"><a href="#cb27-29"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-30"><a href="#cb27-30"></a></span>
+<span id="cb27-31"><a href="#cb27-31"></a><span class="cf">for</span> alpha, ax <span class="kw">in</span> <span class="bu">zip</span>([<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">1000</span>], axes.ravel()):</span>
+<span id="cb27-32"><a href="#cb27-32"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb27-33"><a href="#cb27-33"></a>        sample <span class="op">=</span> stick_breaking_process(alpha, base_distribution)</span>
+<span id="cb27-34"><a href="#cb27-34"></a>        ax.ecdf(sample, color<span class="op">=</span><span class="st">"0.5"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb27-35"><a href="#cb27-35"></a>        </span>
+<span id="cb27-36"><a href="#cb27-36"></a>    pz.Normal(<span class="dv">0</span>, <span class="dv">1</span>).plot_cdf(legend<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb27-37"><a href="#cb27-37"></a>    ax.set_title(<span class="vs">fr"$\alpha$=</span><span class="sc">{</span>alpha<span class="sc">}</span><span class="vs">"</span>)</span>
+<span id="cb27-38"><a href="#cb27-38"></a>    </span>
+<span id="cb27-39"><a href="#cb27-39"></a>plt.suptitle(<span class="ss">f'</span><span class="sc">{</span>N<span class="sc">}</span><span class="ss"> Realizaciones de un proceso de Dirichlet'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="e44772e5" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>K <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_DP:</span>
+<span id="cb28-4"><a href="#cb28-4"></a>    α <span class="op">=</span> pm.Gamma(<span class="st">'α'</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb28-5"><a href="#cb28-5"></a></span>
+<span id="cb28-6"><a href="#cb28-6"></a>    w <span class="op">=</span> pm.StickBreakingWeights(<span class="st">"w"</span>, α, K<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb28-7"><a href="#cb28-7"></a>    means <span class="op">=</span> pm.Normal(<span class="st">'means'</span>,</span>
+<span id="cb28-8"><a href="#cb28-8"></a>                      mu<span class="op">=</span>np.linspace(cs_exp.<span class="bu">min</span>(), cs_exp.<span class="bu">max</span>(), K),</span>
+<span id="cb28-9"><a href="#cb28-9"></a>                      sigma<span class="op">=</span><span class="dv">5</span>, shape<span class="op">=</span>K,</span>
+<span id="cb28-10"><a href="#cb28-10"></a>                      transform<span class="op">=</span>pm.distributions.transforms.ordered,</span>
+<span id="cb28-11"><a href="#cb28-11"></a>                     )</span>
+<span id="cb28-12"><a href="#cb28-12"></a>    </span>
+<span id="cb28-13"><a href="#cb28-13"></a>    sd <span class="op">=</span> pm.HalfNormal(<span class="st">'sd'</span>, sigma<span class="op">=</span><span class="dv">10</span>, shape<span class="op">=</span>K)</span>
+<span id="cb28-14"><a href="#cb28-14"></a>    obs <span class="op">=</span> pm.NormalMixture(<span class="st">'obs'</span>, w, means, sigma<span class="op">=</span>sd, observed<span class="op">=</span>cs_exp.values)</span>
+<span id="cb28-15"><a href="#cb28-15"></a>    idata <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>, target_accept<span class="op">=</span><span class="fl">0.9</span>, nuts_sampler<span class="op">=</span><span class="st">"nutpie"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/nutpie/compile_pymc.py:416: NumbaWarning: Cannot cache compiled function "numba_funcified_fgraph" as it uses dynamic globals (such as ctypes pointers and large global arrays)
+  return inner(x)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+    <div>
+      <progress value="8000" class="" max="8000" style="width:300px; height:20px; vertical-align: middle;"></progress>
+      100.00% [8000/8000 05:34&lt;00:00  Sampling chains: 0, Divergences: 1]
+    </div>
+    
+</div>
+</div>
+<p>Debido a que estamos aproximando el DP (infinito) con un valor finito, es importante verificar que el valor de truncamiento (<span class="math inline">\(K=10\)</span> en este ejemplo) no introduzca ningún sesgo. Una forma sencilla de hacerlo es calcular el peso promedio de cada componente, ordenarlos y luego visualizar la suma acumulada. Para estar seguros, deberíamos tener al menos algunos componentes con un peso insignificante; de lo contrario, debemos aumentar el valor de truncamiento. El siguiente gráfico es un ejemplo de esto.</p>
+<div id="314c2753" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</span>
+<span id="cb30-2"><a href="#cb30-2"></a>plot_w <span class="op">=</span> np.arange(K)</span>
+<span id="cb30-3"><a href="#cb30-3"></a>ax.plot(np.cumsum(np.sort(idata.posterior[<span class="st">'w'</span>].mean((<span class="st">"chain"</span>, <span class="st">"draw"</span>)))[::<span class="op">-</span><span class="dv">1</span>]), <span class="st">'o-'</span>)</span>
+<span id="cb30-4"><a href="#cb30-4"></a>ax.hlines(<span class="fl">0.99</span>, <span class="dv">0</span>, K, ls<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"0.5"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5"></a>ax.set_xticks(plot_w, plot_w<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb30-6"><a href="#cb30-6"></a>ax.set_xlabel(<span class="st">'Número de componentes'</span>)</span>
+<span id="cb30-7"><a href="#cb30-7"></a>ax.set_ylabel(<span class="st">'Peso promedio'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Podemos ver que sólo los primeros 7 componentes son algo importantes. Los primeros 7 componentes representan más del 99% del peso total (línea discontinua gris en la figura anterior y por lo tanto podemos estar seguros de que el valor elegido (<span class="math inline">\(K=10\)</span>) es adecuado para estos datos.</p>
+<div id="9260c615" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>x_plot <span class="op">=</span> np.linspace(cs_exp.<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span>, cs_exp.<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span>, <span class="dv">500</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a>posterior <span class="op">=</span> idata.posterior.stack(samples<span class="op">=</span>(<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a>post_pdf_contribs <span class="op">=</span> pz.Normal(posterior[<span class="st">'means'</span>].values[:, <span class="va">None</span>, :],</span>
+<span id="cb31-6"><a href="#cb31-6"></a>                              posterior[<span class="st">'sd'</span>].values[:, <span class="va">None</span>, :]).pdf(np.atleast_3d(x_plot))</span>
+<span id="cb31-7"><a href="#cb31-7"></a></span>
+<span id="cb31-8"><a href="#cb31-8"></a>post_pdfs <span class="op">=</span> (posterior[<span class="st">'w'</span>].values[:, np.newaxis, :] <span class="op">*</span> post_pdf_contribs).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb31-9"><a href="#cb31-9"></a></span>
+<span id="cb31-10"><a href="#cb31-10"></a></span>
+<span id="cb31-11"><a href="#cb31-11"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</span>
+<span id="cb31-12"><a href="#cb31-12"></a></span>
+<span id="cb31-13"><a href="#cb31-13"></a>ax.plot(x_plot, post_pdfs[:,::<span class="dv">100</span>], c<span class="op">=</span><span class="st">'C1'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb31-14"><a href="#cb31-14"></a>ax.plot(x_plot, post_pdfs.mean(axis<span class="op">=</span><span class="dv">1</span>), c<span class="op">=</span><span class="st">'k'</span>, label<span class="op">=</span><span class="st">"media a posteriori"</span>)</span>
+<span id="cb31-15"><a href="#cb31-15"></a></span>
+<span id="cb31-16"><a href="#cb31-16"></a>ax.set_xlabel(<span class="st">'x'</span>)</span>
+<span id="cb31-17"><a href="#cb31-17"></a>ax.set_yticks([])</span>
+<span id="cb31-18"><a href="#cb31-18"></a>ax.legend()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="mezclas-continuas" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="mezclas-continuas"><span class="header-section-number">6.8</span> Mezclas continuas</h2>
+<p>El enfoque de este capítulo estuvo en los modelos de mezcla discreta, pero también podemos tener modelos de mezcla continua. Y de hecho ya conocemos algunos de ellos. Por ejemplo, los modelos jerárquicos también pueden interpretarse como modelos de mezcla continua donde los parámetros de cada grupo provienen de una distribución continua en el nivel superior. Para hacerlo más concreto, piense en realizar una regresión lineal para varios grupos. Podemos suponer que cada grupo tiene su propia pendiente o que todos los grupos comparten la misma pendiente. Alternativamente, en lugar de enmarcar nuestro problema como dos opciones discretas extremas, un modelo jerárquico nos permite modelar efectivamente una mezcla continua de estas dos opciones.</p>
+<section id="algunas-distribuciones-comunes-son-mezclas" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="algunas-distribuciones-comunes-son-mezclas"><span class="header-section-number">6.8.1</span> Algunas distribuciones comunes son mezclas</h3>
+<p>BetaBinomial es una distribución discreta que generalmente se utiliza para describir el número de éxitos <span class="math inline">\(y\)</span> para <span class="math inline">\(n\)</span> ensayos de Bernoulli cuando se desconoce la probabilidad de éxito <span class="math inline">\(p\)</span> en cada ensayo y se supone que sigue una distribución beta con parámetros <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>:</p>
+<p><span class="math display">\[
+\text{BetaBinomial}(y \mid n, \alpha,\beta) = \int_0^1 \text{Bin}(y \mid p, n) \; \text{Beta}(p \mid \alpha, \beta) dp
+\]</span></p>
+<p>Es decir, para encontrar la probabilidad de observar el resultado <span class="math inline">\(y\)</span>, promediamos todos los valores posibles (y continuos) de <span class="math inline">\(p\)</span>. Por tanto, el BetaBinomial puede considerarse como un modelo de mezcla continua. Si el modelo BetaBinomial te suena familiar es porque estuviste prestando atención en los dos primeros capítulos del libro. Este es el modelo que usamos para el problema de lanzar una moneda, aunque usamos explícitamente una distribución Beta y Binomial, en lugar de usar la distribución Beta-Binomio ya .</p>
+<p>De manera similar tenemos la distribución Binomial Negativa, que puede entenderse como una mezcla Gamma-Poisson. Es decir, una mezcla de distribuciones de Poisson donde el parámetro de velocidad tiene una distribución Gamma. La distribución binomial negativa se utiliza a menudo para evitar un problema común que se encuentra al tratar con datos de conteo. Este problema se conoce como sobredispersión. Suponga que está utilizando una distribución de Poisson para modelar los datos de recuento y luego se da cuenta de que la varianza en sus datos excede la del modelo; El problema con el uso de una distribución de Poisson es que la media y la varianza se describen mediante el mismo parámetro. Una forma de explicar la sobredispersión es modelar los datos como una mezcla (continua) de distribuciones de Poisson. Al considerar una combinación de distribuciones, nuestro modelo tiene más flexibilidad y puede adaptarse mejor a la media y la varianza de los datos.</p>
+<p>Otro ejemplo de mezcla de distribuciones es la distribución t de Student. Introdujimos esta distribución como una alternativa sólida a la distribución gaussiana. En este caso, la distribución t resulta de una mezcla de distribuciones gaussianas con media <span class="math inline">\(\mu\)</span> y varianza desconocida distribuida como una distribución Gamma inversa.</p>
+</section>
+</section>
+<section id="resumen" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="resumen"><span class="header-section-number">6.9</span> Resumen</h2>
+<p>Muchos problemas pueden describirse como una población general compuesta de distintas subpoblaciones. Cuando sabemos a qué subpoblación pertenece cada observación, podemos modelar específicamente cada subpoblación como un grupo separado. Sin embargo, muchas veces no tenemos acceso directo a esta información, por lo que puede ser apropiado modelar esos datos utilizando modelos mixtos. Podemos utilizar modelos mixtos para intentar capturar subpoblaciones reales en los datos o como un truco estadístico general para modelar distribuciones complejas combinando distribuciones más simples.</p>
+<p>En este capítulo, dividimos los modelos de mezclas en tres clases: modelos de mezclas finitas, modelos de mezclas no finitas y modelos de mezclas continuas. Un modelo de mezcla finita es una mezcla finita ponderada de dos o más distribuciones, donde cada distribución o componente representa un subgrupo de datos. En principio, los componentes pueden ser prácticamente cualquier cosa que consideremos útil, desde distribuciones simples, como una gaussiana o una Poisson, hasta objetos más complejos, como modelos jerárquicos o redes neuronales. Conceptualmente, para resolver un modelo mixto, todo lo que necesitamos hacer es asignar adecuadamente cada punto de datos a uno de los componentes. Podemos hacer esto introduciendo una variable latente <span class="math inline">\(z\)</span>. Usamos una distribución categórica para <span class="math inline">\(z\)</span>, que es la distribución discreta más general, con un previo de Dirichlet, que es la generalización n-dimensional de la distribución Beta. El muestreo de la variable discreta <span class="math inline">\(z\)</span> puede ser problemático, por lo que puede resultar conveniente marginarla. PyMC incluye una distribución de mezcla normal y una distribución de mezcla que realiza esta marginación por nosotros, lo que facilita la construcción de modelos de mezcla con PyMC.</p>
+<p>Un problema común que analizamos en este capítulo cuando trabajamos con modelos mixtos es que este modelo puede conducir al problema de cambio de etiqueta, una forma de no identificabilidad. Una forma de eliminar la no identificabilidad es forzar el pedido de los componentes. Un desafío con los modelos de mezclas finitas es cómo decidir el número de componentes. Una solución es realizar una comparación de modelos para un conjunto de modelos en torno a un número estimado de componentes. Esa estimación debe guiarse, cuando sea posible, por nuestro conocimiento del problema en cuestión. Otra opción es intentar estimar automáticamente la cantidad de componentes a partir de los datos. Por esta razón, introdujimos el concepto del proceso de Dirichlet como una versión de dimensión infinita de la distribución de Dirichlet que podemos usar para construir un modelo de mezcla no paramétrico.</p>
+<p>Finalmente, para cerrar el capítulo, discutimos brevemente cuántos modelos, como el BetaBinomial (el que se usa para el problema de lanzar una moneda), el Binomial Negativo, la distribución t de Student e incluso los modelos jerárquicos, pueden interpretarse como modelos de mezcla continua.</p>
 
 
 </section>
