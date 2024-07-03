@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.557">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Estadística a Inferencia II - 6&nbsp; Modelos de mezcla</title>
+<title>6&nbsp; Modelos de mezcla – Estadística a Inferencia II</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,13 +147,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_modelos_de_mezcla.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modelos de mezcla</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -168,7 +168,7 @@ window.Quarto = {
       <a href="./">Estadística a Inferencia II</a> 
         <div class="sidebar-tools-main tools-wide">
     <div class="dropdown">
-      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="github"><i class="bi bi-github"></i></a>
+      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="github"><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/LCD-UNSAM/estadistica_e_inferencia_II">
@@ -410,14 +410,11 @@ p(x)
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 11 seconds.
-The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
-The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
+NUTS: [w, μ, σ]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"fdb6ff2df528402a9d4aa233b4c1e647","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"56a88a4d86054fee9e17e68d8d1e3cbd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -426,10 +423,15 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 6 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
+</div>
 </div>
 <p>OK, lo primero que notamos es que el modelo corre en un tiempo razonable. Pero tenemos reportes de <span class="math inline">\(\hat R\)</span> altos y ESS bajos! Veamos un foresplot, para lograr entender que está sucediendo</p>
 <div id="1da6a5ab" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>az.plot_forest(idata_mg, var_names<span class="op">=</span><span class="st">"μ"</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>az.plot_forest(idata_mg, var_names<span class="op">=</span><span class="st">"μ"</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -448,32 +450,44 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 <p>Con los modelos mixtos, existen al menos dos formas de parametrizar un modelo para eliminar el problema de la no identificabilidad. Podemos forzar un orden arbitrario en los componentes; por ejemplo, establecer que el vector <span class="math inline">\(\mu\)</span> debe ser estrictamente creciente o podemos usar priors informativos. La primer estrategia suele ser más general y simple de implementar y la segunda no garantiza la eliminación de problemas.</p>
 <p>Usando PyMC, podemos implementar la primera opción con una transformación:</p>
 <div id="e66c8ad3" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_mgo:</span>
-<span id="cb8-2"><a href="#cb8-2"></a>    w <span class="op">=</span> pm.Dirichlet(<span class="st">'w'</span>, a<span class="op">=</span>np.ones(K))</span>
-<span id="cb8-3"><a href="#cb8-3"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span>cs_exp.mean(), sigma<span class="op">=</span><span class="dv">10</span>, shape<span class="op">=</span>K,</span>
-<span id="cb8-4"><a href="#cb8-4"></a>                 transform<span class="op">=</span>pm.distributions.transforms.ordered,</span>
-<span id="cb8-5"><a href="#cb8-5"></a>                 initval<span class="op">=</span>np.array([cs_exp.mean()<span class="op">-</span><span class="dv">1</span>, cs_exp.mean()<span class="op">+</span><span class="dv">1</span>]),</span>
-<span id="cb8-6"><a href="#cb8-6"></a>                 )</span>
-<span id="cb8-7"><a href="#cb8-7"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb8-8"><a href="#cb8-8"></a>    x <span class="op">=</span> pm.NormalMixture(<span class="st">'x'</span>, w<span class="op">=</span>w, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>cs_exp)</span>
-<span id="cb8-9"><a href="#cb8-9"></a>    idata_mg <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>)    </span>
-<span id="cb8-10"><a href="#cb8-10"></a>    </span>
-<span id="cb8-11"><a href="#cb8-11"></a>    idata_mgo <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_mgo:</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    w <span class="op">=</span> pm.Dirichlet(<span class="st">'w'</span>, a<span class="op">=</span>np.ones(K))</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span>cs_exp.mean(), sigma<span class="op">=</span><span class="dv">10</span>, shape<span class="op">=</span>K,</span>
+<span id="cb9-4"><a href="#cb9-4"></a>                 transform<span class="op">=</span>pm.distributions.transforms.ordered,</span>
+<span id="cb9-5"><a href="#cb9-5"></a>                 initval<span class="op">=</span>np.array([cs_exp.mean()<span class="op">-</span><span class="dv">1</span>, cs_exp.mean()<span class="op">+</span><span class="dv">1</span>]),</span>
+<span id="cb9-6"><a href="#cb9-6"></a>                 )</span>
+<span id="cb9-7"><a href="#cb9-7"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    x <span class="op">=</span> pm.NormalMixture(<span class="st">'x'</span>, w<span class="op">=</span>w, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>cs_exp)</span>
+<span id="cb9-9"><a href="#cb9-9"></a>    idata_mg <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>)    </span>
+<span id="cb9-10"><a href="#cb9-10"></a>    </span>
+<span id="cb9-11"><a href="#cb9-11"></a>    idata_mgo <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 31 seconds.
+NUTS: [w, μ, σ]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"4177d9ca148f47808c30163d00ff17b3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 31 seconds.</code></pre>
+NUTS: [w, μ, σ]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"dc07cdd38d53444a9fe26af321f8c15a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"2fcee978f30b47e3bb16c6c36b54b952","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -482,16 +496,8 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"6e0e25b69e084f64ab6c133b5c8eae3f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 13 seconds.</code></pre>
 </div>
 </div>
 </section>
@@ -500,51 +506,95 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Una de las principales preocupaciones con los modelos de mezclas finitas es cómo decidir el número de componentes. Una regla general es comenzar con una cantidad relativamente pequeña de componentes y luego aumentarla para el ajuste del modelo. Como ya vimos anteriormente el ajuste de un modelo se puede evaluar con una combinación de herramientas como las pruebas predictivas a posteriori, el ELPD y la experiencia de los modeladores.</p>
 <p>Comparemos el modelo para <span class="math inline">\(K = \{2, 3, 4, 5\}\)</span></p>
 <div id="dc6fefd0" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>Ks <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a>models <span class="op">=</span> []</span>
-<span id="cb10-4"><a href="#cb10-4"></a>idatas <span class="op">=</span> []</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="cf">for</span> k <span class="kw">in</span> Ks:</span>
-<span id="cb10-6"><a href="#cb10-6"></a>    <span class="cf">with</span> pm.Model() <span class="im">as</span> model:</span>
-<span id="cb10-7"><a href="#cb10-7"></a>        w <span class="op">=</span> pm.Dirichlet(<span class="st">'w'</span>, a<span class="op">=</span>np.ones(k))</span>
-<span id="cb10-8"><a href="#cb10-8"></a>        μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>,</span>
-<span id="cb10-9"><a href="#cb10-9"></a>                      mu<span class="op">=</span>np.linspace(cs_exp.<span class="bu">min</span>(), cs_exp.<span class="bu">max</span>(), k),</span>
-<span id="cb10-10"><a href="#cb10-10"></a>                      sigma<span class="op">=</span>cs_exp.var() <span class="op">/</span> k, shape<span class="op">=</span>k,</span>
-<span id="cb10-11"><a href="#cb10-11"></a>                      transform<span class="op">=</span>pm.distributions.transforms.ordered,</span>
-<span id="cb10-12"><a href="#cb10-12"></a>                     )</span>
-<span id="cb10-13"><a href="#cb10-13"></a>        σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb10-14"><a href="#cb10-14"></a>        x <span class="op">=</span> pm.NormalMixture(<span class="st">'x'</span>, w<span class="op">=</span>w, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>cs_exp)</span>
-<span id="cb10-15"><a href="#cb10-15"></a>        idata <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>,</span>
-<span id="cb10-16"><a href="#cb10-16"></a>                          idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>}</span>
-<span id="cb10-17"><a href="#cb10-17"></a>                         )</span>
-<span id="cb10-18"><a href="#cb10-18"></a>                         </span>
-<span id="cb10-19"><a href="#cb10-19"></a>        idatas.append(idata)</span>
-<span id="cb10-20"><a href="#cb10-20"></a>        models.append(model)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>Ks <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>models <span class="op">=</span> []</span>
+<span id="cb13-4"><a href="#cb13-4"></a>idatas <span class="op">=</span> []</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="cf">for</span> k <span class="kw">in</span> Ks:</span>
+<span id="cb13-6"><a href="#cb13-6"></a>    <span class="cf">with</span> pm.Model() <span class="im">as</span> model:</span>
+<span id="cb13-7"><a href="#cb13-7"></a>        w <span class="op">=</span> pm.Dirichlet(<span class="st">'w'</span>, a<span class="op">=</span>np.ones(k))</span>
+<span id="cb13-8"><a href="#cb13-8"></a>        μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>,</span>
+<span id="cb13-9"><a href="#cb13-9"></a>                      mu<span class="op">=</span>np.linspace(cs_exp.<span class="bu">min</span>(), cs_exp.<span class="bu">max</span>(), k),</span>
+<span id="cb13-10"><a href="#cb13-10"></a>                      sigma<span class="op">=</span>cs_exp.var() <span class="op">/</span> k, shape<span class="op">=</span>k,</span>
+<span id="cb13-11"><a href="#cb13-11"></a>                      transform<span class="op">=</span>pm.distributions.transforms.ordered,</span>
+<span id="cb13-12"><a href="#cb13-12"></a>                     )</span>
+<span id="cb13-13"><a href="#cb13-13"></a>        σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb13-14"><a href="#cb13-14"></a>        x <span class="op">=</span> pm.NormalMixture(<span class="st">'x'</span>, w<span class="op">=</span>w, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>cs_exp)</span>
+<span id="cb13-15"><a href="#cb13-15"></a>        idata <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb13-16"><a href="#cb13-16"></a>                          idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>}</span>
+<span id="cb13-17"><a href="#cb13-17"></a>                         )</span>
+<span id="cb13-18"><a href="#cb13-18"></a>                         </span>
+<span id="cb13-19"><a href="#cb13-19"></a>        idatas.append(idata)</span>
+<span id="cb13-20"><a href="#cb13-20"></a>        models.append(model)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 36 seconds.
+NUTS: [w, μ, σ]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b2d66cb83384410ca7a3137bb2d854e9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 36 seconds.
+NUTS: [w, μ, σ]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"bafd38080c994004b7186e6d6e32d6ed","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 45 seconds.
+There were 40 divergences after tuning. Increase `target_accept` or reparameterize.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 68 seconds.
+NUTS: [w, μ, σ]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"d0ee296febdd4dc7bced6fa31afb9cd2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 56 seconds.
+There were 9 divergences after tuning. Increase `target_accept` or reparameterize.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [w, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 72 seconds.</code></pre>
+NUTS: [w, μ, σ]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9366613b36b24844a9357b4b32e76901","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"0e4311012bd74c058432ae108c88a734","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -553,64 +603,34 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"84d2108712a84ec0bf62c5a74ff46d9f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4ba3b0700e9f4072807a7b3dea1b40f3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"23feb0fe74ee4175aceb54fb64a5dd8b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 28 seconds.</code></pre>
 </div>
 </div>
 <p>La siguiente figura muestra los modelos de mezcla para <span class="math inline">\(K\)</span> Gaussianas. La linea negra y solida representa la media a posteriori y las lineas turquesa muestras de la distribución a posterori. La distribución media de cada componente está representado usando lineas punteadas</p>
 <div id="35b2b1ff" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">8</span>))</span>
-<span id="cb12-2"><a href="#cb12-2"></a> </span>
-<span id="cb12-3"><a href="#cb12-3"></a>ax <span class="op">=</span> np.ravel(ax)</span>
-<span id="cb12-4"><a href="#cb12-4"></a>x <span class="op">=</span> np.linspace(cs_exp.<span class="bu">min</span>(), cs_exp.<span class="bu">max</span>(), <span class="dv">200</span>)</span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="cf">for</span> idx, idata_x <span class="kw">in</span> <span class="bu">enumerate</span>(idatas):</span>
-<span id="cb12-6"><a href="#cb12-6"></a>    posterior_x <span class="op">=</span> idata_x.posterior.stack(samples<span class="op">=</span>(<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
-<span id="cb12-7"><a href="#cb12-7"></a>    x_ <span class="op">=</span> np.array([x] <span class="op">*</span> Ks[idx]).T</span>
-<span id="cb12-8"><a href="#cb12-8"></a></span>
-<span id="cb12-9"><a href="#cb12-9"></a>    <span class="cf">for</span> i_ <span class="kw">in</span> np.random.randint(<span class="dv">0</span>, posterior_x.samples.size, size<span class="op">=</span><span class="dv">50</span>):</span>
-<span id="cb12-10"><a href="#cb12-10"></a>        dist <span class="op">=</span> pz.Normal(posterior_x[<span class="st">'μ'</span>][:,i_], posterior_x[<span class="st">'σ'</span>][i_])</span>
-<span id="cb12-11"><a href="#cb12-11"></a>        ax[idx].plot(x, np.<span class="bu">sum</span>(dist.pdf(x_) <span class="op">*</span>  posterior_x[<span class="st">'w'</span>][:,i_].values, <span class="dv">1</span>), <span class="st">'C1'</span>)</span>
-<span id="cb12-12"><a href="#cb12-12"></a> </span>
-<span id="cb12-13"><a href="#cb12-13"></a>    p_y <span class="op">=</span> posterior_x[<span class="st">'w'</span>].mean(<span class="st">"samples"</span>)</span>
-<span id="cb12-14"><a href="#cb12-14"></a>    dist <span class="op">=</span> pz.Normal(posterior_x[<span class="st">'μ'</span>].mean(<span class="st">"samples"</span>), posterior_x[<span class="st">'σ'</span>].mean())</span>
-<span id="cb12-15"><a href="#cb12-15"></a>    ax[idx].plot(x, np.<span class="bu">sum</span>(dist.pdf(x_) <span class="op">*</span> p_y.values, <span class="dv">1</span>), <span class="st">'k'</span>, lw<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb12-16"><a href="#cb12-16"></a>    ax[idx].plot(x, dist.pdf(x_) <span class="op">*</span> p_y.values, <span class="st">'k--'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb12-17"><a href="#cb12-17"></a>         </span>
-<span id="cb12-18"><a href="#cb12-18"></a>    ax[idx].set_title(<span class="st">'K = </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(Ks[idx]))</span>
-<span id="cb12-19"><a href="#cb12-19"></a>    ax[idx].set_yticks([])</span>
-<span id="cb12-20"><a href="#cb12-20"></a>    ax[idx].set_xlabel(<span class="st">'x'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">8</span>))</span>
+<span id="cb19-2"><a href="#cb19-2"></a> </span>
+<span id="cb19-3"><a href="#cb19-3"></a>ax <span class="op">=</span> np.ravel(ax)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>x <span class="op">=</span> np.linspace(cs_exp.<span class="bu">min</span>(), cs_exp.<span class="bu">max</span>(), <span class="dv">200</span>)</span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="cf">for</span> idx, idata_x <span class="kw">in</span> <span class="bu">enumerate</span>(idatas):</span>
+<span id="cb19-6"><a href="#cb19-6"></a>    posterior_x <span class="op">=</span> idata_x.posterior.stack(samples<span class="op">=</span>(<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
+<span id="cb19-7"><a href="#cb19-7"></a>    x_ <span class="op">=</span> np.array([x] <span class="op">*</span> Ks[idx]).T</span>
+<span id="cb19-8"><a href="#cb19-8"></a></span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="cf">for</span> i_ <span class="kw">in</span> np.random.randint(<span class="dv">0</span>, posterior_x.samples.size, size<span class="op">=</span><span class="dv">50</span>):</span>
+<span id="cb19-10"><a href="#cb19-10"></a>        dist <span class="op">=</span> pz.Normal(posterior_x[<span class="st">'μ'</span>][:,i_], posterior_x[<span class="st">'σ'</span>][i_])</span>
+<span id="cb19-11"><a href="#cb19-11"></a>        ax[idx].plot(x, np.<span class="bu">sum</span>(dist.pdf(x_) <span class="op">*</span>  posterior_x[<span class="st">'w'</span>][:,i_].values, <span class="dv">1</span>), <span class="st">'C1'</span>)</span>
+<span id="cb19-12"><a href="#cb19-12"></a> </span>
+<span id="cb19-13"><a href="#cb19-13"></a>    p_y <span class="op">=</span> posterior_x[<span class="st">'w'</span>].mean(<span class="st">"samples"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14"></a>    dist <span class="op">=</span> pz.Normal(posterior_x[<span class="st">'μ'</span>].mean(<span class="st">"samples"</span>), posterior_x[<span class="st">'σ'</span>].mean())</span>
+<span id="cb19-15"><a href="#cb19-15"></a>    ax[idx].plot(x, np.<span class="bu">sum</span>(dist.pdf(x_) <span class="op">*</span> p_y.values, <span class="dv">1</span>), <span class="st">'k'</span>, lw<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb19-16"><a href="#cb19-16"></a>    ax[idx].plot(x, dist.pdf(x_) <span class="op">*</span> p_y.values, <span class="st">'k--'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb19-17"><a href="#cb19-17"></a>         </span>
+<span id="cb19-18"><a href="#cb19-18"></a>    ax[idx].set_title(<span class="st">'K = </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(Ks[idx]))</span>
+<span id="cb19-19"><a href="#cb19-19"></a>    ax[idx].set_yticks([])</span>
+<span id="cb19-20"><a href="#cb19-20"></a>    ax[idx].set_xlabel(<span class="st">'x'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -625,25 +645,25 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <div id="74634413" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>ppc_mm <span class="op">=</span> [pm.sample_posterior_predictive(idatas[i],</span>
-<span id="cb13-2"><a href="#cb13-2"></a>                                         models[i],</span>
-<span id="cb13-3"><a href="#cb13-3"></a>                                         random_seed<span class="op">=</span><span class="dv">4591</span>,</span>
-<span id="cb13-4"><a href="#cb13-4"></a>                                         progressbar<span class="op">=</span><span class="va">False</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>)]</span>
-<span id="cb13-5"><a href="#cb13-5"></a></span>
-<span id="cb13-6"><a href="#cb13-6"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-7"><a href="#cb13-7"></a>ax <span class="op">=</span> np.ravel(ax)</span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="kw">def</span> iqr(x, a<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb13-9"><a href="#cb13-9"></a>    <span class="cf">return</span> np.subtract(<span class="op">*</span>np.percentile(x, [<span class="dv">75</span>, <span class="dv">25</span>], axis<span class="op">=</span>a))</span>
-<span id="cb13-10"><a href="#cb13-10"></a>    </span>
-<span id="cb13-11"><a href="#cb13-11"></a>T_obs <span class="op">=</span> iqr(cs_exp)</span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="cf">for</span> idx, d_sim <span class="kw">in</span> <span class="bu">enumerate</span>(ppc_mm):</span>
-<span id="cb13-13"><a href="#cb13-13"></a>    d_sim <span class="op">=</span> d_sim.posterior_predictive[<span class="st">"x"</span>]</span>
-<span id="cb13-14"><a href="#cb13-14"></a>    T_sim <span class="op">=</span> iqr(d_sim, <span class="dv">1</span>)</span>
-<span id="cb13-15"><a href="#cb13-15"></a>    p_value <span class="op">=</span> np.mean(T_sim <span class="op">&gt;=</span> T_obs)</span>
-<span id="cb13-16"><a href="#cb13-16"></a>    az.plot_kde(T_sim, ax<span class="op">=</span>ax[idx])</span>
-<span id="cb13-17"><a href="#cb13-17"></a>    ax[idx].axvline(T_obs, <span class="dv">0</span>, <span class="dv">1</span>, color<span class="op">=</span><span class="st">'k'</span>, ls<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb13-18"><a href="#cb13-18"></a>    ax[idx].set_title(<span class="ss">f'K = </span><span class="sc">{</span>Ks[idx]<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss"> p-value </span><span class="sc">{</span>p_value<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb13-19"><a href="#cb13-19"></a>    ax[idx].set_yticks([])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>ppc_mm <span class="op">=</span> [pm.sample_posterior_predictive(idatas[i],</span>
+<span id="cb20-2"><a href="#cb20-2"></a>                                         models[i],</span>
+<span id="cb20-3"><a href="#cb20-3"></a>                                         random_seed<span class="op">=</span><span class="dv">4591</span>,</span>
+<span id="cb20-4"><a href="#cb20-4"></a>                                         progressbar<span class="op">=</span><span class="va">False</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>)]</span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-7"><a href="#cb20-7"></a>ax <span class="op">=</span> np.ravel(ax)</span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="kw">def</span> iqr(x, a<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb20-9"><a href="#cb20-9"></a>    <span class="cf">return</span> np.subtract(<span class="op">*</span>np.percentile(x, [<span class="dv">75</span>, <span class="dv">25</span>], axis<span class="op">=</span>a))</span>
+<span id="cb20-10"><a href="#cb20-10"></a>    </span>
+<span id="cb20-11"><a href="#cb20-11"></a>T_obs <span class="op">=</span> iqr(cs_exp)</span>
+<span id="cb20-12"><a href="#cb20-12"></a><span class="cf">for</span> idx, d_sim <span class="kw">in</span> <span class="bu">enumerate</span>(ppc_mm):</span>
+<span id="cb20-13"><a href="#cb20-13"></a>    d_sim <span class="op">=</span> d_sim.posterior_predictive[<span class="st">"x"</span>]</span>
+<span id="cb20-14"><a href="#cb20-14"></a>    T_sim <span class="op">=</span> iqr(d_sim, <span class="dv">1</span>)</span>
+<span id="cb20-15"><a href="#cb20-15"></a>    p_value <span class="op">=</span> np.mean(T_sim <span class="op">&gt;=</span> T_obs)</span>
+<span id="cb20-16"><a href="#cb20-16"></a>    az.plot_kde(T_sim, ax<span class="op">=</span>ax[idx])</span>
+<span id="cb20-17"><a href="#cb20-17"></a>    ax[idx].axvline(T_obs, <span class="dv">0</span>, <span class="dv">1</span>, color<span class="op">=</span><span class="st">'k'</span>, ls<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb20-18"><a href="#cb20-18"></a>    ax[idx].set_title(<span class="ss">f'K = </span><span class="sc">{</span>Ks[idx]<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss"> p-value </span><span class="sc">{</span>p_value<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb20-19"><a href="#cb20-19"></a>    ax[idx].set_yticks([])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Sampling: [x]
@@ -661,8 +681,8 @@ Sampling: [x]</code></pre>
 </div>
 <p>Para complementar las estas pruebas, podemos calcular el ELPD usando LOO. Podemos ver que los resultados coinciden con las pruebas predictivas</p>
 <div id="9bacc0e5" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>comp <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>([<span class="bu">str</span>(K) <span class="cf">for</span> K <span class="kw">in</span> Ks], idatas)))</span>
-<span id="cb15-2"><a href="#cb15-2"></a>comp</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>comp <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>([<span class="bu">str</span>(K) <span class="cf">for</span> K <span class="kw">in</span> Ks], idatas)))</span>
+<span id="cb22-2"><a href="#cb22-2"></a>comp</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
@@ -686,11 +706,11 @@ Sampling: [x]</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">5</td>
 <td>0</td>
-<td>-5129.318168</td>
-<td>9.999541</td>
+<td>-5129.403532</td>
+<td>10.050910</td>
 <td>0.000000</td>
 <td>1.000000e+00</td>
-<td>30.754122</td>
+<td>30.765814</td>
 <td>0.000000</td>
 <td>False</td>
 <td>log</td>
@@ -698,36 +718,36 @@ Sampling: [x]</code></pre>
 <tr class="even">
 <td data-quarto-table-cell-role="th">4</td>
 <td>1</td>
-<td>-5139.716879</td>
-<td>7.721453</td>
-<td>10.398712</td>
+<td>-5155.672477</td>
+<td>19.914150</td>
+<td>26.268945</td>
 <td>0.000000e+00</td>
-<td>31.256780</td>
-<td>4.024542</td>
+<td>31.333449</td>
+<td>4.312002</td>
 <td>False</td>
 <td>log</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3</td>
 <td>2</td>
-<td>-5178.298877</td>
-<td>5.756020</td>
-<td>48.980710</td>
+<td>-5192.861947</td>
+<td>15.129354</td>
+<td>63.458415</td>
 <td>0.000000e+00</td>
-<td>31.873449</td>
-<td>8.809736</td>
+<td>32.182557</td>
+<td>9.178287</td>
 <td>False</td>
 <td>log</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2</td>
 <td>3</td>
-<td>-5215.922884</td>
-<td>3.260827</td>
-<td>86.604716</td>
-<td>2.227694e-10</td>
-<td>33.483317</td>
-<td>11.949417</td>
+<td>-5215.851380</td>
+<td>3.201959</td>
+<td>86.447848</td>
+<td>4.024514e-11</td>
+<td>33.499721</td>
+<td>11.948419</td>
 <td>False</td>
 <td>log</td>
 </tr>
@@ -738,7 +758,7 @@ Sampling: [x]</code></pre>
 </div>
 </div>
 <div id="e58861e0" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>az.plot_compare(comp, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>az.plot_compare(comp, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -782,27 +802,26 @@ f(x \mid \psi, n, p) = \left\{ \begin{array}{l}
 <h2 data-number="6.6" class="anchored" data-anchor-id="regresión-de-poisson-inflada-en-cero"><span class="header-section-number">6.6</span> Regresión de Poisson inflada en cero</h2>
 <p>Para ejemplificar un modelo de regresión de Poisson inflado en cero, vamos a trabajar con un conjunto de datos tomado del <a href="http://www.ats.ucla.edu/stat/data">Instituto de Investigación y Educación Digital</a>. Tenemos 250 grupos de visitantes a un parque, para cada grupo tenemos el registro de la cantidad de peces que capturaron <code>count</code>, cuántos niños había en el grupo <code>child</code> y si trajeron una casa-rodante/caravana al parque <code>camper</code>. Usando estos datos, vamos a construir un modelo de la cantidad de peces capturados en función de las variables del niño y del campista.</p>
 <div id="68517516" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>pesca <span class="op">=</span> pd.read_csv(<span class="st">'datos/pesca.csv'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>pesca <span class="op">=</span> pd.read_csv(<span class="st">'datos/pesca.csv'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Usando PyMC podemos escribir un modelo para estos datos como:</p>
 <div id="27b32c9c" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> ZIP_reg:</span>
-<span id="cb18-2"><a href="#cb18-2"></a>    ψ <span class="op">=</span> pm.Beta(<span class="st">'ψ'</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb18-3"><a href="#cb18-3"></a>    α <span class="op">=</span> pm.Normal(<span class="st">'α'</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>    β <span class="op">=</span> pm.Normal(<span class="st">'β'</span>, <span class="dv">0</span>, <span class="dv">1</span>, shape<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb18-5"><a href="#cb18-5"></a>    θ <span class="op">=</span> pm.math.exp(α <span class="op">+</span> β[<span class="dv">0</span>] <span class="op">*</span> pesca[<span class="st">'child'</span>] <span class="op">+</span> β[<span class="dv">1</span>] <span class="op">*</span> pesca[<span class="st">'camper'</span>])</span>
-<span id="cb18-6"><a href="#cb18-6"></a>    yl <span class="op">=</span> pm.ZeroInflatedPoisson(<span class="st">'yl'</span>, ψ, θ, observed<span class="op">=</span>pesca[<span class="st">'count'</span>])</span>
-<span id="cb18-7"><a href="#cb18-7"></a>    idata_ZIP_reg <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> ZIP_reg:</span>
+<span id="cb25-2"><a href="#cb25-2"></a>    ψ <span class="op">=</span> pm.Beta(<span class="st">'ψ'</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb25-3"><a href="#cb25-3"></a>    α <span class="op">=</span> pm.Normal(<span class="st">'α'</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    β <span class="op">=</span> pm.Normal(<span class="st">'β'</span>, <span class="dv">0</span>, <span class="dv">1</span>, shape<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    θ <span class="op">=</span> pm.math.exp(α <span class="op">+</span> β[<span class="dv">0</span>] <span class="op">*</span> pesca[<span class="st">'child'</span>] <span class="op">+</span> β[<span class="dv">1</span>] <span class="op">*</span> pesca[<span class="st">'camper'</span>])</span>
+<span id="cb25-6"><a href="#cb25-6"></a>    yl <span class="op">=</span> pm.ZeroInflatedPoisson(<span class="st">'yl'</span>, ψ, θ, observed<span class="op">=</span>pesca[<span class="st">'count'</span>])</span>
+<span id="cb25-7"><a href="#cb25-7"></a>    idata_ZIP_reg <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [ψ, α, β]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 11 seconds.</code></pre>
+NUTS: [ψ, α, β]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2fc088eedf9a4f14bcb5a342d5c7aa59","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"0fae6e58b24046539620064ffd54aa30","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -810,6 +829,9 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 5 seconds.</code></pre>
 </div>
 </div>
 <p><code>camper</code> es una variable binaria con 0 si el grupo no entró al parque en casa-rodante y 1 si lo hizo. A una variable que indica la ausencia/presencia de un atributo se le suele llamar variable binaria, dicotómica, “dummy” o variable indicadora. Es importante notar que cuando <code>camper</code> toma el valor de 0, el término que involucra a <span class="math inline">\(\beta_1\)</span> también será 0 y el modelo se reduce a una regresión con una sola variable independiente. Ya discutimos esto cuando discutimos el uso de covariables categóricas.</p>
@@ -822,28 +844,28 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <div id="74a42275" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>children <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</span>
-<span id="cb20-2"><a href="#cb20-2"></a>fish_count_pred_0 <span class="op">=</span> []</span>
-<span id="cb20-3"><a href="#cb20-3"></a>fish_count_pred_1 <span class="op">=</span> []</span>
-<span id="cb20-4"><a href="#cb20-4"></a></span>
-<span id="cb20-5"><a href="#cb20-5"></a>posterior <span class="op">=</span> az.extract(idata_ZIP_reg)</span>
-<span id="cb20-6"><a href="#cb20-6"></a></span>
-<span id="cb20-7"><a href="#cb20-7"></a>without_camper <span class="op">=</span> posterior[<span class="st">'α'</span>] <span class="op">+</span> posterior[<span class="st">'β'</span>][<span class="dv">0</span>] <span class="op">*</span> xr.DataArray(children)</span>
-<span id="cb20-8"><a href="#cb20-8"></a>with_camper <span class="op">=</span> without_camper <span class="op">+</span> posterior[<span class="st">'β'</span>][<span class="dv">1</span>]</span>
-<span id="cb20-9"><a href="#cb20-9"></a>fish_count_pred_0 <span class="op">=</span> np.exp(without_camper)</span>
-<span id="cb20-10"><a href="#cb20-10"></a>fish_count_pred_1 <span class="op">=</span> np.exp(with_camper)</span>
-<span id="cb20-11"><a href="#cb20-11"></a></span>
-<span id="cb20-12"><a href="#cb20-12"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
-<span id="cb20-13"><a href="#cb20-13"></a>ax.plot(children, fish_count_pred_0.T, <span class="st">'C0.'</span>, alpha<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb20-14"><a href="#cb20-14"></a>ax.plot(children, fish_count_pred_1.T, <span class="st">'C1.'</span>, alpha<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb20-15"><a href="#cb20-15"></a>ax.plot(children, fish_count_pred_0.mean(<span class="st">"sample"</span>), <span class="st">'C0'</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb20-16"><a href="#cb20-16"></a>ax.plot(children, fish_count_pred_1.mean(<span class="st">"sample"</span>), <span class="st">'C1'</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb20-17"><a href="#cb20-17"></a>ax.set_xticks(children)</span>
-<span id="cb20-18"><a href="#cb20-18"></a>ax.set_xlabel(<span class="st">'Número de niños'</span>)</span>
-<span id="cb20-19"><a href="#cb20-19"></a>ax.set_ylabel(<span class="st">'Peces'</span>)</span>
-<span id="cb20-20"><a href="#cb20-20"></a>ax.plot([], <span class="st">'C0o'</span>, label<span class="op">=</span><span class="st">'sin casa-rodante'</span>)</span>
-<span id="cb20-21"><a href="#cb20-21"></a>ax.plot([], <span class="st">'C1o'</span>, label<span class="op">=</span><span class="st">'con casa-rodante'</span>)</span>
-<span id="cb20-22"><a href="#cb20-22"></a>plt.legend()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>children <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</span>
+<span id="cb28-2"><a href="#cb28-2"></a>fish_count_pred_0 <span class="op">=</span> []</span>
+<span id="cb28-3"><a href="#cb28-3"></a>fish_count_pred_1 <span class="op">=</span> []</span>
+<span id="cb28-4"><a href="#cb28-4"></a></span>
+<span id="cb28-5"><a href="#cb28-5"></a>posterior <span class="op">=</span> az.extract(idata_ZIP_reg)</span>
+<span id="cb28-6"><a href="#cb28-6"></a></span>
+<span id="cb28-7"><a href="#cb28-7"></a>without_camper <span class="op">=</span> posterior[<span class="st">'α'</span>] <span class="op">+</span> posterior[<span class="st">'β'</span>][<span class="dv">0</span>] <span class="op">*</span> xr.DataArray(children)</span>
+<span id="cb28-8"><a href="#cb28-8"></a>with_camper <span class="op">=</span> without_camper <span class="op">+</span> posterior[<span class="st">'β'</span>][<span class="dv">1</span>]</span>
+<span id="cb28-9"><a href="#cb28-9"></a>fish_count_pred_0 <span class="op">=</span> np.exp(without_camper)</span>
+<span id="cb28-10"><a href="#cb28-10"></a>fish_count_pred_1 <span class="op">=</span> np.exp(with_camper)</span>
+<span id="cb28-11"><a href="#cb28-11"></a></span>
+<span id="cb28-12"><a href="#cb28-12"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb28-13"><a href="#cb28-13"></a>ax.plot(children, fish_count_pred_0.T, <span class="st">'C0.'</span>, alpha<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb28-14"><a href="#cb28-14"></a>ax.plot(children, fish_count_pred_1.T, <span class="st">'C1.'</span>, alpha<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb28-15"><a href="#cb28-15"></a>ax.plot(children, fish_count_pred_0.mean(<span class="st">"sample"</span>), <span class="st">'C0'</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb28-16"><a href="#cb28-16"></a>ax.plot(children, fish_count_pred_1.mean(<span class="st">"sample"</span>), <span class="st">'C1'</span>, ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb28-17"><a href="#cb28-17"></a>ax.set_xticks(children)</span>
+<span id="cb28-18"><a href="#cb28-18"></a>ax.set_xlabel(<span class="st">'Número de niños'</span>)</span>
+<span id="cb28-19"><a href="#cb28-19"></a>ax.set_ylabel(<span class="st">'Peces'</span>)</span>
+<span id="cb28-20"><a href="#cb28-20"></a>ax.plot([], <span class="st">'C0o'</span>, label<span class="op">=</span><span class="st">'sin casa-rodante'</span>)</span>
+<span id="cb28-21"><a href="#cb28-21"></a>ax.plot([], <span class="st">'C1o'</span>, label<span class="op">=</span><span class="st">'con casa-rodante'</span>)</span>
+<span id="cb28-22"><a href="#cb28-22"></a>plt.legend()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -879,121 +901,121 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Los cangrejos herradura llegan a la playa en parejas para su ritual de desove. Los machos solitarios se agrupan alrededor de las parejas que anidan y compiten por la oportunidad de fertilizar los huevos. Estos individuos, conocidos como machos satélites, a menudo se congregan cerca de ciertas parejas, e ignoran a otras. Queremos modelar el número de <code>satelites</code>. Sospechamos que este número está relacionado con las propiedades de las hembras de cangrejo. Como predictores vamos a utilizar propiedades del caparazón <code>width</code> y <code>color</code>. El color se codifica utilizando los números enteros del 1 al 4, desde tonos más claros a más oscuros.</p>
 <p>Usaremos Bambi para escribir y ajustar cuatro modelos. La principal diferencia entre los cuatro modelos es que vamos a utilizar cuatro likelihoods diferentes, a saber, Poisson, Hurdle Poisson, NegativeBinomial y Hurdle NegativeBinomial.</p>
 <div id="cdbb780e" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>crab <span class="op">=</span> pd.read_csv(<span class="st">"datos/horseshoe_crab.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>crab <span class="op">=</span> pd.read_csv(<span class="st">"datos/horseshoe_crab.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="326d3d73" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>familias <span class="op">=</span> [<span class="st">"poisson"</span>, <span class="st">"hurdle_poisson"</span>, <span class="st">"negativebinomial"</span>, <span class="st">"hurdle_negativebinomial"</span>]</span>
-<span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a>modelos <span class="op">=</span> []</span>
-<span id="cb22-4"><a href="#cb22-4"></a>idatas <span class="op">=</span> []</span>
-<span id="cb22-5"><a href="#cb22-5"></a></span>
-<span id="cb22-6"><a href="#cb22-6"></a><span class="cf">for</span> familia <span class="kw">in</span> familias:</span>
-<span id="cb22-7"><a href="#cb22-7"></a>    modelo <span class="op">=</span> bmb.Model(<span class="st">"satellite ~ width + C(color)"</span>, family<span class="op">=</span>familia, data<span class="op">=</span>crab)</span>
-<span id="cb22-8"><a href="#cb22-8"></a>    idata <span class="op">=</span> modelo.fit(idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>}, random_seed<span class="op">=</span><span class="dv">123</span>)</span>
-<span id="cb22-9"><a href="#cb22-9"></a>    modelo.predict(idata, kind<span class="op">=</span><span class="st">"pps"</span>)</span>
-<span id="cb22-10"><a href="#cb22-10"></a>    idatas.append(idata)</span>
-<span id="cb22-11"><a href="#cb22-11"></a>    modelos.append(modelo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>familias <span class="op">=</span> [<span class="st">"poisson"</span>, <span class="st">"hurdle_poisson"</span>, <span class="st">"negativebinomial"</span>, <span class="st">"hurdle_negativebinomial"</span>]</span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a>modelos <span class="op">=</span> []</span>
+<span id="cb30-4"><a href="#cb30-4"></a>idatas <span class="op">=</span> []</span>
+<span id="cb30-5"><a href="#cb30-5"></a></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="cf">for</span> familia <span class="kw">in</span> familias:</span>
+<span id="cb30-7"><a href="#cb30-7"></a>    modelo <span class="op">=</span> bmb.Model(<span class="st">"satellite ~ width + C(color)"</span>, family<span class="op">=</span>familia, data<span class="op">=</span>crab)</span>
+<span id="cb30-8"><a href="#cb30-8"></a>    idata <span class="op">=</span> modelo.fit(idata_kwargs<span class="op">=</span>{<span class="st">"log_likelihood"</span>:<span class="va">True</span>}, random_seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb30-9"><a href="#cb30-9"></a>    modelo.predict(idata, kind<span class="op">=</span><span class="st">"pps"</span>)</span>
+<span id="cb30-10"><a href="#cb30-10"></a>    idatas.append(idata)</span>
+<span id="cb30-11"><a href="#cb30-11"></a>    modelos.append(modelo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
+<pre><code>Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [Intercept, width, C(color)]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"e21459d465054165aee80007161db53b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 3 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 6 seconds.
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
+NUTS: [satellite_psi, Intercept, width, C(color)]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"22721f5735254b4ea99ce25b37f036b7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 4 seconds.
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [satellite_psi, Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 10 seconds.
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
-Auto-assigning NUTS sampler...
-Initializing NUTS using jitter+adapt_diag...
-Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [satellite_alpha, Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 8 seconds.
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/formulae/terms/call.py:108: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  elif is_string_dtype(x) or is_categorical_dtype(x) or isinstance(x, CategoricalBox):
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+NUTS: [satellite_alpha, Intercept, width, C(color)]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3b8727c99ab843f7a1beeac82a4d0b81","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 4 seconds.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [satellite_alpha, satellite_psi, Intercept, width, C(color)]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 20 seconds.
-/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
+NUTS: [satellite_alpha, satellite_psi, Intercept, width, C(color)]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"16c1fa839ddd44d8aee59ab8e2b68e79","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 8 seconds.
+/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/pytensor/tensor/rewriting/elemwise.py:702: UserWarning: Optimization Warning: The Op betainc does not provide a C implementation. As well as being potentially slow, this also disables loop fusion.
   warn(</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"189db6039cdb442197b92004066faf30","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e70a997fab234dce98cdadbd96f30d14","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"af6cbae192984566a2636d8e715fd628","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"c2e4996769a74532bb048dd208577950","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
 <p>Primero hagamos una comparación en términos del ELPD</p>
 <div id="c8cfe160" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="bu">cmp</span> <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>(familias, idatas)))</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="bu">cmp</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a><span class="bu">cmp</span> <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>(familias, idatas)))</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="bu">cmp</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 
@@ -1017,11 +1039,11 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <tr class="odd">
 <td data-quarto-table-cell-role="th">hurdle_negativebinomial</td>
 <td>0</td>
-<td>-372.700542</td>
-<td>6.195750</td>
+<td>-372.810467</td>
+<td>6.341265</td>
 <td>0.000000</td>
-<td>0.000000</td>
-<td>13.657861</td>
+<td>0.00000</td>
+<td>13.689807</td>
 <td>0.000000</td>
 <td>False</td>
 <td>log</td>
@@ -1029,36 +1051,36 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <tr class="even">
 <td data-quarto-table-cell-role="th">negativebinomial</td>
 <td>1</td>
-<td>-380.321518</td>
-<td>5.606572</td>
-<td>7.620976</td>
-<td>0.416289</td>
-<td>14.105379</td>
-<td>5.659943</td>
+<td>-380.355948</td>
+<td>5.654806</td>
+<td>7.545481</td>
+<td>0.41551</td>
+<td>14.122017</td>
+<td>5.727093</td>
 <td>False</td>
 <td>log</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">hurdle_poisson</td>
 <td>2</td>
-<td>-382.422101</td>
-<td>8.682035</td>
-<td>9.721559</td>
-<td>0.583711</td>
-<td>17.724196</td>
-<td>6.643121</td>
+<td>-382.358981</td>
+<td>8.595326</td>
+<td>9.548513</td>
+<td>0.58449</td>
+<td>17.719552</td>
+<td>6.573658</td>
 <td>False</td>
 <td>log</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">poisson</td>
 <td>3</td>
-<td>-468.759790</td>
-<td>16.664588</td>
-<td>96.059248</td>
-<td>0.000000</td>
-<td>24.851782</td>
-<td>19.492402</td>
+<td>-468.366717</td>
+<td>16.124879</td>
+<td>95.556249</td>
+<td>0.00000</td>
+<td>24.794667</td>
+<td>19.441265</td>
 <td>False</td>
 <td>log</td>
 </tr>
@@ -1069,7 +1091,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 <div id="160811f2" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>az.plot_compare(<span class="bu">cmp</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">2.5</span>), plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>az.plot_compare(<span class="bu">cmp</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">2.5</span>), plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1083,32 +1105,36 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <div id="e939d53c" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">def</span> rotogram(idata, ax):</span>
-<span id="cb26-2"><a href="#cb26-2"></a>    max_ <span class="op">=</span> <span class="dv">17</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a>    bins <span class="op">=</span> np.array(<span class="bu">range</span>(<span class="dv">0</span>, max_))</span>
-<span id="cb26-4"><a href="#cb26-4"></a>    dims <span class="op">=</span> idata.posterior_predictive.dims</span>
-<span id="cb26-5"><a href="#cb26-5"></a>    n_samples <span class="op">=</span> dims[<span class="st">"chain"</span>] <span class="op">*</span> dims[<span class="st">"draw"</span>]</span>
-<span id="cb26-6"><a href="#cb26-6"></a>    pred <span class="op">=</span>  (np.histogram(idata.posterior_predictive[<span class="st">"satellite"</span>].values.ravel(),  bins<span class="op">=</span>bins)[<span class="dv">0</span>] <span class="op">/</span> n_samples)<span class="op">**</span><span class="fl">0.5</span></span>
-<span id="cb26-7"><a href="#cb26-7"></a>    observed <span class="op">=</span> np.histogram(crab[<span class="st">"satellite"</span>].values, bins<span class="op">=</span>bins)[<span class="dv">0</span>]<span class="op">**</span><span class="fl">0.5</span></span>
-<span id="cb26-8"><a href="#cb26-8"></a></span>
-<span id="cb26-9"><a href="#cb26-9"></a>    ax.bar(bins[:<span class="op">-</span><span class="dv">1</span>], observed, <span class="fl">0.5</span>, bottom<span class="op">=</span>pred<span class="op">-</span>observed, color<span class="op">=</span><span class="st">"C0"</span>)</span>
-<span id="cb26-10"><a href="#cb26-10"></a>    ax.plot(bins[:<span class="op">-</span><span class="dv">1</span>], pred,  <span class="st">"k.--"</span>)</span>
-<span id="cb26-11"><a href="#cb26-11"></a>    ax.hlines(<span class="dv">0</span>, <span class="op">-</span><span class="fl">0.5</span>, max_<span class="op">-</span><span class="fl">1.5</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"0.5"</span>)</span>
-<span id="cb26-12"><a href="#cb26-12"></a></span>
-<span id="cb26-13"><a href="#cb26-13"></a></span>
-<span id="cb26-14"><a href="#cb26-14"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
-<span id="cb26-15"><a href="#cb26-15"></a><span class="cf">for</span> ax, idata, model <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), idatas, modelos):</span>
-<span id="cb26-16"><a href="#cb26-16"></a>    rotogram(idata, ax)</span>
-<span id="cb26-17"><a href="#cb26-17"></a>    ax.set_title(model.family.name)</span>
-<span id="cb26-18"><a href="#cb26-18"></a></span>
-<span id="cb26-19"><a href="#cb26-19"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Satellites"</span>)</span>
-<span id="cb26-20"><a href="#cb26-20"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Satellites"</span>)</span>
-<span id="cb26-21"><a href="#cb26-21"></a>fig.text(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">0.5</span>, <span class="st">"$\sqrt</span><span class="sc">{frecuencia}</span><span class="st">$"</span>, va<span class="op">=</span><span class="st">"center"</span>, rotation<span class="op">=</span><span class="st">"vertical"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">def</span> rotogram(idata, ax):</span>
+<span id="cb38-2"><a href="#cb38-2"></a>    max_ <span class="op">=</span> <span class="dv">17</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>    bins <span class="op">=</span> np.array(<span class="bu">range</span>(<span class="dv">0</span>, max_))</span>
+<span id="cb38-4"><a href="#cb38-4"></a>    dims <span class="op">=</span> idata.posterior_predictive.dims</span>
+<span id="cb38-5"><a href="#cb38-5"></a>    n_samples <span class="op">=</span> dims[<span class="st">"chain"</span>] <span class="op">*</span> dims[<span class="st">"draw"</span>]</span>
+<span id="cb38-6"><a href="#cb38-6"></a>    pred <span class="op">=</span>  (np.histogram(idata.posterior_predictive[<span class="st">"satellite"</span>].values.ravel(),  bins<span class="op">=</span>bins)[<span class="dv">0</span>] <span class="op">/</span> n_samples)<span class="op">**</span><span class="fl">0.5</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a>    observed <span class="op">=</span> np.histogram(crab[<span class="st">"satellite"</span>].values, bins<span class="op">=</span>bins)[<span class="dv">0</span>]<span class="op">**</span><span class="fl">0.5</span></span>
+<span id="cb38-8"><a href="#cb38-8"></a></span>
+<span id="cb38-9"><a href="#cb38-9"></a>    ax.bar(bins[:<span class="op">-</span><span class="dv">1</span>], observed, <span class="fl">0.5</span>, bottom<span class="op">=</span>pred<span class="op">-</span>observed, color<span class="op">=</span><span class="st">"C0"</span>)</span>
+<span id="cb38-10"><a href="#cb38-10"></a>    ax.plot(bins[:<span class="op">-</span><span class="dv">1</span>], pred,  <span class="st">"k.--"</span>)</span>
+<span id="cb38-11"><a href="#cb38-11"></a>    ax.hlines(<span class="dv">0</span>, <span class="op">-</span><span class="fl">0.5</span>, max_<span class="op">-</span><span class="fl">1.5</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"0.5"</span>)</span>
+<span id="cb38-12"><a href="#cb38-12"></a></span>
+<span id="cb38-13"><a href="#cb38-13"></a></span>
+<span id="cb38-14"><a href="#cb38-14"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb38-15"><a href="#cb38-15"></a><span class="cf">for</span> ax, idata, model <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), idatas, modelos):</span>
+<span id="cb38-16"><a href="#cb38-16"></a>    rotogram(idata, ax)</span>
+<span id="cb38-17"><a href="#cb38-17"></a>    ax.set_title(model.family.name)</span>
+<span id="cb38-18"><a href="#cb38-18"></a></span>
+<span id="cb38-19"><a href="#cb38-19"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Satellites"</span>)</span>
+<span id="cb38-20"><a href="#cb38-20"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Satellites"</span>)</span>
+<span id="cb38-21"><a href="#cb38-21"></a>fig.text(<span class="op">-</span><span class="fl">0.03</span>, <span class="fl">0.5</span>, <span class="st">"$\sqrt</span><span class="sc">{frecuencia}</span><span class="st">$"</span>, va<span class="op">=</span><span class="st">"center"</span>, rotation<span class="op">=</span><span class="st">"vertical"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_60611/424556328.py:7: FutureWarning: The return type of `Dataset.dims` will be changed to return a set of dimension names in future, in order to be more consistent with `DataArray.dims`. To access a mapping from dimension names to lengths, please use `Dataset.sizes`.
+  n_samples = dims["chain"] * dims["draw"]</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_modelos_de_mezcla_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="06_modelos_de_mezcla_files/figure-html/cell-20-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1149,45 +1175,45 @@ G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 <p>La siguiente figura muestra un ejemplo de una relización (muestra) de un proceso de Dirichlet para 4 valores distintos de <span class="math inline">\(\alpha\)</span></p>
 <p>Asi como la distribución de Dirichlet es la generalización n-dimensional de la distribución Beta, el proceso de Dirichlet es la generalización de dimensión infinita de la distribución de Dirichlet.</p>
 <div id="99887649" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">def</span> stick_breaking_process(alpha, base_dist):</span>
-<span id="cb27-2"><a href="#cb27-2"></a>    <span class="co">"""</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="co">    Generate a realization from a Dirichlet Process using the stick-breaking process.</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="co">    Parameters:</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a><span class="co">    ----------</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a><span class="co">    </span></span>
-<span id="cb27-8"><a href="#cb27-8"></a><span class="co">    alpha : float</span></span>
-<span id="cb27-9"><a href="#cb27-9"></a><span class="co">        Concentration parameter of the Dirichlet Process</span></span>
-<span id="cb27-10"><a href="#cb27-10"></a><span class="co">    base_dist : PreliZ distribution</span></span>
-<span id="cb27-11"><a href="#cb27-11"></a><span class="co">        Base distribution</span></span>
-<span id="cb27-12"><a href="#cb27-12"></a><span class="co">    """</span></span>
-<span id="cb27-13"><a href="#cb27-13"></a>    K_max <span class="op">=</span> <span class="bu">max</span>(<span class="dv">10</span>, <span class="bu">int</span>(alpha<span class="op">/</span><span class="dv">10</span>)) </span>
-<span id="cb27-14"><a href="#cb27-14"></a>    beta <span class="op">=</span> pz.Beta(<span class="dv">1</span>, alpha).rvs(K_max)</span>
-<span id="cb27-15"><a href="#cb27-15"></a>    w <span class="op">=</span> np.empty(K_max)</span>
-<span id="cb27-16"><a href="#cb27-16"></a>    w[<span class="dv">0</span>] <span class="op">=</span> beta[<span class="dv">0</span>]</span>
-<span id="cb27-17"><a href="#cb27-17"></a>    w[<span class="dv">1</span>:] <span class="op">=</span> beta[<span class="dv">1</span>:] <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> beta[:<span class="op">-</span><span class="dv">1</span>]).cumprod()</span>
-<span id="cb27-18"><a href="#cb27-18"></a>    w <span class="op">/=</span> w.<span class="bu">sum</span>()  </span>
-<span id="cb27-19"><a href="#cb27-19"></a></span>
-<span id="cb27-20"><a href="#cb27-20"></a>    loc <span class="op">=</span> base_dist.rvs(K_max)</span>
-<span id="cb27-21"><a href="#cb27-21"></a></span>
-<span id="cb27-22"><a href="#cb27-22"></a>    samples <span class="op">=</span> np.random.choice(loc, p<span class="op">=</span>w, size<span class="op">=</span>K_max)</span>
-<span id="cb27-23"><a href="#cb27-23"></a></span>
-<span id="cb27-24"><a href="#cb27-24"></a>    <span class="cf">return</span> samples</span>
-<span id="cb27-25"><a href="#cb27-25"></a></span>
-<span id="cb27-26"><a href="#cb27-26"></a>N <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb27-27"><a href="#cb27-27"></a>base_distribution <span class="op">=</span> pz.Normal(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb27-28"><a href="#cb27-28"></a></span>
-<span id="cb27-29"><a href="#cb27-29"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb27-30"><a href="#cb27-30"></a></span>
-<span id="cb27-31"><a href="#cb27-31"></a><span class="cf">for</span> alpha, ax <span class="kw">in</span> <span class="bu">zip</span>([<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">1000</span>], axes.ravel()):</span>
-<span id="cb27-32"><a href="#cb27-32"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
-<span id="cb27-33"><a href="#cb27-33"></a>        sample <span class="op">=</span> stick_breaking_process(alpha, base_distribution)</span>
-<span id="cb27-34"><a href="#cb27-34"></a>        ax.ecdf(sample, color<span class="op">=</span><span class="st">"0.5"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb27-35"><a href="#cb27-35"></a>        </span>
-<span id="cb27-36"><a href="#cb27-36"></a>    pz.Normal(<span class="dv">0</span>, <span class="dv">1</span>).plot_cdf(legend<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax)</span>
-<span id="cb27-37"><a href="#cb27-37"></a>    ax.set_title(<span class="vs">fr"$\alpha$=</span><span class="sc">{</span>alpha<span class="sc">}</span><span class="vs">"</span>)</span>
-<span id="cb27-38"><a href="#cb27-38"></a>    </span>
-<span id="cb27-39"><a href="#cb27-39"></a>plt.suptitle(<span class="ss">f'</span><span class="sc">{</span>N<span class="sc">}</span><span class="ss"> Realizaciones de un proceso de Dirichlet'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">def</span> stick_breaking_process(alpha, base_dist):</span>
+<span id="cb40-2"><a href="#cb40-2"></a>    <span class="co">"""</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="co">    Generate a realization from a Dirichlet Process using the stick-breaking process.</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a></span>
+<span id="cb40-5"><a href="#cb40-5"></a><span class="co">    Parameters:</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a><span class="co">    ----------</span></span>
+<span id="cb40-7"><a href="#cb40-7"></a><span class="co">    </span></span>
+<span id="cb40-8"><a href="#cb40-8"></a><span class="co">    alpha : float</span></span>
+<span id="cb40-9"><a href="#cb40-9"></a><span class="co">        Concentration parameter of the Dirichlet Process</span></span>
+<span id="cb40-10"><a href="#cb40-10"></a><span class="co">    base_dist : PreliZ distribution</span></span>
+<span id="cb40-11"><a href="#cb40-11"></a><span class="co">        Base distribution</span></span>
+<span id="cb40-12"><a href="#cb40-12"></a><span class="co">    """</span></span>
+<span id="cb40-13"><a href="#cb40-13"></a>    K_max <span class="op">=</span> <span class="bu">max</span>(<span class="dv">10</span>, <span class="bu">int</span>(alpha<span class="op">/</span><span class="dv">10</span>)) </span>
+<span id="cb40-14"><a href="#cb40-14"></a>    beta <span class="op">=</span> pz.Beta(<span class="dv">1</span>, alpha).rvs(K_max)</span>
+<span id="cb40-15"><a href="#cb40-15"></a>    w <span class="op">=</span> np.empty(K_max)</span>
+<span id="cb40-16"><a href="#cb40-16"></a>    w[<span class="dv">0</span>] <span class="op">=</span> beta[<span class="dv">0</span>]</span>
+<span id="cb40-17"><a href="#cb40-17"></a>    w[<span class="dv">1</span>:] <span class="op">=</span> beta[<span class="dv">1</span>:] <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> beta[:<span class="op">-</span><span class="dv">1</span>]).cumprod()</span>
+<span id="cb40-18"><a href="#cb40-18"></a>    w <span class="op">/=</span> w.<span class="bu">sum</span>()  </span>
+<span id="cb40-19"><a href="#cb40-19"></a></span>
+<span id="cb40-20"><a href="#cb40-20"></a>    loc <span class="op">=</span> base_dist.rvs(K_max)</span>
+<span id="cb40-21"><a href="#cb40-21"></a></span>
+<span id="cb40-22"><a href="#cb40-22"></a>    samples <span class="op">=</span> np.random.choice(loc, p<span class="op">=</span>w, size<span class="op">=</span>K_max)</span>
+<span id="cb40-23"><a href="#cb40-23"></a></span>
+<span id="cb40-24"><a href="#cb40-24"></a>    <span class="cf">return</span> samples</span>
+<span id="cb40-25"><a href="#cb40-25"></a></span>
+<span id="cb40-26"><a href="#cb40-26"></a>N <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb40-27"><a href="#cb40-27"></a>base_distribution <span class="op">=</span> pz.Normal(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb40-28"><a href="#cb40-28"></a></span>
+<span id="cb40-29"><a href="#cb40-29"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb40-30"><a href="#cb40-30"></a></span>
+<span id="cb40-31"><a href="#cb40-31"></a><span class="cf">for</span> alpha, ax <span class="kw">in</span> <span class="bu">zip</span>([<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">1000</span>], axes.ravel()):</span>
+<span id="cb40-32"><a href="#cb40-32"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb40-33"><a href="#cb40-33"></a>        sample <span class="op">=</span> stick_breaking_process(alpha, base_distribution)</span>
+<span id="cb40-34"><a href="#cb40-34"></a>        ax.ecdf(sample, color<span class="op">=</span><span class="st">"0.5"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb40-35"><a href="#cb40-35"></a>        </span>
+<span id="cb40-36"><a href="#cb40-36"></a>    pz.Normal(<span class="dv">0</span>, <span class="dv">1</span>).plot_cdf(legend<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb40-37"><a href="#cb40-37"></a>    ax.set_title(<span class="vs">fr"$\alpha$=</span><span class="sc">{</span>alpha<span class="sc">}</span><span class="vs">"</span>)</span>
+<span id="cb40-38"><a href="#cb40-38"></a>    </span>
+<span id="cb40-39"><a href="#cb40-39"></a>plt.suptitle(<span class="ss">f'</span><span class="sc">{</span>N<span class="sc">}</span><span class="ss"> Realizaciones de un proceso de Dirichlet'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1196,62 +1222,200 @@ G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 </div>
 </div>
 </div>
-<div id="e44772e5" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>K <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_DP:</span>
-<span id="cb28-4"><a href="#cb28-4"></a>    α <span class="op">=</span> pm.Gamma(<span class="st">'α'</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb28-5"><a href="#cb28-5"></a></span>
-<span id="cb28-6"><a href="#cb28-6"></a>    w <span class="op">=</span> pm.StickBreakingWeights(<span class="st">"w"</span>, α, K<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb28-7"><a href="#cb28-7"></a>    means <span class="op">=</span> pm.Normal(<span class="st">'means'</span>,</span>
-<span id="cb28-8"><a href="#cb28-8"></a>                      mu<span class="op">=</span>np.linspace(cs_exp.<span class="bu">min</span>(), cs_exp.<span class="bu">max</span>(), K),</span>
-<span id="cb28-9"><a href="#cb28-9"></a>                      sigma<span class="op">=</span><span class="dv">5</span>, shape<span class="op">=</span>K,</span>
-<span id="cb28-10"><a href="#cb28-10"></a>                      transform<span class="op">=</span>pm.distributions.transforms.ordered,</span>
-<span id="cb28-11"><a href="#cb28-11"></a>                     )</span>
-<span id="cb28-12"><a href="#cb28-12"></a>    </span>
-<span id="cb28-13"><a href="#cb28-13"></a>    sd <span class="op">=</span> pm.HalfNormal(<span class="st">'sd'</span>, sigma<span class="op">=</span><span class="dv">10</span>, shape<span class="op">=</span>K)</span>
-<span id="cb28-14"><a href="#cb28-14"></a>    obs <span class="op">=</span> pm.NormalMixture(<span class="st">'obs'</span>, w, means, sigma<span class="op">=</span>sd, observed<span class="op">=</span>cs_exp.values)</span>
-<span id="cb28-15"><a href="#cb28-15"></a>    idata <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>, target_accept<span class="op">=</span><span class="fl">0.9</span>, nuts_sampler<span class="op">=</span><span class="st">"nutpie"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/home/osvaldo/anaconda3/envs/pymc/lib/python3.11/site-packages/nutpie/compile_pymc.py:416: NumbaWarning: Cannot cache compiled function "numba_funcified_fgraph" as it uses dynamic globals (such as ctypes pointers and large global arrays)
-  return inner(x)</code></pre>
-</div>
+<div id="e44772e5" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a>K <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_DP:</span>
+<span id="cb41-4"><a href="#cb41-4"></a>    α <span class="op">=</span> pm.Gamma(<span class="st">'α'</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb41-5"><a href="#cb41-5"></a></span>
+<span id="cb41-6"><a href="#cb41-6"></a>    w <span class="op">=</span> pm.StickBreakingWeights(<span class="st">"w"</span>, α, K<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb41-7"><a href="#cb41-7"></a>    means <span class="op">=</span> pm.Normal(<span class="st">'means'</span>,</span>
+<span id="cb41-8"><a href="#cb41-8"></a>                      mu<span class="op">=</span>np.linspace(cs_exp.<span class="bu">min</span>(), cs_exp.<span class="bu">max</span>(), K),</span>
+<span id="cb41-9"><a href="#cb41-9"></a>                      sigma<span class="op">=</span><span class="dv">5</span>, shape<span class="op">=</span>K,</span>
+<span id="cb41-10"><a href="#cb41-10"></a>                      transform<span class="op">=</span>pm.distributions.transforms.ordered,</span>
+<span id="cb41-11"><a href="#cb41-11"></a>                     )</span>
+<span id="cb41-12"><a href="#cb41-12"></a>    </span>
+<span id="cb41-13"><a href="#cb41-13"></a>    sd <span class="op">=</span> pm.HalfNormal(<span class="st">'sd'</span>, sigma<span class="op">=</span><span class="dv">10</span>, shape<span class="op">=</span>K)</span>
+<span id="cb41-14"><a href="#cb41-14"></a>    obs <span class="op">=</span> pm.NormalMixture(<span class="st">'obs'</span>, w, means, sigma<span class="op">=</span>sd, observed<span class="op">=</span>cs_exp.values)</span>
+<span id="cb41-15"><a href="#cb41-15"></a>    idata <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>, target_accept<span class="op">=</span><span class="fl">0.9</span>, nuts_sampler<span class="op">=</span><span class="st">"nutpie"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
+    :root {
+        --column-width-1: 40%; /* Progress column width */
+        --column-width-2: 15%; /* Chain column width */
+        --column-width-3: 15%; /* Divergences column width */
+        --column-width-4: 15%; /* Step Size column width */
+        --column-width-5: 15%; /* Gradients/Draw column width */
     }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+
+    .nutpie {
+        max-width: 800px;
+        margin: 10px auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        //color: #333;
+        //background-color: #fff;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        font-size: 14px; /* Smaller font size for a more compact look */
     }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
+    .nutpie table {
+        width: 100%;
+        border-collapse: collapse; /* Remove any extra space between borders */
+    }
+    .nutpie th, .nutpie td {
+        padding: 8px 10px; /* Reduce padding to make table more compact */
+        text-align: left;
+        border-bottom: 1px solid #888;
+    }
+    .nutpie th {
+        //background-color: #f0f0f0;
+    }
+
+    .nutpie th:nth-child(1) { width: var(--column-width-1); }
+    .nutpie th:nth-child(2) { width: var(--column-width-2); }
+    .nutpie th:nth-child(3) { width: var(--column-width-3); }
+    .nutpie th:nth-child(4) { width: var(--column-width-4); }
+    .nutpie th:nth-child(5) { width: var(--column-width-5); }
+
+    .nutpie progress {
+        width: 100%;
+        height: 15px; /* Smaller progress bars */
+        border-radius: 5px;
+    }
+    progress::-webkit-progress-bar {
+        background-color: #eee;
+        border-radius: 5px;
+    }
+    progress::-webkit-progress-value {
+        background-color: #5cb85c;
+        border-radius: 5px;
+    }
+    progress::-moz-progress-bar {
+        background-color: #5cb85c;
+        border-radius: 5px;
+    }
+    .nutpie .progress-cell {
+        width: 100%;
+    }
+
+    .nutpie p strong { font-size: 16px; font-weight: bold; }
+
+    @media (prefers-color-scheme: dark) {
+        .nutpie {
+            //color: #ddd;
+            //background-color: #1e1e1e;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .nutpie table, .nutpie th, .nutpie td {
+            border-color: #555;
+            color: #ccc;
+        }
+        .nutpie th {
+            background-color: #2a2a2a;
+        }
+        .nutpie progress::-webkit-progress-bar {
+            background-color: #444;
+        }
+        .nutpie progress::-webkit-progress-value {
+            background-color: #3178c6;
+        }
+        .nutpie progress::-moz-progress-bar {
+            background-color: #3178c6;
+        }
     }
 </style>
 </div>
 <div class="cell-output cell-output-display">
 
-    <div>
-      <progress value="8000" class="" max="8000" style="width:300px; height:20px; vertical-align: middle;"></progress>
-      100.00% [8000/8000 05:34&lt;00:00  Sampling chains: 0, Divergences: 1]
-    </div>
-    
+<div class="nutpie">
+    <p><strong>Sampler Progress</strong></p>
+    <p>Total Chains: <span id="total-chains">4</span></p>
+    <p>Active Chains: <span id="active-chains">0</span></p>
+    <p>
+        Finished Chains:
+        <span id="active-chains">4</span>
+    </p>
+    <p>Sampling for 4 minutes</p>
+    <p>
+        Estimated Time to Completion:
+        <span id="eta">now</span>
+    </p>
+
+    <progress id="total-progress-bar" max="8000" value="8000">
+    </progress>
+    <table>
+        <thead>
+            <tr>
+                <th>Progress</th>
+                <th>Draws</th>
+                <th>Divergences</th>
+                <th>Step Size</th>
+                <th>Gradients/Draw</th>
+            </tr>
+        </thead>
+        <tbody id="chain-details">
+            
+                <tr>
+                    <td class="progress-cell">
+                        <progress max="2000" value="2000">
+                        </progress>
+                    </td>
+                    <td>2000</td>
+                    <td>0</td>
+                    <td>0.06</td>
+                    <td>255</td>
+                </tr>
+            
+                <tr>
+                    <td class="progress-cell">
+                        <progress max="2000" value="2000">
+                        </progress>
+                    </td>
+                    <td>2000</td>
+                    <td>1</td>
+                    <td>0.06</td>
+                    <td>255</td>
+                </tr>
+            
+                <tr>
+                    <td class="progress-cell">
+                        <progress max="2000" value="2000">
+                        </progress>
+                    </td>
+                    <td>2000</td>
+                    <td>1</td>
+                    <td>0.07</td>
+                    <td>255</td>
+                </tr>
+            
+                <tr>
+                    <td class="progress-cell">
+                        <progress max="2000" value="2000">
+                        </progress>
+                    </td>
+                    <td>2000</td>
+                    <td>5</td>
+                    <td>0.06</td>
+                    <td>767</td>
+                </tr>
+            
+            
+        </tbody>
+    </table>
+</div>
 </div>
 </div>
 <p>Debido a que estamos aproximando el DP (infinito) con un valor finito, es importante verificar que el valor de truncamiento (<span class="math inline">\(K=10\)</span> en este ejemplo) no introduzca ningún sesgo. Una forma sencilla de hacerlo es calcular el peso promedio de cada componente, ordenarlos y luego visualizar la suma acumulada. Para estar seguros, deberíamos tener al menos algunos componentes con un peso insignificante; de lo contrario, debemos aumentar el valor de truncamiento. El siguiente gráfico es un ejemplo de esto.</p>
-<div id="314c2753" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</span>
-<span id="cb30-2"><a href="#cb30-2"></a>plot_w <span class="op">=</span> np.arange(K)</span>
-<span id="cb30-3"><a href="#cb30-3"></a>ax.plot(np.cumsum(np.sort(idata.posterior[<span class="st">'w'</span>].mean((<span class="st">"chain"</span>, <span class="st">"draw"</span>)))[::<span class="op">-</span><span class="dv">1</span>]), <span class="st">'o-'</span>)</span>
-<span id="cb30-4"><a href="#cb30-4"></a>ax.hlines(<span class="fl">0.99</span>, <span class="dv">0</span>, K, ls<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"0.5"</span>)</span>
-<span id="cb30-5"><a href="#cb30-5"></a>ax.set_xticks(plot_w, plot_w<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb30-6"><a href="#cb30-6"></a>ax.set_xlabel(<span class="st">'Número de componentes'</span>)</span>
-<span id="cb30-7"><a href="#cb30-7"></a>ax.set_ylabel(<span class="st">'Peso promedio'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="314c2753" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</span>
+<span id="cb42-2"><a href="#cb42-2"></a>plot_w <span class="op">=</span> np.arange(K)</span>
+<span id="cb42-3"><a href="#cb42-3"></a>ax.plot(np.cumsum(np.sort(idata.posterior[<span class="st">'w'</span>].mean((<span class="st">"chain"</span>, <span class="st">"draw"</span>)))[::<span class="op">-</span><span class="dv">1</span>]), <span class="st">'o-'</span>)</span>
+<span id="cb42-4"><a href="#cb42-4"></a>ax.hlines(<span class="fl">0.99</span>, <span class="dv">0</span>, K, ls<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"0.5"</span>)</span>
+<span id="cb42-5"><a href="#cb42-5"></a>ax.set_xticks(plot_w, plot_w<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb42-6"><a href="#cb42-6"></a>ax.set_xlabel(<span class="st">'Número de componentes'</span>)</span>
+<span id="cb42-7"><a href="#cb42-7"></a>ax.set_ylabel(<span class="st">'Peso promedio'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1261,25 +1425,25 @@ G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 </div>
 </div>
 <p>Podemos ver que sólo los primeros 7 componentes son algo importantes. Los primeros 7 componentes representan más del 99% del peso total (línea discontinua gris en la figura anterior y por lo tanto podemos estar seguros de que el valor elegido (<span class="math inline">\(K=10\)</span>) es adecuado para estos datos.</p>
-<div id="9260c615" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>x_plot <span class="op">=</span> np.linspace(cs_exp.<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span>, cs_exp.<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span>, <span class="dv">500</span>)</span>
-<span id="cb31-2"><a href="#cb31-2"></a></span>
-<span id="cb31-3"><a href="#cb31-3"></a>posterior <span class="op">=</span> idata.posterior.stack(samples<span class="op">=</span>(<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
-<span id="cb31-4"><a href="#cb31-4"></a></span>
-<span id="cb31-5"><a href="#cb31-5"></a>post_pdf_contribs <span class="op">=</span> pz.Normal(posterior[<span class="st">'means'</span>].values[:, <span class="va">None</span>, :],</span>
-<span id="cb31-6"><a href="#cb31-6"></a>                              posterior[<span class="st">'sd'</span>].values[:, <span class="va">None</span>, :]).pdf(np.atleast_3d(x_plot))</span>
-<span id="cb31-7"><a href="#cb31-7"></a></span>
-<span id="cb31-8"><a href="#cb31-8"></a>post_pdfs <span class="op">=</span> (posterior[<span class="st">'w'</span>].values[:, np.newaxis, :] <span class="op">*</span> post_pdf_contribs).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb31-9"><a href="#cb31-9"></a></span>
-<span id="cb31-10"><a href="#cb31-10"></a></span>
-<span id="cb31-11"><a href="#cb31-11"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</span>
-<span id="cb31-12"><a href="#cb31-12"></a></span>
-<span id="cb31-13"><a href="#cb31-13"></a>ax.plot(x_plot, post_pdfs[:,::<span class="dv">100</span>], c<span class="op">=</span><span class="st">'C1'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
-<span id="cb31-14"><a href="#cb31-14"></a>ax.plot(x_plot, post_pdfs.mean(axis<span class="op">=</span><span class="dv">1</span>), c<span class="op">=</span><span class="st">'k'</span>, label<span class="op">=</span><span class="st">"media a posteriori"</span>)</span>
-<span id="cb31-15"><a href="#cb31-15"></a></span>
-<span id="cb31-16"><a href="#cb31-16"></a>ax.set_xlabel(<span class="st">'x'</span>)</span>
-<span id="cb31-17"><a href="#cb31-17"></a>ax.set_yticks([])</span>
-<span id="cb31-18"><a href="#cb31-18"></a>ax.legend()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9260c615" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>x_plot <span class="op">=</span> np.linspace(cs_exp.<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span>, cs_exp.<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span>, <span class="dv">500</span>)</span>
+<span id="cb43-2"><a href="#cb43-2"></a></span>
+<span id="cb43-3"><a href="#cb43-3"></a>posterior <span class="op">=</span> idata.posterior.stack(samples<span class="op">=</span>(<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
+<span id="cb43-4"><a href="#cb43-4"></a></span>
+<span id="cb43-5"><a href="#cb43-5"></a>post_pdf_contribs <span class="op">=</span> pz.Normal(posterior[<span class="st">'means'</span>].values[:, <span class="va">None</span>, :],</span>
+<span id="cb43-6"><a href="#cb43-6"></a>                              posterior[<span class="st">'sd'</span>].values[:, <span class="va">None</span>, :]).pdf(np.atleast_3d(x_plot))</span>
+<span id="cb43-7"><a href="#cb43-7"></a></span>
+<span id="cb43-8"><a href="#cb43-8"></a>post_pdfs <span class="op">=</span> (posterior[<span class="st">'w'</span>].values[:, np.newaxis, :] <span class="op">*</span> post_pdf_contribs).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb43-9"><a href="#cb43-9"></a></span>
+<span id="cb43-10"><a href="#cb43-10"></a></span>
+<span id="cb43-11"><a href="#cb43-11"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</span>
+<span id="cb43-12"><a href="#cb43-12"></a></span>
+<span id="cb43-13"><a href="#cb43-13"></a>ax.plot(x_plot, post_pdfs[:,::<span class="dv">100</span>], c<span class="op">=</span><span class="st">'C1'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb43-14"><a href="#cb43-14"></a>ax.plot(x_plot, post_pdfs.mean(axis<span class="op">=</span><span class="dv">1</span>), c<span class="op">=</span><span class="st">'k'</span>, label<span class="op">=</span><span class="st">"media a posteriori"</span>)</span>
+<span id="cb43-15"><a href="#cb43-15"></a></span>
+<span id="cb43-16"><a href="#cb43-16"></a>ax.set_xlabel(<span class="st">'x'</span>)</span>
+<span id="cb43-17"><a href="#cb43-17"></a>ax.set_yticks([])</span>
+<span id="cb43-18"><a href="#cb43-18"></a>ax.legend()<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1315,6 +1479,9 @@ G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 </section>
 
 </main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"0c1bd13515a241418cfc44ef4fe0bc2f":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"0e4311012bd74c058432ae108c88a734":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_3cad24945e284625871a5639fab9061f","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:27</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:27\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"0fae6e58b24046539620064ffd54aa30":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_a4ecc9f0ffc3485198e4790727ca7806","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:04</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:04\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"16c1fa839ddd44d8aee59ab8e2b68e79":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_721edf2c7b0b48179de1aeb6ce327629","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:08</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:08\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"22721f5735254b4ea99ce25b37f036b7":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_af95ee0ddcd6428894a9d994c58cc63d","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:04</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:04\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"2fcee978f30b47e3bb16c6c36b54b952":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_73a843c673b349b88952d802d2247857","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:12</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:12\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"32dd5c2487fd4ec184c2d5b2597faddc":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"3b8727c99ab843f7a1beeac82a4d0b81":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_32dd5c2487fd4ec184c2d5b2597faddc","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:03</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:03\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"3cad24945e284625871a5639fab9061f":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"3fea5b7b2fcc49e187ed565fd96df240":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"4177d9ca148f47808c30163d00ff17b3":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_0c1bd13515a241418cfc44ef4fe0bc2f","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:13</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:13\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"41e55249db3840cb89e05b689b8b3a40":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"56a88a4d86054fee9e17e68d8d1e3cbd":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_3fea5b7b2fcc49e187ed565fd96df240","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:05</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:05\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"5d815f8634f4483b8852c3aa2d17e9e2":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"721edf2c7b0b48179de1aeb6ce327629":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"73a843c673b349b88952d802d2247857":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"7788a1f0530142fc97eeec4c22a41af8":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"a4ecc9f0ffc3485198e4790727ca7806":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"af95ee0ddcd6428894a9d994c58cc63d":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"b06ead59be8c461bb1596d1f13ad6091":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"b2d66cb83384410ca7a3137bb2d854e9":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_7788a1f0530142fc97eeec4c22a41af8","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:14</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:14\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"bafd38080c994004b7186e6d6e32d6ed":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_41e55249db3840cb89e05b689b8b3a40","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 40 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:44</span>\n</pre>\n","text/plain":"Sampling 4 chains, 40 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:44\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"d0ee296febdd4dc7bced6fa31afb9cd2":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_5d815f8634f4483b8852c3aa2d17e9e2","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 9 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:55</span>\n</pre>\n","text/plain":"Sampling 4 chains, 9 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:55\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"e21459d465054165aee80007161db53b":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_b06ead59be8c461bb1596d1f13ad6091","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:02</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:02\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}}},"version_major":2,"version_minor":0}
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1494,18 +1661,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1537,7 +1693,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1545,7 +1723,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
