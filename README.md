@@ -37,15 +37,15 @@ Este enfoque es posible por dos razones:
 
 
 ## Instalación
-Para usar este material es necesario tener instalado Python. Se recomienda la versión 3.9 o superior. Además es necesario instalar los siguientes paquetes:
+Para usar este material es necesario tener instalado Python. Se recomienda instalar primero [Anaconda](https://www.anaconda.com/download)
 
-* PyMC 5.15.1
-* ArviZ 0.18.0
-* Preliz 0.7.0
+Se recomienda crear un ambiente usando el archivo `env.yml` disponible en este repositorio.
 
-Se recomienda instalar primero [Anaconda](https://www.anaconda.com/download). Luego instalar el resto de los paquetes con los comandos:
+`conda env create -f env.yml`
 
-* `conda install -c conda-forge pymc arviz preliz`
+Una vez creado el ambiente se puede activar con el siguiente comando
+
+`conda activate EI2`
 
 ## Contribuciones
 Todo el contenido de este repositorio es abierto, esto quiere decir que cualquier persona interesada puede contribuir al mismo. Todas las contribuciones serán bien recibidas incluyendo:
