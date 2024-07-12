@@ -15,16 +15,6 @@ book:
       state: San Luis
       country: Argentina
       postal-code: 5700
-    - name: Tomas Cicchini
-      url: https://ic.fcen.uba.ar/institucional/integrantes/tom%C3%A1s-cicchini
-      affiliation: CONICET-UBA, Instituto de Calculo
-      afilliation-url: https://ic.fcen.uba.ar/home
-      orcid: 0009-0008-3931-8055
-      address: Intendente Güirarles 2160
-      city: Ciudad Autonoma de Buenos Aires
-      state: Ciudad Autonoma de Buenos Aires
-      country: Argentina
-      postal-code: 1428
   date: today
   chapters:
     - index.qmd
