@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Flujo de trabajo Bayesiano – Estadística a Inferencia II</title>
+<title>Estadística a Inferencia II - 4&nbsp; Flujo de trabajo Bayesiano</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -147,13 +147,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_Flujo_de_trabajo_bayesiano.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Flujo de trabajo Bayesiano</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -168,7 +168,7 @@ window.Quarto = {
       <a href="./">Estadística a Inferencia II</a> 
         <div class="sidebar-tools-main tools-wide">
     <div class="dropdown">
-      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="github"><i class="bi bi-github"></i></a>
+      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="github"><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/LCD-UNSAM/estadistica_e_inferencia_II">
@@ -2635,7 +2635,14 @@ p(\tilde y_i \le y_i \mid y_{-i})
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [μ, σ]</code></pre>
+NUTS: [μ, σ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 1 seconds.
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [μ, σ, ν]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 2 seconds.
+There were 13 divergences after tuning. Increase `target_accept` or reparameterize.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -2648,13 +2655,6 @@ NUTS: [μ, σ]</code></pre>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 1 seconds.
-Auto-assigning NUTS sampler...
-Initializing NUTS using jitter+adapt_diag...
-Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [μ, σ, ν]</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"81c21772c40a4c61ae9172cd064b8b7b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
@@ -2666,19 +2666,16 @@ NUTS: [μ, σ, ν]</code></pre>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 2 seconds.
-There were 13 divergences after tuning. Increase `target_accept` or reparameterize.</code></pre>
-</div>
 </div>
 <div id="df8ce9c2" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>cmp_df <span class="op">=</span> az.compare({<span class="st">'modelo_n'</span>:idata_n, <span class="st">'modelo_t'</span>:idata_t})</span>
-<span id="cb35-2"><a href="#cb35-2"></a>cmp_df</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a>cmp_df <span class="op">=</span> az.compare({<span class="st">'modelo_n'</span>:idata_n, <span class="st">'modelo_t'</span>:idata_t})</span>
+<span id="cb33-2"><a href="#cb33-2"></a>cmp_df</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
+<div>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -2724,6 +2721,7 @@ There were 13 divergences after tuning. Increase `target_accept` or reparameteri
 </div>
 </div>
 </div>
+</div>
 <p>En las filas tenemos los modelos comparados y en la columnas tenemos</p>
 <ul>
 <li>rank : el orden de los modelos (de mejor a peor)</li>
@@ -2738,7 +2736,7 @@ There were 13 divergences after tuning. Increase `target_accept` or reparameteri
 </ul>
 <p>También podemos obtener más o menos la misma información de forma gráfica usando la función `az.compareplot</p>
 <div id="645e4af8" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>az.plot_compare(cmp_df, plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>az.plot_compare(cmp_df, plot_ic_diff<span class="op">=</span><span class="va">False</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2831,47 +2829,47 @@ p_i t_{ij} = p_j t_{ji}
 \end{aligned}\]</span>
 <p>Este modelo tiene solución analítica. Pero supongamos que no sabemos cómo calcularla, y por lo tanto, implementaremos el algoritmo Metropolis-Hastings usando Python.</p>
 <div id="2be96e1a" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">def</span> post(θ, Y, α<span class="op">=</span><span class="dv">1</span>, β<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb37-2"><a href="#cb37-2"></a>    <span class="cf">if</span> <span class="dv">0</span> <span class="op">&lt;=</span> θ <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
-<span id="cb37-3"><a href="#cb37-3"></a>        prior <span class="op">=</span> pz.Beta(α, β).pdf(θ)</span>
-<span id="cb37-4"><a href="#cb37-4"></a>        like  <span class="op">=</span> pz.Bernoulli(θ).pdf(Y).prod()</span>
-<span id="cb37-5"><a href="#cb37-5"></a>        prob <span class="op">=</span> like <span class="op">*</span> prior</span>
-<span id="cb37-6"><a href="#cb37-6"></a>    <span class="cf">else</span>:</span>
-<span id="cb37-7"><a href="#cb37-7"></a>        prob <span class="op">=</span> <span class="op">-</span>np.inf</span>
-<span id="cb37-8"><a href="#cb37-8"></a>    <span class="cf">return</span> prob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">def</span> post(θ, Y, α<span class="op">=</span><span class="dv">1</span>, β<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb35-2"><a href="#cb35-2"></a>    <span class="cf">if</span> <span class="dv">0</span> <span class="op">&lt;=</span> θ <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb35-3"><a href="#cb35-3"></a>        prior <span class="op">=</span> pz.Beta(α, β).pdf(θ)</span>
+<span id="cb35-4"><a href="#cb35-4"></a>        like  <span class="op">=</span> pz.Bernoulli(θ).pdf(Y).prod()</span>
+<span id="cb35-5"><a href="#cb35-5"></a>        prob <span class="op">=</span> like <span class="op">*</span> prior</span>
+<span id="cb35-6"><a href="#cb35-6"></a>    <span class="cf">else</span>:</span>
+<span id="cb35-7"><a href="#cb35-7"></a>        prob <span class="op">=</span> <span class="op">-</span>np.inf</span>
+<span id="cb35-8"><a href="#cb35-8"></a>    <span class="cf">return</span> prob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>También necesitamos datos, por lo que generaremos algunos datos falsos aleatorios para este propósito.</p>
 <div id="d04bff59" class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>Y <span class="op">=</span> pz.Bernoulli(<span class="fl">0.7</span>).rvs(<span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a>Y <span class="op">=</span> pz.Bernoulli(<span class="fl">0.7</span>).rvs(<span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Y finalmente ejecutamos nuestra implementación del algoritmo Metropolis-Hastings:</p>
 <div id="6a69434c" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>n_iters <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>can_sd <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a>α <span class="op">=</span> β <span class="op">=</span>  <span class="dv">1</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a>θ <span class="op">=</span> <span class="fl">0.5</span> </span>
-<span id="cb39-5"><a href="#cb39-5"></a>trace <span class="op">=</span> {<span class="st">"θ"</span>:np.zeros(n_iters)}</span>
-<span id="cb39-6"><a href="#cb39-6"></a>p2 <span class="op">=</span> post(θ, Y, α, β)</span>
-<span id="cb39-7"><a href="#cb39-7"></a></span>
-<span id="cb39-8"><a href="#cb39-8"></a><span class="cf">for</span> <span class="bu">iter</span> <span class="kw">in</span> <span class="bu">range</span>(n_iters):</span>
-<span id="cb39-9"><a href="#cb39-9"></a>    θ_can <span class="op">=</span> pz.Normal(θ, can_sd).rvs(<span class="dv">1</span>)</span>
-<span id="cb39-10"><a href="#cb39-10"></a>    p1 <span class="op">=</span> post(θ_can, Y, α, β)  </span>
-<span id="cb39-11"><a href="#cb39-11"></a>    pa <span class="op">=</span> p1 <span class="op">/</span> p2</span>
-<span id="cb39-12"><a href="#cb39-12"></a></span>
-<span id="cb39-13"><a href="#cb39-13"></a>    <span class="cf">if</span> pa <span class="op">&gt;</span> pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(<span class="dv">1</span>):</span>
-<span id="cb39-14"><a href="#cb39-14"></a>        θ <span class="op">=</span> θ_can</span>
-<span id="cb39-15"><a href="#cb39-15"></a>        p2 <span class="op">=</span> p1</span>
-<span id="cb39-16"><a href="#cb39-16"></a></span>
-<span id="cb39-17"><a href="#cb39-17"></a>    trace[<span class="st">"θ"</span>][<span class="bu">iter</span>] <span class="op">=</span> θ.item()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>n_iters <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>can_sd <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>α <span class="op">=</span> β <span class="op">=</span>  <span class="dv">1</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>θ <span class="op">=</span> <span class="fl">0.5</span> </span>
+<span id="cb37-5"><a href="#cb37-5"></a>trace <span class="op">=</span> {<span class="st">"θ"</span>:np.zeros(n_iters)}</span>
+<span id="cb37-6"><a href="#cb37-6"></a>p2 <span class="op">=</span> post(θ, Y, α, β)</span>
+<span id="cb37-7"><a href="#cb37-7"></a></span>
+<span id="cb37-8"><a href="#cb37-8"></a><span class="cf">for</span> <span class="bu">iter</span> <span class="kw">in</span> <span class="bu">range</span>(n_iters):</span>
+<span id="cb37-9"><a href="#cb37-9"></a>    θ_can <span class="op">=</span> pz.Normal(θ, can_sd).rvs(<span class="dv">1</span>)</span>
+<span id="cb37-10"><a href="#cb37-10"></a>    p1 <span class="op">=</span> post(θ_can, Y, α, β)  </span>
+<span id="cb37-11"><a href="#cb37-11"></a>    pa <span class="op">=</span> p1 <span class="op">/</span> p2</span>
+<span id="cb37-12"><a href="#cb37-12"></a></span>
+<span id="cb37-13"><a href="#cb37-13"></a>    <span class="cf">if</span> pa <span class="op">&gt;</span> pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(<span class="dv">1</span>):</span>
+<span id="cb37-14"><a href="#cb37-14"></a>        θ <span class="op">=</span> θ_can</span>
+<span id="cb37-15"><a href="#cb37-15"></a>        p2 <span class="op">=</span> p1</span>
+<span id="cb37-16"><a href="#cb37-16"></a></span>
+<span id="cb37-17"><a href="#cb37-17"></a>    trace[<span class="st">"θ"</span>][<span class="bu">iter</span>] <span class="op">=</span> θ.item()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>En la línea 9 del bloque de código anterior generamos una propuesta muestreando una distribución Normal con desviación estándar <code>can_sd</code>. En la línea 10 evaluamos el posterior en el nuevo valor generado <code>θ_can</code> y en la línea 11 calculamos la probabilidad de aceptación. En la línea 17 guardamos un valor de <code>θ</code> en el array <code>trace</code>. Dependiendo del resultado de la comparación en la línea 13, el valor guardado será nuevo o repetiremos el anterior.</p>
 <p>El primer panel de la siguiente figura muestra cada valor muestreado en cada paso, y el panel de la derecha el histograma de esos valores. El resultado parece razonable. Nada mal para unas pocas lineas de código!</p>
 <div id="325fb0e9" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb40-2"><a href="#cb40-2"></a>axes[<span class="dv">0</span>].plot(trace[<span class="st">'θ'</span>])</span>
-<span id="cb40-3"><a href="#cb40-3"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'θ'</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb40-4"><a href="#cb40-4"></a>axes[<span class="dv">1</span>].hist(trace[<span class="st">'θ'</span>], orientation<span class="op">=</span><span class="st">"horizontal"</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb40-5"><a href="#cb40-5"></a>axes[<span class="dv">1</span>].set_xticks([])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb38-2"><a href="#cb38-2"></a>axes[<span class="dv">0</span>].plot(trace[<span class="st">'θ'</span>])</span>
+<span id="cb38-3"><a href="#cb38-3"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'θ'</span>, rotation<span class="op">=</span><span class="dv">0</span>, labelpad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb38-4"><a href="#cb38-4"></a>axes[<span class="dv">1</span>].hist(trace[<span class="st">'θ'</span>], orientation<span class="op">=</span><span class="st">"horizontal"</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb38-5"><a href="#cb38-5"></a>axes[<span class="dv">1</span>].set_xticks([])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2942,8 +2940,8 @@ p_i t_{ij} = p_j t_{ji}
 <p>Idealmente, nos gustaría poder trabajar con muestras independientes e idénticamente distribuidas (iid). Por construcción, las muestras MCMC están correlacionadas, ya que la probabilidad de aceptar el paso <span class="math inline">\(i\)</span> depende del paso <span class="math inline">\(i-1\)</span>. En la práctica, queremos muestras con baja autocorrelación.</p>
 <p>En ArviZ obtenemos este gráfico con la función <code>az.plot_autocorr()</code></p>
 <div id="73bdb4a8" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a>cadenas_defectuosas <span class="op">=</span> {<span class="st">"cadenas_defectuosas"</span>: np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>).reshape(<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>)}</span>
-<span id="cb41-2"><a href="#cb41-2"></a>az.plot_autocorr(cadenas_defectuosas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>cadenas_defectuosas <span class="op">=</span> {<span class="st">"cadenas_defectuosas"</span>: np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>).reshape(<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>)}</span>
+<span id="cb39-2"><a href="#cb39-2"></a>az.plot_autocorr(cadenas_defectuosas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2953,8 +2951,8 @@ p_i t_{ij} = p_j t_{ji}
 </div>
 </div>
 <div id="dbffd34e" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a>cadenas_adecuadas <span class="op">=</span> {<span class="st">"cadena_adecuadas"</span>: pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">500</span>))}</span>
-<span id="cb42-2"><a href="#cb42-2"></a>az.plot_autocorr(cadenas_adecuadas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>cadenas_adecuadas <span class="op">=</span> {<span class="st">"cadena_adecuadas"</span>: pz.Uniform(<span class="dv">0</span>, <span class="dv">1</span>).rvs(size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">500</span>))}</span>
+<span id="cb40-2"><a href="#cb40-2"></a>az.plot_autocorr(cadenas_adecuadas)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2975,8 +2973,8 @@ p_i t_{ij} = p_j t_{ji}
 <p>Podemos estimar el <strong>tamaño de muestra efectivo</strong> (ESS), es decir, el tamaño de una muestra con la cantidad equivalente de información pero sin autocorrelación. Esto es útil para determinar si el tamaño de muestra que tenemos es lo suficientemente grande. Se recomienda que el ESS sea superior a 100 por cadena. Es decir para para 4 cadenas queremos un mínimo de 400.</p>
 <p>Con ArviZ podemos obtenerlo <code>az.ess(⋅)</code>, <code>az.summary(⋅)</code> y <code>az.plot_forest(⋅, ess=True)</code></p>
 <div id="8d6896b9" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>pd.concat((az.ess(cadenas_defectuosas).to_pandas(),</span>
-<span id="cb43-2"><a href="#cb43-2"></a>           az.ess(cadenas_adecuadas).to_pandas()))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a>pd.concat((az.ess(cadenas_defectuosas).to_pandas(),</span>
+<span id="cb41-2"><a href="#cb41-2"></a>           az.ess(cadenas_adecuadas).to_pandas()))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
 <pre><code>cadenas_defectuosas      2.282878
 cadena_adecuadas       933.274390
@@ -2985,13 +2983,14 @@ dtype: float64</code></pre>
 </div>
 <p>Vemos que <code>az.summary(⋅)</code> devuelve dos valores de ESS, <code>ess_bulk</code> y <code>ess_tail</code>. Esto se debe a que, distintas regiones del espacio de los parámetros pueden tener distinto valor de ESS, ya que no todas las regiones son muestreadas con la misma eficiencia. Intuitivamente uno puede pensar que al muestrear una distribución como una Gaussiana es más fácil obtener mejor calidad de muestra alrededor de la media que de las colas, simplemente por que tenemos más muestras de esa región.</p>
 <div id="b86b18da" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1"></a>pd.concat([az.summary(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"diagnostics"</span>),</span>
-<span id="cb45-2"><a href="#cb45-2"></a>           az.summary(cadenas_defectuosas, kind<span class="op">=</span><span class="st">"diagnostics"</span>)])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a>pd.concat([az.summary(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"diagnostics"</span>),</span>
+<span id="cb43-2"><a href="#cb43-2"></a>           az.summary(cadenas_defectuosas, kind<span class="op">=</span><span class="st">"diagnostics"</span>)])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="36">
+<div>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -3025,12 +3024,13 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p>Si las muestras de MCMC las vamos a usar para calcular valores centrales como medias o medianas entonces tenemos que asegurarnos que el <code>ess_bulk</code> sea lo suficientemente algo, en cambio, si queremos calcular intervalos como un HDI 95% hay que asegurarse que <code>ess_tail</code> sea adecuado.</p>
 <p>ArviZ ofrece varias funciones vinculadas al ESS. Por ejemplo si queremos evaluar el desempeño del sampler para varias regiones al mismo tiempo podemos usar <code>az.plot_ess</code>.</p>
 <div id="99f14b7b" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a>az.plot_ess(cadenas_adecuadas, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb46-3"><a href="#cb46-3"></a>az.plot_ess(cadenas_defectuosas, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb44-2"><a href="#cb44-2"></a>az.plot_ess(cadenas_adecuadas, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb44-3"><a href="#cb44-3"></a>az.plot_ess(cadenas_defectuosas, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -3041,9 +3041,9 @@ dtype: float64</code></pre>
 </div>
 <p>Una forma simple de aumentar el ESS es aumentar la cantidad de muestras, pero podría darse el caso que el ESS crezca muy lento con el número de muestras, por lo que aún si aumentáramos 10 veces la cantidad de muestras estaríamos por debajo de lo requerido. Una forma de estimar “cuanto nos falta” es usar <code>az.plot_ess(⋅, kind="evolution")</code>. Este gráfico nos muestra como fue cambiando el ESS con cada muestra, lo que nos permite hacer proyecciones. En el siguiente ejemplo vemos que para <code>cadenas_adecuadas</code> el ESS crece linealmente con el número de muestras mientras que para <code>cadenas_defectuosas</code> no crece para nada. Este último caso no hay esperanzas de mejorar el ESS simplemente aumentando la cantidad de muestras.</p>
 <div id="e9d08319" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb47-2"><a href="#cb47-2"></a>az.plot_ess(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb47-3"><a href="#cb47-3"></a>az.plot_ess(cadenas_defectuosas,  kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb45-2"><a href="#cb45-2"></a>az.plot_ess(cadenas_adecuadas, kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb45-3"><a href="#cb45-3"></a>az.plot_ess(cadenas_defectuosas,  kind<span class="op">=</span><span class="st">"evolution"</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -3067,11 +3067,11 @@ dtype: float64</code></pre>
 <div id="91594a32-79a3-4b0a-97a5-a7499636ce51" class="cell" data-execution_count="39">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1"></a>kilpisjärvi <span class="op">=</span> pd.read_csv(<span class="st">"datos/kilpisjärvi.csv"</span>)</span>
-<span id="cb48-2"><a href="#cb48-2"></a>kilpisjärvi.plot(<span class="st">"year"</span>, <span class="st">"temperature"</span>, kind<span class="op">=</span><span class="st">"scatter"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))<span class="op">;</span></span>
-<span id="cb48-3"><a href="#cb48-3"></a></span>
-<span id="cb48-4"><a href="#cb48-4"></a>x <span class="op">=</span> kilpisjärvi.year <span class="op">-</span> kilpisjärvi.year.mean()</span>
-<span id="cb48-5"><a href="#cb48-5"></a>y <span class="op">=</span> kilpisjärvi.temperature</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1"></a>kilpisjärvi <span class="op">=</span> pd.read_csv(<span class="st">"datos/kilpisjärvi.csv"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2"></a>kilpisjärvi.plot(<span class="st">"year"</span>, <span class="st">"temperature"</span>, kind<span class="op">=</span><span class="st">"scatter"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))<span class="op">;</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a></span>
+<span id="cb46-4"><a href="#cb46-4"></a>x <span class="op">=</span> kilpisjärvi.year <span class="op">-</span> kilpisjärvi.year.mean()</span>
+<span id="cb46-5"><a href="#cb46-5"></a>y <span class="op">=</span> kilpisjärvi.temperature</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -3085,19 +3085,20 @@ dtype: float64</code></pre>
 <div id="d9b14430-9945-4b6a-8cc5-5342df7cf04d" class="cell" data-execution_count="40">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_k:</span>
-<span id="cb49-2"><a href="#cb49-2"></a>    α <span class="op">=</span> pm.Normal(<span class="st">"α"</span>, y.mean(), <span class="dv">1</span>)</span>
-<span id="cb49-3"><a href="#cb49-3"></a>    β <span class="op">=</span> pm.Normal(<span class="st">"β"</span>, <span class="dv">0</span>, <span class="fl">0.1</span><span class="op">/</span><span class="dv">3</span>)</span>
-<span id="cb49-4"><a href="#cb49-4"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">"σ"</span>, <span class="dv">1</span>)</span>
-<span id="cb49-5"><a href="#cb49-5"></a>    μ <span class="op">=</span> pm.Deterministic(<span class="st">"μ"</span>, α <span class="op">+</span> β<span class="op">*</span>x)</span>
-<span id="cb49-6"><a href="#cb49-6"></a>    _ <span class="op">=</span> pm.Normal(<span class="st">"obs"</span>, μ, σ, observed<span class="op">=</span>y)</span>
-<span id="cb49-7"><a href="#cb49-7"></a>    idata_k <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">125</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_k:</span>
+<span id="cb47-2"><a href="#cb47-2"></a>    α <span class="op">=</span> pm.Normal(<span class="st">"α"</span>, y.mean(), <span class="dv">1</span>)</span>
+<span id="cb47-3"><a href="#cb47-3"></a>    β <span class="op">=</span> pm.Normal(<span class="st">"β"</span>, <span class="dv">0</span>, <span class="fl">0.1</span><span class="op">/</span><span class="dv">3</span>)</span>
+<span id="cb47-4"><a href="#cb47-4"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">"σ"</span>, <span class="dv">1</span>)</span>
+<span id="cb47-5"><a href="#cb47-5"></a>    μ <span class="op">=</span> pm.Deterministic(<span class="st">"μ"</span>, α <span class="op">+</span> β<span class="op">*</span>x)</span>
+<span id="cb47-6"><a href="#cb47-6"></a>    _ <span class="op">=</span> pm.Normal(<span class="st">"obs"</span>, μ, σ, observed<span class="op">=</span>y)</span>
+<span id="cb47-7"><a href="#cb47-7"></a>    idata_k <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">125</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [α, β, σ]</code></pre>
+NUTS: [α, β, σ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 2 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -3110,17 +3111,15 @@ NUTS: [α, β, σ]</code></pre>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 2 seconds.</code></pre>
-</div>
 </div>
 <div id="5e62942a-88f4-48b5-bf72-16d280c651b0" class="cell" data-execution_count="41">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1"></a>az.summary(idata_k, var_names<span class="op">=</span><span class="st">"~μ"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1"></a>az.summary(idata_k, var_names<span class="op">=</span><span class="st">"~μ"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="41">
+<div>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -3178,14 +3177,16 @@ NUTS: [α, β, σ]</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p>Usando <code>az.summary()</code> podemos ver que tenemos un bajo valor para <span class="math inline">\(\hat R\)</span> y elevado para ESS. Nos vamos a concentrar en reportar un valor para <span class="math inline">\(\beta\)</span>, la pendiente de la regresión. Primero vamos a multiplicar el resultado por 100, de esta forma <span class="math inline">\(\beta\)</span> representará el aumento de temperatura por cada 100 años (según el modelo).</p>
 <div id="c383a8ec-16ae-4d06-af7c-392c130b276b" class="cell" data-execution_count="42">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1"></a>az.summary(idata_k, kind<span class="op">=</span><span class="st">"stats"</span>, var_names<span class="op">=</span><span class="st">"β"</span>, round_to<span class="op">=</span><span class="dv">5</span>)<span class="op">*</span><span class="dv">100</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1"></a>az.summary(idata_k, kind<span class="op">=</span><span class="st">"stats"</span>, var_names<span class="op">=</span><span class="st">"β"</span>, round_to<span class="op">=</span><span class="dv">5</span>)<span class="op">*</span><span class="dv">100</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="42">
+<div>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -3209,14 +3210,16 @@ NUTS: [α, β, σ]</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p>Por defecto ArviZ usa 0.94 como valor para el HDI. Este valor es arbitrario y podemos elegir el que consideremos conveniente. Por ej, si usáramos 0.8 obtendríamos:</p>
 <div id="677d7e8f-9b0e-45e4-b43e-d9b3ea7c82d9" class="cell" data-execution_count="43">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1"></a>az.summary(idata_k, kind<span class="op">=</span><span class="st">"stats"</span>, var_names<span class="op">=</span><span class="st">"β"</span>, round_to<span class="op">=</span><span class="dv">5</span>, hdi_prob<span class="op">=</span><span class="fl">0.8</span>)<span class="op">*</span><span class="dv">100</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1"></a>az.summary(idata_k, kind<span class="op">=</span><span class="st">"stats"</span>, var_names<span class="op">=</span><span class="st">"β"</span>, round_to<span class="op">=</span><span class="dv">5</span>, hdi_prob<span class="op">=</span><span class="fl">0.8</span>)<span class="op">*</span><span class="dv">100</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="43">
+<div>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -3240,19 +3243,20 @@ NUTS: [α, β, σ]</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p>Por lo que redondeando podríamos reportar esto como un incremento medio de 2 grados con un 80% de probabilidad de que sea entre 1 y 3 grados. Fijensé que estamos exagerando ligeramente la temperatura media y el valor superior del intervalo, pero la diferencia es pequeña y esto nos deja con número redondos que son fáciles de discutir, comunicar, recordar, etc.</p>
 <p>OK, veamos que pasa con el MCSE</p>
 <div id="8e20458e-2f71-4c40-a35e-a1930e9872e1" class="cell" data-execution_count="44">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1"></a>(az.summary(idata_k, kind<span class="op">=</span><span class="st">"all"</span>, var_names<span class="op">=</span><span class="st">"β"</span>, round_to<span class="op">=</span><span class="dv">5</span>, hdi_prob<span class="op">=</span><span class="fl">0.8</span>)<span class="op">*</span><span class="dv">100</span>)[<span class="st">"mcse_mean"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1"></a>(az.summary(idata_k, kind<span class="op">=</span><span class="st">"all"</span>, var_names<span class="op">=</span><span class="st">"β"</span>, round_to<span class="op">=</span><span class="dv">5</span>, hdi_prob<span class="op">=</span><span class="fl">0.8</span>)<span class="op">*</span><span class="dv">100</span>)[<span class="st">"mcse_mean"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="44">
 <pre><code>β    0.011
 Name: mcse_mean, dtype: float64</code></pre>
 </div>
 </div>
 <div id="2ce9f13e-9813-4402-870c-64dda9b9c92f" class="cell" data-execution_count="45">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1"></a>{<span class="st">"β_mcse_mean"</span>: <span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.3f}</span><span class="ss">"</span>,</span>
-<span id="cb57-2"><a href="#cb57-2"></a> <span class="st">"β_mcse_10%"</span>: <span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k, method<span class="op">=</span><span class="st">'quantile'</span>, prob<span class="op">=</span><span class="fl">0.1</span>)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.3f}</span><span class="ss">"</span>,</span>
-<span id="cb57-3"><a href="#cb57-3"></a> <span class="st">"β_mcse_90%"</span>: <span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k, method<span class="op">=</span><span class="st">'quantile'</span>, prob<span class="op">=</span><span class="fl">0.9</span>)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.3f}</span><span class="ss">"</span>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1"></a>{<span class="st">"β_mcse_mean"</span>: <span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.3f}</span><span class="ss">"</span>,</span>
+<span id="cb54-2"><a href="#cb54-2"></a> <span class="st">"β_mcse_10%"</span>: <span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k, method<span class="op">=</span><span class="st">'quantile'</span>, prob<span class="op">=</span><span class="fl">0.1</span>)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.3f}</span><span class="ss">"</span>,</span>
+<span id="cb54-3"><a href="#cb54-3"></a> <span class="st">"β_mcse_90%"</span>: <span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k, method<span class="op">=</span><span class="st">'quantile'</span>, prob<span class="op">=</span><span class="fl">0.9</span>)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.3f}</span><span class="ss">"</span>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="45">
 <pre><code>{'β_mcse_mean': '0.011', 'β_mcse_10%': '0.031', 'β_mcse_90%': '0.030'}</code></pre>
 </div>
@@ -3261,8 +3265,8 @@ Name: mcse_mean, dtype: float64</code></pre>
 <p>De esto podemos esperar que la media probablemente varíe de 1,92 ±0,02, por lo tanto, de 1,90 a 1,94. Por lo tanto, es seguro informar que la media es 2. Podemos hacer un cálculo similar para el límite superior e inferior y veremos que reportar el intervalo como 1-3, es razonable.</p>
 <p>Como alternativa o de forma complementaria podríamos estar interesados en reportar la probilidad de que exista un aumento, es decir la probabilidad que <span class="math inline">\(\beta\)</span> sea positivo.</p>
 <div id="2e84dece-5cc5-43cb-b162-3843c26c92e0" class="cell" data-execution_count="46">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1"></a>{<span class="st">"mean"</span>:<span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span>mean(idata_k.posterior[<span class="st">'β'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">"</span>,</span>
-<span id="cb59-2"><a href="#cb59-2"></a> <span class="st">"mcse"</span>:<span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k.posterior[<span class="st">'β'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">"</span>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1"></a>{<span class="st">"mean"</span>:<span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span>mean(idata_k.posterior[<span class="st">'β'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">"</span>,</span>
+<span id="cb56-2"><a href="#cb56-2"></a> <span class="st">"mcse"</span>:<span class="ss">f"</span><span class="sc">{</span>az<span class="sc">.</span>mcse(idata_k.posterior[<span class="st">'β'</span>] <span class="op">&gt;</span> <span class="dv">0</span>)[<span class="st">'β'</span>]<span class="sc">.</span>item()<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">"</span>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="46">
 <pre><code>{'mean': '99.2', 'mcse': '0.1'}</code></pre>
 </div>
@@ -3330,8 +3334,8 @@ H(\mathbf{q}, \mathbf{p}) = \overbrace{-\log p(\mathbf{p} \mid \mathbf{q})}^{K(\
 <p>Debido a su funcionamiento interno, algoritmos como NUTS ofrecen algunas pruebas específicas que no están disponibles para otros métodos. Generalmente estas pruebas son muy sensibles</p>
 <p>Para ejemplificar esto vamos a cargar dos InferenceData de modelos pre-calculados. Los detalles de como se generaron estos idatas no son relevantes por el momento. Solo diremos que son dos modelos que son matemáticamente equivalente pero parametrizados de formas distintas. En este caso la parametrización afecta la eficiencia del sampler. El modelo <code>centrado</code> es muestreado de forma más eficiente que el modelo <code>no centrado</code>.</p>
 <div id="87a258ff" class="cell" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1"></a>idata_cm <span class="op">=</span> az.load_arviz_data(<span class="st">"centered_eight"</span>)</span>
-<span id="cb61-2"><a href="#cb61-2"></a>idata_ncm <span class="op">=</span> az.load_arviz_data(<span class="st">"non_centered_eight"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1"></a>idata_cm <span class="op">=</span> az.load_arviz_data(<span class="st">"centered_eight"</span>)</span>
+<span id="cb58-2"><a href="#cb58-2"></a>idata_ncm <span class="op">=</span> az.load_arviz_data(<span class="st">"non_centered_eight"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="divergencias" class="level3" data-number="4.9.12">
@@ -3339,14 +3343,14 @@ H(\mathbf{q}, \mathbf{p}) = \overbrace{-\log p(\mathbf{p} \mid \mathbf{q})}^{K(\
 <p>Una ventaja de NUTS es que <em>falla con el estilo</em>. Esto sucede por ejemplo al intentar pasar de regiones de baja curvatura a regiones de alta curvatura. En estos casos las trayectorias numéricas pueden divergir. En esencia esto sucede porque en esos casos no existe un único conjunto de hiper-parámetros que permita el muestreo eficiente de ambas regiones. Por lo que una de la regiones es muestreada adecuandamente y cuando el sampler se mueve hacia la otra región falla. Las trayectorias numéricas divergentes son identificadores extremadamente sensibles de <em>vecindarios patológicos</em>.</p>
 <p>El siguiente ejemplo muestra dos cosas el modelo <code>no centrado</code> muestra varias divergencias (círculos turquesas) agrupados en una región. En el modelo <code>centrado</code>, que no tiene divergencias, se puede ver que alrededor de esa misma región hay muestras para valores más pequeños de <code>tau</code>. Es decir el modelo <code>no centrado</code> falla en muestrear una región, pero al menos avisa que está teniendo problemas en muestrear esa región!</p>
 <div id="95ba3d06" class="cell" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb62-2"><a href="#cb62-2"></a></span>
-<span id="cb62-3"><a href="#cb62-3"></a></span>
-<span id="cb62-4"><a href="#cb62-4"></a><span class="cf">for</span> ax, idata, nombre <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), (idata_cm, idata_ncm), (<span class="st">"centrado"</span>, <span class="st">"no_centrado"</span>)):</span>
-<span id="cb62-5"><a href="#cb62-5"></a>    az.plot_pair(idata, var_names<span class="op">=</span>[<span class="st">'theta'</span>, <span class="st">'tau'</span>], coords<span class="op">=</span>{<span class="st">'school'</span>:<span class="st">"Choate"</span>}, kind<span class="op">=</span><span class="st">'scatter'</span>,</span>
-<span id="cb62-6"><a href="#cb62-6"></a>                 divergences<span class="op">=</span><span class="va">True</span>, divergences_kwargs<span class="op">=</span>{<span class="st">'color'</span>:<span class="st">'C1'</span>},</span>
-<span id="cb62-7"><a href="#cb62-7"></a>                 ax<span class="op">=</span>ax)</span>
-<span id="cb62-8"><a href="#cb62-8"></a>    ax.set_title(nombre)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, sharex<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb59-2"><a href="#cb59-2"></a></span>
+<span id="cb59-3"><a href="#cb59-3"></a></span>
+<span id="cb59-4"><a href="#cb59-4"></a><span class="cf">for</span> ax, idata, nombre <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), (idata_cm, idata_ncm), (<span class="st">"centrado"</span>, <span class="st">"no_centrado"</span>)):</span>
+<span id="cb59-5"><a href="#cb59-5"></a>    az.plot_pair(idata, var_names<span class="op">=</span>[<span class="st">'theta'</span>, <span class="st">'tau'</span>], coords<span class="op">=</span>{<span class="st">'school'</span>:<span class="st">"Choate"</span>}, kind<span class="op">=</span><span class="st">'scatter'</span>,</span>
+<span id="cb59-6"><a href="#cb59-6"></a>                 divergences<span class="op">=</span><span class="va">True</span>, divergences_kwargs<span class="op">=</span>{<span class="st">'color'</span>:<span class="st">'C1'</span>},</span>
+<span id="cb59-7"><a href="#cb59-7"></a>                 ax<span class="op">=</span>ax)</span>
+<span id="cb59-8"><a href="#cb59-8"></a>    ax.set_title(nombre)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -3356,7 +3360,7 @@ H(\mathbf{q}, \mathbf{p}) = \overbrace{-\log p(\mathbf{p} \mid \mathbf{q})}^{K(\
 </div>
 </div>
 <div id="784c2014" class="cell" data-execution_count="49">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1"></a>az.plot_parallel(idata_cm, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1"></a>az.plot_parallel(idata_cm, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -3649,7 +3653,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -3681,29 +3696,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -3711,7 +3704,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

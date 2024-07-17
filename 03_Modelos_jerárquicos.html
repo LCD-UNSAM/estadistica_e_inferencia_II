@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Modelado Jerárquico – Estadística a Inferencia II</title>
+<title>Estadística a Inferencia II - 3&nbsp; Modelado Jerárquico</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -147,13 +147,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_Modelos_jerárquicos.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modelado Jerárquico</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -168,7 +168,7 @@ window.Quarto = {
       <a href="./">Estadística a Inferencia II</a> 
         <div class="sidebar-tools-main tools-wide">
     <div class="dropdown">
-      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="github"><i class="bi bi-github"></i></a>
+      <a href="" title="github" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="github"><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://github.com/LCD-UNSAM/estadistica_e_inferencia_II">
@@ -383,7 +383,8 @@ IPython.OutputArea.prototype._should_scroll = function(lines) {
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [μ, σ]</code></pre>
+NUTS: [μ, σ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 3 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -396,30 +397,28 @@ NUTS: [μ, σ]</code></pre>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 3 seconds.</code></pre>
-</div>
 </div>
 <p>Y ahora la novedad. El modelo jerárquico.</p>
 <p>Este modelo tiene un hiper-prior para la media de <span class="math inline">\(\mu\)</span> (<code>μ_mu</code>) y otro para la desviación estándar de <span class="math inline">\(\mu\)</span> (<code>μ_sd</code>). Para <span class="math inline">\(\sigma\)</span> no usamos un hiper-prior, asumimos un valor común del parámetro para todos los grupos. Esto es una decisión de modelado. En este caso la justificación es mantener el ejemplo simple, pero en principio no sería problemático usar un hiper-prior también para <span class="math inline">\(\sigma\)</span>.</p>
 <div id="cell-13" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> cs_h:</span>
-<span id="cb8-2"><a href="#cb8-2"></a>    <span class="co"># hyper_priors</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>    μ_mu <span class="op">=</span> pm.Normal(<span class="st">'μ_mu'</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb8-4"><a href="#cb8-4"></a>    μ_sd <span class="op">=</span> pm.HalfNormal(<span class="st">'μ_sd'</span>, <span class="dv">2</span>)</span>
-<span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a>    <span class="co"># priors</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span>μ_mu, sigma<span class="op">=</span>μ_sd, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
-<span id="cb8-8"><a href="#cb8-8"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">2</span>, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
-<span id="cb8-9"><a href="#cb8-9"></a></span>
-<span id="cb8-10"><a href="#cb8-10"></a>    y <span class="op">=</span> pm.Normal(<span class="st">'y'</span>, mu<span class="op">=</span>μ[idx], sigma<span class="op">=</span>σ[idx], observed<span class="op">=</span>diff) </span>
-<span id="cb8-11"><a href="#cb8-11"></a></span>
-<span id="cb8-12"><a href="#cb8-12"></a>    idata_cs_h <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> cs_h:</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="co"># hyper_priors</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    μ_mu <span class="op">=</span> pm.Normal(<span class="st">'μ_mu'</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    μ_sd <span class="op">=</span> pm.HalfNormal(<span class="st">'μ_sd'</span>, <span class="dv">2</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="co"># priors</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span>μ_mu, sigma<span class="op">=</span>μ_sd, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
+<span id="cb7-8"><a href="#cb7-8"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">2</span>, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>    y <span class="op">=</span> pm.Normal(<span class="st">'y'</span>, mu<span class="op">=</span>μ[idx], sigma<span class="op">=</span>σ[idx], observed<span class="op">=</span>diff) </span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a>    idata_cs_h <span class="op">=</span> pm.sample()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [μ_mu, μ_sd, μ, σ]</code></pre>
+NUTS: [μ_mu, μ_sd, μ, σ]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 4 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -432,9 +431,6 @@ NUTS: [μ_mu, μ_sd, μ, σ]</code></pre>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 4 seconds.</code></pre>
-</div>
 </div>
 <p>Antes de observar los resultados, comparemos gráficamente ambos modelos, para estar seguros que entendemos en qué difieren. La siguiente figura muestra una representación gráfica de los modelos <code>cs_nh</code> (no-jerárquico) y <code>cs_h</code> (jerárquico). Se puede ver como el modelo jerárquico tiene un nivel más.</p>
 <div>
@@ -442,11 +438,11 @@ NUTS: [μ_mu, μ_sd, μ, σ]</code></pre>
 </div>
 <p>Ahora que tenemos más claras las diferencias a nivel del modelo, vamos a explorar las consecuencias de esas diferencias. Para ello vamos a comparar los resultados usando un forest plot. ArviZ nos ofrece la función <code>plot_forest</code> que permite pasar más de un modelo, esto es útil cuando queremos comparar los valores de parámetros equivalentes entre modelos como en el presente ejemplo. Por defecto, <code>plot_forest</code> grafica las cadenas de MCMC por separado, esto no es relevante en este caso por lo que vamos a combinarlas usando <code>combined=True</code>. Los invito a explorar, por su cuenta, el significado del resto de los argumentos que pasamos en la siguiente celda.</p>
 <div id="cell-16" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>axes <span class="op">=</span> az.plot_forest([idata_cs_nh, idata_cs_h], model_names<span class="op">=</span>[<span class="st">'no_jerárquico'</span>, <span class="st">'jerárquico'</span>],</span>
-<span id="cb11-2"><a href="#cb11-2"></a>                      var_names<span class="op">=</span><span class="st">'μ'</span>, combined<span class="op">=</span><span class="va">True</span>, r_hat<span class="op">=</span><span class="va">False</span>, ess<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>),</span>
-<span id="cb11-3"><a href="#cb11-3"></a>                      colors<span class="op">=</span><span class="st">'cycle'</span>)</span>
-<span id="cb11-4"><a href="#cb11-4"></a>y_lims <span class="op">=</span> axes[<span class="dv">0</span>].get_ylim()</span>
-<span id="cb11-5"><a href="#cb11-5"></a>axes[<span class="dv">0</span>].vlines(idata_cs_h.posterior[<span class="st">'μ_mu'</span>].mean(), <span class="op">*</span>y_lims, color<span class="op">=</span><span class="st">"k"</span>, ls<span class="op">=</span><span class="st">":"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>axes <span class="op">=</span> az.plot_forest([idata_cs_nh, idata_cs_h], model_names<span class="op">=</span>[<span class="st">'no_jerárquico'</span>, <span class="st">'jerárquico'</span>],</span>
+<span id="cb9-2"><a href="#cb9-2"></a>                      var_names<span class="op">=</span><span class="st">'μ'</span>, combined<span class="op">=</span><span class="va">True</span>, r_hat<span class="op">=</span><span class="va">False</span>, ess<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>),</span>
+<span id="cb9-3"><a href="#cb9-3"></a>                      colors<span class="op">=</span><span class="st">'cycle'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>y_lims <span class="op">=</span> axes[<span class="dv">0</span>].get_ylim()</span>
+<span id="cb9-5"><a href="#cb9-5"></a>axes[<span class="dv">0</span>].vlines(idata_cs_h.posterior[<span class="st">'μ_mu'</span>].mean(), <span class="op">*</span>y_lims, color<span class="op">=</span><span class="st">"k"</span>, ls<span class="op">=</span><span class="st">":"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -518,7 +514,7 @@ X_{ij} &amp;\sim p(X \mid \theta_i) \\
 <h2 data-number="3.6" class="anchored" data-anchor-id="intercambiabilidad-e-inferencia"><span class="header-section-number">3.6</span> Intercambiabilidad e inferencia</h2>
 <p>Yo he seleccionado 10 valores de desplazamientos químicos <span class="math inline">\(y_1, \dots, y_{10}\)</span>. Qué me pueden decir del valor <span class="math inline">\(y_4\)</span>? Sin conocer algo de la química de aminoácidos es dificil arriesgar un rango razonable para <span class="math inline">\(y_4\)</span>, pero si asumen intercambialidad podrían decir <span class="math inline">\(y_4\)</span> debe parecerse a los demás valores, ya que no hay razón para pensar que <span class="math inline">\(y_4\)</span> sea especial, por ejemplo para decir algo como <span class="math inline">\(y_4 &gt; y_3\)</span> necesitarían información adicional o supuestos adicionales, como asumir un orden dado. Es decir intercambialidad, implica cierto grado de ignorancia.</p>
 <p>Bien, ahora supongamos que les muestro 9 valores, excepto <span class="math inline">\(y_4\)</span>, qué pueden decir de <span class="math inline">\(y_4\)</span>?</p>
-<table class="caption-top table">
+<table class="table">
 <colgroup>
 <col style="width: 10%">
 <col style="width: 10%">
@@ -576,14 +572,15 @@ X_{ij} &amp;\sim p(X \mid \theta_i) \\
 <li><p>Podemos pensar en cada tanque como un grupo</p></li>
 </ul>
 <div id="cell-22" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">'datos/renacuajos.csv'</span>, sep<span class="op">=</span><span class="st">","</span>)</span>
-<span id="cb12-2"><a href="#cb12-2"></a>coords <span class="op">=</span> {<span class="st">"tanks"</span>: <span class="bu">list</span>(d.index)}</span>
-<span id="cb12-3"><a href="#cb12-3"></a>d.head()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">'datos/renacuajos.csv'</span>, sep<span class="op">=</span><span class="st">","</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>coords <span class="op">=</span> {<span class="st">"tanks"</span>: <span class="bu">list</span>(d.index)}</span>
+<span id="cb10-3"><a href="#cb10-3"></a>d.head()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
+<div>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -641,23 +638,25 @@ X_{ij} &amp;\sim p(X \mid \theta_i) \\
 </div>
 </div>
 </div>
+</div>
 <div id="cell-23" class="cell" data-hide_input="false" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_renacuajos:</span>
-<span id="cb13-2"><a href="#cb13-2"></a>    <span class="co"># Hiperpriors</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, <span class="fl">0.</span>, <span class="fl">2.</span>)</span>
-<span id="cb13-4"><a href="#cb13-4"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, <span class="fl">2.</span>)</span>
-<span id="cb13-5"><a href="#cb13-5"></a>    <span class="co"># Prior</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a>    α_tanque <span class="op">=</span> pm.Normal(<span class="st">'α_tanque'</span>, μ, σ,  dims<span class="op">=</span><span class="st">"tanks"</span>)</span>
-<span id="cb13-7"><a href="#cb13-7"></a>    p <span class="op">=</span> pm.Deterministic(<span class="st">'p'</span>, pm.math.sigmoid(α_tanque))  <span class="co"># transformación logística</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a>    <span class="co">#likelihood</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a>    surv <span class="op">=</span> pm.Binomial(<span class="st">'surv'</span>, n<span class="op">=</span>d.density, p<span class="op">=</span>p, observed<span class="op">=</span>d.surv)</span>
-<span id="cb13-10"><a href="#cb13-10"></a>    </span>
-<span id="cb13-11"><a href="#cb13-11"></a>    idata_renacuajos <span class="op">=</span> pm.sample(<span class="dv">2000</span>, tune<span class="op">=</span><span class="dv">2000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_renacuajos:</span>
+<span id="cb11-2"><a href="#cb11-2"></a>    <span class="co"># Hiperpriors</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, <span class="fl">0.</span>, <span class="fl">2.</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, <span class="fl">2.</span>)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    <span class="co"># Prior</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>    α_tanque <span class="op">=</span> pm.Normal(<span class="st">'α_tanque'</span>, μ, σ,  dims<span class="op">=</span><span class="st">"tanks"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7"></a>    p <span class="op">=</span> pm.Deterministic(<span class="st">'p'</span>, pm.math.sigmoid(α_tanque))  <span class="co"># transformación logística</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>    <span class="co">#likelihood</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>    surv <span class="op">=</span> pm.Binomial(<span class="st">'surv'</span>, n<span class="op">=</span>d.density, p<span class="op">=</span>p, observed<span class="op">=</span>d.surv)</span>
+<span id="cb11-10"><a href="#cb11-10"></a>    </span>
+<span id="cb11-11"><a href="#cb11-11"></a>    idata_renacuajos <span class="op">=</span> pm.sample(<span class="dv">2000</span>, tune<span class="op">=</span><span class="dv">2000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [μ, σ, α_tanque]</code></pre>
+NUTS: [μ, σ, α_tanque]
+Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws total) took 5 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -670,12 +669,9 @@ NUTS: [μ, σ, α_tanque]</code></pre>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws total) took 5 seconds.</code></pre>
-</div>
 </div>
 <div id="cell-24" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>pm.model_to_graphviz(modelo_renacuajos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>pm.model_to_graphviz(modelo_renacuajos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <figure class="figure">
@@ -686,24 +682,24 @@ NUTS: [μ, σ, α_tanque]</code></pre>
 </div>
 <p>En la siguiente figura se muestran las proporciones empíricas de sobrevivientes en cada tanque de renacuajos (puntos azules) y las proporciones estimadas por el modelo (puntos turquesa). La línea discontinua indica la proporción promedio de sobrevivientes teniendo en cuenta todos los tanques. Las lineas verticales dividen los tanques de acuerdo a las diferentes densidades iniciales de renacuajos: tanques pequeños (10), tanques medianos (25) y tanques grandes (35). En cada tanque, la media a posteriori del modelo multinivel está más cerca de la línea punteada que la proporción empírica. Esto refleja la información compartida entre tanques y el efecto de contracción.</p>
 <div id="cell-26" class="cell" data-hide_input="true" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
-<span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>post_r <span class="op">=</span> az.extract(idata_renacuajos)</span>
-<span id="cb17-4"><a href="#cb17-4"></a></span>
-<span id="cb17-5"><a href="#cb17-5"></a>ax.scatter(np.arange(<span class="dv">0</span>, <span class="dv">48</span>), d.propsurv, color<span class="op">=</span><span class="st">'C0'</span>)</span>
-<span id="cb17-6"><a href="#cb17-6"></a>ax.scatter(np.arange(<span class="dv">0</span>, <span class="dv">48</span>), post_r[<span class="st">'p'</span>].mean(<span class="st">"sample"</span>), color<span class="op">=</span><span class="st">'C1'</span>)</span>
-<span id="cb17-7"><a href="#cb17-7"></a>ax.hlines(logistic(post_r[<span class="st">'μ'</span>].median(<span class="st">"sample"</span>)), <span class="op">-</span><span class="dv">1</span>, <span class="dv">49</span>, linestyles<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb17-8"><a href="#cb17-8"></a></span>
-<span id="cb17-9"><a href="#cb17-9"></a>idx <span class="op">=</span> d.density[d.density.diff() <span class="op">&gt;</span> <span class="dv">0</span>].index</span>
-<span id="cb17-10"><a href="#cb17-10"></a>ax.vlines(idx <span class="op">+</span> <span class="fl">0.5</span>, <span class="op">-</span><span class="fl">.05</span>, <span class="fl">1.05</span>, lw<span class="op">=</span><span class="fl">.5</span>)</span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="cf">for</span> i, t <span class="kw">in</span> <span class="bu">zip</span>(np.linspace(<span class="dv">0</span>, <span class="dv">48</span>, <span class="dv">7</span>)[<span class="dv">1</span>::<span class="dv">2</span>], (<span class="st">'pequeño'</span>, <span class="st">'mediano'</span>, <span class="st">'grande'</span>)):</span>
-<span id="cb17-12"><a href="#cb17-12"></a>    ax.text(i, <span class="dv">0</span>, t, horizontalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb17-13"><a href="#cb17-13"></a>ax.set_xlabel(<span class="st">'tanques'</span>)</span>
-<span id="cb17-14"><a href="#cb17-14"></a>ax.set_ylabel(<span class="st">'proporción de survivencia'</span>)</span>
-<span id="cb17-15"><a href="#cb17-15"></a>ax.set_xlim(<span class="op">-</span><span class="dv">1</span>, <span class="dv">48</span>)</span>
-<span id="cb17-16"><a href="#cb17-16"></a>ax.set_xticks([])</span>
-<span id="cb17-17"><a href="#cb17-17"></a>ax.set_ylim(<span class="op">-</span><span class="fl">.05</span>, <span class="fl">1.05</span>)</span>
-<span id="cb17-18"><a href="#cb17-18"></a>ax.grid(<span class="va">False</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>post_r <span class="op">=</span> az.extract(idata_renacuajos)</span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>ax.scatter(np.arange(<span class="dv">0</span>, <span class="dv">48</span>), d.propsurv, color<span class="op">=</span><span class="st">'C0'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>ax.scatter(np.arange(<span class="dv">0</span>, <span class="dv">48</span>), post_r[<span class="st">'p'</span>].mean(<span class="st">"sample"</span>), color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb14-7"><a href="#cb14-7"></a>ax.hlines(logistic(post_r[<span class="st">'μ'</span>].median(<span class="st">"sample"</span>)), <span class="op">-</span><span class="dv">1</span>, <span class="dv">49</span>, linestyles<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a>idx <span class="op">=</span> d.density[d.density.diff() <span class="op">&gt;</span> <span class="dv">0</span>].index</span>
+<span id="cb14-10"><a href="#cb14-10"></a>ax.vlines(idx <span class="op">+</span> <span class="fl">0.5</span>, <span class="op">-</span><span class="fl">.05</span>, <span class="fl">1.05</span>, lw<span class="op">=</span><span class="fl">.5</span>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="cf">for</span> i, t <span class="kw">in</span> <span class="bu">zip</span>(np.linspace(<span class="dv">0</span>, <span class="dv">48</span>, <span class="dv">7</span>)[<span class="dv">1</span>::<span class="dv">2</span>], (<span class="st">'pequeño'</span>, <span class="st">'mediano'</span>, <span class="st">'grande'</span>)):</span>
+<span id="cb14-12"><a href="#cb14-12"></a>    ax.text(i, <span class="dv">0</span>, t, horizontalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb14-13"><a href="#cb14-13"></a>ax.set_xlabel(<span class="st">'tanques'</span>)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>ax.set_ylabel(<span class="st">'proporción de survivencia'</span>)</span>
+<span id="cb14-15"><a href="#cb14-15"></a>ax.set_xlim(<span class="op">-</span><span class="dv">1</span>, <span class="dv">48</span>)</span>
+<span id="cb14-16"><a href="#cb14-16"></a>ax.set_xticks([])</span>
+<span id="cb14-17"><a href="#cb14-17"></a>ax.set_ylim(<span class="op">-</span><span class="fl">.05</span>, <span class="fl">1.05</span>)</span>
+<span id="cb14-18"><a href="#cb14-18"></a>ax.grid(<span class="va">False</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -724,41 +720,43 @@ NUTS: [μ, σ, α_tanque]</code></pre>
 <p>Volviendo a nuestros jugadores de fútbol, hemos recopilado datos de la <em>Premier League</em>, <em>Ligue 1</em>, <em>Bundesliga</em>, <em>Serie A</em> y <em>La Liga</em>, en el transcurso de cuatro años (2017 a 2020). Supongamos que estamos interesados en la métrica de goles por tiro. Esto es lo que los estadísticos suelen llamar <em>tasa de éxito</em>, y podemos estimarlo con un modelo Binomial donde el parámetro <span class="math inline">\(n\)</span> es el número de tiros y las observaciones <span class="math inline">\(y\)</span> es el número de goles. Esto nos deja con un valor desconocido para <span class="math inline">\(p\)</span>, en ejemplos anteriores hemos estado llamando a este parámetro <span class="math inline">\(\theta\)</span> y hemos usado una distribución Beta para modelarlo. Haremos lo mismo ahora, pero jerárquicamente. <span class="math inline">\(\theta\)</span> representa la “tasa de éxito” de cada jugador y, por lo tanto, es un vector de tamaño <code>n_jugadores</code>. Usamos una distribución Beta para modelar <span class="math inline">\(\theta\)</span>. Los hiperparámetros de la distribución Beta serán los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span>, que son vectores de tamaño 4, que representan las cuatro posiciones en nuestro conjunto de datos (defensor <code>DF</code>, centrocampista <code>MF</code>, delantero <code>FW</code> y arquero <code>GK</code>). Tendremos que indexar correctamente los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span> para que coincidan con el número total de jugadores. Finalmente, tendremos dos parámetros globales, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\nu\)</span>, que representan a los futbolistas profesionales.</p>
 <p>El modelo PyMC se define en el siguiente bloque de código. El <code>pm.Beta('mu', 1.7, 5.8)</code> fue elegido con la ayuda de PreliZ como prior con el 90% de la masa entre 0 y 0.5. Este es un ejemplo de un prior poco informativo, ya que no hay duda de que una tasa de éxito de 0,5 es un valor alto. Las estadísticas deportivas están bien estudiadas y hay mucha información previa que podría usarse para definir priors más fuertes. Para este ejemplo, nos conformaremos con este prior. Una justificación similar se puede hacer para el prior <code>pm.Gamma('nu', mu=125, sigma=50)</code>, que definimos como la distribución Gamma de máxima entropía con el 90% de la masa entre 50 y 200.</p>
 <div id="cell-28" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>futbol <span class="op">=</span> pd.read_csv(<span class="st">"datos/futbol.csv"</span>, dtype<span class="op">=</span>{<span class="st">'posición'</span>:<span class="st">'category'</span>})</span>
-<span id="cb18-2"><a href="#cb18-2"></a>pos_idx <span class="op">=</span> futbol.posición.cat.codes.values</span>
-<span id="cb18-3"><a href="#cb18-3"></a>pos_codes <span class="op">=</span> futbol.posición.cat.categories</span>
-<span id="cb18-4"><a href="#cb18-4"></a>n_pos <span class="op">=</span> pos_codes.size</span>
-<span id="cb18-5"><a href="#cb18-5"></a>n_jugadores <span class="op">=</span> futbol.index.size</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>futbol <span class="op">=</span> pd.read_csv(<span class="st">"datos/futbol.csv"</span>, dtype<span class="op">=</span>{<span class="st">'posición'</span>:<span class="st">'category'</span>})</span>
+<span id="cb15-2"><a href="#cb15-2"></a>pos_idx <span class="op">=</span> futbol.posición.cat.codes.values</span>
+<span id="cb15-3"><a href="#cb15-3"></a>pos_codes <span class="op">=</span> futbol.posición.cat.categories</span>
+<span id="cb15-4"><a href="#cb15-4"></a>n_pos <span class="op">=</span> pos_codes.size</span>
+<span id="cb15-5"><a href="#cb15-5"></a>n_jugadores <span class="op">=</span> futbol.index.size</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-29" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>coords <span class="op">=</span> {<span class="st">"pos"</span>: pos_codes}</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_futbol:</span>
-<span id="cb19-3"><a href="#cb19-3"></a>    <span class="co"># Hiper-parámetros</span></span>
-<span id="cb19-4"><a href="#cb19-4"></a>    μ <span class="op">=</span> pm.Beta(<span class="st">'μ'</span>, <span class="fl">1.7</span>, <span class="fl">5.8</span>) </span>
-<span id="cb19-5"><a href="#cb19-5"></a>    ν <span class="op">=</span> pm.Gamma(<span class="st">'ν'</span>, mu<span class="op">=</span><span class="dv">125</span>, sigma<span class="op">=</span><span class="dv">50</span>)</span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a>    </span>
-<span id="cb19-8"><a href="#cb19-8"></a>    <span class="co"># Parámetros por posición</span></span>
-<span id="cb19-9"><a href="#cb19-9"></a>    μ_p <span class="op">=</span> pm.Beta(<span class="st">'μ_p'</span>,</span>
-<span id="cb19-10"><a href="#cb19-10"></a>                       mu<span class="op">=</span>μ,</span>
-<span id="cb19-11"><a href="#cb19-11"></a>                       nu<span class="op">=</span>ν,</span>
-<span id="cb19-12"><a href="#cb19-12"></a>                       dims <span class="op">=</span> <span class="st">"pos"</span>)</span>
-<span id="cb19-13"><a href="#cb19-13"></a>    </span>
-<span id="cb19-14"><a href="#cb19-14"></a>    ν_p <span class="op">=</span> pm.Gamma(<span class="st">'ν_p'</span>, mu<span class="op">=</span><span class="dv">125</span>, sigma<span class="op">=</span><span class="dv">50</span>, dims<span class="op">=</span><span class="st">"pos"</span>)</span>
-<span id="cb19-15"><a href="#cb19-15"></a> </span>
-<span id="cb19-16"><a href="#cb19-16"></a>    <span class="co"># Parámetros por jugador</span></span>
-<span id="cb19-17"><a href="#cb19-17"></a>    θ <span class="op">=</span> pm.Beta(<span class="st">'θ'</span>, </span>
-<span id="cb19-18"><a href="#cb19-18"></a>                    mu<span class="op">=</span>μ_p[pos_idx],</span>
-<span id="cb19-19"><a href="#cb19-19"></a>                    nu<span class="op">=</span>ν_p[pos_idx])</span>
-<span id="cb19-20"><a href="#cb19-20"></a>    </span>
-<span id="cb19-21"><a href="#cb19-21"></a>    _ <span class="op">=</span> pm.Binomial(<span class="st">'gs'</span>, n<span class="op">=</span>futbol.tiros.values, p<span class="op">=</span>θ, observed<span class="op">=</span>futbol.goles.values)</span>
-<span id="cb19-22"><a href="#cb19-22"></a></span>
-<span id="cb19-23"><a href="#cb19-23"></a>    idata_futbol <span class="op">=</span> pm.sample(<span class="dv">4000</span>, target_accept<span class="op">=</span><span class="fl">0.98</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>coords <span class="op">=</span> {<span class="st">"pos"</span>: pos_codes}</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_futbol:</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="co"># Hiper-parámetros</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>    μ <span class="op">=</span> pm.Beta(<span class="st">'μ'</span>, <span class="fl">1.7</span>, <span class="fl">5.8</span>) </span>
+<span id="cb16-5"><a href="#cb16-5"></a>    ν <span class="op">=</span> pm.Gamma(<span class="st">'ν'</span>, mu<span class="op">=</span><span class="dv">125</span>, sigma<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a>    </span>
+<span id="cb16-8"><a href="#cb16-8"></a>    <span class="co"># Parámetros por posición</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>    μ_p <span class="op">=</span> pm.Beta(<span class="st">'μ_p'</span>,</span>
+<span id="cb16-10"><a href="#cb16-10"></a>                       mu<span class="op">=</span>μ,</span>
+<span id="cb16-11"><a href="#cb16-11"></a>                       nu<span class="op">=</span>ν,</span>
+<span id="cb16-12"><a href="#cb16-12"></a>                       dims <span class="op">=</span> <span class="st">"pos"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13"></a>    </span>
+<span id="cb16-14"><a href="#cb16-14"></a>    ν_p <span class="op">=</span> pm.Gamma(<span class="st">'ν_p'</span>, mu<span class="op">=</span><span class="dv">125</span>, sigma<span class="op">=</span><span class="dv">50</span>, dims<span class="op">=</span><span class="st">"pos"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15"></a> </span>
+<span id="cb16-16"><a href="#cb16-16"></a>    <span class="co"># Parámetros por jugador</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a>    θ <span class="op">=</span> pm.Beta(<span class="st">'θ'</span>, </span>
+<span id="cb16-18"><a href="#cb16-18"></a>                    mu<span class="op">=</span>μ_p[pos_idx],</span>
+<span id="cb16-19"><a href="#cb16-19"></a>                    nu<span class="op">=</span>ν_p[pos_idx])</span>
+<span id="cb16-20"><a href="#cb16-20"></a>    </span>
+<span id="cb16-21"><a href="#cb16-21"></a>    _ <span class="op">=</span> pm.Binomial(<span class="st">'gs'</span>, n<span class="op">=</span>futbol.tiros.values, p<span class="op">=</span>θ, observed<span class="op">=</span>futbol.goles.values)</span>
+<span id="cb16-22"><a href="#cb16-22"></a></span>
+<span id="cb16-23"><a href="#cb16-23"></a>    idata_futbol <span class="op">=</span> pm.sample(<span class="dv">4000</span>, target_accept<span class="op">=</span><span class="fl">0.98</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [μ, ν, μ_p, ν_p, θ]</code></pre>
+NUTS: [μ, ν, μ_p, ν_p, θ]
+Sampling 4 chains for 1_000 tune and 4_000 draw iterations (4_000 + 16_000 draws total) took 285 seconds.
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
@@ -771,13 +769,9 @@ NUTS: [μ, ν, μ_p, ν_p, θ]</code></pre>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Sampling 4 chains for 1_000 tune and 4_000 draw iterations (4_000 + 16_000 draws total) took 285 seconds.
-The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
-</div>
 </div>
 <div id="cell-30" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>pm.model_to_graphviz(modelo_futbol)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>pm.model_to_graphviz(modelo_futbol)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <figure class="figure">
@@ -788,13 +782,13 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 <p>En el panel superior de la siguiente figura tenemos la distribución a posteriori del parámetro global <span class="math inline">\(\mu\)</span>. La distribución a posteriori es cercana a 0.1. Lo que significa que, en general, para un jugador de fútbol profesional, la probabilidad de hacer un gol es en promedio del 10%. Este es un valor razonable, ya que hacer goles no es una tarea fácil y no estamos discriminando posiciones, es decir, estamos considerando jugadores cuyo papel principal no es el de hacer goles. En el panel central, tenemos el valor estimado de <span class="math inline">\(mu_p\)</span> para la posición de defensa, como es de esperar, es más alto que el parámetro global <span class="math inline">\(\mu\)</span>. En el panel inferior, tenemos el valor estimado de <span class="math inline">\(\theta\)</span> para Lionel Messi, con un valor de 0.17, que es más alto que el parámetro global <span class="math inline">\(\mu\)</span> y el valor de la posición delantera <span class="math inline">\(\mu_p\)</span>. Esto también es de esperarse, ya que Lionel Messi es el mejor jugador de fútbol del mundo, y su rol principal es hacer goles.</p>
 <div id="cell-32" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-2"><a href="#cb23-2"></a>az.plot_posterior(idata_futbol, var_names<span class="op">=</span><span class="st">'μ'</span>, ax<span class="op">=</span>ax[<span class="dv">0</span>])</span>
-<span id="cb23-3"><a href="#cb23-3"></a>ax[<span class="dv">0</span>].set_title(<span class="vs">r"Global mean"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4"></a>az.plot_posterior(idata_futbol.posterior.sel(pos<span class="op">=</span><span class="st">"FW"</span>), var_names<span class="op">=</span><span class="st">'μ_p'</span>, ax<span class="op">=</span>ax[<span class="dv">1</span>])</span>
-<span id="cb23-5"><a href="#cb23-5"></a>ax[<span class="dv">1</span>].set_title(<span class="vs">r"Forward position mean"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6"></a>az.plot_posterior(idata_futbol.posterior.sel(θ_dim_0<span class="op">=</span><span class="dv">1457</span>), var_names<span class="op">=</span><span class="st">'θ'</span>, ax<span class="op">=</span>ax[<span class="dv">2</span>])</span>
-<span id="cb23-7"><a href="#cb23-7"></a>ax[<span class="dv">2</span>].set_title(<span class="vs">r"Messi mean"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>az.plot_posterior(idata_futbol, var_names<span class="op">=</span><span class="st">'μ'</span>, ax<span class="op">=</span>ax[<span class="dv">0</span>])</span>
+<span id="cb19-3"><a href="#cb19-3"></a>ax[<span class="dv">0</span>].set_title(<span class="vs">r"Global mean"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>az.plot_posterior(idata_futbol.posterior.sel(pos<span class="op">=</span><span class="st">"FW"</span>), var_names<span class="op">=</span><span class="st">'μ_p'</span>, ax<span class="op">=</span>ax[<span class="dv">1</span>])</span>
+<span id="cb19-5"><a href="#cb19-5"></a>ax[<span class="dv">1</span>].set_title(<span class="vs">r"Forward position mean"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6"></a>az.plot_posterior(idata_futbol.posterior.sel(θ_dim_0<span class="op">=</span><span class="dv">1457</span>), var_names<span class="op">=</span><span class="st">'θ'</span>, ax<span class="op">=</span>ax[<span class="dv">2</span>])</span>
+<span id="cb19-7"><a href="#cb19-7"></a>ax[<span class="dv">2</span>].set_title(<span class="vs">r"Messi mean"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -805,7 +799,7 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 <p>La siguiente figura muestra un <code>forest plot</code> para la distribución a posteriori del parámetro <span class="math inline">\(\mu_p\)</span>. La distribución a posteriori para delanteros se centra en torno a 0.13, como ya vimos, y es la más alta de las cuatro. Esto tiene sentido ya que el papel de los jugadores en una posición delantera es hacer goles y asistencias. El valor más bajo de <span class="math inline">\(\mu_p\)</span> es para la posición de arquero. Esto esperable, ya que la función principal es evitar que el equipo contrario haga goles. El aspecto interesante es que la incertidumbre es muy alta, esto se debe a que tenemos muy pocos arqueros haciendo goles en nuestro conjunto de datos, 3 para ser precisos. Las distribuciones a posteriori para las posiciones de defensa y mediocampo están en <em>el medio</em>, siendo ligeramente más altas para los mediocampistas. Podemos explicar esto porque el papel principal de un mediocampista es defender y atacar, y por lo tanto la probabilidad de marcar un gol es mayor que la de un defensor pero menor que la de un delantero.</p>
 <div id="cell-34" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>az.plot_forest(idata_futbol, var_names<span class="op">=</span>[<span class="st">'μ_p'</span>], combined<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>az.plot_forest(idata_futbol, var_names<span class="op">=</span>[<span class="st">'μ_p'</span>], combined<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1025,7 +1019,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1057,29 +1062,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1087,7 +1070,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
