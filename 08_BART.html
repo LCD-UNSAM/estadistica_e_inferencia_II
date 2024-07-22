@@ -446,12 +446,12 @@ Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathca
 <div class="cell-output cell-output-stderr">
 <pre><code>Multiprocess sampling (4 chains in 4 jobs)
 PGBART: [μ_]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 17 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 24 seconds.
 The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"383ff55546854ef1b7161468b8852081","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"b675f8fa475b439b968bf572e08093ef","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -511,11 +511,11 @@ The rhat statistic is larger than 1.01 for some parameters. This indicates probl
 CompoundStep
 &gt;NUTS: [α]
 &gt;PGBART: [μ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 52 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 79 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a2c21d788811464ab3c1d9b271909da5","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"e323a74121bb4481b9da3947a116450f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -544,10 +544,14 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div id="cell-26" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>pmb.plot_convergence(idata_bikes, var_name<span class="op">=</span><span class="st">"μ"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/arviz/plots/ecdfplot.py:295: BehaviourChangeWarning: In future versions, if `eval_points` is not provided, then the ECDF will be evaluated at the unique values of the sample. To keep the current behavior, provide `eval_points` explicitly.
+  warnings.warn(</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="08_BART_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="08_BART_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -560,7 +564,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <h2 data-number="7.10" class="anchored" data-anchor-id="partial-dependence-plots"><span class="header-section-number">7.10</span> Partial dependence plots</h2>
 <p>Para ayudarnos a interpretar los resultados de nuestro modelo, utilizaremos gráficos de dependencia parcial. Este es un tipo de gráfico que muestra el efecto marginal que tiene una covariable sobre la variable predicha. Es decir, ¿cuál es el efecto que tiene una covariable <span class="math inline">\(X_i\)</span> sobre <span class="math inline">\(Y\)</span> mientras promediamos todas las demás covariables (<span class="math inline">\(X_j, \forall j \not = i\)</span>). Esta herramienta no es exclusiva de BART. Pero se utilizan a menudo en la literatura de BART.</p>
 <div id="cell-29" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>pmb.plot_pdp(μ, X<span class="op">=</span>X, Y<span class="op">=</span>Y, grid<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), func<span class="op">=</span>np.exp, var_discrete<span class="op">=</span>[<span class="dv">3</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>pmb.plot_pdp(μ, X<span class="op">=</span>X, Y<span class="op">=</span>Y, grid<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), func<span class="op">=</span>np.exp, var_discrete<span class="op">=</span>[<span class="dv">3</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -576,7 +580,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <h3 data-number="7.10.1" class="anchored" data-anchor-id="selección-de-variables"><span class="header-section-number">7.10.1</span> Selección de variables</h3>
 <p>Como vimos en la sección anterior, un gráfico de dependencia parcial nos permite interpretar el efecto (marginal) de cada covariable sobre la respuesta. Además nos da una idea de cuánto contribuye cada covariable a la variable predicha. Pero hay una forma más directa de hacer esto. Veamos primero un gráfico y luego como interpretarlo y calcularlo.</p>
 <div id="cell-32" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -594,7 +598,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </ul>
 <p>En lugar de utilizar la “heurística de conteo”. También puede realizar una búsqueda hacia atrás, <code>pmb.plot_variable_importance(..., method="backward")</code>. Internamente, esto calculará el R² para el modelo completo, luego para todos los modelos con una variable menos que el modelo completo, y luego para todos los modelos con menos de dos, y así sucesivamente. En cada etapa, descartamos la variable que da el R² más bajo. El método inverso será más lento, ya que necesitamos calcular predicciones para más modelos.</p>
 <div id="cell-34" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X, method<span class="op">=</span><span class="st">"backward"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X, method<span class="op">=</span><span class="st">"backward"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -610,18 +614,18 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Como ya vimos para modelos lineales generalizados, no estamos restringidos a crear modelos lineales para la media o el parámetro de ubicación; También podemos modelar otros parámetros, como el parámetro de dispersión. Lo mismo se aplica a los modelos BART.</p>
 <p>Para ejemplificar esto probemos extender el modelo anterior, esta vez usando la suma de árboles tanto para modelar <span class="math inline">\(\mu\)</span> como <span class="math inline">\(\alpha\)</span>.</p>
 <div id="cell-36" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_bb:</span>
-<span id="cb16-2"><a href="#cb16-2"></a>    μ <span class="op">=</span> pmb.BART(<span class="st">"μ"</span>, X, np.log(Y), shape<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">348</span>), separate_trees<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb16-3"><a href="#cb16-3"></a>    pm.NegativeBinomial(<span class="st">'yl'</span>, mu<span class="op">=</span>np.exp(μ[<span class="dv">0</span>]), alpha<span class="op">=</span>np.exp(μ[<span class="dv">1</span>]), observed<span class="op">=</span>Y)</span>
-<span id="cb16-4"><a href="#cb16-4"></a>    idata_bb <span class="op">=</span> pm.sample(compute_convergence_checks<span class="op">=</span><span class="va">False</span>, random_seed<span class="op">=</span>RANDOM_SEED)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_bb:</span>
+<span id="cb17-2"><a href="#cb17-2"></a>    μ <span class="op">=</span> pmb.BART(<span class="st">"μ"</span>, X, np.log(Y), shape<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">348</span>), separate_trees<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-3"><a href="#cb17-3"></a>    pm.NegativeBinomial(<span class="st">'yl'</span>, mu<span class="op">=</span>np.exp(μ[<span class="dv">0</span>]), alpha<span class="op">=</span>np.exp(μ[<span class="dv">1</span>]), observed<span class="op">=</span>Y)</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    idata_bb <span class="op">=</span> pm.sample(compute_convergence_checks<span class="op">=</span><span class="va">False</span>, random_seed<span class="op">=</span>RANDOM_SEED)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Multiprocess sampling (4 chains in 4 jobs)
 PGBART: [μ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 102 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 166 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"870f01ddac9e41c6b731dbf052070d6d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"6f047def39394a449810aa32b645eced","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -637,9 +641,9 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Otro aspecto importante del <code>modelo_bb</code> es que tomamos la función exponencial de <code>μ</code>. Hacemos esto para garantizar que la distribución binomial negativa obtenga solo valores positivos, tanto para <span class="math inline">\(\mu\)</span> como para <span class="math inline">\(\alpha\)</span>. Este es el mismo tipo de transformación que discutimos en el contexto de los modelos lineales generalizados.</p>
 <p>La siguiente figura muestra un partial dependence plots con dos columnas una por cada parámetro de la distribución NegativaBinomial</p>
 <div id="cell-38" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>pmb.plot_pdp(μ, X, Y, </span>
-<span id="cb18-2"><a href="#cb18-2"></a>             xs_interval<span class="op">=</span><span class="st">"insample"</span>, func<span class="op">=</span>np.exp , var_discrete<span class="op">=</span>[<span class="dv">3</span>],</span>
-<span id="cb18-3"><a href="#cb18-3"></a>             grid<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>pmb.plot_pdp(μ, X, Y, </span>
+<span id="cb19-2"><a href="#cb19-2"></a>             xs_interval<span class="op">=</span><span class="st">"insample"</span>, func<span class="op">=</span>np.exp , var_discrete<span class="op">=</span>[<span class="dv">3</span>],</span>
+<span id="cb19-3"><a href="#cb19-3"></a>             grid<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -656,31 +660,31 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <li><p>Esto podría ser otro mostrando que las predicciones insample son similares pero los PDPs no https://www.pymc.io/projects/bart/en/latest/examples/bart_categorical_hawks.html</p></li>
 <li><p>generamos este dataset</p></li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>X <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, (<span class="dv">250</span>, <span class="dv">3</span>))</span>
-<span id="cb19-2"><a href="#cb19-2"></a>lala <span class="op">=</span> np.where(X[:,<span class="dv">2</span>] <span class="op">&gt;=</span> <span class="dv">0</span>,  np.zeros_like(X[:,<span class="dv">2</span>]), np.ones_like(X[:,<span class="dv">2</span>]))</span>
-<span id="cb19-3"><a href="#cb19-3"></a>e <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">250</span>)</span>
-<span id="cb19-4"><a href="#cb19-4"></a>Y <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span>X[:,<span class="dv">0</span>] <span class="op">-</span> <span class="dv">5</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">+</span> <span class="dv">10</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">*</span> lala<span class="op">+</span> e</span>
-<span id="cb19-5"><a href="#cb19-5"></a></span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a>plt.plot(X[:,<span class="dv">1</span>], Y, <span class="st">'.'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>X <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, (<span class="dv">250</span>, <span class="dv">3</span>))</span>
+<span id="cb20-2"><a href="#cb20-2"></a>lala <span class="op">=</span> np.where(X[:,<span class="dv">2</span>] <span class="op">&gt;=</span> <span class="dv">0</span>,  np.zeros_like(X[:,<span class="dv">2</span>]), np.ones_like(X[:,<span class="dv">2</span>]))</span>
+<span id="cb20-3"><a href="#cb20-3"></a>e <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">250</span>)</span>
+<span id="cb20-4"><a href="#cb20-4"></a>Y <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span>X[:,<span class="dv">0</span>] <span class="op">-</span> <span class="dv">5</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">+</span> <span class="dv">10</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">*</span> lala<span class="op">+</span> e</span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7"></a>plt.plot(X[:,<span class="dv">1</span>], Y, <span class="st">'.'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>usan BART y calculan un PDP y un ICE, expliquen diferencia</p>
 <ul>
 <li>Space influenza con distintos valores de m [5, 20, 50, 100] tienen que usar LOO y un gráfico para comparar los resultados y explicar las diferencias.</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>space_in <span class="op">=</span> pd.read_csv(<span class="st">"datos/space_influenza.csv"</span>)</span>
-<span id="cb20-2"><a href="#cb20-2"></a>X <span class="op">=</span> np.atleast_2d(space_in[<span class="st">"age"</span>]).T</span>
-<span id="cb20-3"><a href="#cb20-3"></a>Y <span class="op">=</span> space_in[<span class="st">"sick"</span>]</span>
-<span id="cb20-4"><a href="#cb20-4"></a></span>
-<span id="cb20-5"><a href="#cb20-5"></a></span>
-<span id="cb20-6"><a href="#cb20-6"></a>Y_jittered <span class="op">=</span> np.random.normal(Y, <span class="fl">0.02</span>)</span>
-<span id="cb20-7"><a href="#cb20-7"></a>plt.plot(X[:,<span class="dv">0</span>], Y_jittered, <span class="st">"."</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>space_in <span class="op">=</span> pd.read_csv(<span class="st">"datos/space_influenza.csv"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>X <span class="op">=</span> np.atleast_2d(space_in[<span class="st">"age"</span>]).T</span>
+<span id="cb21-3"><a href="#cb21-3"></a>Y <span class="op">=</span> space_in[<span class="st">"sick"</span>]</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a></span>
+<span id="cb21-6"><a href="#cb21-6"></a>Y_jittered <span class="op">=</span> np.random.normal(Y, <span class="fl">0.02</span>)</span>
+<span id="cb21-7"><a href="#cb21-7"></a>plt.plot(X[:,<span class="dv">0</span>], Y_jittered, <span class="st">"."</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
 
 </main> <!-- /main -->
 <script type="application/vnd.jupyter.widget-state+json">
-{"state":{"3156d9ede02947d78ac4be28fb916cf4":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"383ff55546854ef1b7161468b8852081":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_e3196f831529458897fa8759e5107ca9","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:16</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:16\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"870f01ddac9e41c6b731dbf052070d6d":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_3156d9ede02947d78ac4be28fb916cf4","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:01:42</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:01:42\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"a2c21d788811464ab3c1d9b271909da5":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_fef5394ca2a64fd7aa61c6035d9efc5b","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:51</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:51\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"e3196f831529458897fa8759e5107ca9":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"fef5394ca2a64fd7aa61c6035d9efc5b":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}}},"version_major":2,"version_minor":0}
+{"state":{"01877bfd774a43aa889009b894464a34":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"0d5a03386f4648ba8206929e16a5a18f":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"6f047def39394a449810aa32b645eced":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_87ffa508174e4e07a95bf6f5da3bdcdf","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:02:45</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:02:45\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"87ffa508174e4e07a95bf6f5da3bdcdf":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{}},"b675f8fa475b439b968bf572e08093ef":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_01877bfd774a43aa889009b894464a34","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:00:23</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:00:23\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}},"e323a74121bb4481b9da3947a116450f":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"layout":"IPY_MODEL_0d5a03386f4648ba8206929e16a5a18f","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Sampling 4 chains, 0 divergences <span style=\"color: #008000; text-decoration-color: #008000\">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span> / <span style=\"color: #808000; text-decoration-color: #808000\">0:01:19</span>\n</pre>\n","text/plain":"Sampling 4 chains, 0 divergences \u001b[32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m / \u001b[33m0:01:19\u001b[0m\n"},"metadata":{},"output_type":"display_data"}]}}},"version_major":2,"version_minor":0}
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
