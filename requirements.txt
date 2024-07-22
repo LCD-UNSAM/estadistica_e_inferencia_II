@@ -9,5 +9,5 @@ ipython>=8.6
 jupyter>=1.0.0
 ipympl>=0.9.2
 nbclient<0.6,>=0.2
-python-graphviz==0.20.3
+graphviz
 ipywidgets
