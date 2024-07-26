@@ -655,9 +655,9 @@ p(\tilde{y}  \mid  y) = \int p(\tilde{y} \mid \theta) p(\theta \mid y) d\theta
 </section>
 <section id="distribución-predictiva-a-priori" class="level3" data-number="1.4.2">
 <h3 data-number="1.4.2" class="anchored" data-anchor-id="distribución-predictiva-a-priori"><span class="header-section-number">1.4.2</span> Distribución predictiva <em>a priori</em></h3>
-<p>Asi como es posible generar datos sintéticos desde el <em>a posteriori</em>. Es posible hacerlo desde el prior. En este caso la distribución se llama distribución predictiva <em>a priori</em>. Y representa los datos <span class="math inline">\(p(Y^\ast)\)</span> que el modelo <em>espera</em> ver antes de haber visto los datos. O más formalmente antes de haber sido condicionado a los datos. Se calcula como:</p>
+<p>Asi como es posible generar datos sintéticos desde el <em>a posteriori</em>. Es posible hacerlo desde el prior. En este caso la distribución se llama distribución predictiva <em>a priori</em>. Y representa los datos <span class="math inline">\(p(y^\ast)\)</span> que el modelo <em>espera</em> ver antes de haber visto los datos. O más formalmente antes de haber sido condicionado a los datos. Se calcula como:</p>
 <p><span class="math display">\[
-p(Y^\ast) =  \int_{\Theta} p(Y^\ast \mid \theta) \; p(\theta) \; d\theta
+p(y^\ast) =  \int p(y^\ast \mid \theta) \; p(\theta) \; d\theta
 \]</span></p>
 <p>Es importante notar que la definición es muy similar a la distribución predictiva a posteriori, solo que ahora integramos a lo largo del prior en vez del posterior.</p>
 <p>Los datos generados son predictivos ya que son los datos que el modelo esperara ver, es decir son datos no observados pero potencialmente observables. Como veremos en el siguiente capítulo un uso muy común para la distribución predictiva <em>a priori</em> es compararla con nuestro conocimiento previo y así evaluar si el modelo es capaz de generar resultados razonable, incluso antes de haber incorporado los datos.</p>
@@ -666,10 +666,10 @@ p(Y^\ast) =  \int_{\Theta} p(Y^\ast \mid \theta) \; p(\theta) \; d\theta
 <h3 data-number="1.4.3" class="anchored" data-anchor-id="distribución-predictiva-a-priori-y-a-posterior-para-el-problema-de-la-moneda."><span class="header-section-number">1.4.3</span> Distribución predictiva <em>a priori</em> y a posterior para el problema de la moneda.</h3>
 <p>En el caso del modelo beta-binomial es posible obtener analíticamente tanto la distribución predictiva a priori como a posteriori y estas son:</p>
 <p><span class="math display">\[
-p(Y^\ast) \propto \operatorname{Beta-binomial}(n=N, \alpha_{a priori}, \beta_{a priori})
+p(y^\ast) \propto \operatorname{Beta-binomial}(n=N, \alpha_{a priori}, \beta_{a priori})
 \]</span></p>
 <p><span class="math display">\[
-p(\tilde{Y}  \mid  Y)  \propto \operatorname{Beta-binomial}(n=N, \alpha_{a priori} + y, \beta_{a priori} + N - y)
+p(\tilde{y}  \mid  y)  \propto \operatorname{Beta-binomial}(n=N, \alpha_{a priori} + y, \beta_{a priori} + N - y)
 \]</span></p>
 <p>Omitiremos la discusión de como se obtienen estas distribuciones</p>
 </section>
