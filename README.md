@@ -43,14 +43,17 @@ Este enfoque es posible por dos razones:
 - 6 al 13: Inferencia Bayesiana y Programación probabilista.  
 - 16 y 20: Modelos Jerárquicos bayesianos.  
 - 23 al 30: Evaluación.  
+
 **Septiembre**:  
 - 3 al 13: Flujo de trabajo Bayesiano.  
 - 17 al 27: GLM.  
+
 **Octubre**  
 - 1 y 4: GLM.  
 - 8 y 11: Evaluación.  
 - 15 al 22: MM.  
 - 25 y 29: GP.  
+
 **Noviembre**:  
 - 1 y 5: GP.  
 - 8 y 12: BART.  
