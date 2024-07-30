@@ -27,6 +27,40 @@ Este enfoque es posible por dos razones:
 * La otra es técnica: Software moderno permite a los practicantes definir, resolver y analizar modelos de forma cada vez más sencilla.
 
 
+## Programa  
+1) Inferencia Bayesiana  
+2) Programación probabilista  
+3) Modelos jerárquicos Bayesianos  
+4) Flujo de trabajo Bayesiano  
+5) Modelos Líneales Generalizados (GLMs)  
+6) Modelos de Mezcla (MM)  
+7) Procesos Gaussianos (GP)  
+8) Árboles de Regresión Aditiva Bayesiana (BART)  
+
+
+## Cronograma (2024)  
+**Agosto**:  
+- 6 al 13: Inferencia Bayesiana y Programación probabilista.  
+- 16 y 20: Modelos Jerárquicos bayesianos.  
+- 23 al 30: Evaluación.  
+
+**Septiembre**:  
+- 3 al 13: Flujo de trabajo Bayesiano.  
+- 17 al 27: GLM.  
+
+**Octubre**  
+- 1 y 4: GLM.  
+- 8 y 11: Evaluación.  
+- 15 al 22: MM.  
+- 25 y 29: GP.  
+
+**Noviembre**:  
+- 1 y 5: GP.  
+- 8 y 12: BART.  
+- 15: Consultas.  
+- 19 y 22: Evaluación.  
+
+
 ## Cómo usar este material
 
 * Versión estática: Al hacer click en los archivos que se muestran arriba (los que terminan en ipynb) podrás leer una versión estática del material. Es decir podrás ver el texto y las figuras pero no podrás modificarlos, ni interactuar con el material.
@@ -46,6 +80,7 @@ Se recomienda crear un ambiente usando el archivo `env.yml` disponible en este r
 Una vez creado el ambiente se puede activar con el siguiente comando
 
 `conda activate EI2`
+
 
 ## Contribuciones
 Todo el contenido de este repositorio es abierto, esto quiere decir que cualquier persona interesada puede contribuir al mismo. Todas las contribuciones serán bien recibidas incluyendo:
