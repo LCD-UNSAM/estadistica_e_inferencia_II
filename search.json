@@ -20,6 +20,26 @@
     ]
   },
   {
+    "objectID": "index.html#programa",
+    "href": "index.html#programa",
+    "title": "Estadística a Inferencia II",
+    "section": "Programa",
+    "text": "Programa\n\nInferencia Bayesiana\n\nProgramación probabilista\n\nModelos jerárquicos Bayesianos\n\nFlujo de trabajo Bayesiano\n\nModelos Líneales Generalizados (GLMs)\n\nModelos de Mezcla (MM)\n\nProcesos Gaussianos (GP)\n\nÁrboles de Regresión Aditiva Bayesiana (BART)",
+    "crumbs": [
+      "‎"
+    ]
+  },
+  {
+    "objectID": "index.html#cronograma-2024",
+    "href": "index.html#cronograma-2024",
+    "title": "Estadística a Inferencia II",
+    "section": "Cronograma (2024)",
+    "text": "Cronograma (2024)\nAgosto:\n- 6 al 13: Inferencia Bayesiana y Programación probabilista.\n- 16 y 20: Modelos Jerárquicos bayesianos.\n- 23 al 30: Evaluación.\nSeptiembre:\n- 3 al 13: Flujo de trabajo Bayesiano.\n- 17 al 27: GLM.\nOctubre\n- 1 y 4: GLM.\n- 8 y 11: Evaluación.\n- 15 al 22: MM.\n- 25 y 29: GP.\nNoviembre:\n- 1 y 5: GP.\n- 8 y 12: BART.\n- 15: Consultas.\n- 19 y 22: Evaluación.",
+    "crumbs": [
+      "‎"
+    ]
+  },
+  {
     "objectID": "index.html#cómo-usar-este-material",
     "href": "index.html#cómo-usar-este-material",
     "title": "Estadística a Inferencia II",
