@@ -417,7 +417,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <li>La tercer linea indica que PyMC correrá cuatro cadenas en paralelo, es decir generará cuatro muestras independientes del <em>a posteriori</em>. Esta cantidad puede ser diferente en sus computadoras ya que es determinada automáticamente en función de los procesadores disponibles (que en mi caso, 4). <code>sample</code> tiene un argumento <code>chains</code> que permite modificar este comportamiento.</li>
 <li>La cuarta linea indica qué variable ha sido asignada a cual método de muestreo. En este caso la información es redundante, ya que tenemos una sola variable, pero esto no siempre es así. PyMC permite combinar métodos de muestreo, ya sea de forma automática basado en propiedades de las variables a muestrear o especificado por el usuario usando el argumento <code>step</code>.</li>
 <li>La quinta linea es una barra de progreso con varias métricas sobre la velocidad del muestreo, que en este caso (y para referencia futura) es muy alta. También indica la cantidad de cadenas usadas y la cantidad de divergencias. Tener 0 divergencias es ideal, más adelante discutiremos la razón.</li>
-<li>Por último tenemos un detalle de la cantidad de muestras generadas, aunque pedimos 1000 obtuvimos 8000, la razón es que es son 1000 por cadena (4 cadenas en mi caso), es decir 4000. Todavía nos queda explicar 4000 muestras <em>extras</em>, estas se corresponden a 1000 por cadena y son muestras que PyMC utiliza para <em>auto-tunear</em> el método de muestreo. Estás muestras son luego descartadas automáticamente ya que no son muestras representativas del posterior. La cantidad de pasos que se usan para <em>tunear</em> el algoritmo de muestro se puede cambiar con el argumento <code>tune</code> de la función <code>pm.sample(.)</code>.</li>
+<li>Por último tenemos un detalle de la cantidad de muestras generadas, aunque pedimos 1000 obtuvimos 8000, la razón es que es son 1000 por cadena (4 cadenas en mi caso), es decir 4000. Todavía nos queda explicar 4000 muestras <em>extras</em>, estas se corresponden a 1000 por cadena y son muestras que PyMC utiliza para <em>auto-tunear</em> el método de muestreo. Estás muestras son luego descartadas automáticamente ya que no son muestras representativas del posterior. La cantidad de pasos que se usan para <em>tunear</em> el algoritmo de muestreo se puede cambiar con el argumento <code>tune</code> de la función <code>pm.sample(.)</code>.</li>
 </ul>
 </section>
 <section id="resumiendo-el-a-posteriori" class="level3" data-number="2.1.4">
@@ -435,7 +435,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <p>El punto indica la media, la linea gruesa el rango intercuartil y las lineas finas el HDI 94%</p>
 <blockquote class="blockquote">
-<p>Es importante notar que la variable <code>y</code> es una variable observada, es decir conocida. Mientras que en gráfico anterior estamos dibujando solo <span class="math inline">\(\theta\)</span> que es la única variables desconocida, y por lo tanto muestreada.</p>
+<p>Es importante notar que la variable <code>y</code> es una variable observada, es decir conocida. Mientras que en el gráfico anterior estamos dibujando solo <span class="math inline">\(\theta\)</span> que es la única variables desconocida, y por lo tanto muestreada.</p>
 </blockquote>
 <p>Si quisiéramos un resumen numérico de los resultados podemos usar:</p>
 <div id="cell-19" class="cell" data-execution_count="8">
@@ -487,7 +487,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <h3 data-number="2.1.5" class="anchored" data-anchor-id="accidentes-mineros"><span class="header-section-number">2.1.5</span> Accidentes mineros</h3>
 <p>Este ejemplo está tomado del <a href="https://www.pymc.io/projects/docs/en/latest/learn/core_notebooks/pymc_overview.html#case-study-2-coal-mining-disasters">tutorial</a> de PyMC.</p>
 <p>El problema es el siguiente, tenemos un registro del número de accidentes en minas de carbón, ubicadas en el Reino Unido, que ocurrieron entre 1851 y 1962 (<a href="http://biomet.oxfordjournals.org/content/66/1/191.abstract">Jarrett, 1979</a>). Se sospecha que la aplicación de ciertas regulaciones de seguridad tuvo como efecto una disminución en la cantidad de catástrofes. Por lo tanto nos interesa averiguar el año en que la tasa cambió y nos interesa estimar ambas tasas.</p>
-<p>Los datos son los siguientes, por un lado tenemos la variable <em>accidentes</em> que contiene la cantidad de accidentes por año y por el otro la variable <em>años</em> conteniendo el rango de años para los cuales tenemos datos. Si prestan atención verán que <em>accidentes</em> es un arreglo enmascarado (o <em>masked array</em>). Esto es un tipo especial de arreglo de NumPy donde cada elemento del arreglo contiene asociado un valor <em>True</em> o <em>False</em> el cual indica si el elemento debe o no ser usado durante cualquier tipo de operación. En este caso como faltan datos para dos años lo que se ha hecho es marcar esa falta de datos con un valor centinela de -999, esta es la forma de indicarle a PyMC la presencia de datos faltantes, alternativamente se pueden pasar los datos como un <em>dataframe</em> de Pandas conteniendo el valor especial <code>NAN</code> (que es el valor por defecto en Pandas para lidiar con datos faltantes).</p>
+<p>Los datos son los siguientes, por un lado tenemos la variable <em>accidentes</em> que contiene la cantidad de accidentes por año y por el otro la variable <em>años</em> conteniendo el rango de años para los cuales tenemos datos. <code>accidentes</code> es una serie de Pandas que contiene el valor especial <code>NAN</code>, este es el valor por defecto en Pandas para lidiar con datos faltantes.</p>
 <p>Bien, pero para que molestarse con datos faltantes si en general es más fácil eliminarlos. una de las razones es que esto puede conducir a pérdida de información cuando por cada observación tenemos más de una variable o cantidad de interés. Por ejemplo si tenemos 50 sujetos a los que les hemos medido la presión, la temperatura y el ritmo cardíaco, pero sucede que para 4 de ellos no contamos con el datos de la presión (porque alguien se olvidó de medirlo o registrarlo, o porque el tensiómetro se rompió, o por lo que sea). Podemos eliminar esos cuatro sujetos del análisis y perder por lo tanto información sobre la presión y ritmo cardíaco, o podemos usar todos los datos disponibles y además estimar los valores de temperatura faltantes. En el contexto de la estadística Bayesiana los datos faltantes se tratan como un parámetro desconocido del modelo que puede ser estimado.</p>
 <div id="cell-23" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>accidentes <span class="op">=</span> pd.Series([<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">6</span>,</span>
@@ -529,6 +529,7 @@ pc \sim U(A_0, A_1)
 \end{align}\]</span></p>
 <p>Donde la distribución uniforme es discreta y <span class="math inline">\(A_0\)</span> y <span class="math inline">\(A_1\)</span> corresponden al primer y último año considerado en el análisis respectivamente.</p>
 <p>Gráficamente el modelo es:</p>
+<center>
 <p><img src="img/modelo_mineros.png" width="350"></p>
 <p>Una peculiaridad de la implementación de este modelo en PyMC es el uso de la función <code>pm.switch</code> (linea 10). Esta es en realidad una función de PyMC y equivale a un <em>if else</em> de Python. Si el primer argumento es <em>True</em> entonces devuelve el segundo argumento caso contrario el tercer argumento. Como resultado tenemos que <em>tasa</em> es un vector de longitud igual a la de <em>años</em> y cuyos elementos corresponden a una repetición <span class="math inline">\(t_0\)</span> seguida de una repetición <span class="math inline">\(t_1\)</span>, la cantidad exacta de repeticiones de <span class="math inline">\(t_0\)</span> y <span class="math inline">\(t_1\)</span> está controlada por la condición <span class="math inline">\(pc \ge\)</span> <em>años</em>. De esta forma, podemos al muestrear <span class="math inline">\(pc\)</span>, modificar que años reciben cual tasa para el cálculo del <em>likelihood</em>.</p>
 <div id="cell-26" class="cell" data-execution_count="12">
@@ -3013,20 +3014,15 @@ dl.xr-attrs {
 <span id="cb19-23"><a href="#cb19-23"></a>ax.plot(años, tasa_mean, <span class="st">"k"</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb19-24"><a href="#cb19-24"></a>ax.fill_between(años, tasa_hdi[:, <span class="dv">0</span>], tasa_hdi[:, <span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.3</span>, color<span class="op">=</span><span class="st">"k"</span>)</span>
 <span id="cb19-25"><a href="#cb19-25"></a></span>
-<span id="cb19-26"><a href="#cb19-26"></a><span class="co">#faltante0 = (</span></span>
-<span id="cb19-27"><a href="#cb19-27"></a><span class="co">#    idata_cat.posterior["acc_missing"].sel(acc_missing_dim_0=0).mean(("chain", "draw"))</span></span>
-<span id="cb19-28"><a href="#cb19-28"></a><span class="co">#)</span></span>
-<span id="cb19-29"><a href="#cb19-29"></a><span class="co">#faltante1 = (</span></span>
-<span id="cb19-30"><a href="#cb19-30"></a><span class="co">#    idata_cat.posterior["acc_missing"].sel(acc_missing_dim_0=1).mean(("chain", "draw"))</span></span>
-<span id="cb19-31"><a href="#cb19-31"></a><span class="co">#)</span></span>
-<span id="cb19-32"><a href="#cb19-32"></a>faltante0 <span class="op">=</span> (</span>
-<span id="cb19-33"><a href="#cb19-33"></a>    idata_cat.posterior[<span class="st">"acc_unobserved"</span>].sel(acc_unobserved_dim_0<span class="op">=</span><span class="dv">0</span>).mean((<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
-<span id="cb19-34"><a href="#cb19-34"></a>)</span>
-<span id="cb19-35"><a href="#cb19-35"></a>faltante1 <span class="op">=</span> (</span>
-<span id="cb19-36"><a href="#cb19-36"></a>    idata_cat.posterior[<span class="st">"acc_unobserved"</span>].sel(acc_unobserved_dim_0<span class="op">=</span><span class="dv">1</span>).mean((<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
-<span id="cb19-37"><a href="#cb19-37"></a>)</span>
-<span id="cb19-38"><a href="#cb19-38"></a></span>
-<span id="cb19-39"><a href="#cb19-39"></a>ax.plot(años[np.isnan(accidentes)], [faltante0, faltante1], <span class="st">"C2s"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-26"><a href="#cb19-26"></a></span>
+<span id="cb19-27"><a href="#cb19-27"></a>faltante0 <span class="op">=</span> (</span>
+<span id="cb19-28"><a href="#cb19-28"></a>    idata_cat.posterior[<span class="st">"acc_unobserved"</span>].sel(acc_unobserved_dim_0<span class="op">=</span><span class="dv">0</span>).mean((<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
+<span id="cb19-29"><a href="#cb19-29"></a>)</span>
+<span id="cb19-30"><a href="#cb19-30"></a>faltante1 <span class="op">=</span> (</span>
+<span id="cb19-31"><a href="#cb19-31"></a>    idata_cat.posterior[<span class="st">"acc_unobserved"</span>].sel(acc_unobserved_dim_0<span class="op">=</span><span class="dv">1</span>).mean((<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
+<span id="cb19-32"><a href="#cb19-32"></a>)</span>
+<span id="cb19-33"><a href="#cb19-33"></a></span>
+<span id="cb19-34"><a href="#cb19-34"></a>ax.plot(años[np.isnan(accidentes)], [faltante0, faltante1], <span class="st">"C2s"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -3035,7 +3031,7 @@ dl.xr-attrs {
 </div>
 </div>
 </div>
-</section>
+</center></section>
 </section>
 <section id="comparando-grupos" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="comparando-grupos"><span class="header-section-number">2.2</span> Comparando grupos</h2>
@@ -3274,7 +3270,7 @@ Sampling: [y]</code></pre>
 <p><span class="math display">\[
 \text{ps} = \Phi \left ( \frac{\delta}{\sqrt{2}} \right)
 \]</span></p>
-<p><span class="math inline">\(\Phi\)</span> es la <code>cdf</code> de una distribución normal <span class="math inline">\(\delta\)</span> es el valor del Cohen’s d.</p>
+<p><span class="math inline">\(\Phi\)</span> es la <code>cdf</code> de una distribución normal <span class="math inline">\(\delta\)</span> es el valor del d de Cohen.</p>
 <p>Con el siguiente código usamos <code>plot_posterior</code> para graficar todas las diferencias no triviales o redundantes. Es decir evitamos las diferencias de un día con sigo mismo y evitamos calcular ‘Vie - Jue’ si ya hemos calculado ‘Jue - Vie’. Si lo viéramos como una matriz de diferencias solo estaríamos calculando la porción triangular superior.</p>
 <div id="cell-46" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>cg_posterior <span class="op">=</span> az.extract(idata_cg)</span>
@@ -3314,8 +3310,7 @@ Sampling: [y]</code></pre>
 <h2 data-number="2.3" class="anchored" data-anchor-id="resumen"><span class="header-section-number">2.3</span> Resumen</h2>
 <p>Aunque la estadística Bayesiana es conceptualmente simple, los modelos probabilísticos a menudo conducen a expresiones analíticamente intratables. Durante muchos años, esta fue una gran barrera que obstaculizó la adopción amplia de métodos Bayesianos. Afortunadamente, la matemática, la física y la informática vinieron al rescate en forma de métodos numéricos capaces, al menos en principio, de resolver cualquier inferencia. La posibilidad de automatizar el proceso de inferencia ha llevado al desarrollo de los lenguajes de programación probabilista que permiten una clara separación entre la definición del modelo y la inferencia.</p>
 <p>PyMC es una librería de Python para programación probabilística con una sintaxis simple, intuitiva y fácil de leer que también está muy cerca de la sintaxis estadística utilizada para describir modelos probabilísticos. En este capítulo introducimos PyMC revisando el problema de la moneda que vimos en el capítulo anterior. La diferencia es que no tuvimos que derivar analíticamente la distribución <em>a posteriori</em>. Los modelos en PyMC se definen dentro de un bloque <code>with</code>; para agregar una distribución de probabilidad a un modelo, solo necesitamos escribir una línea de código. Las distribuciones se pueden combinar y se pueden usar como priors (variables no observadas) o likelihoods (variables observadas). En la sintaxis de PyMC la única diferencia entre ambas es que para esta última debemos pasar los datos usando el argumento <code>observed</code>. Si todo va bien las muestras generadas por PyMC serán representativas de la distribución <em>a posteriori</em> y por lo tanto serán una representación de las consecuencias lógicas del modelo y los datos.</p>
-<p>ArviZ es una librería que nos ayuda a explorar los modelos definidos por PyMC (u otras librerías como PyStan, TFP, BeanMachine, etc). Una forma de usar el posterior para ayudarnos a tomar decisiones es comparando la ROPE con el intervalo HDI. También mencionamos brevemente la noción de funciones de pérdida, una aproximación formal para cuantificar los costos y beneficios asociados a la toma de decisiones. Aprendimos que las funciones de pérdida y las estimaciones puntuales están íntimamente asociadas.</p>
-<p>Hasta este momento todos los ejemplos estuvieron basado en modelos con un solo parámetro. Sin embargo PyMC permite, en principiop, usar un número arbitrario de parámetros, esto lo ejemplificamos con un modelo Gaussiano y luego una generalización de este, el modelo t de Student. La distribución t de Student suele usarse como alternativa a la Gaussiana cuando queremos hacer inferencias robustas a valores aberrantes. Pronto veremos cómo se puede usar estos modelos como para construir regresiones lineales.</p>
+<p>ArviZ es una librería que nos ayuda a explorar los modelos definidos por PyMC (u otras librerías como PyStan, TFP, BeanMachine, etc). Una forma de usar el posterior para ayudarnos a tomar decisiones es comparando la ROPE con el intervalo HDI.</p>
 <p>Finalizamos comparando medias entre grupos, una tarea común en análisis de datos. Si bien esto a veces se enmarca en el contexto de las pruebas de hipótesis, tomamos otra ruta y trabajamos este problema como una inferencia del tamaño del efecto.</p>
 </section>
 <section id="ejercicios" class="level2" data-number="2.4">
