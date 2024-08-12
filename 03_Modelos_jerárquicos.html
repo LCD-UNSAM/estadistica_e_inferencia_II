@@ -265,8 +265,7 @@ window.Quarto = {
   <li><a href="#renacuajos-multinivel" id="toc-renacuajos-multinivel" class="nav-link" data-scroll-target="#renacuajos-multinivel"><span class="header-section-number">3.7</span> Renacuajos multinivel</a></li>
   <li><a href="#jerarquías-futboleras" id="toc-jerarquías-futboleras" class="nav-link" data-scroll-target="#jerarquías-futboleras"><span class="header-section-number">3.8</span> Jerarquías futboleras</a></li>
   <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">3.9</span> Resumen</a></li>
-  <li><a href="#para-seguir-leyendo" id="toc-para-seguir-leyendo" class="nav-link" data-scroll-target="#para-seguir-leyendo"><span class="header-section-number">3.10</span> Para seguir leyendo</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">3.11</span> Ejercicios</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">3.10</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -349,7 +348,7 @@ window.Quarto = {
 <li>La cuarta tiene valores experimentales.</li>
 </ul>
 <p>La motivación de este ejemplo es comparar las diferencias entre valores teóricos y experimentales, entre otras razones para evaluar la capacidad de los métodos teóricos para reproducir valores experimentales.</p>
-<div id="cell-8" class="cell" data-execution_count="4">
+<div id="cell-8" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>cs_data <span class="op">=</span> pd.read_csv(<span class="st">'datos/chemical_shifts_theo_exp.csv'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a>diff <span class="op">=</span> cs_data.theo <span class="op">-</span> cs_data.exp</span>
 <span id="cb3-3"><a href="#cb3-3"></a>cat_encode <span class="op">=</span> pd.Categorical(cs_data[<span class="st">'aa'</span>])</span>
@@ -357,7 +356,7 @@ window.Quarto = {
 <span id="cb3-5"><a href="#cb3-5"></a>coords <span class="op">=</span> {<span class="st">"aa"</span>: cat_encode.categories}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Para resaltar la diferencia entre un modelo jerárquico y uno no-jerárquico vamos a construir ambos. Primero el no-jerárquico. Este modelo es equivalente a haber ajustado cada uno de los <code>aa</code> grupos por separado.</p>
-<div id="cell-10" class="cell" data-execution_count="5">
+<div id="cell-10" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> cs_nh:         </span>
 <span id="cb4-2"><a href="#cb4-2"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">1</span>, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
 <span id="cb4-3"><a href="#cb4-3"></a>    σ <span class="op">=</span> pm.HalfNormal(<span class="st">'σ'</span>, sigma<span class="op">=</span><span class="dv">2</span>, dims<span class="op">=</span><span class="st">"aa"</span>) </span>
@@ -374,7 +373,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"47aa41658c9440299e96b3cc17089f67","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"07c275968004467281183ab8d022555d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -386,7 +385,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <p>Y ahora la novedad. El modelo jerárquico.</p>
 <p>Este modelo tiene un hiper-prior para la media de <span class="math inline">\(\mu\)</span> (<code>μ_mu</code>) y otro para la desviación estándar de <span class="math inline">\(\mu\)</span> (<code>μ_sd</code>). Para <span class="math inline">\(\sigma\)</span> no usamos un hiper-prior, asumimos un valor común del parámetro para todos los grupos. Esto es una decisión de modelado. En este caso la justificación es mantener el ejemplo simple, pero en principio no sería problemático usar un hiper-prior también para <span class="math inline">\(\sigma\)</span>.</p>
-<div id="cell-12" class="cell" data-execution_count="6">
+<div id="cell-12" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> cs_h:</span>
 <span id="cb6-2"><a href="#cb6-2"></a>    <span class="co"># hyper_priors</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>    μ_mu <span class="op">=</span> pm.Normal(<span class="st">'μ_mu'</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">2</span>)</span>
@@ -404,11 +403,11 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [μ_mu, μ_sd, μ, σ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 3 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 4 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"cfc352bb1359452d9f3261f9447d77c2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"9827e122e6f1433f85bee52c66939d95","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -423,7 +422,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p><img src="img/cs_nh_vs_h.png" width="700"></p>
 </div>
 <p>Ahora que tenemos más claras las diferencias a nivel del modelo, vamos a explorar las consecuencias de esas diferencias. Para ello vamos a comparar los resultados usando un forest plot. ArviZ nos ofrece la función <code>plot_forest</code> que permite pasar más de un modelo, esto es útil cuando queremos comparar los valores de parámetros equivalentes entre modelos como en el presente ejemplo. Por defecto, <code>plot_forest</code> grafica las cadenas de MCMC por separado, esto no es relevante en este caso por lo que vamos a combinarlas usando <code>combined=True</code>. Los invito a explorar, por su cuenta, el significado del resto de los argumentos que pasamos en la siguiente celda.</p>
-<div id="cell-15" class="cell" data-execution_count="7">
+<div id="cell-15" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>axes <span class="op">=</span> az.plot_forest([idata_cs_nh, idata_cs_h], model_names<span class="op">=</span>[<span class="st">'no_jerárquico'</span>, <span class="st">'jerárquico'</span>],</span>
 <span id="cb8-2"><a href="#cb8-2"></a>                      var_names<span class="op">=</span><span class="st">'μ'</span>, combined<span class="op">=</span><span class="va">True</span>, r_hat<span class="op">=</span><span class="va">False</span>, ess<span class="op">=</span><span class="va">False</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>),</span>
 <span id="cb8-3"><a href="#cb8-3"></a>                      colors<span class="op">=</span><span class="st">'cycle'</span>)</span>
@@ -463,10 +462,10 @@ Nota
 <p>Un ejemplo típico de variables intercambiables es el siguiente:</p>
 <p>Tenemos una bolsa con una bola blanca y una negra. La probabilidad de sacar cualquiera de ellas es de 0.5. Si <span class="math inline">\(Y_i = 1\)</span> indica que la iésima bola es blanca y muestreando sin reemplazo, tendremos que:</p>
 <p><span class="math display">\[P(X_1=1, X_2=0) = 0.5\]</span> <span class="math display">\[P(X_1=0, X_2=1) = 0.5\]</span></p>
-<p>Es decir la probabilidad de tomar primero la blanca y luego la negra es igual a tomar primero la blanca y luego la negra. Es decir <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> son intercambiables.</p>
+<p>Es decir la probabilidad de tomar primero la blanca y luego la negra es igual a tomar primero la blanca y luego la negra, por lo que <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> son intercambiables.</p>
 <p>Ahora bien también es cierto que:</p>
 <p><span class="math display">\[0 = P(X_2=1 \mid X_1=1) \not= P(X_2=1) = 0.5\]</span></p>
-<p>Es decir la probabilidad marginal de que la segunda bola sea blanca no es la misma que la probabilidad (condicional) de que la segunda sea blanca dado que ya obtuvimos una blanca. Es decir <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> no son independientes.</p>
+<p>Es decir la probabilidad marginal de que la segunda bola sea blanca no es la misma que la probabilidad (condicional) de que la segunda sea blanca dado que ya obtuvimos una blanca, por lo tanto <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> no son independientes.</p>
 <blockquote class="blockquote">
 <p>Toda secuencia iid es también intercambiable, pero una secuencia intercambiable no es necesariamente iid. La condición de intercambialidad es más general (o menos <em>estricta</em>) que la de independencia.</p>
 </blockquote>
@@ -557,11 +556,11 @@ X_{ij} &amp;\sim p(X \mid \theta_i) \\
 <li><p>Las condiciones como la temperatura, el pH, la luz, etc. varían ligeramente entre los tanques (pero no los estamos teniendo en cuenta explícitamente)</p></li>
 <li><p>Podemos pensar en cada tanque como un grupo</p></li>
 </ul>
-<div id="cell-21" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="8">
+<div id="cell-21" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>d <span class="op">=</span> pd.read_csv(<span class="st">'datos/renacuajos.csv'</span>, sep<span class="op">=</span><span class="st">","</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a>coords <span class="op">=</span> {<span class="st">"tanks"</span>: <span class="bu">list</span>(d.index)}</span>
 <span id="cb9-3"><a href="#cb9-3"></a>d.head()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 <div>
 
@@ -625,7 +624,7 @@ X_{ij} &amp;\sim p(X \mid \theta_i) \\
 </div>
 </div>
 </div>
-<div id="cell-22" class="cell" data-hide_input="false" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="9">
+<div id="cell-22" class="cell" data-hide_input="false" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_renacuajos:</span>
 <span id="cb10-2"><a href="#cb10-2"></a>    <span class="co"># Hiperpriors</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a>    μ <span class="op">=</span> pm.Normal(<span class="st">'μ'</span>, <span class="fl">0.</span>, <span class="fl">2.</span>)</span>
@@ -646,7 +645,7 @@ Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws 
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a4929dee9c3f4ff1bfb9d7ac27c82baa","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"2fa018bfdf774a7985a7751c9dade0fc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -656,9 +655,9 @@ Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
-<div id="cell-23" class="cell" data-execution_count="10">
+<div id="cell-23" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>pm.model_to_graphviz(modelo_renacuajos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <figure class="figure">
 <p><img src="03_Modelos_jerárquicos_files/figure-html/cell-10-output-1.svg" class="img-fluid figure-img"></p>
@@ -667,7 +666,7 @@ Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws 
 </div>
 </div>
 <p>En la siguiente figura se muestran las proporciones empíricas de sobrevivientes en cada tanque de renacuajos (puntos azules) y las proporciones estimadas por el modelo (puntos turquesa). La línea discontinua indica la proporción promedio de sobrevivientes teniendo en cuenta todos los tanques. Las lineas verticales dividen los tanques de acuerdo a las diferentes densidades iniciales de renacuajos: tanques pequeños (10), tanques medianos (25) y tanques grandes (35). En cada tanque, la media a posteriori del modelo multinivel está más cerca de la línea punteada que la proporción empírica. Esto refleja la información compartida entre tanques y el efecto de contracción.</p>
-<div id="cell-25" class="cell" data-hide_input="true" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="11">
+<div id="cell-25" class="cell" data-hide_input="true" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
 <span id="cb13-2"><a href="#cb13-2"></a></span>
 <span id="cb13-3"><a href="#cb13-3"></a>post_r <span class="op">=</span> az.extract(idata_renacuajos)</span>
@@ -704,15 +703,15 @@ Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws 
 <li><p>Investigación de mercado: supongamos que estamos interesados en comprender el comportamiento de compra de los consumidores de un producto en particular en diferentes regiones. Podemos categorizar a los consumidores según su información demográfica (por ejemplo, edad, sexo, ingresos, educación) y construir un modelo jerárquico para estimar la distribución del comportamiento de compra para cada subgrupo. Luego podemos usar los parámetros de la distribución del subgrupo para estimar la distribución del comportamiento de compra para el grupo general de consumidores.</p></li>
 </ul>
 <p>Volviendo a nuestros jugadores de fútbol, hemos recopilado datos de la <em>Premier League</em>, <em>Ligue 1</em>, <em>Bundesliga</em>, <em>Serie A</em> y <em>La Liga</em>, en el transcurso de cuatro años (2017 a 2020). Supongamos que estamos interesados en la métrica de goles por tiro. Esto es lo que los estadísticos suelen llamar <em>tasa de éxito</em>, y podemos estimarlo con un modelo Binomial donde el parámetro <span class="math inline">\(n\)</span> es el número de tiros y las observaciones <span class="math inline">\(y\)</span> es el número de goles. Esto nos deja con un valor desconocido para <span class="math inline">\(p\)</span>, en ejemplos anteriores hemos estado llamando a este parámetro <span class="math inline">\(\theta\)</span> y hemos usado una distribución Beta para modelarlo. Haremos lo mismo ahora, pero jerárquicamente. <span class="math inline">\(\theta\)</span> representa la “tasa de éxito” de cada jugador y, por lo tanto, es un vector de tamaño <code>n_jugadores</code>. Usamos una distribución Beta para modelar <span class="math inline">\(\theta\)</span>. Los hiperparámetros de la distribución Beta serán los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span>, que son vectores de tamaño 4, que representan las cuatro posiciones en nuestro conjunto de datos (defensor <code>DF</code>, mediocampista <code>MF</code>, delantero <code>FW</code> y arquero <code>GK</code>). Tendremos que indexar correctamente los vectores <span class="math inline">\(\mu_p\)</span> y <span class="math inline">\(\nu_p\)</span> para que coincidan con el número total de jugadores. Finalmente, tendremos dos parámetros globales, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\nu\)</span>, que representan a los futbolistas profesionales.</p>
-<p>El modelo PyMC se define en el siguiente bloque de código. El <code>pm.Beta('mu', 1.7, 5.8)</code> fue elegido con la ayuda de PreliZ como prior con el 90% de la masa entre 0 y 0.5. Este es un ejemplo de un prior poco informativo, ya que no hay duda de que una tasa de éxito de 0,5 es un valor alto. Las estadísticas deportivas están bien estudiadas y hay mucha información previa que podría usarse para definir priors más fuertes. Para este ejemplo, nos conformaremos con este prior. Una justificación similar se puede hacer para el prior <code>pm.Gamma('nu', mu=125, sigma=50)</code>, que definimos como la distribución Gamma de máxima entropía con el 90% de la masa entre 50 y 200.</p>
-<div id="cell-27" class="cell" data-execution_count="12">
+<p>El modelo PyMC se define en el siguiente bloque de código. El <code>pm.Beta('mu', 1.7, 5.8)</code> fue elegido con la ayuda de PreliZ como prior con el 90% de la masa entre 0 y 0,5. Este es un ejemplo de un prior poco informativo, ya que no hay duda de que una tasa de éxito de 0,5 es un valor alto. Las estadísticas deportivas están bien estudiadas y hay mucha información previa que podría usarse para definir priors más fuertes. Para este ejemplo, nos conformaremos con este prior. Una justificación similar se puede hacer para el prior <code>pm.Gamma('nu', mu=125, sigma=50)</code>, que definimos como la distribución Gamma de máxima entropía con el 90% de la masa entre 50 y 200.</p>
+<div id="cell-27" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>futbol <span class="op">=</span> pd.read_csv(<span class="st">"datos/futbol.csv"</span>, dtype<span class="op">=</span>{<span class="st">'posición'</span>:<span class="st">'category'</span>})</span>
 <span id="cb14-2"><a href="#cb14-2"></a>pos_idx <span class="op">=</span> futbol.posición.cat.codes.values</span>
 <span id="cb14-3"><a href="#cb14-3"></a>pos_codes <span class="op">=</span> futbol.posición.cat.categories</span>
 <span id="cb14-4"><a href="#cb14-4"></a>n_pos <span class="op">=</span> pos_codes.size</span>
 <span id="cb14-5"><a href="#cb14-5"></a>n_jugadores <span class="op">=</span> futbol.index.size</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-28" class="cell" data-execution_count="13">
+<div id="cell-28" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>coords <span class="op">=</span> {<span class="st">"pos"</span>: pos_codes}</span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> modelo_futbol:</span>
 <span id="cb15-3"><a href="#cb15-3"></a>    <span class="co"># Hiper-parámetros</span></span>
@@ -741,13 +740,13 @@ Sampling 4 chains for 2_000 tune and 2_000 draw iterations (8_000 + 8_000 draws 
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [μ, ν, μ_p, ν_p, θ]
-Sampling 4 chains for 1_000 tune and 4_000 draw iterations (4_000 + 16_000 draws total) took 258 seconds.
+Sampling 4 chains for 1_000 tune and 4_000 draw iterations (4_000 + 16_000 draws total) took 242 seconds.
 The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
 The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"fdeb184fbe8142c4a67f21cb483d7317","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"6f263371a2b6438fa184b16001eae313","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -757,9 +756,9 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
-<div id="cell-29" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>pm.model_to_graphviz(modelo_futbol)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div id="cell-29" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>modelo_futbol.to_graphviz()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 <figure class="figure">
 <p><img src="03_Modelos_jerárquicos_files/figure-html/cell-14-output-1.svg" class="img-fluid figure-img"></p>
@@ -768,14 +767,14 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 </div>
 <p>En el panel superior de la siguiente figura tenemos la distribución a posteriori del parámetro global <span class="math inline">\(\mu\)</span>. La distribución a posteriori es cercana a 0.1. Lo que significa que, en general, para un jugador de fútbol profesional, la probabilidad de hacer un gol es en promedio del 10%. Este es un valor razonable, ya que hacer goles no es una tarea fácil y no estamos discriminando posiciones, es decir, estamos considerando jugadores cuyo papel principal no es el de hacer goles. En el panel central, tenemos el valor estimado de <span class="math inline">\(mu_p\)</span> para la posición de defensa, como es de esperar, es más alto que el parámetro global <span class="math inline">\(\mu\)</span>. En el panel inferior, tenemos el valor estimado de <span class="math inline">\(\theta\)</span> para Lionel Messi, con un valor de 0.17, que es más alto que el parámetro global <span class="math inline">\(\mu\)</span> y el valor de la posición delantera <span class="math inline">\(\mu_p\)</span>. Esto también es de esperarse, ya que Lionel Messi es el mejor jugador de fútbol del mundo, y su rol principal es hacer goles.</p>
-<div id="cell-31" class="cell" data-execution_count="15">
+<div id="cell-31" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>_, ax <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb18-2"><a href="#cb18-2"></a>az.plot_posterior(idata_futbol, var_names<span class="op">=</span><span class="st">'μ'</span>, ax<span class="op">=</span>ax[<span class="dv">0</span>])</span>
-<span id="cb18-3"><a href="#cb18-3"></a>ax[<span class="dv">0</span>].set_title(<span class="vs">r"Global mean"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>ax[<span class="dv">0</span>].set_title(<span class="vs">r"Media global"</span>)</span>
 <span id="cb18-4"><a href="#cb18-4"></a>az.plot_posterior(idata_futbol.posterior.sel(pos<span class="op">=</span><span class="st">"FW"</span>), var_names<span class="op">=</span><span class="st">'μ_p'</span>, ax<span class="op">=</span>ax[<span class="dv">1</span>])</span>
-<span id="cb18-5"><a href="#cb18-5"></a>ax[<span class="dv">1</span>].set_title(<span class="vs">r"Forward position mean"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5"></a>ax[<span class="dv">1</span>].set_title(<span class="vs">r"Media delanteros"</span>)</span>
 <span id="cb18-6"><a href="#cb18-6"></a>az.plot_posterior(idata_futbol.posterior.sel(θ_dim_0<span class="op">=</span><span class="dv">1457</span>), var_names<span class="op">=</span><span class="st">'θ'</span>, ax<span class="op">=</span>ax[<span class="dv">2</span>])</span>
-<span id="cb18-7"><a href="#cb18-7"></a>ax[<span class="dv">2</span>].set_title(<span class="vs">r"Messi mean"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-7"><a href="#cb18-7"></a>ax[<span class="dv">2</span>].set_title(<span class="vs">r"Media Messi"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -785,7 +784,7 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 </div>
 <p>La siguiente figura muestra un <code>forest plot</code> para la distribución a posteriori del parámetro <span class="math inline">\(\mu_p\)</span>. La distribución a posteriori para delanteros se centra en torno a 0.13, como ya vimos, y es la más alta de las cuatro. Esto tiene sentido ya que el papel de los jugadores en una posición delantera es hacer goles y asistencias. El valor más bajo de <span class="math inline">\(\mu_p\)</span> es para la posición de arquero. Esto esperable, ya que la función principal es evitar que el equipo contrario haga goles. El aspecto interesante es que la incertidumbre es muy alta, esto se debe a que tenemos muy pocos arqueros haciendo goles en nuestro conjunto de datos, 3 para ser precisos. Las distribuciones a posteriori para las posiciones de defensa y mediocampo están en <em>el medio</em>, siendo ligeramente más altas para los mediocampistas. Podemos explicar esto porque el papel principal de un mediocampista es defender y atacar, y por lo tanto la probabilidad de marcar un gol es mayor que la de un defensor pero menor que la de un delantero.</p>
-<div id="cell-33" class="cell" data-execution_count="16">
+<div id="cell-33" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>az.plot_forest(idata_futbol, var_names<span class="op">=</span>[<span class="st">'μ_p'</span>], combined<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -801,23 +800,37 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 <p>En este capítulo hemos descrito uno de los conceptos más importantes de este curso: los modelos jerárquicos. Podemos construir modelos jerárquicos cada vez que podamos identificar subgrupos en nuestros datos. En tales casos, en lugar de tratar los subgrupos como entidades separadas o ignorar los subgrupos y tratarlos como un solo gran-grupo, podemos construir un modelo para agrupar-parcialmente la información entre los grupos.</p>
 <p>El principal efecto de este agrupamiento-parcial es que las estimaciones de cada subgrupo estarán sesgadas por las estimaciones del resto de los subgrupos. Este efecto se conoce como contracción y, en general, es un <em>truco</em> muy útil que ayuda a mejorar las inferencias haciéndolas más conservadoras (ya que cada subgrupo informa a los demás acercando el resto de las estimaciones hacia él) y más informativas, obtenemos estimaciones a nivel de subgrupo y el nivel del grupo.</p>
 </section>
-<section id="para-seguir-leyendo" class="level2" data-number="3.10">
-<h2 data-number="3.10" class="anchored" data-anchor-id="para-seguir-leyendo"><span class="header-section-number">3.10</span> Para seguir leyendo</h2>
-<ul>
-<li>Capítulo 5 de Bayesian Data Analysis de Gelman et al.&nbsp;<a href="https://www.stat.columbia.edu/~gelman/book/BDA3.pdf">BDA3</a></li>
-<li>Bernardo, J. M. (1996). The concept of exchangeability and its applications. Far East J. Mathematical Sciences 4, 111-121. <a href="http://www.uv.es/~bernardo/Exchangeability.pdf">Exchangeability</a></li>
-</ul>
-</section>
-<section id="ejercicios" class="level2" data-number="3.11">
-<h2 data-number="3.11" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">3.11</span> Ejercicios</h2>
+<section id="ejercicios" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">3.10</span> Ejercicios</h2>
 <ol type="1">
-<li><p>(Borrador). Escribir el teorema de bayes para un modelo jerárquico. La idea es que escriban, likelihood, prior e hyperprior.</p></li>
-<li><p>Descrí un ejemplo donde un modelo jerárquico sería más adecuado que un modelo simple. Explica cómo se estructuraría el modelo jerárquico, incluyendo los niveles de la jerarquía y las dependencias entre los parámetros.</p></li>
-<li><p>(Borrador) Tenés datos de ventas mensuales de diferentes sucursales de una cadena de supermercados. El objetivo es construir un modelo jerárquico para predecir las ventas futuras y entender la variabilidad entre tiendas. Realizá un esquema de como podría ser un modelo de ese tipo</p></li>
-<li><p>(Borrador). Escribir enunciado tuberías jerarquicas (ver ejemplo en repo privado).</p></li>
-<li><p>(Borrador, este ejericio asume que ya vimos el ejemplo de las propinas, si no es así podríamos introducir el ejemplo y pedir que ajusten el modelo jerarquico y no jerarquico). Creá una versión jerárquica para el ejemplo de las propinas agrupando parcialmente los días de la semana.</p></li>
-<li><p>(Borrador), Cuando se utilizan distribuciones a priori débilmente informativos, las predicciones medias a posteriori de un modelo normal-normal jerárquico son (aproximadamente) promedios pesado de la siguiente forma $ _{} + _j$. Donde <span class="math inline">\(\overline{y}_{\text{global}}\)</span> es la media de todas las observaciones, <span class="math inline">\(\overline{y}_j\)</span> es la media de las observaciones en el grupo <span class="math inline">\(j\)</span>, <span class="math inline">\(n_j\)</span> es el número de observaciones en el grupo <span class="math inline">\(j\)</span>, <span class="math inline">\(\sigma^2_y\)</span> es la varianza de las observaciones y <span class="math inline">\(\sigma^2_\mu\)</span> es la varianza de las medias de los grupos. Indique en que condiciones las prediccions a nivel individual se contraeran más hacia la predicción global.</p></li>
-<li><p>Aplicá al menos uno de los modelos visto en este capítulo a datos propios o de tu interés.</p></li>
+<li><p>Escribir el teorema de Bayes para un modelo jerárquico.</p></li>
+<li><p>Descrí un ejemplo donde un modelo jerárquico sería más adecuado que un modelo sin <em>partial pooling</em>. Explica cómo se estructuraría el modelo jerárquico, incluyendo los niveles de la jerarquía y las dependencias entre los parámetros.</p></li>
+<li><p>Tenés datos de ventas mensuales de diferentes sucursales de una cadena de supermercados. El objetivo es construir un modelo jerárquico para predecir las ventas futuras y entender la variabilidad entre tiendas. Realizá un esquema de como podría ser un modelo de ese tipo.</p></li>
+<li><p>Supongamos que queremos analizar la calidad del agua en una ciudad, entonces tomamos muestras dividiendo la ciudad en barrios.</p></li>
+</ol>
+<p>Para este ejemplo, vamos a utilizar datos sintéticos. Vamos a imaginar que hemos recolectado muestras de agua de tres regiones diferentes de la misma ciudad y hemos medido el contenido de plomo del agua; las muestras con concentraciones de plomo por encima de las recomendaciones de la Organización Mundial de la Salud (OMS) se marcan con 0 y las muestras con valores por debajo de las recomendaciones se marcan con 1. Este es un escenario muy simple, en un ejemplo más realista, posiblemente tendríamos una medición continua de la concentración de plomo y probablemente muchos más grupos.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>N <span class="op">=</span> [<span class="dv">30</span>, <span class="dv">30</span>, <span class="dv">30</span>]</span>
+<span id="cb20-2"><a href="#cb20-2"></a>G <span class="op">=</span> [<span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">18</span>]</span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a>group_idx <span class="op">=</span> np.repeat(np.arange(<span class="bu">len</span>(N)), N)</span>
+<span id="cb20-5"><a href="#cb20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6"></a>data <span class="op">=</span> []</span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(N)):</span>
+<span id="cb20-8"><a href="#cb20-8"></a>    data.extend(np.repeat([<span class="dv">1</span>, <span class="dv">0</span>], [G[i], N[i]<span class="op">-</span>G[i]]))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="a">
+<li><p>Usando notación estadística escribí un modelo jerárquico para este problema. Tip: Utiliza como prior una <span class="math inline">\(\text{Beta}(\mu, \nu)\)</span></p></li>
+<li><p>Usando PyMC implementá el modelo del apartado anterior</p></li>
+<li><p>Ejecutá el modelo de PyMC 3 veces, resumí los resultados y explicá las diferencias.</p>
+<ol type="i">
+<li>Una ejecución configurando todos los elementos de G a 18</li>
+<li>Una ejecución configurando todos los elementos de G a 3</li>
+<li>Una última ejecución configurando un elemento en 18 y los otros dos en 3</li>
+</ol></li>
+</ol>
+<ol start="5" type="1">
+<li><p>Creá una versión jerárquica para el ejemplo de las propinas, agrupando parcialmente los días de la semana.</p></li>
+<li><p>Cuando se utilizan distribuciones a priori débilmente informativas, las predicciones medias a posteriori de un modelo normal-normal jerárquico son (aproximadamente) promedios pesado de la siguiente forma $ _{} + _j$. Donde <span class="math inline">\(\overline{y}_{\text{global}}\)</span> es la media de todas las observaciones, <span class="math inline">\(\overline{y}_j\)</span> es la media de las observaciones en el grupo <span class="math inline">\(j\)</span>, <span class="math inline">\(n_j\)</span> es el número de observaciones en el grupo <span class="math inline">\(j\)</span>, <span class="math inline">\(\sigma^2_y\)</span> es la varianza de las observaciones y <span class="math inline">\(\sigma^2_\mu\)</span> es la varianza de las medias de los grupos. Indique en que condiciones las prediccions a nivel individual se contraeran más hacia la predicción global.</p></li>
+<li><p>(Extra) Aplicá al menos uno de los modelos visto en este capítulo a datos propios o de tu interés.</p></li>
 </ol>
 
 
