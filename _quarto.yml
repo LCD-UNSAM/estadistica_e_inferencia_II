@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "Estadística a Inferencia II"
+  title: "Estadística e Inferencia II"
   author:
     - name: Osvaldo A. Martin 
       url: https://aloctavodia.github.io/
