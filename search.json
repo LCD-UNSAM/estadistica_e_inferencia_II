@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Estadística a Inferencia II",
+    "title": "Estadística e Inferencia II",
     "section": "",
     "text": "‎\nLa estadística trata sobre la recolección, organización, análisis e interpretación de datos, es por ello que la estadística es esencial para el correcto análisis de datos.\nExisten dos grandes conjuntos de herramientas para analizar datos:\nAnálisis Exploratorio de Datos (EDA): Consiste en resúmenes numéricos como la media, moda, desviación estándar, rangos intercuartiles, etc (esto se conoce también como estadística descriptiva). Además hace énfasis en el uso de métodos visuales para inspeccionar los datos, como por ejemplo histogramas y gráficos de dispersión.\nEstadística Inferencial: Consiste en usar datos para generar enunciados que exceden los propios datos. A veces esto implica realizar predicciones, a veces entender los detalles de algún fenómeno en particular o elegir entre varias explicaciones plausibles.\nMuchos de los cursos y libros sobre estadística, principalmente aquellos dirigidos a no-estadísticos, enseñan una serie de recetas que más o menos tienen la siguiente forma.\nLa principal meta de estos cursos es la de enseñar a usar la lata adecuada y con suerte alguna que otra discusión sobre el emplatado. Esta aproximación pedagógica, dificulta entender conceptualmente la unidad de los diferentes métodos enseñados y tiene como resultado la reproducción de prácticas poco transparentes y/o útiles.\nEn este curso se intenta una aproximación totalmente diferente. También aprenderemos recetas, pero intentaremos que los platos tengan un sabor más casero y menos enlatado, aprenderemos a mezclar ingredientes frescos que se acomoden a diferentes situaciones gastronómicas.\nEste enfoque es posible por dos razones:",
     "crumbs": [
@@ -12,7 +12,7 @@
   {
     "objectID": "index.html#a-quienes-está-dirijido",
     "href": "index.html#a-quienes-está-dirijido",
-    "title": "Estadística a Inferencia II",
+    "title": "Estadística e Inferencia II",
     "section": "A quienes está dirijido?",
     "text": "A quienes está dirijido?\nEste es un curso introductorio para personas sin conocimiento previo de estadística o ciencia de datos. Se asume familiaridad con Python y librerías de Python usadas en análisis de datos como Numpy, matplotlib, Pandas, etc.\nQuienes no sepan Python, pero tengan familiaridad con otros lenguajes de programación también podrán aprovechar el curso, aunque puede que experimente un poco más de fricción.\nPor último quienes no tengan interés en aprender a usar código para analisis de datos pueden aún aprovechar parte del material para obtener una visión a vuelo de pájaro de los métodos Bayesianos.",
     "crumbs": [
@@ -22,7 +22,7 @@
   {
     "objectID": "index.html#programa",
     "href": "index.html#programa",
-    "title": "Estadística a Inferencia II",
+    "title": "Estadística e Inferencia II",
     "section": "Programa",
     "text": "Programa\n\nInferencia Bayesiana\n\nProgramación probabilista\n\nModelos jerárquicos Bayesianos\n\nFlujo de trabajo Bayesiano\n\nModelos Líneales Generalizados (GLMs)\n\nModelos de Mezcla (MM)\n\nProcesos Gaussianos (GP)\n\nÁrboles de Regresión Aditiva Bayesiana (BART)",
     "crumbs": [
@@ -32,7 +32,7 @@
   {
     "objectID": "index.html#cronograma-2024",
     "href": "index.html#cronograma-2024",
-    "title": "Estadística a Inferencia II",
+    "title": "Estadística e Inferencia II",
     "section": "Cronograma (2024)",
     "text": "Cronograma (2024)\nAgosto:\n- 6 al 13: Inferencia Bayesiana y Programación probabilista.\n- 16 y 20: Modelos Jerárquicos bayesianos.\n- 23 al 30: Evaluación.\nSeptiembre:\n- 3 al 13: Flujo de trabajo Bayesiano.\n- 17 al 27: GLM.\nOctubre\n- 1 y 4: GLM.\n- 8 y 11: Evaluación.\n- 15 al 22: MM.\n- 25 y 29: GP.\nNoviembre:\n- 1 y 5: GP.\n- 8 y 12: BART.\n- 15: Consultas.\n- 19 y 22: Evaluación.",
     "crumbs": [
@@ -42,7 +42,7 @@
   {
     "objectID": "index.html#cómo-usar-este-material",
     "href": "index.html#cómo-usar-este-material",
-    "title": "Estadística a Inferencia II",
+    "title": "Estadística e Inferencia II",
     "section": "Cómo usar este material",
     "text": "Cómo usar este material\n\nVersión estática: Esta página contiene una versión estática del material. Es decir podrás ver el texto y las figuras pero no podrás modificarlos, ni interactuar con el material.\nVersión interactiva online: . Esta versión permite interactuar con el material, modificarlo y ejecutarlo en tu navegador.\nVersión interactiva local: También es posible descargar el material y ejecutarlo en tu propia computadora. Para ello hacé click y seguí las instrucciones de la próxima sección (Instalación).",
     "crumbs": [
@@ -52,7 +52,7 @@
   {
     "objectID": "index.html#instalación",
     "href": "index.html#instalación",
-    "title": "Estadística a Inferencia II",
+    "title": "Estadística e Inferencia II",
     "section": "Instalación",
     "text": "Instalación\nPara usar este material es necesario tener instalado Python. Se recomienda la versión 3.9 o superior. Además es necesario instalar los siguientes paquetes:\n\nPyMC 5.8.2\nArviZ 0.16.1\nPreliZ 0.3.3\ngraphviz (una dependencia opcional de PyMC)\n\nSe recomienda instalar primero Anaconda. Luego instalar el resto de los paquetes con los comandos:\nconda install pip\npip install pymc==5.8.3 arviz==0.16.1 preliz==0.3.3 graphviz\nComo alternativa pueden crear un ambiente con los paquetes necesario descargando el archivo y ejecutando el comando\nconda env create -f environment.yml",
     "crumbs": [
@@ -62,7 +62,7 @@
   {
     "objectID": "index.html#contribuciones",
     "href": "index.html#contribuciones",
-    "title": "Estadística a Inferencia II",
+    "title": "Estadística e Inferencia II",
     "section": "Contribuciones",
     "text": "Contribuciones\nTodo el contenido de este repositorio es abierto, esto quiere decir que cualquier persona interesada puede contribuir al mismo. Todas las contribuciones serán bien recibidas incluyendo:\n\nCorrecciones ortográficas\nNuevas figuras\nCorrecciones en el código Python, incluidas mejoras de estilo\nMejores ejemplos\nMejores explicaciones\nCorrecciones de errores conceptuales\n\nLa forma de contribuir es vía Github, es decir los cambios deberán ser hechos en forma de pull requests y los problemas/bugs deberán reportarse como Issues.",
     "crumbs": [
