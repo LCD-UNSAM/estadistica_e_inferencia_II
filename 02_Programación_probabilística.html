@@ -3285,10 +3285,10 @@ Sampling: [y]</code></pre>
 <section id="ejercicios" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">2.4</span> Ejercicios</h2>
 <ol type="1">
-<li><p>Usando PyMC reproducí los resultados del primer capítulo para el problema de la moneda. Usar los 3 priors usados en ese capítulo Beta(1, 1), Beta(0.5, 0.5), Beta(20, 20).</p></li>
-<li><p>Reemplazá la distribución Beta por una uniforme en el intervalo [0, 1] ¿Cómo cambia la velocidad del muestreo? ¿Y si usas un intervalo más ámplio, como [-3, 3]?</p></li>
+<li><p>Usando PyMC reproducí los resultados del primer capítulo para el problema de la moneda. Usá los 3 priors usados en ese capítulo Beta(1, 1), Beta(0.5, 0.5), Beta(20, 20). Probá con 4 experimentos y con 150. Presenta los resultados usando 2 visualizaciones.</p></li>
+<li><p>En <code>nuestro_primer_modelo</code> reemplazá la distribución <span class="math inline">\(\theta \sim \text{Beta}(1, 1)\)</span> por una uniforme en el intervalo [0, 1] Cual es el efecto en el muestreo y en la distribución <em>a posteriori</em>? ¿Y si usas un intervalo más ámplio, como [-2, 1]?</p></li>
 <li><p>Los modelos de PyMC tienen un método <code>.to_graphviz()</code> que se puede utilizar para visualizar el modelo (también existe la función <code>pm.model_to_graphviz()</code>. Use este método para visualizar <code>nuestro_primer_modelo</code>. Compare el resultado con el diagrama de Kruschke.</p></li>
-<li><p>En el modelo <code>comparación_grupos</code> que dimensión y tamaño tiene <code>μ[idx]</code> y <code>σ[idx]</code>? Justifique.</p></li>
+<li><p>En el modelo <code>comparación_grupos</code> que dimensión y tamaño tiene <code>μ[idx]</code> y <code>σ[idx]</code>? Justifique</p></li>
 <li><p>La Gaussiana es una distribución <em>sin límites</em> es decir es válida en el intervalo <span class="math inline">\((-\infty, \infty)\)</span>, en el modelo <code>comparación_grupos</code> usamos una Gama como likelihood, pero podríamos haber usado una Gaussiana? Cambiarías tu respuesta si las propinas tomaran valores alrededor de 100 dolares?</p></li>
 <li><p>Calculá la probabilidad de superioridad directamente a partir de las muestras de la distribución <em>a posteriori</em>, es decir sin la expresión analítica. Cómo se comparan los resultados con los valores obtenidos analíticamente.</p></li>
 <li><p>Aplicá al menos uno de los modelos vistos en este capítulo a datos propios o de tu interés.</p></li>
