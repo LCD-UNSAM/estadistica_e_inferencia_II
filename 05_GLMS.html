@@ -2818,7 +2818,7 @@ Sampling: [y_pred]</code></pre>
 </section>
 <section id="regresión-robusta" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="regresión-robusta"><span class="header-section-number">5.5</span> Regresión robusta</h2>
-<p>Una vez estaba ejecutando una simulación compleja de un sistema molecular. En cada paso de la simulación, necesitabamos calcular una regresión lineal como paso intermedio. Teníamos razones teóricas y empíricas para pensar que nuestra “Y” era condicionalmente normal dada nuestra “X”, por lo que la regresión lineal simple debía funcionar. Pero de vez en cuando la simulación generaba algunos valores de “Y” muy por encima o por debajo de la del grueso de los datos, esto arruinaba completamente nuestra simulación y tenáimos que reiniciarla. Estos valores muy diferentes al grueso de los datos se denominan valores atípicos o aberrantes. El motivo del fracaso de nuestras simulaciones era que los valores atípicos estaban <em>tirando</em> de la línea de regresión hacia valores que daban un muy mal ajuste para el grueso de los datos y cuando pasabamos de esta estimación al siguiente paso de la simulación, todo se detenía. Resolvimos esto con la ayuda de nuestra buena amiga, la distribución T de Student, que como vimos anteriormente, tiene colas más pesadas que la distribución Normal. Esto significa que los valores atípicos tienen menos <em>influencia</em> en el resultado final, que se asemeja más al resultado que hubieramos obtenido en ausencia de los valores <em>atípicos</em>. Esto es un ejemplo de una regresión robusta.</p>
+<p>Una vez estaba ejecutando una simulación compleja de un sistema molecular. En cada paso de la simulación, necesitabamos calcular una regresión lineal como paso intermedio. Teníamos razones teóricas y empíricas para pensar que nuestra “Y” era condicionalmente normal dada nuestra “X”, por lo que la regresión lineal simple debía funcionar. Pero de vez en cuando la simulación generaba algunos valores de “Y” muy por encima o por debajo de la del grueso de los datos, esto arruinaba completamente nuestra simulación y teníamos que reiniciarla. Estos valores muy diferentes al grueso de los datos se denominan valores atípicos o aberrantes. El motivo del fracaso de nuestras simulaciones era que los valores atípicos estaban <em>tirando</em> de la línea de regresión hacia valores que daban un muy mal ajuste para el grueso de los datos y cuando pasabamos de esta estimación al siguiente paso de la simulación, todo se detenía. Resolvimos esto con la ayuda de nuestra buena amiga, la distribución T de Student, que como vimos anteriormente, tiene colas más pesadas que la distribución Normal. Esto significa que los valores atípicos tienen menos <em>influencia</em> en el resultado final, que se asemeja más al resultado que hubieramos obtenido en ausencia de los valores <em>atípicos</em>. Esto es un ejemplo de una regresión robusta.</p>
 <p>Para ejemplificar la robustez que la distribución T de Student aporta a la regresión lineal, vamos a utilizar un conjunto de datos muy simple. Una versión ligeramente modificada del tercer grupo de datos del <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">cuarteto de Anscombe</a>.</p>
 <p>En el siguiente modelo, estamos usando una exponencial desplazada (le sumamos 1) para evitar valores cercanos a cero. La distribución exponencial (no desplazada) pone demasiado peso en los valores cercanos a cero. En mi experiencia, esto está bien para datos con valores atípicos “moderados”, pero en algunos conjuntos de datos pequeños como este, es mejor evitar valores tan bajos. Esta recomendación, como otras, hay que tomarlas con una pizca de sal. Los valores por defecto son buenos puntos de partida, pero no es necesario ceñirse a ellos. Otro priors comunes para Gamma(2, 0.1) o Gamma(mu = 20, sd = 15).</p>
 <div id="486578c7" class="cell" data-execution_count="15">
@@ -2940,7 +2940,7 @@ There were 1 divergences after tuning. Increase `target_accept` or reparameteriz
 Y &amp;\sim \text{Bern}(\theta)
 \end{aligned}
 \]</span></p>
-<p>Esto modelo se puede explicar de la siguiente forma. Si nuestros datos son binarios <span class="math inline">\(y \in \{0, 1\}\)</span>, como con el ejemplo de la moneda, vemos que tiene sentido usar una distribución Bernoulli. Esta distribución está parametrizada por un único parámetro en el intervalo [0, 1], el cual puede ser generado desde un modelo lineal siempre y cuando los valores generados por el modelo lineal sean <em>comprimidos</em> al intervalo [0, 1], algo que puede ser obtenido al emplear una función logística.</p>
+<p>Este modelo se puede explicar de la siguiente forma. Si nuestros datos son binarios <span class="math inline">\(y \in \{0, 1\}\)</span>, como con el ejemplo de la moneda, vemos que tiene sentido usar una distribución Bernoulli. Esta distribución está parametrizada por un único parámetro en el intervalo [0, 1], el cual puede ser generado desde un modelo lineal siempre y cuando los valores generados por el modelo lineal sean <em>comprimidos</em> al intervalo [0, 1], algo que puede ser obtenido al emplear una función logística.</p>
 </section>
 <section id="el-modelo-logístico-aplicado-al-conjunto-de-datos-del-iris." class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="el-modelo-logístico-aplicado-al-conjunto-de-datos-del-iris."><span class="header-section-number">5.7</span> El modelo logístico aplicado al conjunto de datos del iris.</h2>
@@ -3169,7 +3169,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </section>
 <section id="interpretación-de-los-coeficientes-de-una-regresión-logística" class="level2" data-number="5.9">
 <h2 data-number="5.9" class="anchored" data-anchor-id="interpretación-de-los-coeficientes-de-una-regresión-logística"><span class="header-section-number">5.9</span> Interpretación de los coeficientes de una regresión logística</h2>
-<p>Debemos tener cuidado al interpretar los coeficientes <span class="math inline">\(\beta\)</span> de una regresión logística. La interpretación no es tan sencilla como con los modelos lineales en el capítulo anterior. La función logística introduce una no linearidad, que debemos tener en cuenta. Si <span class="math inline">\(\beta\)</span> es positivo, aumentar <span class="math inline">\(x\)</span> aumentará <span class="math inline">\(p(y = 1)\)</span> en cierta cantidad, pero la cantidad no es una función lineal de <span class="math inline">\(x\)</span>, es en cambio una función no-lineal de <span class="math inline">\(x\)</span>. Podemos visualizar este hecho en la figura 4.4, en lugar de una línea con una pendiente constante, tenemos una línea en forma de S con una pendiente que cambia en función de <span class="math inline">\(x\)</span>. Un poco de álgebra nos puede dar una idea de cuánto cambia <span class="math inline">\(p(y=1)\)</span> con <span class="math inline">\(\beta\)</span>:</p>
+<p>Debemos tener cuidado al interpretar los coeficientes <span class="math inline">\(\beta\)</span> de una regresión logística. La interpretación no es tan sencilla como con los modelos lineales en el capítulo anterior. La función logística introduce una no linearidad, que debemos tener en cuenta. Si <span class="math inline">\(\beta\)</span> es positivo, aumentar <span class="math inline">\(x\)</span> aumentará <span class="math inline">\(p(y = 1)\)</span> en cierta cantidad, pero la cantidad no es una función lineal de <span class="math inline">\(x\)</span>, es en cambio una función no-lineal de <span class="math inline">\(x\)</span>. Podemos visualizar este hecho en la figura anterior, en lugar de una línea con una pendiente constante, tenemos una línea en forma de S con una pendiente que cambia en función de <span class="math inline">\(x\)</span>. Un poco de álgebra nos puede dar una idea de cuánto cambia <span class="math inline">\(p(y=1)\)</span> con <span class="math inline">\(\beta\)</span>:</p>
 <p>El modelo logístico básico es:</p>
 <p><span class="math display">\[\theta = logistic (\alpha + X \beta) \]</span></p>
 <p>El inverso de la logística es la función logit, que es:</p>
@@ -3184,7 +3184,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <blockquote class="blockquote">
 <p>En una regresión logística, el coeficiente <span class="math inline">\(\beta\)</span> codifica el aumento en unidades de log-odds por unidad de aumento de la variable <span class="math inline">\(x\)</span>.</p>
 </blockquote>
-<p>La transformación de probabilidad a odds es una transformación monotónica, lo que significa que las probabilidades aumentan a medida que aumenta la probabilidad. Mientras que las probabilidades están restringidas al intervalo <span class="math inline">\([0, 1]\)</span>, los odds viven en el intervalo <span class="math inline">\([0, \infty]\)</span>. El logaritmo es otra transformación monótonica y los log-odds están en el intervalo <span class="math inline">\([-\infty, \infty]\)</span>. La siguiente figura muestra cómo la probabilidad está relacionada con los odds y los log-odds.</p>
+<p>La transformación de probabilidad a odds es una transformación monotónica, lo que significa que los odds aumentan a medida que aumenta la probabilidad. Mientras que las probabilidades están restringidas al intervalo <span class="math inline">\([0, 1]\)</span>, los odds viven en el intervalo <span class="math inline">\([0, \infty]\)</span>. El logaritmo es otra transformación monótonica y los log-odds están en el intervalo <span class="math inline">\([-\infty, \infty]\)</span>. La siguiente figura muestra cómo la probabilidad está relacionada con los odds y los log-odds.</p>
 <div id="3b3938c8" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>probability <span class="op">=</span> np.linspace(<span class="fl">0.01</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
 <span id="cb32-2"><a href="#cb32-2"></a>odds <span class="op">=</span> probability <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> probability)</span>
@@ -3209,7 +3209,6 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 </div>
-<p>Entonces averigüemos cuantas veces más probable es que una flor sea versicolor por unidad del largo del sépalo</p>
 </section>
 <section id="varianza-variable" class="level2" data-number="5.10">
 <h2 data-number="5.10" class="anchored" data-anchor-id="varianza-variable"><span class="header-section-number">5.10</span> Varianza variable</h2>
@@ -3240,13 +3239,12 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <span id="cb35-5"><a href="#cb35-5"></a>    γ <span class="op">=</span> pm.HalfNormal(<span class="st">'γ'</span>, sigma<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb35-6"><a href="#cb35-6"></a>    δ <span class="op">=</span> pm.HalfNormal(<span class="st">'δ'</span>, sigma<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb35-7"><a href="#cb35-7"></a></span>
-<span id="cb35-8"><a href="#cb35-8"></a></span>
-<span id="cb35-9"><a href="#cb35-9"></a>    μ <span class="op">=</span> pm.Deterministic(<span class="st">'μ'</span>, α <span class="op">+</span> β <span class="op">*</span> x_shared<span class="op">**</span><span class="fl">0.5</span>)</span>
-<span id="cb35-10"><a href="#cb35-10"></a>    σ <span class="op">=</span> pm.Deterministic(<span class="st">'σ'</span>, γ <span class="op">+</span> δ <span class="op">*</span> x_shared)</span>
-<span id="cb35-11"><a href="#cb35-11"></a>    </span>
-<span id="cb35-12"><a href="#cb35-12"></a>    y_pred <span class="op">=</span> pm.Normal(<span class="st">'y_pred'</span>, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>data.Longitud)</span>
-<span id="cb35-13"><a href="#cb35-13"></a>    </span>
-<span id="cb35-14"><a href="#cb35-14"></a>    idata_vv <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-8"><a href="#cb35-8"></a>    μ <span class="op">=</span> pm.Deterministic(<span class="st">'μ'</span>, α <span class="op">+</span> β <span class="op">*</span> x_shared<span class="op">**</span><span class="fl">0.5</span>)</span>
+<span id="cb35-9"><a href="#cb35-9"></a>    σ <span class="op">=</span> pm.Deterministic(<span class="st">'σ'</span>, γ <span class="op">+</span> δ <span class="op">*</span> x_shared)</span>
+<span id="cb35-10"><a href="#cb35-10"></a>    </span>
+<span id="cb35-11"><a href="#cb35-11"></a>    y_pred <span class="op">=</span> pm.Normal(<span class="st">'y_pred'</span>, mu<span class="op">=</span>μ, sigma<span class="op">=</span>σ, observed<span class="op">=</span>data.Longitud)</span>
+<span id="cb35-12"><a href="#cb35-12"></a>    </span>
+<span id="cb35-13"><a href="#cb35-13"></a>    idata_vv <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -3356,7 +3354,6 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <p>Quiere decir esto que al hacer una regresión por cuantiles estamos asumiendo que la variable respuesta se distribuye (condicionalmente) como una Asimétrica de Laplace? No necesariamente.</p>
 <p>Una forma alternativa de pensar el likelihood, es como una función de error (o de diferencia) entre el ajuste lineal y los datos. Al elegir una distribución determinada estamos, indirectamente, eligiendo como penalizaremos esa diferencia y al hacer inferencia estámos encontrando la distribución de parámetros que reducen esa diferencia. Usando esta lógica podemos pensar que una gaussiana le asigna un determinado peso a valores alejados de la media y una t de Student le asigna un menor peso, y por ende terminamos teniendo un ajuste más robusto. De la misma forma una asimétrica de Laplace le asigna una determinado peso a estas diferencias de forma tal que el resultado final es ajustar cuantiles en vez de medias. Si esto les suena extraño es por que están prestando atención.</p>
-<hr>
 <p>Para ejemplificar la regresión por cuantiles vamos a usar el dataset de las longitudes de bebés que usamos anteriormente. Vamos a ajustar 3 cuantiles al mismo tiempo, 0.05, 0.5, 0.95. Esto nos va a permitir ver como cambia la relación entre las variables a medida que nos movemos de los cuantiles bajos a los altos. Para esto vamos a “apilar” el dataset 3 veces, una para cada cuantil.</p>
 <div id="7c994c35" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a>y_con <span class="op">=</span> np.stack([data.Longitud.values]<span class="op">*</span> <span class="dv">3</span>).T</span>
@@ -3548,7 +3545,7 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 <p>La primer sugerencias es aumentar <code>target_accept</code>, que es un argumento de <code>pm.sample()</code> que por defecto toma el valor 0.8 y puede tomar valores en el intervalo (0, 1). Si ves divergencias, como en este caso, cambiar el valor por defecto a valores tales como 0.85, 0.9 o incluso más puede ayudar. En algunos casos incluso valores altos como 0.99 no serán de ayuda. Un efecto adverso de aumentar <code>target_accept</code> es que el sampler suele demorar más en generar una misma cantidad de muestras.</p>
 <p>Si las divergencias no desaparecen al cambiar <code>target_accept</code>, en general la única solución es reparametrizar. ¿Qué es esto? Reparametrizar es escribir un modelo de una manera diferente, pero matemáticamente equivalente a su versión original. Muchos modelos (por no decir todos) se pueden escribir de formas alternativas. A veces, la reparametrización puede tener un efecto positivo en la eficiencia del método de muestreo o en la interpretabilidad del modelo. Por ejemplo, al reparametrizar podemos eliminar las divergencias.</p>
 <p>Si prueban volver a correr <code>modelo_jerárquico</code> pero con valores más altos de <code>target_accept</code> verán que las divergecias disminuyen pero no desaparecen. Lamentablemente esto es algo común con modelos lineales jerárquicos, lo bueno es que existe una reparametrización que suele solucionar el problema. La reparametrización consiste en reescribir el modelo de la siguiente forma:</p>
-<p>En vez definir <span class="math inline">\(\beta \mathcal{N}(\beta_\mu, \beta_\sigma)\)</span> como en <code>modelo_jerárquico</code> vamos a escribir <span class="math inline">\(\beta = \beta_\mu + \beta_\text{offset} * \beta_\sigma\)</span>. Donde <span class="math inline">\(\beta_\text{offset}\)</span> es una distribución normal con media 0 y desviación estándar 1. Conceptualmente la diferencia es que en el primer caso estamos modelando la pendiente de cada grupo de forma explícita, mientras que en el segundo caso lo estamos haciendo como una desviación respecto de un valor común (<span class="math inline">\(\beta_\mu\)</span>). A la primer versión se la suele llamar centrada y a la segunda no-centrada. Veamos como queda el modelo no-centrado en PyMC:</p>
+<p>En vez definir <span class="math inline">\(\beta \sim \mathcal{N}(\beta_\mu, \beta_\sigma)\)</span> como en <code>modelo_jerárquico</code> vamos a escribir <span class="math inline">\(\beta = \beta_\mu + \beta_\text{offset} * \beta_\sigma\)</span>. Donde <span class="math inline">\(\beta_\text{offset}\)</span> es una distribución normal con media 0 y desviación estándar 1. Conceptualmente la diferencia es que en el primer caso estamos modelando la pendiente de cada grupo de forma explícita, mientras que en el segundo caso lo estamos haciendo como una desviación respecto de un valor común (<span class="math inline">\(\beta_\mu\)</span>). A la primer versión se la suele llamar centrada y a la segunda no-centrada. Veamos como queda el modelo no-centrado en PyMC:</p>
 <div id="eb586cb9" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1"></a><span class="cf">with</span> pm.Model(coords<span class="op">=</span>coords) <span class="im">as</span> jerárquico_no_centrado:</span>
 <span id="cb52-2"><a href="#cb52-2"></a>    <span class="co"># hyper-priors</span></span>
@@ -3594,9 +3591,9 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <span id="cb54-2"><a href="#cb54-2"></a></span>
 <span id="cb54-3"><a href="#cb54-3"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="st">"row"</span>, sharex<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
 <span id="cb54-4"><a href="#cb54-4"></a></span>
-<span id="cb54-5"><a href="#cb54-5"></a><span class="bu">vars</span> <span class="op">=</span> [<span class="st">"log(β_σ)"</span>, <span class="st">"log(β_σ)"</span>]</span>
+<span id="cb54-5"><a href="#cb54-5"></a>nvars <span class="op">=</span> [<span class="st">"log(β_σ)"</span>, <span class="st">"log(β_σ)"</span>]</span>
 <span id="cb54-6"><a href="#cb54-6"></a>glabel <span class="op">=</span> [<span class="st">"B"</span>, <span class="st">"H"</span>]</span>
-<span id="cb54-7"><a href="#cb54-7"></a><span class="cf">for</span> ax, var, gl <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), <span class="bu">vars</span>, glabel):</span>
+<span id="cb54-7"><a href="#cb54-7"></a><span class="cf">for</span> ax, var, gl <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), nvars, glabel):</span>
 <span id="cb54-8"><a href="#cb54-8"></a>    az.plot_pair(</span>
 <span id="cb54-9"><a href="#cb54-9"></a>        idata_mj,</span>
 <span id="cb54-10"><a href="#cb54-10"></a>        var_names<span class="op">=</span>[<span class="st">"β"</span>, var],</span>
@@ -3615,7 +3612,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 <p>Ahora bien, que pasa cuando usamos un modelo jerárquico no centrado? Veamos la siguiente figura:</p>
-<p>Ahora tenemos 4 paneles, en la primer fila vemos <span class="math inline">\(\log \beta_\sigma\)</span> vs <span class="math inline">\(\log \beta_{text{offset}}\)</span>, que es la nueva variable que introdujimos en la versión no centrada. Ahora vemos que el posterior es más “esférico” o al menos que la forma de embudo es mucho menos pronunciada. Esta geométrica es mucho más simple de muestrear que la anterior y por eso no observamos divergencias.</p>
+<p>Ahora tenemos 4 paneles, en la primer fila vemos <span class="math inline">\(\log \beta_\sigma\)</span> vs <span class="math inline">\(\log \beta_{offset}\)</span>, que es la nueva variable que introdujimos en la versión no centrada. Ahora vemos que el posterior es más “esférico” o al menos que la forma de embudo es mucho menos pronunciada. Esta geométrica es mucho más simple de muestrear que la anterior y por eso no observamos divergencias.</p>
 <p>En la segunda fila vemos <span class="math inline">\(\log \beta_\sigma\)</span> vs <span class="math inline">\(\beta\)</span>, ahora vemos que el embudo es aún más acentuado que en la figura anterior. Esto no debería ser aún más problemático? En realidad no, esto no es un problema para el sampler por que el sampler nunca “ve” este embudo ya que <span class="math inline">\(\beta\)</span> lo obtenemos al combinar <span class="math inline">\(\beta_\text{offset}\)</span>, <span class="math inline">\(\beta_\sigma\)</span> y <span class="math inline">\(\beta_\mu\)</span>. Es decir con la reparametrización logramos obtener un embudo más “profundo”, pero sin muestrearlo directamente!</p>
 <p>Ahora que quiere decir que ahora el embudo sea “más profundo”? Quiere decir que ahora somos capaces de muestrear una región de la distribución a posteriori que antes no podíamos. En la versión centrada del modelo el sampler divergía antes de poder encontrar la zona angosta y por lo tanto esa zona NO estaba presente en la distribución a posteriori. Nos estábamos perdiendo parte de la distribución a posteriori, que si no fuera por las divergencias no sabríamos que existe y estaríamos trabajando con una distribución a posteriori sesgada sin siquiera saberlo.</p>
 <div id="64eb0564" class="cell" data-execution_count="41">
@@ -3623,10 +3620,10 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <span id="cb55-2"><a href="#cb55-2"></a></span>
 <span id="cb55-3"><a href="#cb55-3"></a>_, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="st">"row"</span>, sharex<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb55-4"><a href="#cb55-4"></a></span>
-<span id="cb55-5"><a href="#cb55-5"></a><span class="bu">vars</span> <span class="op">=</span> np.repeat([<span class="st">"β_offset"</span>, <span class="st">"β"</span>], <span class="dv">2</span>)</span>
+<span id="cb55-5"><a href="#cb55-5"></a>nvars <span class="op">=</span> np.repeat([<span class="st">"β_offset"</span>, <span class="st">"β"</span>], <span class="dv">2</span>)</span>
 <span id="cb55-6"><a href="#cb55-6"></a>glabel <span class="op">=</span> [<span class="st">"B"</span>, <span class="st">"H"</span>] <span class="op">*</span> <span class="dv">2</span></span>
 <span id="cb55-7"><a href="#cb55-7"></a></span>
-<span id="cb55-8"><a href="#cb55-8"></a><span class="cf">for</span> ax, var, gl <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), <span class="bu">vars</span>, glabel):</span>
+<span id="cb55-8"><a href="#cb55-8"></a><span class="cf">for</span> ax, var, gl <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), nvars, glabel):</span>
 <span id="cb55-9"><a href="#cb55-9"></a>    az.plot_pair(</span>
 <span id="cb55-10"><a href="#cb55-10"></a>        idata_ncen,</span>
 <span id="cb55-11"><a href="#cb55-11"></a>        var_names<span class="op">=</span>[var, <span class="st">"log(β_σ)"</span>],</span>
@@ -3693,7 +3690,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <li>Calidad percibida del vino (dependiente) y acidez, densidad, grado alcohólico, azúcar residual y contenido de sulfatos (variables independientes)</li>
 <li>Calificaciones promedio de un estudiante (dependiente) e ingreso familiar, distancia del hogar a la escuela y nivel de educación de la madre (variable categórica)</li>
 </ul>
-<p>Podemos extender fácilmente el modelo de regresión lineal simple para tratar con más de una variable independiente. Llamamos a este modelo regresión lineal múltiple o menos a menudo regresión lineal multivariable (que no debe confundirse con la regresión lineal multivariable, el caso en el que tenemos múltiples variables dependientes).</p>
+<p>Podemos extender fácilmente el modelo de regresión lineal simple para tratar con más de una variable independiente. Llamamos a este modelo regresión lineal múltiple o menos a menudo modelo de regresión lineal multivariable (que no debe confundirse con la regresión lineal multivariable, el caso en el que tenemos múltiples variables dependientes).</p>
 <p>En un modelo de regresión lineal múltiple, modelamos la media de la variable dependiente de la siguiente manera:</p>
 <p><span class="math display">\[
 \mu = \alpha + \beta_1 X_{1} + \beta_2 X_{2} + \dots + \beta_k X_{k}
@@ -3747,8 +3744,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <span id="cb60-4"><a href="#cb60-4"></a>idata_mlb.posterior[<span class="st">"β0_scaled"</span>] <span class="op">=</span> idata_mlb.posterior[<span class="st">"β0"</span>] <span class="op">*</span> bicis.temperatura.std()</span>
 <span id="cb60-5"><a href="#cb60-5"></a>idata_mlb.posterior[<span class="st">"β1_scaled"</span>] <span class="op">=</span> idata_mlb.posterior[<span class="st">"β1"</span>] <span class="op">*</span> bicis.hora.std()</span>
 <span id="cb60-6"><a href="#cb60-6"></a></span>
-<span id="cb60-7"><a href="#cb60-7"></a></span>
-<span id="cb60-8"><a href="#cb60-8"></a>az.plot_forest([idata_neg, idata_mlb], model_names<span class="op">=</span>[<span class="st">"model_neg"</span>, <span class="st">"model_mlb"</span>], var_names<span class="op">=</span>[<span class="st">"β0_scaled"</span>, <span class="st">"β1_scaled"</span>], figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), combined<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-7"><a href="#cb60-7"></a>az.plot_forest([idata_neg, idata_mlb], model_names<span class="op">=</span>[<span class="st">"model_neg"</span>, <span class="st">"model_mlb"</span>], var_names<span class="op">=</span>[<span class="st">"β0_scaled"</span>, <span class="st">"β1_scaled"</span>], figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), combined<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="45">
 <pre><code>array([&lt;Axes: title={'center': '94.0% HDI'}&gt;], dtype=object)</code></pre>
 </div>
@@ -3864,7 +3860,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
             sigma ~ HalfStudentT(nu: 4.0, sigma: 1.0541)</code></pre>
 </div>
 </div>
-<p>La primera línea muestra la fórmula que usamos para definir el modelo y la segunda línea es el likelihood. En Bambi, usamos el argumento <code>family</code> para especificar el . La tercera línea es la función de enlace. Por defecto cada familia tiene asociada una función de enlace, por ej la Gaussiana se asocia a la función identidad. Luego tenemos el número de observaciones utilizadas para ajustar el modelo, y lo siguiente nos dice que estamos modelando linealmente el parámetro <span class="math inline">\(\mu\)</span> de la Gaussiana. Luego, en las siguientes líneas tenemos la estructura del modelo. La primera parte muestra los efectos de nivel común, en este caso, el intercepto y el coefficiente de regressión (la “pendiente”) asociado a <code>x</code>. En la segunda parte se muestran los parámetros auxiliares, es decir, todos los parámetros no modelados linealmente, en este caso, la desviación estándar.</p>
+<p>La primera línea muestra la fórmula que usamos para definir el modelo y la segunda línea es el likelihood. En Bambi, usamos el argumento <code>family</code> para especificar el likelihood. La tercera línea es la función de enlace. Por defecto cada familia tiene asociada una función de enlace, por ej la Gaussiana se asocia a la función identidad. Luego tenemos el número de observaciones utilizadas para ajustar el modelo, y lo siguiente nos dice que estamos modelando linealmente el parámetro <span class="math inline">\(\mu\)</span> de la Gaussiana. Luego, en las siguientes líneas tenemos la estructura del modelo. La primera parte muestra los efectos de nivel común, en este caso, el intercepto y el coefficiente de regressión (la “pendiente”) asociado a <code>x</code>. En la segunda parte se muestran los parámetros auxiliares, es decir, todos los parámetros no modelados linealmente, en este caso, la desviación estándar.</p>
 <p>Si querés omitir el intercepto, tenés dos opciones:</p>
 <div id="6fe95ad2" class="cell" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1"></a>no_intercepto_1 <span class="op">=</span> bmb.Model(<span class="st">"y ~ 0 + x"</span>, datos)</span>
@@ -4031,7 +4027,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
    \mu = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 \dots \beta_m x^m
 \]</span></p>
 <p>donde <span class="math inline">\(m\)</span> es el grado del polinomio.</p>
-<p>Hay dos cosas importantes a tener en cuenta. Primero, la regresión polinómica sigue siendo una regresión lineal; la linealidad se refiere a los coeficientes (los <span class="math inline">\(\beta\)</span>s), no a las variables (los <span class="math inline">\(x\)</span>s). La segunda es que simplemente estamos creando nuevas variables de la nada. La única variable observada es , el resto son sólo potencias de . Crear nuevas variables a partir de las observadas es un “truco” perfectamente válido al hacer regresión, a veces la transformación puede estar motivada o justificada por la teoría (como sacar la raíz cuadrada de la longitud de los bebés), pero a veces es solo una forma de ajustar una curva. La intuición con los polinomios es que para un valor dado de , cuanto mayor sea el grado del polinomio, más flexible será el ajuste. Un polinomio de grado 1 es una línea, un polinomio de grado 2 es una curva que puede subir o bajar, un polinomio de grado 3 es una curva que puede subir y luego bajar (o al revés), y así sucesivamente. Note que dije “puede” porque si tenemos un polinomio de grado 3 como <span class="math inline">\(\beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3\)</span> pero los coeficientes <span class="math inline">\(\beta_2\)</span> y <span class="math inline">\(\beta_3\)</span> son 0 (o prácticamente 0), entonces la curva será una línea.</p>
+<p>Hay dos cosas importantes a tener en cuenta. Primero, la regresión polinómica sigue siendo una regresión lineal; la linealidad se refiere a los coeficientes (los <span class="math inline">\(\beta\)</span>s), no a las variables (los <span class="math inline">\(x\)</span>s). La segunda es que simplemente estamos creando nuevas variables de la nada. La única variable observada es <span class="math inline">\(x\)</span>, el resto son sólo potencias de <span class="math inline">\(x\)</span>. Crear nuevas variables a partir de las observadas es un “truco” perfectamente válido al hacer regresión, a veces la transformación puede estar motivada o justificada por la teoría (como sacar la raíz cuadrada de la longitud de los bebés), pero a veces es solo una forma de ajustar una curva. La intuición con los polinomios es que para un valor dado de <span class="math inline">\(x\)</span>, cuanto mayor sea el grado del polinomio, más flexible será el ajuste. Un polinomio de grado 1 es una línea, un polinomio de grado 2 es una curva que puede subir o bajar, un polinomio de grado 3 es una curva que puede subir y luego bajar (o al revés), y así sucesivamente. Note que dije “puede” porque si tenemos un polinomio de grado 3 como <span class="math inline">\(\beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3\)</span> pero los coeficientes <span class="math inline">\(\beta_2\)</span> y <span class="math inline">\(\beta_3\)</span> son 0 (o prácticamente 0), entonces la curva será una línea.</p>
 <p>Hay dos formas de definir una regresión polinómica con Bambi. Podemos escribir los polinomios <em>brutos</em>:</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1"></a><span class="co">"y ~ x + I(x ** 2) + I(x ** 3) + I(x ** 4)"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>donde usamos la función de identidad <code>I</code> para dejar claro que queremos elevar <span class="math inline">\(x\)</span> a alguna potencia. Necesitamos esto porque el operador <code>**</code> tiene un significado especial para Bambi. Si usamos esta sintaxis, le estamos diciendo a Bambi que modele la media de <span class="math inline">\(y\)</span> como <span class="math inline">\(\alpha + \beta_0 x + \beta_0 x^2 + \beta_0 x^3 + \beta_0 x^4\)</span></p>
@@ -4072,7 +4068,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <span id="cb86-7"><a href="#cb86-7"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"media"</span>)</span>
 <span id="cb86-8"><a href="#cb86-8"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"predicciones"</span>)</span>
 <span id="cb86-9"><a href="#cb86-9"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">""</span>)</span>
-<span id="cb86-10"><a href="#cb86-10"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">""</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb86-10"><a href="#cb86-10"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">""</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="61">
 <pre><code>Text(0, 0.5, '')</code></pre>
 </div>
@@ -6469,13 +6465,13 @@ dl.xr-attrs {
 <section id="pingüinos-categóricos" class="level3" data-number="5.19.1">
 <h3 data-number="5.19.1" class="anchored" data-anchor-id="pingüinos-categóricos"><span class="header-section-number">5.19.1</span> Pingüinos Categóricos</h3>
 <p>Para el ejemplo actual, vamos a utilizar el conjunto de datos de <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0090081">Palmer Penguins</a>, que contiene 344 observaciones de 8 variables. Por el momento nos interesa modelar la masa de los pingüinos en función de la longitud de su pico. Se espera que la masa de los pingüinos aumente a medida que aumenta la longitud del pico. La novedad de este ejemplo es que vamos a considerar la variable categórica, <code>species</code>. Esta variable tiene 3 categorías o niveles, a saber, <code>Adelie</code>, <code>Chinstrap</code> y <code>Gentoo</code>. La <a href="#fig-scatter_pen" class="quarto-xref">Figura&nbsp;<span>5.1</span></a> muestra un diagrama de dispersión para las variables que queremos modelar.</p>
-<div id="3c51576d" class="cell" data-execution_count="72">
+<div id="3c51576d" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1"></a>penguins <span class="op">=</span> pd.read_csv(<span class="st">"datos/penguins.csv"</span>).dropna()</span>
 <span id="cb101-2"><a href="#cb101-2"></a>penguins.head()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="72">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <div>
 
@@ -6593,7 +6589,7 @@ Figura&nbsp;5.1: Largo del pico (bill_length) vs masa (body_mass) para 3 especie
 </div>
 </div>
 <p>Para ajustar un modelo con variables categoricas no necesitamos de ninguna sintáxis especial</p>
-<div id="a06e7d5a" class="cell" data-execution_count="74">
+<div id="a06e7d5a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1"></a>modelo_p <span class="op">=</span> bmb.Model(<span class="st">"body_mass ~ bill_length + species"</span>, data<span class="op">=</span>penguins)</span>
 <span id="cb103-2"><a href="#cb103-2"></a>idata_p <span class="op">=</span> modelo_p.fit()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -6601,11 +6597,11 @@ Figura&nbsp;5.1: Largo del pico (bill_length) vs masa (body_mass) para 3 especie
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
 NUTS: [body_mass_sigma, Intercept, bill_length, species]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 4 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 3 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"5e4ed438e53744e2bca14b69a30cfc62","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"af3c01afb9a945aaababc9dd2f5fd723","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -6619,14 +6615,14 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p><span class="math display">\[
 \text{body\_mass} = \beta_0 + \beta_1 \text{bill\_length}
 \]</span></p>
-<div id="cell-fig-penguins_posterior" class="cell" data-execution_count="75">
+<div id="cell-fig-penguins_posterior" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1"></a>ax <span class="op">=</span> az.plot_forest(idata_p, combined<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))</span>
 <span id="cb105-2"><a href="#cb105-2"></a>mean_chinstrap <span class="op">=</span> idata_p.posterior[<span class="st">"species"</span>].sel(species_dim<span class="op">=</span><span class="st">"Chinstrap"</span>).mean()</span>
 <span id="cb105-3"><a href="#cb105-3"></a>mean_gentoo <span class="op">=</span> idata_p.posterior[<span class="st">"species"</span>].sel(species_dim<span class="op">=</span><span class="st">"Gentoo"</span>).mean()</span>
-<span id="cb105-4"><a href="#cb105-4"></a>ax[<span class="dv">0</span>].annotate(<span class="ss">f"</span><span class="sc">{</span>mean_chinstrap<span class="sc">.</span>item()<span class="sc">:.2f}</span><span class="ss">"</span>, (mean_chinstrap , <span class="fl">2.5</span>), weight<span class="op">=</span><span class="st">'bold'</span>)</span>
-<span id="cb105-5"><a href="#cb105-5"></a>ax[<span class="dv">0</span>].annotate(<span class="ss">f"</span><span class="sc">{</span>mean_gentoo<span class="sc">.</span>item()<span class="sc">:.2f}</span><span class="ss">"</span>, (mean_gentoo , <span class="fl">1.7</span>), weight<span class="op">=</span><span class="st">'bold'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb105-4"><a href="#cb105-4"></a>ax[<span class="dv">0</span>].annotate(<span class="ss">f"</span><span class="sc">{</span>mean_chinstrap<span class="sc">.</span>item()<span class="sc">:.2f}</span><span class="ss">"</span>, (mean_chinstrap , <span class="fl">1.2</span>), weight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb105-5"><a href="#cb105-5"></a>ax[<span class="dv">0</span>].annotate(<span class="ss">f"</span><span class="sc">{</span>mean_gentoo<span class="sc">.</span>item()<span class="sc">:.2f}</span><span class="ss">"</span>, (mean_gentoo , <span class="fl">0.5</span>), weight<span class="op">=</span><span class="st">'bold'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-penguins_posterior" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -6676,7 +6672,7 @@ Figura&nbsp;5.3: Predicciones del ajuste medio para <code>modelo_p</code>.
 <li>Eficacia de los medicamentos y edad: un medicamento que funciona mejor en personas mayores que en personas más jóvenes</li>
 <li>Nivel de educación e impacto en los ingresos: Es posible que la educación superior tenga un efecto positivo más fuerte en los ingresos de un género en comparación con el otro, lo que resulta en una interacción entre la educación y el género.</li>
 <li>Efectos del ejercicio y la dieta sobre la pérdida de peso: Podría ser que el efecto de la dieta sobre la pérdida de peso sea pequeño para las personas que hacen nada o poco ejercicio y muy importante para las personas que hacen ejercicio moderado.</li>
-<li>*Temperatura y humedad para el crecimiento de los cultivos: El efecto de la temperatura y la humedad en el crecimiento de los cultivos puede depender del tipo de cultivo que se esté cultivando. Algunos cultivos podrían prosperar en condiciones cálidas y húmedas, mientras que otros podrían funcionar mejor en ambientes más fríos y menos húmedos, creando una interacción entre temperatura, humedad y tipo de cultivo.</li>
+<li>Temperatura y humedad para el crecimiento de los cultivos: El efecto de la temperatura y la humedad en el crecimiento de los cultivos puede depender del tipo de cultivo que se esté cultivando. Algunos cultivos podrían prosperar en condiciones cálidas y húmedas, mientras que otros podrían funcionar mejor en ambientes más fríos y menos húmedos, creando una interacción entre temperatura, humedad y tipo de cultivo.</li>
 </ul>
 <p>Tenemos una interacción cuando el efecto combinado de dos o más variables actuando conjuntamente no es igual a la suma de sus efectos individuales. Si tenemos un modelo como</p>
 <p><span class="math display">\[
@@ -6690,16 +6686,15 @@ Figura&nbsp;5.3: Predicciones del ajuste medio para <code>modelo_p</code>.
 <blockquote class="blockquote">
 <p>Multiplicar dos variables puede verse como un truco similar al que usamos para la regresión polinómica (o cualquier transformación de una variable determinada). En lugar de multiplicar un predictor consigo mismo, multiplicamos dos predictores diferentes y obtenemos uno nuevo.</p>
 </blockquote>
-<p>Definir una interacción es fácil; para un modelo PyMC, solo necesitamos multiplicar los dos predictores y agreagar un coeficiente más al modelo. Para que un modelo de Bambi es aún más fácil, usamos el operador <code>:</code>. Veamos un ejemplo de un modelo con y sin interacciones.</p>
+<p>Definir una interacción es fácil; para un modelo PyMC, solo necesitamos multiplicar los dos predictores y agregar un coeficiente más al modelo. Para un modelo de Bambi es aún más fácil, usamos el operador <code>:</code>. Veamos un ejemplo de un modelo con y sin interacciones.</p>
 <div id="91c52e86" class="cell" data-execution_count="77">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1"></a><span class="co"># Sin interacción</span></span>
 <span id="cb107-2"><a href="#cb107-2"></a>model_noint <span class="op">=</span> bmb.Model(<span class="st">"body_mass ~ bill_depth + bill_length"</span>, data<span class="op">=</span>penguins)</span>
 <span id="cb107-3"><a href="#cb107-3"></a>idata_noint <span class="op">=</span> model_noint.fit()</span>
 <span id="cb107-4"><a href="#cb107-4"></a></span>
-<span id="cb107-5"><a href="#cb107-5"></a><span class="co"># COn interacción</span></span>
+<span id="cb107-5"><a href="#cb107-5"></a><span class="co"># Con interacción</span></span>
 <span id="cb107-6"><a href="#cb107-6"></a>model_int <span class="op">=</span> bmb.Model(<span class="st">"body_mass ~ bill_depth + bill_length + bill_depth:bill_length"</span>, data<span class="op">=</span>penguins)</span>
-<span id="cb107-7"><a href="#cb107-7"></a>idata_int <span class="op">=</span> model_int.fit()</span>
-<span id="cb107-8"><a href="#cb107-8"></a>                    </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb107-7"><a href="#cb107-7"></a>idata_int <span class="op">=</span> model_int.fit()                </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
@@ -6735,7 +6730,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
-<p>En la <a href="#fig-interaction_vs_noninteraction" class="quarto-xref">Figura&nbsp;<span>5.4</span></a> tenemos el ajuste de regresión media para <code>bill_depth</code> evaluado en 5 valores fijos de <code>bill_length</code>. A la izquierda tenemos el resultado dpara <code>model_noint</code> (sin interacciones) y a la derecha para <code>model_int</code> (con interacciones). Podemos ver que cuando no tenemos interacciones las rectas ajustadas para <code>bill_ depth</code> son paralelas en diferentes niveles de <code>bill_length</code>. En cambio, cuando tenemos interacciones las rectas ya no son paralelas, precisamente porque el efecto de cambiar <code>bill_depth</code> sobre cuánto cambia <code>body_mass</code> ya no es constante sino que está modulado por los valores de <code>bill_length</code>. Si generás una figura como <a href="#fig-interaction_vs_noninteraction" class="quarto-xref">Figura&nbsp;<span>5.4</span></a>, pero fijando <code>bill_depth</code> en vez de <code>bill_length</code> observarás un fenómeno parecido.</p>
+<p>En la <a href="#fig-interaction_vs_noninteraction" class="quarto-xref">Figura&nbsp;<span>5.4</span></a> tenemos el ajuste de regresión media para <code>bill_depth</code> evaluado en 5 valores fijos de <code>bill_length</code>. A la izquierda tenemos el resultado para <code>model_noint</code> (sin interacciones) y a la derecha para <code>model_int</code> (con interacciones). Podemos ver que cuando no tenemos interacciones las rectas ajustadas para <code>bill_ depth</code> son paralelas en diferentes niveles de <code>bill_length</code>. En cambio, cuando tenemos interacciones las rectas ya no son paralelas, precisamente porque el efecto de cambiar <code>bill_depth</code> sobre cuánto cambia <code>body_mass</code> ya no es constante sino que está modulado por los valores de <code>bill_length</code>. Si generás una figura como <a href="#fig-interaction_vs_noninteraction" class="quarto-xref">Figura&nbsp;<span>5.4</span></a>, pero fijando <code>bill_depth</code> en vez de <code>bill_length</code> observarás un fenómeno parecido.</p>
 <div id="cell-fig-interaction_vs_noninteraction" class="cell" data-execution_count="78">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
@@ -6768,7 +6763,7 @@ Figura&nbsp;5.4: Comparación de un modelo sin interacción (las lineas se manti
 </div>
 </div>
 </div>
-<p>Acabamos de ver visualmente que interpretar modelos lineales con interacciones no es tan fácil como interpretar modelos lineales sin ellas. Veamos esto matemáticamente:</p>
+<p>Acabamos de ver visualmente que interpretar modelos lineales con interacciones no es tan fácil como interpretar modelos lineales sin ellas. Veamos esto matemáticamente.</p>
 <p>Supongamos que tenemos un modelo con 2 variables <span class="math inline">\(X_0\)</span> y <span class="math inline">\(X_1\)</span> y una interacción entre ellas:</p>
 <p><span class="math display">\[
      \mu = \alpha + \beta_0 X_0 + \beta_1 X_1 + \beta_3 X_0X_1
@@ -6781,7 +6776,7 @@ Figura&nbsp;5.4: Comparación de un modelo sin interacción (las lineas se manti
 <p><span class="math display">\[
 \mu = \alpha + \beta_0 X_0 + \underbrace{(\beta_1 + \beta_2 x_0)}_{\text{pendiente de } X_1} X_1
 \]</span></p>
-<p>Esto nos muestra el siguiente gráfico de Fores para la distribución a posteriori de:</p>
+<p>A partir de esta expresión podemos ver que:</p>
 <ul>
 <li>¡El término de interacción puede entenderse como un modelo lineal dentro de un modelo lineal!</li>
 <li>La interacción es simétrica; podemos pensar en ello como la pendiente de <span class="math inline">\(x_0\)</span> en función de <span class="math inline">\(x_1\)</span> y al mismo tiempo como la pendiente de <span class="math inline">\(x_1\)</span> en función de <span class="math inline">\(x_0\)</span>. Esto también se puede ver en la figura interactiva.</li>
@@ -6900,7 +6895,7 @@ Figura&nbsp;5.6: Comparación de las pendientes de bill_depth evaluada en 1.8 pa
 <p>La <a href="#fig-interaction_slopes" class="quarto-xref">Figura&nbsp;<span>5.6</span></a> muestra que las pendientes para <code>bill_depth</code> en 1.8 son:</p>
 <ul>
 <li><span class="math inline">\(\approx\)</span> 2 kg/cm para un largo de pico de 3.5</li>
-<li>-1.4 kg/cm para un largo de pico de4.5</li>
+<li>-1.4 kg/cm para un largo de pico de 4.5</li>
 <li><span class="math inline">\(\approx\)</span> -5 kg/cm para un largo de pico de 5.5</li>
 </ul>
 <p>Si deseas esta información en forma tabular, podés usar: la función <code>bmb.interpret.slopes</code> y obtendrás un DataFrame en lugar de un gráfico.</p>
@@ -6984,7 +6979,7 @@ Figura&nbsp;5.6: Comparación de las pendientes de bill_depth evaluada en 1.8 pa
 <section id="inferencia-predictiva-por-proyección" class="level2" data-number="5.23">
 <h2 data-number="5.23" class="anchored" data-anchor-id="inferencia-predictiva-por-proyección"><span class="header-section-number">5.23</span> Inferencia predictiva por proyección</h2>
 <p>Existen muchos métodos para realizar selección de variables. En esta sección, nos centraremos en uno de ellos llamado inferencia predictiva por proyección . La razón principal por la que nos centramos en este método es que ha mostrado un rendimiento muy bueno en una amplia gama de problemas.</p>
-<p>Los principales pasos de la iinferencia predictiva por proyección son:</p>
+<p>Los principales pasos de la inferencia predictiva por proyección son:</p>
 <ul>
 <li>Generar un modelo de referencia, es decir, un modelo con todas las variables que creas que pueden ser relevantes y/o pudiste medir.</li>
 <li>Generar un conjunto de submodelos, es decir, modelos que solo incluyen algún subconjunto de las variables presentens en el modelo de referencia.</li>
@@ -7026,7 +7021,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 </div>
-<p>El principal punto de entrada de Kulprir es mediante la clase <code>ProjectionPredictive</code>. Una vez provista del modelo de Bambi y los datos resultantes del ajuste de ese modelo. Podemos pedirle a Kulprit que realice una búsqueda. Este paso puede demorar un rato, es la parte pesada de todo el proceso.</p>
+<p>El principal punto de entrada de Kulprit es mediante la clase <code>ProjectionPredictive</code>. Una vez provista del modelo de Bambi y los datos resultantes del ajuste de ese modelo. Podemos pedirle a Kulprit que realice una búsqueda. Este paso puede demorar un rato, es la parte pesada de todo el proceso.</p>
 <div id="0776918c" class="cell" data-execution_count="85">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="#cb117-1"></a>ppi <span class="op">=</span> kpt.ProjectionPredictive(model, idata)</span>
 <span id="cb117-2"><a href="#cb117-2"></a>ppi.search()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -7060,7 +7055,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
   6 siri ~ abdomen + wrist + weight + height + age + thigh</code></pre>
 </div>
 </div>
-<p>El modelo de tamaño 3 es el que incluye las variables <code>abdomen</code>, <code>wrist</code> y <code>height</code>. Este resultado nos dice que si queremos elegir un modelo con menos variables que el modelo de referencia pero con una precisión predictiva similar, entonces esta es una buena opción. Dependiendo del contexto, otros submodelos también pueden ser una buena idea. Por ejemplo, podemos argumentar que la diferencia entre el submodelo de tamaños 2 y 3 es bastante pequeña. Por lo tanto, es posible que estemos dispuestos a sacrificar algo de precisión en favor de un modelo aún más pequeño. Para este ejemplo, medir la altura de los pacientes puede no ser tan problemático, pero para otros escenarios, agregar una tercera variable podría resultar costoso, molesto, peligroso, etc.</p>
+<p>El modelo de tamaño 3 es el que incluye las variables <code>abdomen</code>, <code>wrist</code> y <code>weight</code>. Este resultado nos dice que si queremos elegir un modelo con menos variables que el modelo de referencia pero con una precisión predictiva similar, entonces esta es una buena opción. Dependiendo del contexto, otros submodelos también pueden ser una buena idea. Por ejemplo, podemos argumentar que la diferencia entre el submodelo de tamaños 2 y 3 es bastante pequeña. Por lo tanto, es posible que estemos dispuestos a sacrificar algo de precisión en favor de un modelo aún más pequeño. Para este ejemplo, medir la altura de los pacientes puede no ser tan problemático, pero para otros escenarios, agregar una tercera variable podría resultar costoso, molesto, peligroso, etc.</p>
 <p>Otra forma de interpretar este resultado es notar qué los ELPD para modelos con tamaño 3 o mayor son esencialmente idénticos. Puede darse el caso de que si repetimos el análisis con un conjunto de datos ligeramente diferente, o incluso el mismo conjunto de datos pero con más muestras a posteriori, podamos obtener un orden ligeramente diferente. Por lo tanto, es posible que tengamos otros modelos de tamaño 3 con potencialmente la misma capacidad predictiva, entonces podríamos justificar la selección de la tercera variable por factores externos como qué tan fácil o barato es medirla, o cuál sería menos dolorosa de medir para los pacientes, etc.</p>
 <p>En resumen, como ocurre con otras herramientas estadísticas, los resultados no deben tomarse a ciegas sino en contexto; usted deben tener la última palabra y no sus herramientas. Las herramientas solo deben ayudar a fundamentar sus decisiones.</p>
 <p>Bien, digamos que efectivamente estamos interesados en el submodelo de tamaño 3 calculado por Kulprit; podemos conseguirlo con:</p>
