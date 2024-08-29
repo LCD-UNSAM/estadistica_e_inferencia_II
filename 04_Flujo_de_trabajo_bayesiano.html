@@ -2440,10 +2440,10 @@ H(p) = - \mathbb{E}[\log{p}] = -\sum_i^N p_i \log{p_i}
 <p>Todas formas equivalentes y útiles depediendo en contexto. Algo común en todas estas expresiones es que no podemos aplicar de forma directa si <span class="math inline">\(p\)</span> es desconocida. Por ejemplo si <span class="math inline">\(p\)</span> representa el <strong>proceso generador de datos</strong> o la <strong>población</strong> o la distribución <strong>verdadera</strong>, estamos perdidos… Pero, si lo que nos interesa es comparar modelos veremos que NO es necesario el cálculo directo, la razón es que aún cuando desconozcamos <span class="math inline">\(p\)</span> su entropía es un término constante.</p>
 <p><span class="math display">\[
 \begin{split}
-        \mathbb{KL}(p \parallel q_0) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(y \mid \theta_0)}] \\
-        \mathbb{KL}(p \parallel q_1) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(y \mid \theta_1)}] \\
+        \mathbb{KL}(p \parallel q_0) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(Y \mid \theta_0)}] \\
+        \mathbb{KL}(p \parallel q_1) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(Y \mid \theta_1)}] \\
         &amp;\cdots \\
-        \mathbb{KL}(p \parallel q_2) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(y \mid \theta_2)}]
+        \mathbb{KL}(p \parallel q_m) =&amp;\; \mathbb{E}[\log{p}] - \mathbb{E}[\log{q(Y \mid \theta_m)}]
 \end{split}
 \]</span></p>
 <p>Si comparamos modelos entonces el mejor modelo, dado el conjunto de modelos comparados, será aquel que tenga un valor más grande de verosimilitud. En otras palabras mimimizar la divergencia de KL es proporcional a maximizar la verosimilitud (likelihood).</p>
