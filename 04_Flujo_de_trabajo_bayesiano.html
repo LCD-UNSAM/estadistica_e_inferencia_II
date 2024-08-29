@@ -3474,12 +3474,34 @@ H(\mathbf{q}, \mathbf{p}) = \overbrace{-\log p(\mathbf{p} \mid \mathbf{q})}^{K(\
 <section id="ejercicios" class="level2" data-number="4.13">
 <h2 data-number="4.13" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">4.13</span> Ejercicios</h2>
 <ol type="1">
-<li><p>(Borrador, Está bien esto como ejercicio o lo demostramos en el texto?) Demuestre que la transformada integral de probabilidad es cierta.</p></li>
-<li><p>(Borrador) Usando la transformada integral de probabilidad describa una método general para generar muestreas aleatorias de cualquier distribución a partir de una distribución uniforme.</p></li>
-<li><p>(Borrador) deberíamos tener una serie de ejercicios donde calculen los valores-p marginales para distribuciónes sintéticas, por tomar una Gaussiana de base y comparar con una gaussian más ancha, otra más angosta y otra desplazada y ver en cada caso como la distribución se desvía de la uniforme.</p></li>
-<li><p>(Borrador) correr los dignósticos de convergencia en algún modelo anterior y escribir un breve reporte?</p></li>
-<li><p>(Borrador) deberíamos tener un ejemplo donde comparen un par de modelos</p></li>
-<li><p>(Borrador) deberíamos tener un ejemplo donde reporten un resultado teniendo en cuenta el MCSE.</p></li>
+<li>Para los siguientes modelos vistos en los temas anteriores realizá las siguientes pruebas:</li>
+</ol>
+<ol type="a">
+<li><p><code>cs_nh</code> una prueba predictiva a priori, todos los grupos juntos</p></li>
+<li><p><code>cs_nh</code> una prueba predictiva a posteriori, todos los grupos juntos</p></li>
+<li><p><code>cs_nh</code> una prueba predictiva a posteriori, los 19 grupos por separado</p></li>
+</ol>
+<ol start="2" type="1">
+<li><p>Usando un modelo construido para tus propios datos realizá una prueba predictiva a priori y en función del resultado modificá los priors elegidos.</p></li>
+<li><p>Usando la función <code>az.plot_bpv</code> y sobre la distribución a posteriori del modelo <code>cs_nh</code> realizá:</p></li>
+</ol>
+<ol type="a">
+<li><p>Un gráfico de los p-valores marginales, para todos los grupos juntos.</p></li>
+<li><p>Un gráfico de los p-valores marginales, para los 19 grupos por separado.</p></li>
+<li><p>Un gráfico de los p-valores para un estadístico a su elección que no sea la media, para los 19 grupos por separado.</p></li>
+</ol>
+<ol start="4" type="1">
+<li>Para ganar intuición sobre los gráficos de p-valores marginales. Vamos a hacer el siguiente experimento. Vamos a crear 4 InferenceData, todos con el mismo grupo “observed_data” y con 200 observaciones (extra, podés probar cambiar el número de observaciones).</li>
+</ol>
+<ul>
+<li>Uno de ellos con predicciones que provengan de una distribución más ancha que la observada</li>
+<li>Otro con una predicciones que provengan de una distribución más angosta</li>
+<li>El tercero con la media desplazada respecto de la observada</li>
+<li>El cuarto con muestra de la misma distribución que la observada.</li>
+</ul>
+<p>Exlicá las observaciones.</p>
+<ol start="5" type="1">
+<li>(extra) Usando la transformada integral de probabilidad escribí un algoritmo que utilizando una distribución uniforme permita generar muestreas aleatorias de cualquier distribución de probabiliad.</li>
 </ol>
 
 
