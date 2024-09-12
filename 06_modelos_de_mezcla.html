@@ -345,7 +345,7 @@ p(x) = \sum_{i=1}^{K} w_i p(x \mid \theta_i)
 x &amp; \sim N(\mu_z, \sigma^2)
 \end{align*}
 \end{split}\]</span>
-<p>Es decir, generamos <span class="math inline">\(K\)</span> Gaussianas y usamos <span class="math inline">\(z\)</span> para indexarlas. <span class="math inline">\(z\)</span> tendrá la misma dimensión que <span class="math inline">\(x\)</span>, es decir una variable lantente por observación. <span class="math inline">\(z\)</span> podrá tomar tanto valores como <span class="math inline">\(K\)</span> clases tengamos. Si nuestro modelo es Bayesiano necesitamos completarlo especificando priors, una forma <em>natural</em> es establer que <span class="math inline">\(z\)</span> sea una distribución categórica cuyo soporte será <span class="math inline">\(\{0, \dots ,K-1\}\)</span> (empezamos en 0 para que luego sea más directa la implementación en Python) y asumimos que el parámetro <span class="math inline">\(p\)</span> de la categórica sigue una distribución de Dirichlet. Para la desviación standard de la gaussiana usamos una media-normal o similar, entonces nos queda:</p>
+<p>Es decir, generamos <span class="math inline">\(K\)</span> Gaussianas y usamos <span class="math inline">\(z\)</span> para indexarlas. <span class="math inline">\(z\)</span> tendrá la misma dimensión que <span class="math inline">\(x\)</span>, es decir una variable lantente por observación. <span class="math inline">\(z\)</span> podrá tomar tantos valores como <span class="math inline">\(K\)</span> clases tengamos. Si nuestro modelo es Bayesiano necesitamos completarlo especificando priors, una forma <em>natural</em> es establer que <span class="math inline">\(z\)</span> sea una distribución categórica cuyo soporte será <span class="math inline">\(\{0, \dots ,K-1\}\)</span> (empezamos en 0 para que luego sea más directa la implementación en Python) y asumimos que el parámetro <span class="math inline">\(p\)</span> de la categórica sigue una distribución de Dirichlet. Para la desviación standard de la gaussiana usamos una media-normal o similar, entonces nos queda:</p>
 <span class="math display">\[\begin{split}
 \begin{align*}
 \mu_1, \ldots, \mu_K &amp; \sim N(0, \sigma^2) \\
@@ -357,7 +357,7 @@ y &amp; \sim N(\mu_z, \sigma^2)
 \end{split}\]</span>
 <p>Graficamente tenemos:</p>
 <p><img src="img/mezcla_finita_dag.png" width="400"></p>
-<p>El rectángulo de esquinas redondeadas indica que tenemos <span class="math inline">\(K\)</span> componentes y las variables categóricas deciden cuál de ellas usamos para describir un punto de datos determinado. Observe que en este modelo los valores de <span class="math inline">\(\mu\)</span> depende de los diferentes componentes, mientras que el valor de <span class="math inline">\(\sigma\)</span> se comparten para todos ellos. Esto es una decisión de modelado, si fueses necesario podriamos cambiarlo y permitir que se condicionen otros parámetros a cada componente.</p>
+<p>El rectángulo de esquinas redondeadas indica que tenemos <span class="math inline">\(K\)</span> componentes y las variables categóricas deciden cuál de ellas usamos para describir un punto de datos determinado. Observe que en este modelo los valores de <span class="math inline">\(\mu\)</span> depende de los diferentes componentes, mientras que el valor de <span class="math inline">\(\sigma\)</span> se comparte para todos ellos. Esto es una decisión de modelado, si fuese necesario podriamos cambiarlo y permitir que se condicionen otros parámetros a cada componente.</p>
 </section>
 <section id="mezclas-químicas" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="mezclas-químicas"><span class="header-section-number">6.2</span> Mezclas químicas</h2>
@@ -374,7 +374,7 @@ y &amp; \sim N(\mu_z, \sigma^2)
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>cs_exp <span class="op">=</span> pd.read_csv(<span class="st">"datos/chemical_shifts_theo_exp.csv"</span>)[<span class="st">"exp"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Podemos ver que estos datos no se pueden describir adecuadamente usando una sola distribución como una Gaussiana, pero quizá podriamos lograr una mejor descripción si usáramos tres o cuatro. Hay buenas razones teóricas, que ignoraremos y no discutiremos aquí, que indican que estos datos de provienen realmente de una mezcla de 40 subpoblaciones. Pero con sólo mirar los datos, parece imposible recuperar los grupos verdaderos ya que hay mucha superposición entre ellos.</p>
+<p>Podemos ver que estos datos no se pueden describir adecuadamente usando una sola distribución como una Gaussiana, pero quizá podriamos lograr una mejor descripción si usáramos tres o cuatro. Hay buenas razones teóricas, que ignoraremos y no discutiremos aquí, que indican que estos datos provienen realmente de una mezcla de 40 subpoblaciones. Pero con sólo mirar los datos, parece imposible recuperar los grupos verdaderos ya que hay mucha superposición entre ellos.</p>
 <p>En el siguiente bloque de código podemos ver un modelo de mezcla de gaussiana con 2 componentes:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_kg:</span>
 <span id="cb4-2"><a href="#cb4-2"></a>    w <span class="op">=</span> pm.Dirichlet(<span class="st">'w'</span>, a<span class="op">=</span>np.ones(<span class="dv">2</span>))</span>
@@ -397,7 +397,7 @@ p(x)
     &amp; = \sum_{i = 1}^K w_i\ N(x\ |\ \mu_i, \sigma^2),
 \end{align*}
 \end{split}\]</span>
-<p>PyMC ofrece una sintáxis más directa para escribir este tipo de mmodelos, usando la distribución <code>NormalMixture</code>:</p>
+<p>PyMC ofrece una sintáxis más directa para escribir este tipo de modelos, usando la distribución <code>NormalMixture</code>:</p>
 <div id="68c65cc3" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>K <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_mg:</span>
@@ -439,7 +439,6 @@ The effective sample size per chain is smaller than 100 for some parameters.  A 
 </div>
 </div>
 <p>Notan algo raro en estos resultados? Tomensé un momento para pensarlo.</p>
-<hr>
 <p>En la figura anterior podemos ver que para <code>μ[0]</code> una de las estimaciones está alrededor de 47 y las otras tres alrededor de 57.5. Y lo contrario para <code>μ[1]</code>, normalmente esperamos que las distintas cadenas nos den valores cercanos. Cuando los valores son muy diferentes sospechamos que el muestreo ha tenido problemas. Además si calcularamos la media de <code>μ[0]</code>, obtendremos un valor cercano a 55 (<span class="math inline">\(57,5 \times 3 + 47 \times 1\)</span>), que no es el valor correcto. Lo que estamos viendo es un ejemplo de un fenómeno conocido como <strong>no-identificabilidad</strong> de parámetros. Esto sucede porque, desde la perspectiva del modelo, no hay diferencia si el componente 1 tiene una media de 47 y el componente 2 tiene una media de 57,5 o viceversa; ambos escenarios son equivalentes. En el contexto de los modelos mixtos, esto también se conoce como problema de cambio de etiqueta (label-switching).</p>
 </section>
 <section id="no-identificabilidad" class="level2" data-number="6.3">
@@ -665,7 +664,7 @@ Sampling: [x]</code></pre>
 </div>
 </div>
 </div>
-<p>Para complementar las estas pruebas, podemos calcular el ELPD usando LOO. Podemos ver que los resultados coinciden con las pruebas predictivas</p>
+<p>Para complementar estas pruebas, podemos calcular el ELPD usando LOO. Podemos ver que los resultados coinciden con las pruebas predictivas</p>
 <div id="9bacc0e5" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>comp <span class="op">=</span> az.compare(<span class="bu">dict</span>(<span class="bu">zip</span>([<span class="bu">str</span>(K) <span class="cf">for</span> K <span class="kw">in</span> Ks], idatas)))</span>
 <span id="cb15-2"><a href="#cb15-2"></a>comp</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -863,8 +862,8 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <section id="modelos-hurdle" class="level3" data-number="6.6.1">
 <h3 data-number="6.6.1" class="anchored" data-anchor-id="modelos-hurdle"><span class="header-section-number">6.6.1</span> Modelos hurdle</h3>
-<p>Los modelos de hurdle (obstáculo), también se describien como una mezcla de dos procesos de forma similar a los modelos inflados en cero. La diferencia es que en los modelos hurdles los ceros vienen dados <strong>exclusivamente</strong> con probabilidad <span class="math inline">\(1 - \psi\)</span> y los valores positivos vienen dados por una distribución base truncada en cero. Como consecuencia, un modelo inflado en cero solo puede aumentar la probabilidad de <span class="math inline">\(P(x= 0)\)</span>, pero para los modelos hurdle, la probabilidad puede ser mayor o menor que en la distribución base. La razón del nombre hurdle (obstáculo) es que podemos pensar a estas distribuciones como que estamos modelado la presencia de un obstáculo, que hae que nuestra respuesta sea cero, una vez superado el obstáculo la respuesta puede ser distinta de cero.</p>
-<p>Algunas “distribuciones hurdle” comunente usadas son:</p>
+<p>Los modelos de hurdle (obstáculo), también se describien como una mezcla de dos procesos de forma similar a los modelos inflados en cero. La diferencia es que en los modelos hurdles los ceros vienen dados <strong>exclusivamente</strong> con probabilidad <span class="math inline">\(1 - \psi\)</span> y los valores positivos vienen dados por una distribución base truncada en cero. Como consecuencia, un modelo inflado en cero solo puede aumentar la probabilidad de <span class="math inline">\(P(x= 0)\)</span>, pero para los modelos hurdle, la probabilidad puede ser mayor o menor que en la distribución base. La razón del nombre hurdle (obstáculo) es que podemos pensar a estas distribuciones como que estamos modelado la presencia de un obstáculo, que hace que nuestra respuesta sea cero, una vez superado el obstáculo la respuesta puede ser distinta de cero.</p>
+<p>Algunas “distribuciones hurdle” comunmente usadas son:</p>
 <ul>
 <li>Poisson Hurdle</li>
 <li>NegativaBinomial Hurdle</li>
@@ -1141,18 +1140,18 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 \beta_i &amp; \sim \text{Beta}(1, \alpha) \\
 w_i &amp; = \beta_i \prod_{j=1}^{i-1} (1 - \beta_j)
 \end{align}\]</span></p>
-<p>Este proceso es análogo a imaginar que tenemos un palo de longitud 1, lo partimos en dos partes. Guardamos una de las partes y partimos la restante nuevamente, repetimos indefinidamente. Podemos ver que <span class="math inline">\(\alpha\)</span> controla el proceso de rotura. Cuando <span class="math inline">\(\alpha\)</span> se aproxima a 0, la distribución Beta se concentra hacia el valor 1, cuando <span class="math inline">\(\alpha=1\)</span> la distribución Beta es uniforme y a medida que <span class="math inline">\(\alpha\)</span> crece la distribución Beta se concentra hacia 0. Por lo que un valor alto de <span class="math inline">\(alpha\)</span> favorece pesos pequeños.</p>
+<p>Este proceso es análogo a imaginar que tenemos un palo de longitud 1, lo partimos en dos partes. Guardamos una de las partes y partimos la restante nuevamente, repetimos indefinidamente. Podemos ver que <span class="math inline">\(\alpha\)</span> controla el proceso de rotura. Cuando <span class="math inline">\(\alpha\)</span> se aproxima a 0, la distribución Beta se concentra hacia el valor 1, cuando <span class="math inline">\(\alpha=1\)</span> la distribución Beta es uniforme y a medida que <span class="math inline">\(\alpha\)</span> crece la distribución Beta se concentra hacia 0. Por lo que un valor alto de <span class="math inline">\(\alpha\)</span> favorece pesos pequeños.</p>
 <p>El proceso continua asignado una ubicación <span class="math inline">\(\theta_i\)</span> al peso <span class="math inline">\(w_i\)</span>:</p>
 <p><span class="math display">\[
 \theta_i \sim H
 \]</span></p>
-<p><span class="math inline">\(H\)</span> es la distribución base del PD</p>
+<p><span class="math inline">\(H\)</span> es la distribución base del PD.</p>
 <p>Dados estos elementos podemos definir a un proceso de Dirichlet <span class="math inline">\(G \sim DP(\alpha, H)\)</span> como una suma pesada de masas puntuales localizadas según la distribución base.</p>
 <p><span class="math display">\[
 G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 \]</span></p>
-<p>donde <span class="math inline">\(\delta_{\theta_i}\)</span> es la función delta de Dirac centrada en <span class="math inline">\(\theta_i\)</span></p>
-<p>La siguiente figura muestra un ejemplo de una relización (muestra) de un proceso de Dirichlet para 4 valores distintos de <span class="math inline">\(\alpha\)</span></p>
+<p>donde <span class="math inline">\(\delta_{\theta_i}\)</span> es la función delta de Dirac centrada en <span class="math inline">\(\theta_i\)</span>.</p>
+<p>La siguiente figura muestra un ejemplo de una relización (muestra) de un proceso de Dirichlet para 4 valores distintos de <span class="math inline">\(\alpha\)</span>.</p>
 <p>Asi como la distribución de Dirichlet es la generalización n-dimensional de la distribución Beta, el proceso de Dirichlet es la generalización de dimensión infinita de la distribución de Dirichlet.</p>
 <div id="99887649" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">def</span> stick_breaking_process(alpha, base_dist):</span>
@@ -1387,7 +1386,7 @@ G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 </div>
 </div>
 </div>
-<p>Debido a que estamos aproximando el DP (infinito) con un valor finito, es importante verificar que el valor de truncamiento (<span class="math inline">\(K=15\)</span> en este ejemplo) no introduzca ningún sesgo. Una forma sencilla de hacerlo es calcular el peso promedio de cada componente, ordenarlos y luego visualizar la suma acumulada. Para estar seguros, deberíamos tener al menos algunos componentes con un peso insignificante; de lo contrario, debemos aumentar el valor de truncamiento. El siguiente gráfico es un ejemplo de esto.</p>
+<p>Debido a que estamos aproximando el DP (infinito) con un valor finito, es importante verificar que el valor de truncamiento (<span class="math inline">\(K=10\)</span> en este ejemplo) no introduzca ningún sesgo. Una forma sencilla de hacerlo es calcular el peso promedio de cada componente, ordenarlos y luego visualizar la suma acumulada. Para estar seguros, deberíamos tener al menos algunos componentes con un peso insignificante; de lo contrario, debemos aumentar el valor de truncamiento. El siguiente gráfico es un ejemplo de esto.</p>
 <div id="314c2753" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>))</span>
 <span id="cb30-2"><a href="#cb30-2"></a>plot_w <span class="op">=</span> np.arange(K)</span>
@@ -1404,7 +1403,7 @@ G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 </div>
 </div>
 </div>
-<p>Podemos ver que los primeros 9 componentes representan más del 99% del peso total (línea discontinua gris en la figura anterior) y por lo tanto podemos estar seguros de que el valor elegido (<span class="math inline">\(K=15\)</span>) es adecuado para estos datos.</p>
+<p>Podemos ver que los primeros 9 componentes representan más del 99% del peso total (línea discontinua gris en la figura anterior) y por lo tanto podemos estar seguros de que el valor elegido (<span class="math inline">\(K=10\)</span>) es adecuado para estos datos.</p>
 <div id="9260c615" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>x_plot <span class="op">=</span> np.linspace(cs_exp.<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span>, cs_exp.<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span>, <span class="dv">500</span>)</span>
 <span id="cb31-2"><a href="#cb31-2"></a></span>
@@ -1443,7 +1442,7 @@ G = \sum_{i=1}^{\infty} w_i \delta_{\theta_i}
 <p><span class="math display">\[
 \text{BetaBinomial}(y \mid n, \alpha,\beta) = \int_0^1 \text{Bin}(y \mid p, n) \; \text{Beta}(p \mid \alpha, \beta) dp
 \]</span></p>
-<p>Es decir, para encontrar la probabilidad de observar el resultado <span class="math inline">\(y\)</span>, promediamos todos los valores posibles (y continuos) de <span class="math inline">\(p\)</span>. Por tanto, el BetaBinomial puede considerarse como un modelo de mezcla continua. Si el modelo BetaBinomial te suena familiar es porque estuviste prestando atención en los dos primeros capítulos del libro. Este es el modelo que usamos para el problema de lanzar una moneda, aunque usamos explícitamente una distribución Beta y Binomial, en lugar de usar la distribución Beta-Binomio ya .</p>
+<p>Es decir, para encontrar la probabilidad de observar el resultado <span class="math inline">\(y\)</span>, promediamos todos los valores posibles (y continuos) de <span class="math inline">\(p\)</span>. Por tanto, el BetaBinomial puede considerarse como un modelo de mezcla continua. Si el modelo BetaBinomial te suena familiar es porque estuviste prestando atención en los dos primeros capítulos del libro. Este es el modelo que usamos para el problema de lanzar una moneda, aunque usamos explícitamente una distribución Beta y Binomial, en lugar de usar la distribución Beta-Binomio ya <span class="math inline">\(\textit{mixta}\)</span>.</p>
 <p>De manera similar tenemos la distribución Binomial Negativa, que puede entenderse como una mezcla Gamma-Poisson. Es decir, una mezcla de distribuciones de Poisson donde el parámetro de velocidad tiene una distribución Gamma. La distribución binomial negativa se utiliza a menudo para evitar un problema común que se encuentra al tratar con datos de conteo. Este problema se conoce como sobredispersión. Suponga que está utilizando una distribución de Poisson para modelar los datos de recuento y luego se da cuenta de que la varianza en sus datos excede la del modelo; El problema con el uso de una distribución de Poisson es que la media y la varianza se describen mediante el mismo parámetro. Una forma de explicar la sobredispersión es modelar los datos como una mezcla (continua) de distribuciones de Poisson. Al considerar una combinación de distribuciones, nuestro modelo tiene más flexibilidad y puede adaptarse mejor a la media y la varianza de los datos.</p>
 <p>Otro ejemplo de mezcla de distribuciones es la distribución t de Student. Introdujimos esta distribución como una alternativa sólida a la distribución gaussiana. En este caso, la distribución t resulta de una mezcla de distribuciones gaussianas con media <span class="math inline">\(\mu\)</span> y varianza desconocida distribuida como una distribución Gamma inversa.</p>
 </section>
