@@ -312,7 +312,7 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> pymc_bart <span class="im">as</span> pmb</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-3" class="cell" data-execution_count="2">
+<div id="cell-2" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>plt.style.use(<span class="st">'arviz-doc'</span>)</span>
@@ -321,7 +321,7 @@ window.Quarto = {
 </div>
 <p>Anteriormente analizamos los Procesos Gaussianos (GPs), particularmente en el contexto de regresión. En este capítulo, aprenderemos sobre otro modelo no paramétrico de regresión conocido como árboles de regresión aditiva Bayesiana o BART, para los amigos.</p>
 <p>BART es parte de una gran familia de métodos que podríamos describir como “métodos de ensamble”. Estos métodos funcionan combinando varios modelos simples como por ej constantes, pero restringiendo la aplicación de esos modelos simples a regiones particulares del espacio. Esta descripción es similar por ej a lo que vimos con splines. Un subgrupo de métodos de esta gran familia utiliza árboles para asignar esos modelos simples a distintas regiones. En este subgrupo entran métodos como CART, random forest, Gradient boosting, etc.</p>
-<p>La esencia es BART es usar una suma de árboles regularizada por un prior. Prácticamente en la totalidad de la literatura, BART se discute como un modelo independiente y el software que lo implementa generalmente se limita a uno o unos pocos modelos predeterminados. Nosotros vamos a discutirlo en el mismo contexto en el que hemos discutido el resto de los tópicos de este curso, en el contexto de la programación probabilista. En este contexto BART es una variable aleatoria, o escríctamente un proceso estocástico similar a GPs.</p>
+<p>La esencia en BART es usar una suma de árboles regularizada por un prior. Prácticamente en la totalidad de la literatura, BART se discute como un modelo independiente y el software que lo implementa generalmente se limita a uno o unos pocos modelos predeterminados. Nosotros vamos a discutirlo en el mismo contexto en el que hemos discutido el resto de los tópicos de este curso, en el contexto de la programación probabilista. En este contexto BART es una variable aleatoria, o estríctamente un proceso estocástico similar a GPs.</p>
 <p>En este capítulo, cubriremos los siguientes temas:</p>
 <ul>
 <li>Árboles de decisión</li>
@@ -346,7 +346,7 @@ window.Quarto = {
 </section>
 <section id="árboles-de-regresión" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="árboles-de-regresión"><span class="header-section-number">7.2</span> Árboles de regresión</h2>
-<p>En un árbol de decisión, $ contiene clases o etiquetas. Pero en principio podemos asociar otros elementos, típicamente números reales.</p>
+<p>En un árbol de decisión, <span class="math inline">\(\mathcal{M}\)</span> contiene clases o etiquetas. Pero en principio podemos asociar otros elementos, típicamente números reales.</p>
 <p>En la siguiente figura se muestra un caso de regresión con una sola covariable. A la izquierda vemos un árbol binario similar al de la figura anterior, con la principal diferencia de que en lugar de devolver un valor de clase en cada nodo hoja, el árbol devuelve un número.</p>
 <p><img src="img/decision_tree_reg.png" class="img-fluid"></p>
 <p>En este caso hemos aproximado una serie de puntos, que parecen seguir una curva sinusoidal, con tres valores constantes, que geométricamente podemos interpretar como tres segmentos no-continuos, o de forma más general como una función definida por partes. En ese caso el valor de cada nodo hoja se corresponde con la media de los puntos correspondientes a su partición. La elección de la media es arbitraria, y se relaciona principalmente con su simpleza y facilidad de cálculo. Algunas alternativas serían la mediana, lo que podría ofrecer robustez a valores extremos. O incluso funciones más complejas como una regresión lineal, un spline, un proceso Gaussiano o una red neuronal. Sin embargo, la media es probablemente la opción más común para los árboles de regresión.</p>
@@ -357,7 +357,7 @@ window.Quarto = {
 <p>Una característica atractiva de los árboles de decisión/regresión es su interpretabilidad: literalmente se puede leer el árbol y seguir los pasos necesarios para resolver un determinado problema. Y, por lo tanto, se puede comprender de forma transparente qué está haciendo el método, porque funciona y porque algunas clases pueden no estar clasificadas adecuadamente o porque algunos datos no están bien aproximados. Además, también es fácil explicar el resultado a una audiencia no técnica con términos simples.</p>
 <p>Además los árboles ofrecen un método muy flexible, ya que siempre se puede encontrar un árbol lo suficientemente complejo como para que cada nodo hoja tenga asociado una observación. La contracara de esta flexibilidad es el sobreajuste. La siguiente figura muestra un ejemplo de un árbol que ha sobreajustado los datos.</p>
 <p><img src="img/decision_tree_overfitting.png" class="img-fluid"></p>
-<p>Otro punto a notar es que es posible encontrar más de un árbol que ajuste igualmente bien un conjunto de datos. Esto quiere decir que áun cuando interpretables, podríamos encontrar interpretaciones alternativas. Un caso sencillo se da en la primer figura, el punto <span class="math inline">\(C_1\)</span> no es único, hay una cantidad infinita de puntos a su alrededor que darían árboles que proveen exactamente el mismo ajuste y por lo tanto indistinguibles (al menos in-sample).</p>
+<p>Otro punto a notar es que es posible encontrar más de un árbol que ajuste igualmente bien un conjunto de datos. Esto quiere decir que áun cuando son interpretables, podríamos encontrar interpretaciones alternativas. Un caso sencillo se da en la primer figura, el punto <span class="math inline">\(C_1\)</span> no es único, hay una cantidad infinita de puntos a su alrededor que darían árboles que proveen exactamente el mismo ajuste y por lo tanto indistinguibles (al menos in-sample).</p>
 <p>Una propiedad interesante de los árboles surge cuando pensamos en ellos en términos de efectos e interacciones principales como lo hicimos con los modelos lineales. Observe que el término <span class="math inline">\(\mathbb{E}(Y \mid \boldsymbol{X})\)</span> es igual a la suma de todos los parámetros del nodo hoja <span class="math inline">\(\mu_{ij}\)</span>, por lo tanto:</p>
 <ul>
 <li>Cuando un árbol depende de una sola variable cada uno de esos <span class="math inline">\(\mu_{ij}\)</span> representa un efecto principal</li>
@@ -377,7 +377,7 @@ window.Quarto = {
 <p><span class="math display">\[
 Y = \phi \left(\sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_i, \mathcal{M}_i), \theta \right)
 \]</span></p>
-<p>Donde <span class="math inline">\(G\)</span> representa una función árbol parametrizada por <span class="math inline">\(\mathcal{T}_i\)</span> y <span class="math inline">\(\mathcal{M}_i\)</span>, que como ya vimos<span class="math inline">\(\mathcal{T}_i\)</span> representa la estructura de un árbol binario, es decir, el conjunto de nodos internos y sus reglas de decisión asociadas y un conjunto de nodos terminales. Mientras que <span class="math inline">\(\mathcal{M}_i\)</span> representa los valores en los nodos terminales. <span class="math inline">\(\phi\)</span> representa una distribución de probabilidad arbitraria que se usará como likelihood en nuestro modelo y <span class="math inline">\(\theta\)</span> otros parámetros de <span class="math inline">\(\phi\)</span> no modelados como una suma de árboles.</p>
+<p>Donde <span class="math inline">\(G\)</span> representa una función árbol parametrizada por <span class="math inline">\(\mathcal{T}_i\)</span> y <span class="math inline">\(\mathcal{M}_i\)</span>, que como ya vimos <span class="math inline">\(\mathcal{T}_i\)</span> representa la estructura de un árbol binario, es decir, el conjunto de nodos internos y sus reglas de decisión asociadas y un conjunto de nodos terminales. Mientras que <span class="math inline">\(\mathcal{M}_i\)</span> representa los valores en los nodos terminales. <span class="math inline">\(\phi\)</span> representa una distribución de probabilidad arbitraria que se usará como likelihood en nuestro modelo y <span class="math inline">\(\theta\)</span> otros parámetros de <span class="math inline">\(\phi\)</span> no modelados como una suma de árboles.</p>
 <p>Por ejemplo si <span class="math inline">\(\phi\)</span> es una distribución Normal, podríamos usar la suma de árboles para representar la media <span class="math inline">\(\mu\)</span> y tendríamos a <span class="math inline">\(\sigma\)</span> como variable auxiliar.</p>
 <p><span class="math display">\[
 Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathcal{M}_j), \sigma^2  \right)
@@ -396,9 +396,9 @@ Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathca
 <li><p>La distribución sobre la variable de partición. Lo más habitual es que sea Uniforme entre las covariables disponibles. Es posible utilizar otras distribuciones. PyMC-BART permite pasar un vector <code>split_prior</code> que tiene la misma interpretación que el parámetro de concentración <span class="math inline">\(\alpha\)</span> en una distribución de Dirichlet.</p></li>
 <li><p>La distribución sobre los valores de partición. Es decir, una vez que elegimos una variable de partición, qué valor usamos para tomar una decisión. Es uniforme sobre los valores disponibles.</p></li>
 </ul>
-<p>El prior para los valores de las hojas $_{ij}</p>
-<p>Usamos <span class="math inline">\(\mathcal{N}(\mu_\text{pred}, {\varepsilon^2})\)</span>, donde <span class="math inline">\(\mu_\text{pred}\)</span> se calcula como la media de la suma actual de árboles dividida por número de árboles . <span class="math inline">\(\varepsilon\)</span> se calcula inicialmente a partir de <span class="math inline">\(Y\)</span>, siendo <span class="math inline">\(\varepsilon = \frac{3}{\sqrt{m}}\)</span> para datos binomiales y <span class="math inline">\(\varepsilon = \frac{Y_\text{std}}{\sqrt{m}}\)</span> para datos distintos del binomial.</p>
-<p>El número de árboles <span class="math inline">\(m\)</span> debe ser especificado por el usuario, valores comunmente usados suelen ser 50, 100 o 200. En general mientras más árboles se utilicen mejor serán los resultados. Cuando se evalúa usando LOO, en general lo que se observa al aumentar <span class="math inline">\(m\)</span> es una saturación sin llegar a sobrejustar. Es decir LOO aumenta a medida que <span class="math inline">\(m\)</span> aumenta, pero el incremento va disminuyendo. Esto se puede explicar, al menos en parte, por el hecho que el aumento de <span class="math inline">\(m\)</span> implica un valor cada vez más pequeño de <span class="math inline">\(\mu\)</span>.</p>
+<p>El prior para los valores de las hojas <span class="math inline">\(\mu_{ij}\)</span></p>
+<p>Usamos <span class="math inline">\(\mathcal{N}(\mu_\text{pred}, {\varepsilon^2})\)</span>, donde <span class="math inline">\(\mu_\text{pred}\)</span> se calcula como la media de la suma actual de árboles dividida por número de árboles <span class="math inline">\(m\)</span>. <span class="math inline">\(\varepsilon\)</span> se calcula inicialmente a partir de <span class="math inline">\(Y\)</span>, siendo <span class="math inline">\(\varepsilon = \frac{3}{\sqrt{m}}\)</span> para datos binomiales y <span class="math inline">\(\varepsilon = \frac{Y_\text{std}}{\sqrt{m}}\)</span> para datos distintos del binomial.</p>
+<p>El número de árboles <span class="math inline">\(m\)</span> debe ser especificado por el usuario, los valores comunmente usados suelen ser 50, 100 o 200. En general mientras más árboles se utilicen mejor serán los resultados. Cuando se evalúa usando LOO, en general lo que se observa al aumentar <span class="math inline">\(m\)</span> es una saturación sin llegar a sobrejustar. Es decir LOO aumenta a medida que <span class="math inline">\(m\)</span> aumenta, pero el incremento va disminuyendo. Esto se puede explicar, al menos en parte, por el hecho que el aumento de <span class="math inline">\(m\)</span> implica un valor cada vez más pequeño de <span class="math inline">\(\mu\)</span>.</p>
 <p>La especificación de los priors para BART, se desvía un poco de la especificación típica de priors en modelos Bayesianos, y la razón es que están diseñados para ser automáticos, algo similar a lo que hace Bambi. Por ejemplo usamos <span class="math inline">\(Y\)</span> para especificar <span class="math inline">\(\mu\)</span>, además este valor de <span class="math inline">\(\mu\)</span> es solo utilizado inicialmente. Durante la fase de ajuste el valor de <span class="math inline">\(\mu\)</span> es actualizado utilizando la varianza de las predicciones de cada árbol ajustado. Algo similar sucede con las variables de partición, por defecto todas tienen la misma probabilidad, pero durante la fase de ajuste se va actualizando esta probabiliad de acuerdo a la frecuencia con la que las variables entran en los árboles. Esto disminuye la probabilidad de que variables espurias participen de la suma de árboles, mejorado el uso de los recursos computacionales y mejorando la estimación de la importancia de las variables. Es claro que estos “trucos” hacen que el método no sea 100% bayesiano, si no una aproximación.</p>
 </section>
 </section>
@@ -406,7 +406,7 @@ Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathca
 <h2 data-number="7.7" class="anchored" data-anchor-id="inferencia-sobre-árboles-de-regresión-aditiva-bayesiana"><span class="header-section-number">7.7</span> Inferencia sobre árboles de regresión aditiva bayesiana</h2>
 <p>Hasta ahora hemos discutido ideas generales sobre los árboles y algo sobre como especificar distribuciones a priori para árboles, pero no hemos discutido detalles de calcular una distribución a posteriori de árboles. Hay muchas estrategias para hacer esto y los detalles son demasiado específicos para este curso. Por ese motivo vamos a describir sólo los elementos principales. Para más detalles pueden leer este <a href="https://arxiv.org/abs/2206.03619">artículo</a>.</p>
 <p>Para ajustar los modelos BART no podemos usar métodos basados en gradientes como el Monte Carlo Hamiltoniano porque el espacio de los árboles es discreto, y por lo tanto no hay forma directa de obtener gradientes. Por esa razón, se han desarrollado métodos de muestreo específicos para árboles, muchos de ellos son variantes de MCMC.</p>
-<p>A grandes rasgos, cada paso del método implementado en PyMC-BART consiste en elegir uno de los <span class="math inline">\(m_i\)</span> árboles disponibles y proponer un nuevo árbol que lo reemplace. Para ello se procede de la siguiente forma</p>
+<p>A grandes rasgos, cada paso del método implementado en PyMC-BART consiste en elegir uno de los <span class="math inline">\(m_i\)</span> árboles disponibles y proponer un nuevo árbol que lo reemplace. Para ello se procede de la siguiente forma:</p>
 <ol type="1">
 <li>Se hacen crecer <span class="math inline">\(N\)</span> árboles, comenzando desde la raíz y siguiendo los priors.</li>
 <li>Se calcula un peso para cada uno de los <span class="math inline">\(N\)</span> árboles y para el árbol <span class="math inline">\(m_i\)</span></li>
@@ -420,24 +420,24 @@ Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathca
 <h2 data-number="7.8" class="anchored" data-anchor-id="minería-de-carbón-con-bart"><span class="header-section-number">7.8</span> Minería de carbón con BART</h2>
 <p>Para comprender mejor BART en la práctica, utilizaremos dataset de la minería del carbón que ya usamos en dos ejemplos anteriores. En lugar de pensar este problema como un modelo de punto de cambio con dos distribuciones de Poisson, como en el ejemplo original de PyMC. Vamos a pensar en este problema como una regresión no paramétrica con una respuesta de Poisson, esto generalmente se discute en términos de <a href="https://en.wikipedia.org/wiki/Poisson_point_process">procesos de Poisson</a> o <a href="https://en.wikipedia.org/wiki/Cox_process">procesos de Cox</a>.</p>
 <p>Debido a que nuestros datos son solo una columna con fechas, necesitamos realizar un procesamiento previo. Vamos a discretizar los datos, como si estuviéramos construyendo un histograma. Vamos a utilizar los centros de los <em>bins</em> como la variable <span class="math inline">\(X\)</span> y la frecuencia por <em>bin</em> como la variable <span class="math inline">\(Y\)</span>.</p>
-<div id="cell-14" class="cell" data-execution_count="3">
+<div id="cell-13" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>coal <span class="op">=</span> np.loadtxt(<span class="st">"datos/coal.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-15" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># discretize data</span></span>
+<div id="cell-14" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># discretizar datos</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>years <span class="op">=</span> <span class="bu">int</span>(coal.<span class="bu">max</span>() <span class="op">-</span> coal.<span class="bu">min</span>())</span>
 <span id="cb4-3"><a href="#cb4-3"></a>bins <span class="op">=</span> years <span class="op">//</span> <span class="dv">4</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>hist, x_edges <span class="op">=</span> np.histogram(coal, bins<span class="op">=</span>bins)</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># compute the location of the centers of the discretized data</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># Calcular la ubicación de los centros de los datos discretizados</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a>x_centers <span class="op">=</span> x_edges[:<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> (x_edges[<span class="dv">1</span>] <span class="op">-</span> x_edges[<span class="dv">0</span>]) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># xdata needs to be 2D for BART</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># x_data debe ser 2D para BART</span></span>
 <span id="cb4-8"><a href="#cb4-8"></a>x_data <span class="op">=</span> x_centers[:, <span class="va">None</span>]</span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># express data as the rate number of disaster per year</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># Expresar los datos como la tasa de número de accidentes por año</span></span>
 <span id="cb4-10"><a href="#cb4-10"></a>y_data <span class="op">=</span> hist</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Una variable BART se puede definir de manera muy similar a otras variables aleatorias. Una diferencia importante es que tenemos que pasar los valores de X e Y a la variable BART, esta información se usa al muestrear árboles.</p>
 <p>Aquí también dejamos explícito que vamos a utilizar una suma de 20 árboles (<code>m=20</code>). Un número bajo de árboles como 20 podría ser suficiente para modelos simples como este y también podría funcionar muy bien como una aproximación rápida para modelos más complejos, en particular durante la etapa inicial del modelado, cuando es posible que queramos probar algunas cosas tan rápido como sea posible.</p>
-<div id="cell-17" class="cell" data-execution_count="5">
+<div id="cell-16" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_coal:</span>
 <span id="cb5-2"><a href="#cb5-2"></a>    μ_ <span class="op">=</span> pmb.BART(<span class="st">"μ_"</span>, X<span class="op">=</span>x_data, Y<span class="op">=</span>np.log(y_data), m<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>    μ <span class="op">=</span> pm.Deterministic(<span class="st">"μ"</span>, pm.math.exp(μ_))</span>
@@ -446,16 +446,13 @@ Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathca
 <div class="cell-output cell-output-stderr">
 <pre><code>Multiprocess sampling (4 chains in 4 jobs)
 PGBART: [μ_]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 24 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.
 The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"b675f8fa475b439b968bf572e08093ef","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"bc7cc3adacae41c3be6681a5ecd83d83","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -463,7 +460,7 @@ The rhat statistic is larger than 1.01 for some parameters. This indicates probl
 </div>
 <p>Antes de comprobar el resultado, necesitamos discutir un detalle más, la variable BART siempre devuelve muestras en los reales, lo que significa que en principio podemos obtener valores que van desde <span class="math inline">\(-\infty\)</span> hasta <span class="math inline">\(\infty\)</span>. Por lo tanto, es posible que necesitemos transformar estos valores como lo haríamos para modelos lineales generalizados, por ejemplo en <code>modelo_coal</code> calculamos <code>pm.math.exp(μ_)</code> porque la distribución de Poisson espera valores que van de 0 a <span class="math inline">\(\infty\)</span>. Hasta acá no hay demasiada novedad. Lo nuevo es que es posible que necesitemos aplicar la transformación inversa a los valores de <span class="math inline">\(Y\)</span>, como hicimos en el modelo anterior donde tomamos <span class="math inline">\(\log(Y)\)</span>. Como ya mencionamos los valores del argumento <code>Y</code> se utilizan para obtener un valor inicial razonable. Por tanto, aplicar la transformación inversa es una forma sencilla de mejorar la eficiencia y precisión del resultado. ¿Deberíamos hacer esto siempre? Bueno no. Si usamos BART para el parámetro <span class="math inline">\(\mu\)</span> de distribuciones como Normal, T de Student o LaplaceAsimétrica, no necesitamos hacer nada ya que el soporte de estos parámetros son los reales. Ahora, una excepción no trivial es cuando usemos como likelihood Bernoulli (o Binomial con n=1), en ese caso, necesitamos aplicar la función logística a la variable BART, pero no es necesario aplicar su inversa para transformar <code>Y</code>, PyMC-BART es capaz de lidiar con este caso particular internamente.</p>
 <p>Bien, ahora veamos el resultado de <code>modelo_coal</code>.</p>
-<div id="cell-19" class="cell" data-hide_input="false" data-execution_count="6">
+<div id="cell-18" class="cell" data-hide_input="false" data-execution_count="6">
 <details class="code-fold">
 <summary>Mostrar Código</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>_, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -486,13 +483,13 @@ The rhat statistic is larger than 1.01 for some parameters. This indicates probl
 </div>
 </div>
 </div>
-<p>La línea blanca en el gráfico anterior muestra la tasa media de accidentes. La franja cyan más oscura representa el HDI 50% y la más clara el HDI 94%. Podemos ver una rápida disminución en los accidentes relacionados con el carbón entre 1880 y 1900.</p>
+<p>La línea blanca en el gráfico anterior muestra la tasa media de accidentes. La franja cian más oscura representa el HDI 50% y la más clara el HDI 94%. Podemos ver una rápida disminución en los accidentes relacionados con el carbón entre 1880 y 1900.</p>
 <p>En el gráfico anterior, la línea blanca es la media de 4000 muestras de la distribución a posteriori, y cada uno de esos muestras es una suma de 20 árboles.</p>
 </section>
 <section id="bicicleteando-con-bart" class="level2" data-number="7.9">
 <h2 data-number="7.9" class="anchored" data-anchor-id="bicicleteando-con-bart"><span class="header-section-number">7.9</span> Bicicleteando con BART</h2>
 <p>Veamos otro ejemplo, esta vez usando el dataset de bikes.</p>
-<div id="cell-22" class="cell" data-execution_count="7">
+<div id="cell-21" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>bikes <span class="op">=</span> pd.read_csv(<span class="st">"datos/bikes.csv"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
 <span id="cb8-3"><a href="#cb8-3"></a>features <span class="op">=</span> [<span class="st">"hour"</span>, <span class="st">"temperature"</span>, <span class="st">"humidity"</span>, <span class="st">"weekday"</span>]</span>
@@ -500,7 +497,7 @@ The rhat statistic is larger than 1.01 for some parameters. This indicates probl
 <span id="cb8-5"><a href="#cb8-5"></a>X <span class="op">=</span> bikes[features]</span>
 <span id="cb8-6"><a href="#cb8-6"></a>Y <span class="op">=</span> bikes[<span class="st">"rented"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-23" class="cell" data-execution_count="8">
+<div id="cell-22" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_bikes:</span>
 <span id="cb9-2"><a href="#cb9-2"></a>    α <span class="op">=</span> pm.Exponential(<span class="st">"α"</span>, <span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3"></a>    μ <span class="op">=</span> pmb.BART(<span class="st">"μ"</span>, X, np.log(Y), m<span class="op">=</span><span class="dv">50</span>)</span>
@@ -511,15 +508,12 @@ The rhat statistic is larger than 1.01 for some parameters. This indicates probl
 CompoundStep
 &gt;NUTS: [α]
 &gt;PGBART: [μ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 79 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 46 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e323a74121bb4481b9da3947a116450f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"18176ead8bf14d71a4edcf4cb582c15e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -529,10 +523,10 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <h3 data-number="7.9.1" class="anchored" data-anchor-id="diagnóstico-de-convergencia"><span class="header-section-number">7.9.1</span> Diagnóstico de convergencia</h3>
 <p>Para verificar la convergencia de muestreo de los modelos BART, recomendamos un enfoque de 2 pasos.</p>
 <ul>
-<li>Para las variables que no son BART (como <span class="math inline">\(\alpha\)</span> en <code>model_bikes</code>) seguimos las recomendaciones estándar, como verificar los diagnósticos numéricos R-hat (&lt;= 1.01) y ESS (&lt; 100x número de cadenas), así como usar trazar gráficos o incluso mejores gráficos de clasificación</li>
+<li>Para las variables que no son BART (como <span class="math inline">\(\alpha\)</span> en <code>model_bikes</code>) seguimos las recomendaciones estándar, como verificar los diagnósticos numéricos R-hat (&lt;= 1.01) y ESS (&lt; 100x número de cadenas), así como usar trazar gráficos o incluso mejores gráficos de clasificación.</li>
 <li>Para las variables BART recomendamos utilizar la función <code>pmb.plot_convergence</code>.</li>
 </ul>
-<div id="cell-25" class="cell" data-execution_count="9">
+<div id="cell-24" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>az.plot_trace(idata_bikes, var_names<span class="op">=</span>[<span class="st">"α"</span>], kind<span class="op">=</span><span class="st">"rank_bars"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -542,10 +536,10 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 </div>
-<div id="cell-26" class="cell" data-execution_count="10">
+<div id="cell-25" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>pmb.plot_convergence(idata_bikes, var_name<span class="op">=</span><span class="st">"μ"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/arviz/plots/ecdfplot.py:295: BehaviourChangeWarning: In future versions, if `eval_points` is not provided, then the ECDF will be evaluated at the unique values of the sample. To keep the current behavior, provide `eval_points` explicitly.
+<pre><code>/home/pablo/anaconda3/envs/EI2/lib/python3.11/site-packages/arviz/plots/ecdfplot.py:295: BehaviourChangeWarning: In future versions, if `eval_points` is not provided, then the ECDF will be evaluated at the unique values of the sample. To keep the current behavior, provide `eval_points` explicitly.
   warnings.warn(</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -557,13 +551,13 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 <p>En la literatura de BART, el diagnóstico de las variables de BART a veces se considera menos importante que el diagnóstico de las variables que no son de BART; el argumento principal es que las estimaciones individuales de las variables latentes no tienen ningún interés directo y, en cambio, solo deberíamos preocuparnos. sobre qué tan bien estamos estimando toda la función/regresión.</p>
-<p>En cambio, consideramos que verificar la convergencia de las variables BART es una parte importante del flujo de trabajo Bayesiano. La razón principal para usar <code>pmb.plot_convergence</code> es que normalmente la variable BART será un vector grande (estimamos una distribución por observación) y, por lo tanto, necesitaremos verificar una gran cantidad de diagnósticos. Además, el umbral de R-hat de 1,01 no es un umbral estricto; este valor se eligió suponiendo que se examinan uno o varios R-hat (y que las cadenas son lo suficientemente largas para estimar con precisión su autocorrelación), y si observamos una gran cantidad de R-que se espera que algunos de ellos sean mayores que el umbral de 1,01 (o cualquier umbral que elijamos) incluso si no hay nada malo en nuestra inferencia. Por esa razón, un análisis justo debe incluir un ajuste de comparación múltiple, y eso es lo que <code>pmb.plot_convergence</code> hace automáticamente por usted. Entonces, ¿cómo leer su salida? Tenemos dos paneles uno para ESS y otro para R-hat. La línea azul es la distribución acumulativa empírica de esos valores, para ESS queremos que toda la curva esté por encima de la línea discontinua y para R-hat queremos que la curva esté completamente por debajo de la línea discontinua. En la figura anterior, podemos ver que apenas lo logramos para ESS y para R-hat tenemos muy pocos valores por encima del umbral. ¿Son nuestros resultados inútiles? Probablemente no. Pero, sin duda, es posible que queramos realizar algunos sorteos más.</p>
+<p>En cambio, consideramos que verificar la convergencia de las variables BART es una parte importante del flujo de trabajo Bayesiano. La razón principal para usar <code>pmb.plot_convergence</code> es que normalmente la variable BART será un vector grande (estimamos una distribución por observación) y, por lo tanto, necesitaremos verificar una gran cantidad de diagnósticos. Además, el umbral de R-hat de 1,01 no es un umbral estricto; este valor se eligió suponiendo que se examinan uno o varios R-hat (y que las cadenas son lo suficientemente largas para estimar con precisión su autocorrelación), y si observamos una gran cantidad de R-hat que se espera que algunos de ellos sean mayores que el umbral de 1,01 (o cualquier umbral que elijamos) incluso si no hay nada malo en nuestra inferencia. Por esa razón, un análisis justo debe incluir un ajuste de comparación múltiple, y eso es lo que <code>pmb.plot_convergence</code> hace automáticamente por usted. Entonces, ¿cómo leer su salida? Tenemos dos paneles uno para ESS y otro para R-hat. La línea azul es la distribución acumulativa empírica de esos valores, para ESS queremos que toda la curva esté por encima de la línea discontinua y para R-hat queremos que la curva esté completamente por debajo de la línea discontinua. En la figura anterior, podemos ver que apenas lo logramos para ESS y para R-hat tenemos muy pocos valores por encima del umbral. ¿Son nuestros resultados inútiles? Probablemente no. Pero, sin duda, es posible que queramos realizar algunos sorteos más.</p>
 </section>
 </section>
 <section id="partial-dependence-plots" class="level2" data-number="7.10">
 <h2 data-number="7.10" class="anchored" data-anchor-id="partial-dependence-plots"><span class="header-section-number">7.10</span> Partial dependence plots</h2>
 <p>Para ayudarnos a interpretar los resultados de nuestro modelo, utilizaremos gráficos de dependencia parcial. Este es un tipo de gráfico que muestra el efecto marginal que tiene una covariable sobre la variable predicha. Es decir, ¿cuál es el efecto que tiene una covariable <span class="math inline">\(X_i\)</span> sobre <span class="math inline">\(Y\)</span> mientras promediamos todas las demás covariables (<span class="math inline">\(X_j, \forall j \not = i\)</span>). Esta herramienta no es exclusiva de BART. Pero se utilizan a menudo en la literatura de BART.</p>
-<div id="cell-29" class="cell" data-execution_count="11">
+<div id="cell-28" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>pmb.plot_pdp(μ, X<span class="op">=</span>X, Y<span class="op">=</span>Y, grid<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), func<span class="op">=</span>np.exp, var_discrete<span class="op">=</span>[<span class="dv">3</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -574,12 +568,12 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 <p>En este gráfico, podemos ver el efecto principal de cada covariable sobre el valor predicho. Esto es muy útil ya que podemos recuperar relaciones complejas más allá de efectos monótonos crecientes o decrecientes. Por ejemplo para la covariable “hora” podemos ver dos picos alrededor de las 8 y 17 hs y un mínimo a medianoche.</p>
-<p>Al interpretar gráficos de dependencia parcial debemos tener cuidado con los supuestos de este gráfico. Primero, asumimos que las variables son independientes. Por ejemplo, al calcular el efecto de la “hora” tenemos que marginar el efecto de la “temperatura” y esto significa que para calcular el valor de dependencia parcial en “hora=0” estamos incluyendo todos los valores de temperatura observados, y esto puede incluir temperaturas. que no se observan a medianoche, dado que es más probable que haya temperaturas más bajas que más altas. Solo estamos viendo promedios, por lo que si para una covariable la mitad de los valores están asociados positivamente con la variable predicha y la otra mitad está asociada negativamente. La gráfica de dependencia parcial será plana ya que sus contribuciones se cancelarán entre sí. Este es un problema que se puede resolver utilizando gráficos de expectativas condicionales individuales <code>pmb.plot_ice(...)</code>. Observe que todos estos supuestos son supuestos del gráfico de dependencia parcial, ¡no de nuestro modelo! De hecho, BART puede acomodar fácilmente interacciones de variables de orden arbitrario, las interacciones de alto orden están regularizadas.</p>
+<p>Al interpretar gráficos de dependencia parcial debemos tener cuidado con los supuestos de este gráfico. Primero, asumimos que las variables son independientes. Por ejemplo, al calcular el efecto de la “hora” tenemos que marginar el efecto de la “temperatura” y esto significa que para calcular el valor de dependencia parcial en “hora=0” estamos incluyendo todos los valores de temperatura observados, y esto puede incluir temperaturas que no se observan a medianoche, dado que es más probable que haya temperaturas más bajas que más altas. Solo estamos viendo promedios, por lo que si para una covariable la mitad de los valores están asociados positivamente con la variable predicha y la otra mitad está asociada negativamente. La gráfica de dependencia parcial será plana ya que sus contribuciones se cancelarán entre sí. Este es un problema que se puede resolver utilizando gráficos de expectativas condicionales individuales <code>pmb.plot_ice(...)</code>. Observe que todos estos supuestos son supuestos del gráfico de dependencia parcial, ¡no de nuestro modelo! De hecho, BART puede acomodar fácilmente interacciones de variables de orden arbitrario, las interacciones de alto orden están regularizadas.</p>
 <p>Finalmente, al igual que con otros métodos de regresión, debemos tener cuidado de que los efectos que observamos en las variables individuales estén condicionados a la inclusión de otras variables. Así, por ejemplo, aunque la “humedad” parece ser mayoritariamente plana, lo que significa que esta covariable tiene un pequeño efecto en el número de bicicletas usadas. Este podría ser el caso porque la “humedad” y la “temperatura” están correlacionadas hasta cierto punto y una vez que incluimos la “temperatura” en nuestro modelo, la “humedad” no proporciona demasiada información adicional. Intente, por ejemplo, ajustar el modelo nuevamente, pero esta vez con “humedad” como covariable única y luego ajustar el modelo nuevamente con “hora” como covariable única. Debería ver que el resultado de este modelo de variable única será muy similar a la figura anterior para la covariable “hora”, pero menos similar para la covariable “humedad”.</p>
 <section id="selección-de-variables" class="level3" data-number="7.10.1">
 <h3 data-number="7.10.1" class="anchored" data-anchor-id="selección-de-variables"><span class="header-section-number">7.10.1</span> Selección de variables</h3>
 <p>Como vimos en la sección anterior, un gráfico de dependencia parcial nos permite interpretar el efecto (marginal) de cada covariable sobre la respuesta. Además nos da una idea de cuánto contribuye cada covariable a la variable predicha. Pero hay una forma más directa de hacer esto. Veamos primero un gráfico y luego como interpretarlo y calcularlo.</p>
-<div id="cell-32" class="cell" data-execution_count="12">
+<div id="cell-31" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -597,7 +591,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <li><p>Las predicciones utilizadas para el cálculo de R² provienen de los árboles ya ajustados. Por ejemplo, para estimar el efecto de un modelo BART con la variable <code>hora</code> <em>podamos</em> la rama que no incluye esta variable. Esto hace que los cálculos sean mucho más rápidos, ya que no necesitamos encontrar un nuevo conjunto de árboles. Esto es similar a lo que hacemos al calcular un PDP.</p></li>
 </ul>
 <p>En lugar de utilizar la “heurística de conteo”. También puede realizar una búsqueda hacia atrás, <code>pmb.plot_variable_importance(..., method="backward")</code>. Internamente, esto calculará el R² para el modelo completo, luego para todos los modelos con una variable menos que el modelo completo, y luego para todos los modelos con menos de dos, y así sucesivamente. En cada etapa, descartamos la variable que da el R² más bajo. El método inverso será más lento, ya que necesitamos calcular predicciones para más modelos.</p>
-<div id="cell-34" class="cell" data-execution_count="13">
+<div id="cell-33" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X, method<span class="op">=</span><span class="st">"backward"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -611,9 +605,9 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </section>
 <section id="modelos-distribucionales-con-bart" class="level2" data-number="7.11">
 <h2 data-number="7.11" class="anchored" data-anchor-id="modelos-distribucionales-con-bart"><span class="header-section-number">7.11</span> Modelos distribucionales con BART</h2>
-<p>Como ya vimos para modelos lineales generalizados, no estamos restringidos a crear modelos lineales para la media o el parámetro de ubicación; También podemos modelar otros parámetros, como el parámetro de dispersión. Lo mismo se aplica a los modelos BART.</p>
+<p>Como ya vimos para modelos lineales generalizados, no estamos restringidos a crear modelos lineales para la media o el parámetro de ubicación, también podemos modelar otros parámetros, como el parámetro de dispersión. Lo mismo se aplica a los modelos BART.</p>
 <p>Para ejemplificar esto probemos extender el modelo anterior, esta vez usando la suma de árboles tanto para modelar <span class="math inline">\(\mu\)</span> como <span class="math inline">\(\alpha\)</span>.</p>
-<div id="cell-36" class="cell" data-execution_count="14">
+<div id="cell-35" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_bb:</span>
 <span id="cb17-2"><a href="#cb17-2"></a>    μ <span class="op">=</span> pmb.BART(<span class="st">"μ"</span>, X, np.log(Y), shape<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">348</span>), separate_trees<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb17-3"><a href="#cb17-3"></a>    pm.NegativeBinomial(<span class="st">'yl'</span>, mu<span class="op">=</span>np.exp(μ[<span class="dv">0</span>]), alpha<span class="op">=</span>np.exp(μ[<span class="dv">1</span>]), observed<span class="op">=</span>Y)</span>
@@ -621,15 +615,12 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <div class="cell-output cell-output-stderr">
 <pre><code>Multiprocess sampling (4 chains in 4 jobs)
 PGBART: [μ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 166 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 94 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"6f047def39394a449810aa32b645eced","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"4ce3ae4702144bd28073c52a4b8383d9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-display">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -640,7 +631,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Luego necesitamos indexar <code>μ</code> para usar la primera dimensión para el parámetro <span class="math inline">\(\mu\)</span> y la segunda para el parámetro <span class="math inline">\(\alpha\)</span>.</p>
 <p>Otro aspecto importante del <code>modelo_bb</code> es que tomamos la función exponencial de <code>μ</code>. Hacemos esto para garantizar que la distribución binomial negativa obtenga solo valores positivos, tanto para <span class="math inline">\(\mu\)</span> como para <span class="math inline">\(\alpha\)</span>. Este es el mismo tipo de transformación que discutimos en el contexto de los modelos lineales generalizados.</p>
 <p>La siguiente figura muestra un partial dependence plots con dos columnas una por cada parámetro de la distribución NegativaBinomial</p>
-<div id="cell-38" class="cell" data-execution_count="15">
+<div id="cell-37" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>pmb.plot_pdp(μ, X, Y, </span>
 <span id="cb19-2"><a href="#cb19-2"></a>             xs_interval<span class="op">=</span><span class="st">"insample"</span>, func<span class="op">=</span>np.exp , var_discrete<span class="op">=</span>[<span class="dv">3</span>],</span>
 <span id="cb19-3"><a href="#cb19-3"></a>             grid<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
