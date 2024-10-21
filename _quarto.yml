@@ -24,6 +24,7 @@ book:
     - 04_Flujo_de_trabajo_bayesiano.ipynb
     - 05_GLMS.ipynb
     - 06_modelos_de_mezcla.ipynb
+    - 07_GPs.ipynb
     - 08_BART.ipynb
 
   page-navigation: true
