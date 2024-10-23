@@ -335,7 +335,7 @@ window.Quarto = {
 <p><span class="math display">\[
 Y = f(X)
 \]</span></p>
-<p>For ejemplo, podríamos tener la la función <span class="math inline">\(f(x) = sin(x)\)</span>, donde <span class="math inline">\(X\)</span> es el conjunto de todos los números reales e <span class="math inline">\(Y\)</span> es el conjunto de todos los números reales entre -1 y 1. Si evaluamos la función en una cantidad finita de puntos, podemos representar la función como una tabla de valores.</p>
+<p>Por ejemplo, podríamos tener la función <span class="math inline">\(f(x) = sin(x)\)</span>, donde <span class="math inline">\(X\)</span> es el conjunto de todos los números reales e <span class="math inline">\(Y\)</span> es el conjunto de todos los números reales entre -1 y 1. Si evaluamos la función en una cantidad finita de puntos, podemos representar la función como una tabla de valores.</p>
 <div id="b8c3a96e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>x0 <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span> <span class="op">*</span> np.pi, <span class="dv">10</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>np.stack([x0, np.sin(x0)]).T</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -431,8 +431,7 @@ Y = f(X)
 <span id="cb7-11"><a href="#cb7-11"></a>    axes[idx, <span class="dv">1</span>].set_yticks([])</span>
 <span id="cb7-12"><a href="#cb7-12"></a>    axes[idx, <span class="dv">0</span>].set_xticks([])</span>
 <span id="cb7-13"><a href="#cb7-13"></a>    axes[idx, <span class="dv">0</span>].set_xlabel(<span class="st">"X_0"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14"></a>    axes[idx, <span class="dv">0</span>].set_ylabel(<span class="st">"X_1"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a>   </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14"></a>    axes[idx, <span class="dv">0</span>].set_ylabel(<span class="st">"X_1"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -972,13 +971,14 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Como hicimos anteriormente, vamos a evaluar el GP en unos puntos nuevos <code>X_new</code></p>
 <div id="86b4d790" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>X_new <span class="op">=</span> np.linspace(np.floor(x_1.<span class="bu">min</span>()), np.ceil(x_1.<span class="bu">max</span>()), <span class="dv">200</span>)[:, <span class="va">None</span>]</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="cf">with</span> modelo_iris:</span>
-<span id="cb30-3"><a href="#cb30-3"></a>    f_pred <span class="op">=</span> gp.conditional(<span class="st">'f_pred'</span>, X_new) </span>
-<span id="cb30-4"><a href="#cb30-4"></a>    idata_iris_subset <span class="op">=</span> idata_iris.sel(draw<span class="op">=</span><span class="bu">slice</span>(<span class="dv">0</span>, <span class="va">None</span>, <span class="dv">100</span>))</span>
-<span id="cb30-5"><a href="#cb30-5"></a>    pred_samples <span class="op">=</span> pm.sample_posterior_predictive(idata_iris_subset, var_names<span class="op">=</span>[<span class="st">"f_pred"</span>], random_seed<span class="op">=</span><span class="dv">123</span>)</span>
-<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="cf">with</span> modelo_iris:</span>
+<span id="cb30-4"><a href="#cb30-4"></a>    f_pred <span class="op">=</span> gp.conditional(<span class="st">'f_pred'</span>, X_new) </span>
+<span id="cb30-5"><a href="#cb30-5"></a>    idata_iris_subset <span class="op">=</span> idata_iris.sel(draw<span class="op">=</span><span class="bu">slice</span>(<span class="dv">0</span>, <span class="va">None</span>, <span class="dv">100</span>))</span>
+<span id="cb30-6"><a href="#cb30-6"></a>    pred_samples <span class="op">=</span> pm.sample_posterior_predictive(idata_iris_subset, var_names<span class="op">=</span>[<span class="st">"f_pred"</span>], random_seed<span class="op">=</span><span class="dv">123</span>)</span>
 <span id="cb30-7"><a href="#cb30-7"></a></span>
-<span id="cb30-8"><a href="#cb30-8"></a>f_pred_iris <span class="op">=</span> az.extract(pred_samples, group<span class="op">=</span><span class="st">"posterior_predictive"</span>)[<span class="st">'f_pred'</span>].values</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-8"><a href="#cb30-8"></a></span>
+<span id="cb30-9"><a href="#cb30-9"></a>f_pred_iris <span class="op">=</span> az.extract(pred_samples, group<span class="op">=</span><span class="st">"posterior_predictive"</span>)[<span class="st">'f_pred'</span>].values</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Sampling: [f_pred]</code></pre>
 </div>
@@ -1544,7 +1544,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 </div>
-<p>Para entender la distribución posterior de las funciones de covarianza en términos de distancias, podemos representar gráficamente algunas muestras de la distribución posterior como en siguiente figura. La curva azul más oscura representa la covarianza mediana posterior en cada distancia y las curvas más claras y finas muestran funciones de la distribución posterior conjunta de <span class="math inline">\(\ell\)</span> y <span class="math inline">\(\eta\)</span>.</p>
+<p>Para entender la distribución posterior de las funciones de covarianza en términos de distancias, podemos representar gráficamente algunas muestras de la distribución posterior como en la siguiente figura. La curva azul más oscura representa la covarianza mediana posterior en cada distancia y las curvas más claras y finas muestran funciones de la distribución posterior conjunta de <span class="math inline">\(\ell\)</span> y <span class="math inline">\(\eta\)</span>.</p>
 <p>Usamos la mediana porque las distribuciones para <span class="math inline">\(\ell\)</span> y <span class="math inline">\(\eta\)</span> están muy sesgadas. Podemos ver que la covarianza, en promedio, no es tan alta y también cae a casi 0 a unos 3000 kilómetros. Las líneas delgadas representan la incertidumbre, y podemos ver que hay mucha incertidumbre.</p>
 <div id="c2b3176c" class="cell" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1"></a>posterior_islands <span class="op">=</span> idata_islands.posterior.stack(samples<span class="op">=</span>(<span class="st">"chain"</span>, <span class="st">"draw"</span>))</span>
@@ -1575,11 +1575,11 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <p>Ahora veamos qué tan fuertemente correlacionadas están las sociedades insulares según el modelo y los datos. Para ello, tenemos que convertir la matriz de covarianza en una matriz de correlación.</p>
 <div id="fa09516c" class="cell" data-execution_count="59">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># compute posterior median covariance among societies</span></span>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># Calcular la covarianza mediana posterior entre sociedades</span></span>
 <span id="cb63-2"><a href="#cb63-2"></a>Σ <span class="op">=</span> np.median(trace_η) <span class="op">*</span> (np.exp(<span class="op">-</span>(islands_dist)<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.median(trace_ℓ)<span class="op">**</span><span class="dv">2</span>)))</span>
 <span id="cb63-3"><a href="#cb63-3"></a></span>
 <span id="cb63-4"><a href="#cb63-4"></a></span>
-<span id="cb63-5"><a href="#cb63-5"></a><span class="co"># convert to correlation matrix</span></span>
+<span id="cb63-5"><a href="#cb63-5"></a><span class="co"># Convertir a matriz de correlación</span></span>
 <span id="cb63-6"><a href="#cb63-6"></a>Σ_post <span class="op">=</span> np.diag(np.diag(Σ)<span class="op">**-</span><span class="fl">0.5</span>)</span>
 <span id="cb63-7"><a href="#cb63-7"></a>ρ <span class="op">=</span> Σ_post <span class="op">@</span>  Σ <span class="op">@</span> Σ_post</span>
 <span id="cb63-8"><a href="#cb63-8"></a>ρ <span class="op">=</span> pd.DataFrame(ρ, index<span class="op">=</span>culture_labels, columns<span class="op">=</span>culture_labels)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1663,9 +1663,9 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <section id="hsgps" class="level2" data-number="7.11">
 <h2 data-number="7.11" class="anchored" data-anchor-id="hsgps"><span class="header-section-number">7.11</span> HSGPs</h2>
 <p>Los procesos gaussianos pueden ser lentos. La razón principal es que su cálculo requiere que invirtamos una matriz, cuyo tamaño aumenta con el número de observaciones. En la práctica no se invirte la matriz, si no que se usa una operación más estable numéricamente, llamada descomposición de Cholesky. Pero ambas operaciones escalan con el cubo de los datos, <span class="math inline">\(\mathcal{O}(n^3)\)</span>. Es decir son operaciones costosas que no escalan bien con el número de observaciones. Por esa razón, una gran parte de la investigación en torno a los procesos gaussianos se ha centrado en encontrar aproximaciones para calcularlos más rápido y permitir escalarlos a datasets de gran tamaño.</p>
-<p>En este casos vamos a utilizar solo una de esas aproximaciones, llamada Proceso Gaussiano en Espacios de Hilbert (HSGP por su sigla en inglés). Los detalles de esta aproximación exceden la discusión de este curso. Pero conceptualmente podemos decir que un espacio de Hilbert es una generalización del espacio euclídeo que nos brinda el marco matemático para pensar funciones (“vectores infinitos”) y sus distancia, ángulos etc. En este espacio es posible definir una serie de funciones base que sean ortogonales entre si. Un kernel es aproximado como una serie infinita de estas funciones bases. En la práctica esta serie se trunca. En espíritu estamos haciendo algo similar a como se construyen splines, solo que con otro tipo de función base.</p>
+<p>En este caso vamos a utilizar solo una de esas aproximaciones, llamada Proceso Gaussiano en Espacios de Hilbert (HSGP por su sigla en inglés). Los detalles de esta aproximación exceden la discusión de este curso. Pero conceptualmente podemos decir que un espacio de Hilbert es una generalización del espacio euclídeo que nos brinda el marco matemático para pensar funciones (“vectores infinitos”) y sus distancia, ángulos, etc. En este espacio es posible definir una serie de funciones base que sean ortogonales entre si. Un kernel es aproximado como una serie infinita de estas funciones bases. En la práctica esta serie se trunca. En espíritu estamos haciendo algo similar a como se construyen splines, solo que con otro tipo de función base.</p>
 <p>El resultado práctico es que obtenemos un aproximación que escala como <span class="math inline">\(\mathcal{O}(mn + m)\)</span> para <span class="math inline">\(m\)</span> bases. Una limitación es que solo podemos usar HSGP para dimensiones bajas. En general 1 o 2, quizá 3, y solo para algunos kernels como el cuadrático exponencial o Matern, ya que para estos es posible encontrar las funciones base.</p>
-<p>Usar la aproximación HSGP en PyMC es sencillo, como demostraremos con el conjunto de datos de bicicletas. Queremos modelar la cantidad de bicicletas alquiladas como una función de la hora del día en horas. El siguiente bloque de código muestra la implementación de PyMC de dicho modelo.\</p>
+<p>Usar la aproximación HSGP en PyMC es sencillo, como demostraremos con el conjunto de datos de bicicletas. Queremos modelar la cantidad de bicicletas alquiladas como una función de la hora del día en horas. El siguiente bloque de código muestra la implementación de PyMC de dicho modelo.</p>
 <div id="f456223a" class="cell" data-execution_count="62">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1"></a>bikes <span class="op">=</span> pd.read_csv(<span class="st">"datos/bikes.csv"</span>)</span>
 <span id="cb67-2"><a href="#cb67-2"></a>y <span class="op">=</span> bikes[<span class="st">"rented"</span>].values</span>
@@ -1794,8 +1794,8 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 <p>La aproximación HSGP también está implementada en Bambi. Veamos cómo podemos utilizarla. En principio bastaría hacer</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1"></a>bmb.Model(<span class="st">"rented ~ 0 + hsgp(hour, m=10, c=1.5)"</span>, bikes, family<span class="op">=</span><span class="st">"negativebinomial"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Esto funcionará, pero en general combine definir priors por nuestra cuenta. Esto dará como resultado un muestreo mucho más rápido y muestras más confiables.</p>
-<p>Debemos tener en cuenta que los términos HSGP no reciben valores a priori directamente. En su lugar, necesitamos definir valores a priori para <span class="math inline">\(\ell\)</span> (llamado <code>ell</code> en Bambi) y <span class="math inline">\(\eta\)</span> (llamado <code>sigma</code> en Bambi) y pasar esos valores a priori a los términos HSGP. Una cosa más: en el modelo anterior no usamos <span class="math inline">\(\eta\)</span> pero como Bambi lo espera (ya que es muy común definirlo), usamos un truco bastante barato para definir un valor a priori que sea esencialmente 1.\</p>
+<p>Esto funcionará, pero en general combiene definir priors por nuestra cuenta. Esto dará como resultado un muestreo mucho más rápido y muestras más confiables.</p>
+<p>Debemos tener en cuenta que los términos HSGP no reciben valores a priori directamente. En su lugar, necesitamos definir valores a priori para <span class="math inline">\(\ell\)</span> (llamado <code>ell</code> en Bambi) y <span class="math inline">\(\eta\)</span> (llamado <code>sigma</code> en Bambi) y pasar esos valores a priori a los términos HSGP. Una cosa más: en el modelo anterior no usamos <span class="math inline">\(\eta\)</span> pero como Bambi lo espera (ya que es muy común definirlo), usamos un truco bastante barato para definir un valor a priori que sea esencialmente 1.</p>
 <div id="57595c2b" class="cell" data-execution_count="67">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1"></a>prior_gp <span class="op">=</span> {</span>
 <span id="cb74-2"><a href="#cb74-2"></a>    <span class="st">"sigma"</span>: bmb.Prior(<span class="st">"Gamma"</span>, mu<span class="op">=</span><span class="dv">1</span>, sigma<span class="op">=</span><span class="fl">0.01</span>),</span>
@@ -1902,26 +1902,26 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <section id="resumen" class="level2" data-number="7.12">
 <h2 data-number="7.12" class="anchored" data-anchor-id="resumen"><span class="header-section-number">7.12</span> Resumen</h2>
 <p>Un proceso gaussiano es una generalización de la distribución gaussiana multivariada a infinitas dimensiones y está completamente especificado por una función media y una función de covarianza. Dado que podemos pensar conceptualmente en las funciones como vectores infinitamente largos, podemos utilizar procesos gaussianos como valores a priori sobre el espacio de las funciones. En la práctica, no trabajamos con objetos infinitos sino con distribuciones gaussianas multivariadas con tantas dimensiones como observaciones. Para definir la función de covarianza, utilizamos kernels cuyos parámetros debemos ajustar usando datos; al aprender sobre esos hiperparámetros, terminamos aprendiendo sobre funciones complejas arbitrarias.</p>
-<p>En este capítulo, hemos dado una breve introducción a los procesos gaussianos. Hemos discutido como hacer regresión, como integralos en modelos semiparamétricos (el ejemplo de las islas), como combinar dos o más kernels para describir mejor la función desconocida y cómo se puede utilizar un proceso gaussiano para tareas de clasificación. También discutimos una aproximación, HGSP, que permite reducir el costo computacional de los GPs.</p>
+<p>En este capítulo, hemos dado una breve introducción a los procesos gaussianos. Hemos discutido como hacer regresión, como integrarlos en modelos semiparamétricos (el ejemplo de las islas), como combinar dos o más kernels para describir mejor la función desconocida y cómo se puede utilizar un proceso gaussiano para tareas de clasificación. También discutimos una aproximación, HGSP, que permite reducir el costo computacional de los GPs.</p>
 <p>GPs es un tema muy extenso con muchas aplicaciones prácticas, pero que suele estar asociado a explicaciones que requieren un alto grado de sofisticación matemática. Espero que esta introducción más práctica los haya motivado lo suficiente para seguir usando, leyendo y aprendiendo sobre los procesos gaussianos.</p>
 </section>
 <section id="ejercicios" class="level2" data-number="7.13">
 <h2 data-number="7.13" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">7.13</span> Ejercicios</h2>
 <ol type="1">
-<li><p>Para el ejemplo de la sección , asegúrese de comprender la relación entre los datos de entrada y la matriz de covarianza generada. Intente utilizar otra entrada como .</p></li>
+<li><p>Para el ejemplo de la sección <em>Funciones de covarianza y núcleos</em>, asegúrese de comprender la relación entre los datos de entrada y la matriz de covarianza generada. Intente utilizar otra entrada como <code>data = np.random.normal(size=4)</code>.</p></li>
 <li><p>Vuelva a ejecutar el código que genera la <span class="quarto-unresolved-ref">?fig-ExpQuad_ell</span> y aumente la cantidad de muestras obtenidas del GP anterior a alrededor de 200. En la figura original, la cantidad de muestras es 2. ¿Cuál es el rango de los valores generados?</p></li>
 <li><p>Para el gráfico generado en el ejercicio anterior, calcule la desviación estándar para los valores en cada punto. Hazlo de la siguiente forma:</p>
 <ul>
 <li>Visualmente, simplemente observando los gráficos</li>
-<li>Directamente a partir de los valores generados a partir de </li>
+<li>Directamente a partir de los valores generados a partir de <code>pz.MVNormal(.).rvs</code></li>
 <li>Inspeccionando la matriz de covarianza (si tienes dudas, vuelve al ejercicio 1) ¿Coincidieron los valores que obtuviste de estos tres métodos?</li>
 </ul></li>
-<li><p>Usa los puntos de prueba y vuelve a ejecutar . Grafica los resultados. ¿Qué observaste? ¿Cómo se relaciona esto con la especificación de la prior GP?</p></li>
+<li><p>Usa los puntos de prueba <code>np.linspace(np.floor(x.min()), 20, 100)[:,None]</code> y vuelve a ejecutar <code>model_reg</code>. Grafica los resultados. ¿Qué observaste? ¿Cómo se relaciona esto con la especificación de la prior GP?</p></li>
 <li><p>Repite el ejercicio 1, pero esta vez usa un kernel lineal.</p></li>
-<li><p>Consulta en la documentación de PyMC.</p></li>
-<li><p>Ejecuta un modelo de regresión logística para los datos de . ¿Qué ves? ¿Puedes explicar el resultado?</p></li>
+<li><p>Consulta <a href="https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-MeansAndCovs.html">Funciones de Media y Covarianza</a> en la documentación de PyMC.</p></li>
+<li><p>Ejecuta un modelo de regresión logística para los datos de <code>space_flu</code>. ¿Qué ves? ¿Puedes explicar el resultado?</p></li>
 <li><p>Cambia el modelo de regresión logística para que se ajuste a los datos. Consejo: usa un polinomio de orden 2.</p></li>
-<li><p>Compara el modelo para el desastre de la minería de carbón con el de la documentación de PyMC (). Describe las diferencias entre ambos modelos en términos de especificación del modelo y resultados.</p></li>
+<li><p>Compara el modelo para el desastre de la minería de carbón con el de la <a href="https://www.pymc.io/projects/docs/en/stable/learn/core_notebooks/pymc_overview.html#case-study-2-coal-mining-disasters">documentación de PyMC</a>. Describe las diferencias entre ambos modelos en términos de especificación del modelo y resultados.</p></li>
 </ol>
 
 
