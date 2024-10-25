@@ -529,10 +529,10 @@ Figura&nbsp;7.1: Relación entre valores de entrada de un kernel cuadrático exp
 <span id="cb10-3"><a href="#cb10-3"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb10-4"><a href="#cb10-4"></a>covs <span class="op">=</span> [pm.gp.cov.ExpQuad(input_dim<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="dv">1</span>), </span>
 <span id="cb10-5"><a href="#cb10-5"></a>        pm.gp.cov.Matern32(input_dim<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb10-6"><a href="#cb10-6"></a>        pm.gp.cov.Linear(input_dim<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="fl">2.5</span>),</span>
+<span id="cb10-6"><a href="#cb10-6"></a>        pm.gp.cov.Linear(input_dim<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="dv">50</span>),</span>
 <span id="cb10-7"><a href="#cb10-7"></a>        pm.gp.cov.Cosine(input_dim<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb10-8"><a href="#cb10-8"></a>        pm.gp.cov.Polynomial(input_dim<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="dv">0</span>, d<span class="op">=</span><span class="dv">2</span>, offset<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb10-9"><a href="#cb10-9"></a>        pm.gp.cov.Constant(c<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb10-8"><a href="#cb10-8"></a>        pm.gp.cov.Polynomial(input_dim<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="dv">70</span>, d<span class="op">=</span><span class="dv">3</span>, offset<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb10-9"><a href="#cb10-9"></a>        pm.gp.cov.Constant(c<span class="op">=</span><span class="dv">50</span>),</span>
 <span id="cb10-10"><a href="#cb10-10"></a>       ]</span>
 <span id="cb10-11"><a href="#cb10-11"></a>        </span>
 <span id="cb10-12"><a href="#cb10-12"></a><span class="cf">for</span> cov, ax <span class="kw">in</span> <span class="bu">zip</span>(covs, ax.ravel()):</span>
@@ -1226,7 +1226,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <span id="cb44-11"><a href="#cb44-11"></a>az.plot_hdi(X_new[:, <span class="dv">0</span>], fp.T, color<span class="op">=</span><span class="st">'C2'</span>, smooth<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb44-12"><a href="#cb44-12"></a>ax.set_yticks([<span class="dv">0</span>, <span class="dv">1</span>])</span>
 <span id="cb44-13"><a href="#cb44-13"></a>ax.set_yticklabels([<span class="st">'sano'</span>, <span class="st">'enfermo'</span>])</span>
-<span id="cb44-14"><a href="#cb44-14"></a>ax.set_xlabel(<span class="st">'edad'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-14"><a href="#cb44-14"></a>ax.set_xlabel(<span class="st">'edad'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/arviz/plots/hdiplot.py:161: FutureWarning: hdi currently interprets 2d data as (draw, shape) but this will change in a future release to (chain, draw) for coherence with other functions
   hdi_data = hdi(y, hdi_prob=hdi_prob, circular=circular, multimodal=False, **hdi_kwargs)</code></pre>
