@@ -276,12 +276,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#diagnóstico-de-convergencia" id="toc-diagnóstico-de-convergencia" class="nav-link" data-scroll-target="#diagnóstico-de-convergencia"><span class="header-section-number">8.9.1</span> Diagnóstico de convergencia</a></li>
   </ul></li>
-  <li><a href="#partial-dependence-plots" id="toc-partial-dependence-plots" class="nav-link" data-scroll-target="#partial-dependence-plots"><span class="header-section-number">8.10</span> Partial dependence plots</a>
+  <li><a href="#graficos-de-dependencia-parcial" id="toc-graficos-de-dependencia-parcial" class="nav-link" data-scroll-target="#graficos-de-dependencia-parcial"><span class="header-section-number">8.10</span> Graficos de dependencia parcial</a>
   <ul class="collapse">
   <li><a href="#selección-de-variables" id="toc-selección-de-variables" class="nav-link" data-scroll-target="#selección-de-variables"><span class="header-section-number">8.10.1</span> Selección de variables</a></li>
   </ul></li>
   <li><a href="#modelos-distribucionales-con-bart" id="toc-modelos-distribucionales-con-bart" class="nav-link" data-scroll-target="#modelos-distribucionales-con-bart"><span class="header-section-number">8.11</span> Modelos distribucionales con BART</a></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">8.12</span> Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -452,13 +451,16 @@ Y = \mathcal{N}\left(\mu = \sum_{j=0}^m G(\boldsymbol{X}; \mathcal{T}_j, \mathca
 <div class="cell-output cell-output-stderr">
 <pre><code>Multiprocess sampling (4 chains in 4 jobs)
 PGBART: [μ_]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 14 seconds.
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 11 seconds.
 The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"bc7cc3adacae41c3be6681a5ecd83d83","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"a6675d863fe9431f8c289e0792941ec5","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -473,11 +475,11 @@ The rhat statistic is larger than 1.01 for some parameters. This indicates probl
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a>rates <span class="op">=</span> idata_coal.posterior[<span class="st">"μ"</span>] <span class="op">/</span> <span class="dv">4</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a>rate_mean <span class="op">=</span> rates.mean(dim<span class="op">=</span>[<span class="st">"draw"</span>, <span class="st">"chain"</span>])</span>
-<span id="cb7-5"><a href="#cb7-5"></a>ax.plot(x_centers, rate_mean, <span class="st">"w"</span>, lw<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb7-6"><a href="#cb7-6"></a>ax.plot(x_centers, y_data <span class="op">/</span> <span class="dv">4</span>, <span class="st">"k."</span>)</span>
-<span id="cb7-7"><a href="#cb7-7"></a>az.plot_hdi(x_centers, rates, smooth<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb7-8"><a href="#cb7-8"></a>az.plot_hdi(x_centers, rates, hdi_prob<span class="op">=</span><span class="fl">0.5</span>, smooth<span class="op">=</span><span class="va">False</span>, plot_kwargs<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="dv">0</span>})</span>
-<span id="cb7-9"><a href="#cb7-9"></a>ax.plot(coal, np.zeros_like(coal) <span class="op">-</span> <span class="fl">0.5</span>, <span class="st">"k|"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>az.plot_hdi(x_centers, rates)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>az.plot_hdi(x_centers, rates, hdi_prob<span class="op">=</span><span class="fl">0.5</span>, plot_kwargs<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="dv">0</span>})</span>
+<span id="cb7-7"><a href="#cb7-7"></a>az.plot_hdi(x_centers, rates, hdi_prob<span class="op">=</span><span class="fl">0.01</span>, color<span class="op">=</span><span class="st">"w"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>ax.plot(coal, np.zeros_like(coal) <span class="op">-</span> <span class="fl">0.5</span>, <span class="st">"k|"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>ax.plot(x_centers, y_data <span class="op">/</span> <span class="dv">4</span>, <span class="st">"k."</span>, zorder<span class="op">=-</span><span class="dv">2</span>)</span>
 <span id="cb7-10"><a href="#cb7-10"></a>ax.set_xlabel(<span class="st">"years"</span>)</span>
 <span id="cb7-11"><a href="#cb7-11"></a>ax.set_ylabel(<span class="st">"rate"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -489,37 +491,42 @@ The rhat statistic is larger than 1.01 for some parameters. This indicates probl
 </div>
 </div>
 </div>
-<p>La línea blanca en el gráfico anterior muestra la tasa media de accidentes. La franja cian más oscura representa el HDI 50% y la más clara el HDI 94%. Podemos ver una rápida disminución en los accidentes relacionados con el carbón entre 1880 y 1900.</p>
+<p>La línea blanca en el gráfico anterior muestra la tasa mediana de accidentes. La franja cian más oscura representa el HDI 50% y la más clara el HDI 94%. Podemos ver una rápida disminución en los accidentes relacionados con el carbón entre 1880 y 1900.</p>
 <p>En el gráfico anterior, la línea blanca es la media de 4000 muestras de la distribución a posteriori, y cada uno de esos muestras es una suma de 20 árboles.</p>
 </section>
 <section id="bicicleteando-con-bart" class="level2" data-number="8.9">
 <h2 data-number="8.9" class="anchored" data-anchor-id="bicicleteando-con-bart"><span class="header-section-number">8.9</span> Bicicleteando con BART</h2>
-<p>Veamos otro ejemplo, esta vez usando el dataset de bikes.</p>
+<p>Veamos otro ejemplo, esta vez usando el dataset de bicicletas alquiladas.</p>
 <div id="cell-21" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>bikes <span class="op">=</span> pd.read_csv(<span class="st">"datos/bikes.csv"</span>)</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>bicis <span class="op">=</span> pd.read_csv(<span class="st">"datos/bicis.csv"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a>features <span class="op">=</span> [<span class="st">"hour"</span>, <span class="st">"temperature"</span>, <span class="st">"humidity"</span>, <span class="st">"weekday"</span>]</span>
+<span id="cb8-3"><a href="#cb8-3"></a>features <span class="op">=</span> [<span class="st">"hora"</span>, <span class="st">"temperatura"</span>, <span class="st">"humedad"</span>, <span class="st">"viento"</span>]</span>
 <span id="cb8-4"><a href="#cb8-4"></a></span>
-<span id="cb8-5"><a href="#cb8-5"></a>X <span class="op">=</span> bikes[features]</span>
-<span id="cb8-6"><a href="#cb8-6"></a>Y <span class="op">=</span> bikes[<span class="st">"rented"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5"></a>X <span class="op">=</span> bicis[features]</span>
+<span id="cb8-6"><a href="#cb8-6"></a>Y <span class="op">=</span> bicis[<span class="st">"alquiladas"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-22" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model_bikes:</span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> modelo_bicis:</span>
 <span id="cb9-2"><a href="#cb9-2"></a>    α <span class="op">=</span> pm.Exponential(<span class="st">"α"</span>, <span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3"></a>    μ <span class="op">=</span> pmb.BART(<span class="st">"μ"</span>, X, np.log(Y), m<span class="op">=</span><span class="dv">50</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    y <span class="op">=</span> pm.NegativeBinomial(<span class="st">"y"</span>, mu<span class="op">=</span>pm.math.exp(μ), alpha<span class="op">=</span>α, observed<span class="op">=</span>Y)</span>
-<span id="cb9-5"><a href="#cb9-5"></a>    idata_bikes <span class="op">=</span> pm.sample(compute_convergence_checks<span class="op">=</span><span class="va">False</span>, random_seed<span class="op">=</span>RANDOM_SEED)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4"></a>    </span>
+<span id="cb9-5"><a href="#cb9-5"></a>    y <span class="op">=</span> pm.NegativeBinomial(<span class="st">"y"</span>, mu<span class="op">=</span>pm.math.exp(μ), alpha<span class="op">=</span>α, observed<span class="op">=</span>Y)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>    </span>
+<span id="cb9-7"><a href="#cb9-7"></a>    idata_bicis <span class="op">=</span> pm.sample(compute_convergence_checks<span class="op">=</span><span class="va">False</span>, random_seed<span class="op">=</span>RANDOM_SEED)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Multiprocess sampling (4 chains in 4 jobs)
 CompoundStep
 &gt;NUTS: [α]
 &gt;PGBART: [μ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 46 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 42 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"18176ead8bf14d71a4edcf4cb582c15e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"137a38c8560542b0b58c725e2cd63cbc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -529,11 +536,11 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <h3 data-number="8.9.1" class="anchored" data-anchor-id="diagnóstico-de-convergencia"><span class="header-section-number">8.9.1</span> Diagnóstico de convergencia</h3>
 <p>Para verificar la convergencia de muestreo de los modelos BART, recomendamos un enfoque de 2 pasos.</p>
 <ul>
-<li>Para las variables que no son BART (como <span class="math inline">\(\alpha\)</span> en <code>model_bikes</code>) seguimos las recomendaciones estándar, como verificar los diagnósticos numéricos R-hat (&lt;= 1.01) y ESS (&lt; 100x número de cadenas), así como usar trazar gráficos o incluso mejores gráficos de clasificación.</li>
+<li>Para las variables que no son BART (como <span class="math inline">\(\alpha\)</span> en <code>modelo_bicis</code>) seguimos las recomendaciones estándar, como verificar los diagnósticos numéricos R-hat (&lt;= 1.01) y ESS (&lt; 100x número de cadenas), así como usar trace-plots y rank-plots.</li>
 <li>Para las variables BART recomendamos utilizar la función <code>pmb.plot_convergence</code>.</li>
 </ul>
 <div id="cell-24" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>az.plot_trace(idata_bikes, var_names<span class="op">=</span>[<span class="st">"α"</span>], kind<span class="op">=</span><span class="st">"rank_bars"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>az.plot_trace(idata_bicis, var_names<span class="op">=</span>[<span class="st">"α"</span>], kind<span class="op">=</span><span class="st">"rank_bars"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -543,9 +550,9 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 <div id="cell-25" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>pmb.plot_convergence(idata_bikes, var_name<span class="op">=</span><span class="st">"μ"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>pmb.plot_convergence(idata_bicis, var_name<span class="op">=</span><span class="st">"μ"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/home/pablo/anaconda3/envs/EI2/lib/python3.11/site-packages/arviz/plots/ecdfplot.py:295: BehaviourChangeWarning: In future versions, if `eval_points` is not provided, then the ECDF will be evaluated at the unique values of the sample. To keep the current behavior, provide `eval_points` explicitly.
+<pre><code>/home/osvaldo/anaconda3/envs/EI2/lib/python3.11/site-packages/arviz/plots/ecdfplot.py:295: BehaviourChangeWarning: In future versions, if `eval_points` is not provided, then the ECDF will be evaluated at the unique values of the sample. To keep the current behavior, provide `eval_points` explicitly.
   warnings.warn(</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -560,11 +567,17 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>En cambio, consideramos que verificar la convergencia de las variables BART es una parte importante del flujo de trabajo Bayesiano. La razón principal para usar <code>pmb.plot_convergence</code> es que normalmente la variable BART será un vector grande (estimamos una distribución por observación) y, por lo tanto, necesitaremos verificar una gran cantidad de diagnósticos. Además, el umbral de R-hat de 1,01 no es un umbral estricto; este valor se eligió suponiendo que se examinan uno o varios R-hat (y que las cadenas son lo suficientemente largas para estimar con precisión su autocorrelación), y si observamos una gran cantidad de R-hat que se espera que algunos de ellos sean mayores que el umbral de 1,01 (o cualquier umbral que elijamos) incluso si no hay nada malo en nuestra inferencia. Por esa razón, un análisis justo debe incluir un ajuste de comparación múltiple, y eso es lo que <code>pmb.plot_convergence</code> hace automáticamente por usted. Entonces, ¿cómo leer su salida? Tenemos dos paneles uno para ESS y otro para R-hat. La línea azul es la distribución acumulativa empírica de esos valores, para ESS queremos que toda la curva esté por encima de la línea discontinua y para R-hat queremos que la curva esté completamente por debajo de la línea discontinua. En la figura anterior, podemos ver que apenas lo logramos para ESS y para R-hat tenemos muy pocos valores por encima del umbral. ¿Son nuestros resultados inútiles? Probablemente no. Pero, sin duda, es posible que queramos realizar algunos sorteos más.</p>
 </section>
 </section>
-<section id="partial-dependence-plots" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="partial-dependence-plots"><span class="header-section-number">8.10</span> Partial dependence plots</h2>
-<p>Para ayudarnos a interpretar los resultados de nuestro modelo, utilizaremos gráficos de dependencia parcial. Este es un tipo de gráfico que muestra el efecto marginal que tiene una covariable sobre la variable predicha. Es decir, ¿cuál es el efecto que tiene una covariable <span class="math inline">\(X_i\)</span> sobre <span class="math inline">\(Y\)</span> mientras promediamos todas las demás covariables (<span class="math inline">\(X_j, \forall j \not = i\)</span>). Esta herramienta no es exclusiva de BART. Pero se utilizan a menudo en la literatura de BART.</p>
+<section id="graficos-de-dependencia-parcial" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="graficos-de-dependencia-parcial"><span class="header-section-number">8.10</span> Graficos de dependencia parcial</h2>
+<p>Si tenemos dos variables <span class="math inline">\(X_0\)</span> y <span class="math inline">\(X_1\)</span> y un modelo <span class="math inline">\(f\)</span>. La dependencia parcial de <span class="math inline">\(X_0\)</span> es:</p>
+<p><span class="math display">\[
+\mathbb{E}_{X_1}\left[ f(x, X_1) \right]
+\]</span></p>
+<p>Es decir calculamos cual es efecto de <span class="math inline">\(X_0\)</span> al promediar sobre los valores de <span class="math inline">\(X_1\)</span>. Si tenemos más de dos variables debemos promediar sobre todas las demás variables. Es decir, para calcualr el efecto que tiene una covariable <span class="math inline">\(X_i\)</span> sobre <span class="math inline">\(Y\)</span> promediamos todas las demás covariables (<span class="math inline">\(X_j, \forall j \not = i\)</span>).</p>
+<p>Esta herramienta no es exclusiva de BART, es posible usarla para cualquier modelo. Para cualquier método basado en árboles tiene la ventaja es posible calcularla de forma eficiente.</p>
+<p>En PyMC-BART la función <code>plot_pdp</code> permite obtener este tripo de gráficos.</p>
 <div id="cell-28" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>pmb.plot_pdp(μ, X<span class="op">=</span>X, Y<span class="op">=</span>Y, grid<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), func<span class="op">=</span>np.exp, var_discrete<span class="op">=</span>[<span class="dv">3</span>])<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>pmb.plot_pdp(μ, X<span class="op">=</span>X, Y<span class="op">=</span>Y, grid<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), func<span class="op">=</span>np.exp)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -580,7 +593,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <h3 data-number="8.10.1" class="anchored" data-anchor-id="selección-de-variables"><span class="header-section-number">8.10.1</span> Selección de variables</h3>
 <p>Como vimos en la sección anterior, un gráfico de dependencia parcial nos permite interpretar el efecto (marginal) de cada covariable sobre la respuesta. Además nos da una idea de cuánto contribuye cada covariable a la variable predicha. Pero hay una forma más directa de hacer esto. Veamos primero un gráfico y luego como interpretarlo y calcularlo.</p>
 <div id="cell-31" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>pmb.plot_variable_importance(idata_bicis, μ, X)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -598,7 +611,7 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </ul>
 <p>En lugar de utilizar la “heurística de conteo”. También puede realizar una búsqueda hacia atrás, <code>pmb.plot_variable_importance(..., method="backward")</code>. Internamente, esto calculará el R² para el modelo completo, luego para todos los modelos con una variable menos que el modelo completo, y luego para todos los modelos con menos de dos, y así sucesivamente. En cada etapa, descartamos la variable que da el R² más bajo. El método inverso será más lento, ya que necesitamos calcular predicciones para más modelos.</p>
 <div id="cell-33" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>pmb.plot_variable_importance(idata_bikes, μ, X, method<span class="op">=</span><span class="st">"backward"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>pmb.plot_variable_importance(idata_bicis, μ, X, method<span class="op">=</span><span class="st">"backward"</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -621,12 +634,15 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <div class="cell-output cell-output-stderr">
 <pre><code>Multiprocess sampling (4 chains in 4 jobs)
 PGBART: [μ]
-Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 94 seconds.</code></pre>
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 113 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4ce3ae4702144bd28073c52a4b8383d9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"28ae21306888400d8241ff4f7495d28d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -637,10 +653,8 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 <p>Luego necesitamos indexar <code>μ</code> para usar la primera dimensión para el parámetro <span class="math inline">\(\mu\)</span> y la segunda para el parámetro <span class="math inline">\(\alpha\)</span>.</p>
 <p>Otro aspecto importante del <code>modelo_bb</code> es que tomamos la función exponencial de <code>μ</code>. Hacemos esto para garantizar que la distribución binomial negativa obtenga solo valores positivos, tanto para <span class="math inline">\(\mu\)</span> como para <span class="math inline">\(\alpha\)</span>. Este es el mismo tipo de transformación que discutimos en el contexto de los modelos lineales generalizados.</p>
 <p>La siguiente figura muestra un partial dependence plots con dos columnas una por cada parámetro de la distribución NegativaBinomial</p>
-<div id="cell-37" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>pmb.plot_pdp(μ, X, Y, </span>
-<span id="cb19-2"><a href="#cb19-2"></a>             xs_interval<span class="op">=</span><span class="st">"insample"</span>, func<span class="op">=</span>np.exp , var_discrete<span class="op">=</span>[<span class="dv">3</span>],</span>
-<span id="cb19-3"><a href="#cb19-3"></a>             grid<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-37" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>pmb.plot_pdp(μ, X, Y, func<span class="op">=</span>np.exp, grid<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">2</span>), sharey<span class="op">=</span><span class="st">"col"</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -649,32 +663,6 @@ Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws 
 </div>
 </div>
 </div>
-</section>
-<section id="ejercicios" class="level2" data-number="8.12">
-<h2 data-number="8.12" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">8.12</span> Ejercicios</h2>
-<ul>
-<li><p>Podriamos tener un ejercicio donde ajustamos un dataset muy simple con una sola covariable y hacemos predicciones fuera del rango de los datos y pedimos a los estudiantes que expliquen por que see observa lo que se observa y luego repetir pero cambiando la respuesta lineal.</p></li>
-<li><p>Esto podría ser otro mostrando que las predicciones insample son similares pero los PDPs no https://www.pymc.io/projects/bart/en/latest/examples/bart_categorical_hawks.html</p></li>
-<li><p>generamos este dataset</p></li>
-</ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>X <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, (<span class="dv">250</span>, <span class="dv">3</span>))</span>
-<span id="cb20-2"><a href="#cb20-2"></a>lala <span class="op">=</span> np.where(X[:,<span class="dv">2</span>] <span class="op">&gt;=</span> <span class="dv">0</span>,  np.zeros_like(X[:,<span class="dv">2</span>]), np.ones_like(X[:,<span class="dv">2</span>]))</span>
-<span id="cb20-3"><a href="#cb20-3"></a>e <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">250</span>)</span>
-<span id="cb20-4"><a href="#cb20-4"></a>Y <span class="op">=</span> <span class="fl">0.2</span><span class="op">*</span>X[:,<span class="dv">0</span>] <span class="op">-</span> <span class="dv">5</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">+</span> <span class="dv">10</span><span class="op">*</span>X[:,<span class="dv">1</span>] <span class="op">*</span> lala<span class="op">+</span> e</span>
-<span id="cb20-5"><a href="#cb20-5"></a></span>
-<span id="cb20-6"><a href="#cb20-6"></a></span>
-<span id="cb20-7"><a href="#cb20-7"></a>plt.plot(X[:,<span class="dv">1</span>], Y, <span class="st">'.'</span>)<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>usan BART y calculan un PDP y un ICE, expliquen diferencia</p>
-<ul>
-<li>Space influenza con distintos valores de m [5, 20, 50, 100] tienen que usar LOO y un gráfico para comparar los resultados y explicar las diferencias.</li>
-</ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>space_in <span class="op">=</span> pd.read_csv(<span class="st">"datos/space_influenza.csv"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2"></a>X <span class="op">=</span> np.atleast_2d(space_in[<span class="st">"age"</span>]).T</span>
-<span id="cb21-3"><a href="#cb21-3"></a>Y <span class="op">=</span> space_in[<span class="st">"sick"</span>]</span>
-<span id="cb21-4"><a href="#cb21-4"></a></span>
-<span id="cb21-5"><a href="#cb21-5"></a></span>
-<span id="cb21-6"><a href="#cb21-6"></a>Y_jittered <span class="op">=</span> np.random.normal(Y, <span class="fl">0.02</span>)</span>
-<span id="cb21-7"><a href="#cb21-7"></a>plt.plot(X[:,<span class="dv">0</span>], Y_jittered, <span class="st">"."</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
